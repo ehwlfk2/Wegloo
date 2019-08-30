@@ -52,7 +52,6 @@
         </activity>
         <activity android:name=".AttendActivity" />
         <activity android:name=".MaterialManagementActivity_Admin" />
-        <activity android:name=".MaterialManagementActivity_Client" />
         <activity android:name=".MaterialManagementActivity_Detail" />
         <activity android:name=".MaterialManagementActivity_Insert" />
         <activity android:name=".UserDetailActivity" />
