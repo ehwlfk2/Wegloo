@@ -24,7 +24,7 @@
     </group>
 
     <item android:title="Communicate">
-        <menu>
+        <fragment_menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
@@ -33,7 +33,7 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/menu_send" />
-        </menu>
+        </fragment_menu>
     </item>
 -->
 

@@ -7,18 +7,18 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_Material_Management_Detail extends AppCompatActivity {
+public class MaterialManagementActivity_Detail extends AppCompatActivity {
 
-    ImageView material_management_detail_image;
-    Button material_management_detail_btn2;
+    ImageView activity_material_management_detail_imageview_image;
+    Button activity_material_management_detail_button_lend;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material_management_detail);
 
-        material_management_detail_image = (ImageView) findViewById(R.id.material_management_detail_image);
-        material_management_detail_btn2 = (Button) findViewById(R.id.material_management_detail_btn2);
+        activity_material_management_detail_imageview_image = (ImageView) findViewById(R.id.activity_material_management_detail_imageview_image);
+        activity_material_management_detail_button_lend = (Button) findViewById(R.id.activity_material_management_detail_button_lend);
 
 /*        byte[] byteArray = getIntent().getByteArrayExtra("image");
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -30,7 +30,7 @@ public class Activity_Material_Management_Detail extends AppCompatActivity {
 /*        material_management_detail_btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent = new Intent(Activity_Material_Management_Detail.this, Activity_Material_Management_Admin.class);
+                Intent intent = new Intent(MaterialManagementActivity_Detail.this, MaterialManagementActivity_Admin.class);
                 startActivity(intent);
             }
         });*/

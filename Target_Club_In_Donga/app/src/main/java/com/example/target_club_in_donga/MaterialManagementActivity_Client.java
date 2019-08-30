@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Activity_Material_Management_Client extends AppCompatActivity {
+public class MaterialManagementActivity_Client extends AppCompatActivity {
 
     ImageView material_management_image1;
 
@@ -23,7 +23,7 @@ public class Activity_Material_Management_Client extends AppCompatActivity {
         material_management_image1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent = new Intent(Activity_Material_Management_Client.this, Activity_Material_Management_Detail.class);
+                Intent intent = new Intent(MaterialManagementActivity_Client.this, MaterialManagementActivity_Detail.class);
                 startActivity(intent);
             }
         });
