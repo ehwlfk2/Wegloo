@@ -7,10 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.target_club_in_donga.ActivityAdapter.ViewPagerAdapter_User_Detail;
-import com.example.target_club_in_donga.Fragments.Fragment_Home;
+import com.example.target_club_in_donga.Activity_Adapters.UserDetailActivity_Adapter;
+import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
 
-public class Activity_Menu_User_Detail extends AppCompatActivity implements Fragment_Home.OnFragmentInteractionListener {
+public class UserDetailActivity extends AppCompatActivity implements HomeActivity_Fragment.OnFragmentInteractionListener {
     private ViewPager viewPager;
 
     @Override
@@ -18,7 +18,7 @@ public class Activity_Menu_User_Detail extends AppCompatActivity implements Frag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_pager);
         viewPager = (ViewPager)findViewById(R.id.view_pager);
-        ViewPagerAdapter_User_Detail fragmentAdapter = new ViewPagerAdapter_User_Detail(getSupportFragmentManager());
+        UserDetailActivity_Adapter fragmentAdapter = new UserDetailActivity_Adapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
     }
 

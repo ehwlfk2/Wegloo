@@ -40,18 +40,18 @@
                 tools:context=".Google_Login">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_main_list"
+                    android:id="@+id/activity_material_management_admin_recyclerview_main_list"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:scrollbarFadeDuration="0"
                     android:scrollbarSize="10dp"
                     android:scrollbarThumbVertical="@android:color/darker_gray"
                     android:scrollbars="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/button_main_insert"
+                    app:layout_constraintBottom_toTopOf="@+id/activity_material_management_admin_button_insert"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/button_main_insert"
+                    android:id="@+id/activity_material_management_admin_button_insert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="새상품 추가"

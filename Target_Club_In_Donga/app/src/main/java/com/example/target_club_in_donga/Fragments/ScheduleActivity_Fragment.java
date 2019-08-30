@@ -11,16 +11,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.R;
 
-public class Fragment_Material_Management_Admin extends Fragment {
+public class ScheduleActivity_Fragment extends Fragment {
 
-    public Fragment_Material_Management_Admin() {
+    public ScheduleActivity_Fragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_material_management_admin, container, false);
+        View view = inflater.inflate(R.layout.activity_schedule, container, false);
         return  view;
-    } // activity_material_management_admin 에 있는 화면을 가지고 온다
+    } // activity_schedule에 있는 화면을 가지고 온다
 
 }

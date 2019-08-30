@@ -19,14 +19,14 @@ import com.example.target_club_in_donga.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_Attend extends Fragment {
+public class AttendActivity_Fragment extends Fragment {
 
     private Gallery gallery;
     private Button select_btn;
     private Integer current_image_resource;
 
     private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc,R.drawable.dd,R.drawable.ee};
-    public Fragment_Attend() {
+    public AttendActivity_Fragment() {
         // Required empty public constructor
     }
 
@@ -35,9 +35,9 @@ public class Fragment_Attend extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_attend, container, false);
-        GalleryAdapter galleryAdapter = new GalleryAdapter(getContext(), R.layout.activity_attend_sub_layout,img);
+        Gallery_Adapter galleryAdapter = new Gallery_Adapter(getContext(), R.layout.activity_attend_sub_layout,img);
         gallery = (Gallery)view.findViewById(R.id.activity_attend_gallery);
-        select_btn = (Button)view.findViewById(R.id.activity_attend_select_btn);
+        select_btn = (Button)view.findViewById(R.id.activity_attend_button_select);
 
         gallery.setAdapter(galleryAdapter);
         final ImageView imageView = (ImageView)view.findViewById(R.id.test);
@@ -62,13 +62,13 @@ public class Fragment_Attend extends Fragment {
     }
 
 }
-class GalleryAdapter extends BaseAdapter{
+class Gallery_Adapter extends BaseAdapter{
     Context context;
     int layout;
     int img[];
     LayoutInflater layoutInflater;
 
-    public GalleryAdapter(Context context, int layout, int[] img) {
+    public Gallery_Adapter(Context context, int layout, int[] img) {
         this.context = context;
         this.layout = layout;
         this.img = img;

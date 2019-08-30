@@ -11,7 +11,7 @@
         android:weightSum="5">
 
         <ImageView
-            android:id="@+id/imageview_recyclerview_image"
+            android:id="@+id/activity_material_management_item_imageview_recyclerview_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -26,7 +26,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textview_recyclerview_id"
+                android:id="@+id/activity_material_management_item_textview_recyclerview_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:saveEnabled="false"

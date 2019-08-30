@@ -30,7 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 
 
-public class Activity_Material_Management_Edit extends AppCompatActivity {
+public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000; // 갤러리에서 이미지를 받아오기 위한 세가지 변수
     private static final int PERMISSION_CODE = 1001; //
@@ -38,15 +38,15 @@ public class Activity_Material_Management_Edit extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
-    private ImageView material_management_edit_image_imageview;
-    private EditText material_management_edit_name_edittext;
-    private Button material_management_edit_change_button;
+    private ImageView activity_material_management_insert_imageview_image;
+    private EditText activity_material_management_insert_edittext_item_name;
+    private Button activity_material_management_insert_button_insert;
     private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_management_edit);
+        setContentView(R.layout.activity_material_management_insert);
 
         // 홈에서 공지사항을 눌었을 떄, viewPager에서 ViewPagerAdapter_Notice로 공지사항화면이 나오고
         // 오른쪽에서 왼쪽으로 슬라이드를 하면 홈 화면이 나오도록 한다.
@@ -55,11 +55,11 @@ public class Activity_Material_Management_Edit extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        material_management_edit_image_imageview = (ImageView) findViewById(R.id.material_management_edit_image_imageview);
-        material_management_edit_name_edittext = (EditText) findViewById(R.id.material_management_edit_name_edittext);
-        material_management_edit_change_button = (Button) findViewById(R.id.material_management_edit_change_button);
+        activity_material_management_insert_imageview_image = (ImageView) findViewById(R.id.activity_material_management_insert_imageview_image);
+        activity_material_management_insert_edittext_item_name = (EditText) findViewById(R.id.activity_material_management_insert_edittext_item_name);
+        activity_material_management_insert_button_insert = (Button) findViewById(R.id.activity_material_management_insert_button_insert);
 
-        material_management_edit_image_imageview.setOnClickListener(new View.OnClickListener() {
+        activity_material_management_insert_imageview_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -76,16 +76,16 @@ public class Activity_Material_Management_Edit extends AppCompatActivity {
             }
         });
 
-        material_management_edit_change_button.setOnClickListener(new View.OnClickListener() {
+        activity_material_management_insert_button_insert.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 upload(imagePath);
-                Intent intent = new Intent(Activity_Material_Management_Edit.this, Activity_Material_Management_Admin.class);
+                Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
                 startActivity(intent);
                 finish();
 
 
-//                Intent intent = new Intent(Activity_Material_Management_Edit.this, Activity_Material_Management_Detail.class);
+//                Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Detail.class);
 /*                Bitmap sendBitmap = BitmapFactory.decodeResource(getResources(), material_management_edit_image);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
@@ -97,7 +97,7 @@ public class Activity_Material_Management_Edit extends AppCompatActivity {
 
 
 //                finish();
-/*                Intent intent = new Intent(Activity_Material_Management_Edit.this, Activity_Material_Management_Admin.class);
+/*                Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
                 startActivity(intent);*/
             }
         });
@@ -134,9 +134,9 @@ public class Activity_Material_Management_Edit extends AppCompatActivity {
 
             imagePath = getPath(data.getData());
             File f = new File(imagePath);
-            material_management_edit_image_imageview.setImageURI(Uri.fromFile(f));
+            activity_material_management_insert_imageview_image.setImageURI(Uri.fromFile(f));
 
-/*            Intent intent = new Intent(Activity_Material_Management_Edit.this, Activity_Material_Management_Admin.class);
+/*            Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
 
 *//*            Uri uri = (Uri)data.getData();
             intent.putExtra("uri", uri.toString());*//*
@@ -193,7 +193,7 @@ public class Activity_Material_Management_Edit extends AppCompatActivity {
 
                     ImageDTO imageDTO = new ImageDTO();
                     imageDTO.imageUri = downloadUri.toString();
-                    imageDTO.edit_name_edittext = material_management_edit_name_edittext.getText().toString();
+                    imageDTO.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
 //                    imageDTO.edit_lender_edittext = edit_lender_edittext.getText().toString();
                     imageDTO.uId = auth.getCurrentUser().getUid();
                     imageDTO.userId = auth.getCurrentUser().getEmail();

@@ -21,9 +21,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.facebook.login.LoginManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,7 +82,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         notice_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent = new Intent(HomeActivity.this, Activity_Notice.class);
+                Intent intent = new Intent(HomeActivity.this, NoticeActivity.class);
                 startActivity(intent);
             }
         }); // 공지사항을 누르면 main_home 에서 activity_notice로 activity를 바꿈
@@ -92,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         schedule_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Intent intent = new Intent(HomeActivity.this, Activity_Schedule.class);
+                Intent intent = new Intent(HomeActivity.this, ScheduleActivity.class);
                 Toast.makeText(getApplicationContext(), "눌렀어요", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
@@ -144,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the fragment_menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
