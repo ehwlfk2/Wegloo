@@ -14,11 +14,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.target_club_in_donga.Activity_Attend;
-import com.example.target_club_in_donga.Activity_Material_Management_Admin;
-import com.example.target_club_in_donga.Activity_Menu_User_Detail;
-import com.example.target_club_in_donga.Activity_Notice;
-import com.example.target_club_in_donga.Activity_Schedule;
+import com.example.target_club_in_donga.AttendActivity;
+import com.example.target_club_in_donga.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.UserDetailActivity;
+import com.example.target_club_in_donga.NoticeActivity;
+import com.example.target_club_in_donga.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 
 
@@ -29,10 +29,10 @@ import com.example.target_club_in_donga.R;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Fragment_Home#newInstance} factory method to
+ * Use the {@link HomeActivity_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_Home extends Fragment {
+public class HomeActivity_Fragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,7 +50,7 @@ public class Fragment_Home extends Fragment {
     private ImageView menu_btn,setting_btn;
     private RelativeLayout main_btn_1, main_btn_2;
     private SlidingDrawer slidingDrawer;
-    public Fragment_Home() {
+    public HomeActivity_Fragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +60,11 @@ public class Fragment_Home extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Home.
+     * @return A new instance of fragment HomeActivity_Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Home newInstance(String param1, String param2) {
-        Fragment_Home fragment = new Fragment_Home();
+    public static HomeActivity_Fragment newInstance(String param1, String param2) {
+        HomeActivity_Fragment fragment = new HomeActivity_Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -103,7 +103,7 @@ public class Fragment_Home extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Intent intent = new Intent(getActivity(), Activity_Notice.class);
+                Intent intent = new Intent(getActivity(), NoticeActivity.class);
                 startActivity(intent);
             }
         }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
@@ -111,7 +111,7 @@ public class Fragment_Home extends Fragment {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent = new Intent(getActivity(), Activity_Schedule.class);
+                Intent intent = new Intent(getActivity(), ScheduleActivity.class);
                 startActivity(intent);
             }
         }); // btn4 홈에서 일정인데, 클릭하면 홈에서 일정으로 activity가 바뀜
@@ -119,7 +119,7 @@ public class Fragment_Home extends Fragment {
         menu_detail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Activity_Menu_User_Detail.class);
+                Intent intent = new Intent(getActivity(), UserDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -127,7 +127,7 @@ public class Fragment_Home extends Fragment {
         main_btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Activity_Attend.class);
+                Intent intent = new Intent(getActivity(), AttendActivity.class);
                 startActivity(intent);
             }
         }); // main_btn1 메뉴에서 출석버튼인데, 클릭하면 메뉴에서 출석으로 activity가 바뀌
@@ -135,7 +135,7 @@ public class Fragment_Home extends Fragment {
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Activity_Material_Management_Admin.class);
+                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Admin.class);
                 startActivity(intent);
             }
         }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜

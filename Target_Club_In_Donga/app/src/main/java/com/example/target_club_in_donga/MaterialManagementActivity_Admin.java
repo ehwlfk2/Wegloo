@@ -23,21 +23,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,14 +45,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Activity_Material_Management_Admin extends AppCompatActivity {
+public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
     int y = 0, m = 0, d = 0, h = 0, mi = 0;
     Calendar calendar = Calendar.getInstance();
 
     private static final int GALLARY_CODE = 10;
 
-    RecyclerView recyclerView;
+    RecyclerView activity_material_management_admin_recyclerview_main_list;
     List<ImageDTO> imageDTOs = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
@@ -71,7 +64,7 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseDatabase database;
 
-    protected ImageView mImageView;
+    protected ImageView activity_material_management_item_imageview_recyclerview_image;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -90,14 +83,14 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 
 
-        this.mImageView = (ImageView) findViewById(R.id.imageview_recyclerview_image);
+        this.activity_material_management_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_management_item_imageview_recyclerview_image);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_main_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        activity_material_management_admin_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_material_management_admin_recyclerview_main_list);
+        activity_material_management_admin_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
 
         final BoardRecyclerViewAdapter boardRecyclerViewAdapter = new BoardRecyclerViewAdapter();
 
-        recyclerView.setAdapter(boardRecyclerViewAdapter);
+        activity_material_management_admin_recyclerview_main_list.setAdapter(boardRecyclerViewAdapter);
         boardRecyclerViewAdapter.notifyDataSetChanged();
 
         database.getReference().child("images").addValueEventListener(new ValueEventListener() {
@@ -120,12 +113,12 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
             }
         });
 
-        Button buttonInsert = (Button) findViewById(R.id.button_main_insert);
-        buttonInsert.setOnClickListener(new View.OnClickListener() {
+        Button activity_material_management_admin_button_insert = (Button) findViewById(R.id.activity_material_management_admin_button_insert);
+        activity_material_management_admin_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Activity_Material_Management_Admin.this, Activity_Material_Management_Edit.class);
+                Intent intent = new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_Insert.class);
 
 //                ButtonSubmit.setText("추가하기");
 
@@ -198,7 +191,7 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 
 
-    // Activity_Material_Management_Admin 어댑터
+    // MaterialManagementActivity_Admin 어댑터
 
     class BoardRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -209,12 +202,12 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
             storage.getReference().child("images").child(imageDTOs.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
-                    Toast.makeText(Activity_Material_Management_Admin.this, "삭제 완료", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MaterialManagementActivity_Admin.this, "삭제 완료", Toast.LENGTH_SHORT).show();
 
                     database.getReference().child("images").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(final Void aVoid) {
-                            Toast.makeText(Activity_Material_Management_Admin.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MaterialManagementActivity_Admin.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -226,7 +219,7 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull final Exception e) {
-                    Toast.makeText(Activity_Material_Management_Admin.this, "삭제 실패", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MaterialManagementActivity_Admin.this, "삭제 실패", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -239,9 +232,9 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
             public CustomViewHolder(View view) {
                 super(view);
 
-                mGoodsName = (TextView) view.findViewById(R.id.textview_recyclerview_id);
-                imageView = (ImageView) view.findViewById(R.id.imageview_recyclerview_image);
-                textView = (TextView) view.findViewById(R.id.textview_recyclerview_id);
+                mGoodsName = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_item_name);
+                imageView = (ImageView) view.findViewById(R.id.activity_material_management_item_imageview_recyclerview_image);
+                textView = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_item_name);
 
                 view.setOnCreateContextMenuListener(this);
 
@@ -269,25 +262,25 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
                             storage.getReference().child("images").child(imageDTOs.get(getAdapterPosition()).imageName);
                             database.getReference().child("images").child(imageDTOs.get(getAdapterPosition()).edit_name_edittext);
 
-/*                            Intent intent = new Intent(Activity_Material_Management_Admin.this, Activity_Notice.class);
+/*                            Intent intent = new Intent(MaterialManagementActivity_Admin.this, NoticeActivity.class);
                             final EditText editTextID = (EditText) findViewById(R.id.material_management_edit_name_edittext);
                             editTextID.setText(imageDTOs.get(getAdapterPosition()).edit_name_edittext);
                             startActivity(intent);*/
 
 
-//                            startActivity(new Intent(Activity_Material_Management_Admin.this, Activity_Material_Management_Edit.class));
+//                            startActivity(new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_Insert.class));
 
 
                             // 선택한 position에 있는 것들 수정할 수 있어야 함
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(Activity_Material_Management_Admin.this);
-                            View view = LayoutInflater.from(Activity_Material_Management_Admin.this)
-                                    .inflate(R.layout.activity_material_management_edit, null, false);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
+                            View view = LayoutInflater.from(MaterialManagementActivity_Admin.this)
+                                    .inflate(R.layout.activity_material_management_insert, null, false);
                             builder.setView(view);
 
-                            final Button ButtonSubmit = (Button) view.findViewById(R.id.material_management_edit_change_button);
-                            final EditText editTextID = (EditText) view.findViewById(R.id.material_management_edit_name_edittext);
-                            final ImageView editImageView = (ImageView) view.findViewById(R.id.material_management_edit_image_imageview);
+                            final Button ButtonSubmit = (Button) view.findViewById(R.id.activity_material_management_insert_button_insert);
+                            final EditText editTextID = (EditText) view.findViewById(R.id.activity_material_management_insert_edittext_item_name);
+                            final ImageView editImageView = (ImageView) view.findViewById(R.id.activity_material_management_insert_imageview_image);
 
 //                            editTextID.setText(imageDTOs.get(getAdapterPosition()).getId());
 
@@ -324,7 +317,7 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
                             editImageView.setOnClickListener(new View.OnClickListener() {
 
                                 public void onClick(View v) {
-                                    startActivity(new Intent(Activity_Material_Management_Admin.this, Activity_Material_Management_Edit.class));
+                                    startActivity(new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_Insert.class));
                                 }
                             });
 
@@ -350,9 +343,9 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
 
 //                        count--;
 
-                            AlertDialog.Builder builder2 = new AlertDialog.Builder(Activity_Material_Management_Admin.this);
+                            AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
 
-                            View view2 = LayoutInflater.from(Activity_Material_Management_Admin.this)
+                            View view2 = LayoutInflater.from(MaterialManagementActivity_Admin.this)
                                     .inflate(R.layout.activity_material_management_detail, null, false);
                             builder2.setView(view2);
 
@@ -371,8 +364,8 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
                             // 여기가 문제일 확률이 높음
 
 
-                            final TextView detailTextID = (TextView) view2.findViewById(R.id.material_management_detail_btn);
-                            final Button detailButton = (Button) view2.findViewById(R.id.material_management_detail_btn2);
+                            final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_management_detail_item_name);
+                            final Button detailButton = (Button) view2.findViewById(R.id.activity_material_management_detail_button_lend);
 //                        final TextView detailTextID2 = (TextView) view2.findViewById(R.id.material_management_detail_btn);
 
                             detailTextID.setText(imageDTOs.get(getAdapterPosition()).getId());
@@ -384,7 +377,7 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
                                 public void onClick(View v) {
                                     Toast.makeText(v.getContext(), "눌렀어요" + count, Toast.LENGTH_SHORT).show();
 
-/*                                Intent intent = new Intent(v.getContext(), Activity_Material_Management_Edit.class);
+/*                                Intent intent = new Intent(v.getContext(), MaterialManagementActivity_Insert.class);
                                 intent.putExtra("position", getAdapterPosition());
 
                                 mContext.startActivity(intent);*/
@@ -423,7 +416,7 @@ public class Activity_Material_Management_Admin extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.activity_material_management_add, viewGroup, false);
+                    .inflate(R.layout.activity_material_management_item, viewGroup, false);
 
             return new CustomViewHolder(view);
         }
