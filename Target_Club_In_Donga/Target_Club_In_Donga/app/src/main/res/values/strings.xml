@@ -1,0 +1,74 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_material_management_admin">Material_Management_Admin</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+
+    <string name="facebook_app_id">750941012004334</string>
+    <string name="fb_login_protocol_scheme">fb750941012004334</string>
+
+    <string name="app_name">Target_Club_In_Donga</string>
+    <string name="app_logo">Location of app logo</string>
+    <string name="btn_image">Image Size Change button</string>
+    <string name="btn_login_naver">네이버로 로그인</string>
+    <string name="btn_login_google">구글로 로그인</string>
+    <string name="btn_login_facebook">페이스북으로 로그인</string>
+    <string name="btn_login_email">로그인</string>
+    <string name="btn_login_SignUp">회원가입</string>
+    <string name="hint_id">아이디를 입력해주세요.</string>
+    <string name="hint_pw">비밀번호를 입력해주세요</string>
+
+    <string name="SignUp_Current">현재페이지</string>
+    <string name="SignUp_Next">다음페이지</string>
+    <string name="SignUp_Identification">본인인증</string>
+    <string name="SignUP_Information">정보입력</string>
+    <string name="SignUp_Finish">가입완료</string>
+
+    <string name="SignUp_Agreement">약관동의</string>
+    <string name="SignUp_Agreement_total">이용약관, 개인정보처리방침에 모두 동의합니다.</string>
+    <string name="SignUp_Agreement_term">이용약관 동의 (필수)</string>
+    <string name="SignUp_Agreement_term_Contents">제 1조\n 본 이용약관은 실제 어플의 이용약관과는 차이가 있는 더비입니다.\n제 2조\n길게 늘려야해서 아무말이나 주접떨고 있으니 참고하시길!!\n제 3조\n스크롤이 안되고 있습니다. 이 문제로 고생하고 있는데 도와주실분?</string>
+    <string name="SignUp_Agreement_privacy">개인정보 수집 및 이용</string>
+    <string name="SignUp_Agreement_privacy_Contents">1. 개인정보 수집목적 및 이용목적\n가. 서비스 제공에 따른 요금정산\n콘텐츠 제공, 구매 및 요금 결제, 물품배송 또는 청구서 발송 등등에 이용된다. \n나. 알겠으면 그냥 빨리 동의 누르고 가입해!!\n2. 개인정보 개꿀띠\n가. 너의 개인정보는 나의 빅데이터의 양식이다!</string>
+    <string name="SignUp_Cancel">취소</string>
+
+    <string name="SignUp_identification_email">이메일 입력</string>
+    <string name="SignUp_identification_email_connect">\@</string>
+    <string name="SignUp_identification_email_address">주소 입력</string>
+    <string name="SignUp_identification">본인인증</string>
+    <string name="SignUp_identification_send_code">인증번호 전송</string>
+    <string name="SignUp_identification_check_code">확인</string>
+    <string name="SignUp_identification_insert_code">이메일로 발송된 인증번호를 입력해주세요</string>
+    <string name="SignUp_identification_timeCounter" formatted="true">%d : %d</string>\
+    <string name="SignUp_identification_timeCounter_single" formatted="true">%d : 0%d</string>
+
+    <string name="SignUp_email_code_subject_content">TCID 인증코드입니다.</string>
+    <string name="SignUp_email_code_body_content" formatted="true">안녕하세요! Target Club In Donga 입니다.\n회원가입을 진심으로 축하드리며 인증번호는 \"%s\" 입니다.</string>
+
+    <string name="SignUp_information_email_id">Email (ID)</string>
+    <string name="SignUp_information_pw">Password</string>
+    <string name="SignUp_information_name">Name</string>
+    <string name="SignUp_information_phone">Phone</string>
+    <string name="SignUp_information_school">School</string>
+    <string name="SignUp_information_school_number">School\nNumber</string>
+
+    <string name="SignUp_finish_greetings">가입을 진심으로 축하합니다!\n즐거운 시간보내세요.</string>
+    <string name="Logout">Logout</string>
+
+    <string name="email_All" formatted="true">%s@%s</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
