@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga.ActivityAdapter;
+package com.example.target_club_in_donga.Activity_Adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,14 +8,14 @@ import com.example.target_club_in_donga.Fragments.*;
 
 import java.util.ArrayList;
 
-public class ViewPagerAdapter_User_Detail extends FragmentPagerAdapter {
+public class AttendActivity_Adapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> fragmentData;
 
-    public ViewPagerAdapter_User_Detail(FragmentManager fm) {
+    public AttendActivity_Adapter(FragmentManager fm) {
         super(fm);
         fragmentData = new ArrayList<>();
-        fragmentData.add(new Fragment_Menu_User_Detail());
-        fragmentData.add(new Fragment_Home());
+        fragmentData.add(new AttendActivity_Fragment());
+        fragmentData.add(new HomeActivity_Fragment());
     }
 
     // ArrayList에 Fragment_Attend와 Fragment_Home를 추가시킨다.
