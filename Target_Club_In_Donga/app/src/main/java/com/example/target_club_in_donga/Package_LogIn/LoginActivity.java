@@ -67,7 +67,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 .requestEmail()
                 .build();
 
-        // 구글
+        //
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // 페이스북

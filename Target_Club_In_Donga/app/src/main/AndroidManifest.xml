@@ -38,6 +38,9 @@
         <activity android:name=".SignUpActivity_04" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".ScheduleActivity" />
+<<<<<<< HEAD
+>>>>>>> fb5a09a39bcb337151e1ab8cacfea9c7e25cfa86
+=======
 >>>>>>> fb5a09a39bcb337151e1ab8cacfea9c7e25cfa86
 
         <meta-data
