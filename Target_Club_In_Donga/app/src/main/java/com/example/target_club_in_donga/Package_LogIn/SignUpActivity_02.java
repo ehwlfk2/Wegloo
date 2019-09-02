@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Package_LogIn;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.target_club_in_donga.R;
 
 public class SignUpActivity_02 extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnCancelListener {
     // 이메일 자동 완성 (1)
@@ -239,7 +241,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                 "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
         StringBuilder newCode = new StringBuilder();
 
-        for (int x = 0; x < 8; x++) {
+        for (int x = 0; x < 5; x++) {
             int random = (int) (Math.random() * str.length);
             newCode.append(str[random]);
         }

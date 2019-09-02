@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Package_LogIn;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.target_club_in_donga.HomeActivity;
+import com.example.target_club_in_donga.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -208,19 +210,25 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private void loginUser(){
         String email = activity_login_id_editText.getText().toString();
         String pw = activity_login_pw_editText.getText().toString();
-        mAuth.signInWithEmailAndPassword(email,pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(!task.isSuccessful()){
-                    Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 확인해주세요",Toast.LENGTH_SHORT).show();
-                    Log.w("develop_check","로그인에 실패했습니다.");
-                }else{
-                    Toast.makeText(LoginActivity.this,"로그인 성공!",Toast.LENGTH_SHORT).show();
-                    Log.w("develop_check","로그인에 성공했습니다.");
-                    success_of_login();
+        if(email.length() != 0 && pw.length() != 0) {
+            mAuth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+                        Log.w("develop_check", "로그인에 실패했습니다.");
+                    } else {
+                        Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+                        Log.w("develop_check", "로그인에 성공했습니다.");
+                        success_of_login();
+                    }
                 }
-            }
-        });
+            });
+        }
+        else{
+            Log.w("develop_check","아이디와 비밀번호를 입력하지 않았습니다.");
+            Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void success_of_login() {

@@ -1,10 +1,13 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Package_LogIn;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.target_club_in_donga.HomeActivity;
+import com.example.target_club_in_donga.R;
 
 public class SignUpActivity_04 extends AppCompatActivity {
     @Override
