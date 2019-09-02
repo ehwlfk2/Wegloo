@@ -22,11 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity_01" />
-        <activity android:name=".SignUpActivity_02" />
-        <activity android:name=".SignUpActivity_03" />
-        <activity android:name=".SignUpActivity_04" />
+        <activity android:name=".Package_LogIn.LoginActivity" />
+        <activity android:name=".Package_LogIn.SignUpActivity_01" />
+        <activity android:name=".Package_LogIn.SignUpActivity_02" />
+        <activity android:name=".Package_LogIn.SignUpActivity_03" />
+        <activity android:name=".Package_LogIn.SignUpActivity_04" />
         <activity android:name=".Activity_Notice" />
         <activity android:name=".Activity_Schedule" />
 

@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Package_LogIn;
 
 import android.util.Log;
 
@@ -28,7 +28,7 @@ public class GMailSender extends javax.mail.Authenticator {
     private String emailCode;
 
     static {
-        Security.addProvider(new com.example.target_club_in_donga.JSSEProvider());
+        Security.addProvider(new com.example.target_club_in_donga.Package_LogIn.JSSEProvider());
     }
 
     public GMailSender(String user, String password) {
