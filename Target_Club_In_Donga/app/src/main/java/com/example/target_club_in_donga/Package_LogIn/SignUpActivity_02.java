@@ -241,7 +241,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                 "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
         StringBuilder newCode = new StringBuilder();
 
-        for (int x = 0; x < 4; x++) {
+        for (int x = 0; x < 5; x++) {
             int random = (int) (Math.random() * str.length);
             newCode.append(str[random]);
         }

@@ -194,7 +194,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("develop_check", "signInWithCredential : success");
-                    Toast.makeText(LoginActivity.this, "구글 로그인 성공!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
                     success_of_login();
                     // FirebaseUser user = mAuth.getCurrentUser();
                 } else {

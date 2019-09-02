@@ -19,7 +19,7 @@ public class ScheduleActivity_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.acitivity_schedule, container, false);
+        View view = inflater.inflate(R.layout.activity_schedule, container, false);
         return  view;
     } // activity_schedule에 있는 화면을 가지고 온다
 
