@@ -19,6 +19,14 @@ public class ScheduleActivity extends AppCompatActivity implements HomeActivity_
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         ScheduleActivity_Adapter fragmentAdapter = new ScheduleActivity_Adapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
+
+
+
+
+
+
+
+
     }
 
     // 홈에서 일정을 눌었을 떄, viewPager에서 ViewPagerAdapter_Schedule로 일정화면이 나오고
