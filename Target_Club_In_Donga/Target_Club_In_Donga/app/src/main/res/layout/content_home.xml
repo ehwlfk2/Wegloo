@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".HomeActivity"
+    tools:showIn="@layout/app_bar_home">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff6d61"
+        android:src="@drawable/ic_image_black_24dp" />
+    <!-- 배경화면 위치 -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="25dp"
+        android:paddingTop="46dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="45dp"
+        android:weightSum="9">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <!--            <ImageView
+                            android:id="@+id/menu"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentLeft="true"
+                            android:src="@drawable/menu_icon" />-->
+
+            <ImageView
+                android:id="@+id/setting_btn"
+                android:layout_width="24dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="11dp"
+                android:onClick="onChooseaFile"
+                android:src="@drawable/setting_icon" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_image_black_24dp" />
+            <!-- 동아리 로고 위치 -->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/notice_btn"
+                style="@style/Home_Text_Style"
+                android:text="공지사항" />
+
+            <!--            <TextView
+                            style="@style/Home_Text_Style"
+                            android:text="게시판" />-->
+
+            <TextView
+                android:id="@+id/gallery"
+                style="@style/Home_Text_Style"
+                android:onClick="onChooseaFile"
+                android:text="앨범" />
+
+            <TextView
+                android:id="@+id/schedule"
+                style="@style/Home_Text_Style"
+                android:text="일정" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!--            <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_toLeftOf="@+id/setting_btn"
+                            android:src="@drawable/notification_icon" />
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+
+                            android:src="@drawable/search_icon" />-->
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
