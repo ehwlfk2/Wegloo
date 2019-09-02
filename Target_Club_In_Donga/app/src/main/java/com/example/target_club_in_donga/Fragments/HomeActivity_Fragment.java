@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -50,6 +51,7 @@ public class HomeActivity_Fragment extends Fragment {
     private ImageView menu_btn,setting_btn;
     private RelativeLayout main_btn_1, main_btn_2;
     private SlidingDrawer slidingDrawer;
+    private RelativeLayout activity_fragment_menu_RelativeLayout_scheduleActivity;
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
@@ -89,6 +91,7 @@ public class HomeActivity_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
+        activity_fragment_menu_RelativeLayout_scheduleActivity = (RelativeLayout)view.findViewById(R.id.activity_fragment_menu_RelativeLayout_scheduleActivity);
 
         menu_detail_btn = (TextView) view.findViewById(R.id.menu_detail_btn);
 
@@ -115,6 +118,8 @@ public class HomeActivity_Fragment extends Fragment {
                 startActivity(intent);
             }
         }); // btn4 홈에서 일정인데, 클릭하면 홈에서 일정으로 activity가 바뀜
+
+        activity_fragment_menu_RelativeLayout_scheduleActivity.setOnClickListener(clickListener);
 
         menu_detail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,4 +205,20 @@ public class HomeActivity_Fragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    View.OnClickListener clickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            switch(v.getId()){
+                case R.id.activity_fragment_menu_RelativeLayout_scheduleActivity:
+                    Toast.makeText(getActivity(),"일정선택",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+
+            }   // switch
+        }   // onClick
+    };   // OnClickListener
 }
