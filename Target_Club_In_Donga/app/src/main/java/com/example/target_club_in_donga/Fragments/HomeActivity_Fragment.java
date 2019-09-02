@@ -21,6 +21,7 @@ import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.ScheduleActivity;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 
 
 // Home 프래그먼트
@@ -150,14 +151,15 @@ public class HomeActivity_Fragment extends Fragment {
                 startActivity(intent);
 
             }
-        });
+        }); //연혁
 
         main_btn_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), VoteActivity_Main.class);
+                startActivity(intent);
             }
-        });
+        }); //투표
 
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
