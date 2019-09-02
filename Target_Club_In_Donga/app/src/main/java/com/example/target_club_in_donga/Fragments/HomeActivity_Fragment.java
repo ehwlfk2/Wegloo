@@ -16,11 +16,13 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.AttendActivity;
+import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.ScheduleActivity;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 
 
 // Home 프래그먼트
@@ -49,7 +51,7 @@ public class HomeActivity_Fragment extends Fragment {
     private TextView slidingdrawer_title;
 
     private ImageView menu_btn,setting_btn;
-    private RelativeLayout main_btn_1, main_btn_2;
+    private RelativeLayout main_btn_1, main_btn_2, main_btn_6, main_btn_7;
     private SlidingDrawer slidingDrawer;
     private RelativeLayout activity_fragment_menu_RelativeLayout_scheduleActivity;
     public HomeActivity_Fragment() {
@@ -97,6 +99,8 @@ public class HomeActivity_Fragment extends Fragment {
 
         main_btn_1 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_1);
         main_btn_2 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_2);
+        main_btn_6 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_6);
+        main_btn_7 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_7);
 
         menu_btn = (ImageView)view.findViewById(R.id.frgment_home_menu_btn);
 
@@ -144,6 +148,24 @@ public class HomeActivity_Fragment extends Fragment {
                 startActivity(intent);
             }
         }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
+
+        main_btn_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HistoryActivity_Main.class);
+                startActivity(intent);
+
+            }
+        }); //연혁
+
+        main_btn_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), VoteActivity_Main.class);
+                startActivity(intent);
+            }
+        }); //투표
+
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override

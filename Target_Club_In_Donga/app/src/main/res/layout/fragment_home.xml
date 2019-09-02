@@ -276,6 +276,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/fragment_home_main_btn_6"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
 
@@ -291,7 +292,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/fragment_home_btn_6"
                             android:layout_centerHorizontal="true"
-                            android:text="버튼6"
+                            android:text="연혁"
                             android:textSize="18dp" />
                     </RelativeLayout>
                 </TableRow>
@@ -307,6 +308,7 @@
                 <TableRow>
 
                     <RelativeLayout
+                        android:id="@+id/fragment_home_main_btn_7"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
 
@@ -322,7 +324,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/fragment_home_btn_7"
                             android:layout_centerHorizontal="true"
-                            android:text="버튼7"
+                            android:text="투표"
                             android:textSize="18dp" />
                     </RelativeLayout>
 

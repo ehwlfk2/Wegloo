@@ -226,15 +226,15 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
         }
 
         private class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-            ImageView imageView;
-            TextView textView, mGoodsName;
+            ImageView activity_material_management_item_imageview_recyclerview_image;
+            TextView /*textView,*/ activity_material_management_item_textview_recyclerview_item_name;
 
             public CustomViewHolder(View view) {
                 super(view);
 
-                mGoodsName = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_item_name);
-                imageView = (ImageView) view.findViewById(R.id.activity_material_management_item_imageview_recyclerview_image);
-                textView = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_item_name);
+                activity_material_management_item_textview_recyclerview_item_name = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_item_name);
+                activity_material_management_item_imageview_recyclerview_image = (ImageView) view.findViewById(R.id.activity_material_management_item_imageview_recyclerview_image);
+//                textView = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_item_name);
 
                 view.setOnCreateContextMenuListener(this);
 
@@ -423,11 +423,11 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
-            ((CustomViewHolder) viewholder).mGoodsName.setGravity(Gravity.LEFT);
-            ((CustomViewHolder) viewholder).mGoodsName.setText(imageDTOs.get(position).getId());
+            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setGravity(Gravity.LEFT);
+            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setText(imageDTOs.get(position).getId());
 
-            ((CustomViewHolder) viewholder).textView.setText(imageDTOs.get(position).edit_name_edittext);
-            Glide.with(viewholder.itemView.getContext()).load(imageDTOs.get(position).imageUri).into(((CustomViewHolder) viewholder).imageView);
+            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setText(imageDTOs.get(position).edit_name_edittext);
+            Glide.with(viewholder.itemView.getContext()).load(imageDTOs.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_item_imageview_recyclerview_image);
 
         }
 

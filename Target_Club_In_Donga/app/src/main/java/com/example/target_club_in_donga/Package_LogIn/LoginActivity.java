@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.target_club_in_donga.HomeActivity;
+import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
 import com.example.target_club_in_donga.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -127,7 +127,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity_Fragment.class);
                     finish();
                 } else {
                     // User is signed out

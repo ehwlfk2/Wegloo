@@ -4,6 +4,9 @@
     <!-- 인터넷 권한 허용 (1) -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,10 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +28,7 @@
         <activity android:name=".Package_LogIn.SignUpActivity_04" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".ScheduleActivity" />
+        <activity android:name=".HomeActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -55,6 +55,22 @@
         <activity android:name=".MaterialManagementActivity_Detail" />
         <activity android:name=".UserDetailActivity" />
 
+        <activity android:name=".History.HistoryActivity_Main"/>
+        <activity android:name=".History.HistoryActivity_Insert"/>
+        <activity android:name=".Vote.VoteActivity_Result" />
+        <activity android:name=".Vote.VoteActivity_Execute" />
+        <activity android:name=".Vote.VoteActivity_Main" />
+        <activity android:name=".Vote.VoteActivity_Insert" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider" />
+        </provider>
     </application>
 
 </manifest>
