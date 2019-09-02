@@ -71,7 +71,4 @@
     <string name="email_All" formatted="true">%s@%s</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
-
-    <string name="schedule_year_month" formatted="true">%d\t%d</string>
-    <string name="DayOfWeek" formatted="true">%s</string>
 </resources>
