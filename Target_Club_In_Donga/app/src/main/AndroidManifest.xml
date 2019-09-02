@@ -22,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".Package_LogIn.LoginActivity" />
         <activity android:name=".Package_LogIn.SignUpActivity_01" />
         <activity android:name=".Package_LogIn.SignUpActivity_02" />
@@ -29,6 +30,15 @@
         <activity android:name=".Package_LogIn.SignUpActivity_04" />
         <activity android:name=".Activity_Notice" />
         <activity android:name=".Activity_Schedule" />
+=======
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignUpActivity_01" />
+        <activity android:name=".SignUpActivity_02" />
+        <activity android:name=".SignUpActivity_03" />
+        <activity android:name=".SignUpActivity_04" />
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".ScheduleActivity" />
+>>>>>>> fb5a09a39bcb337151e1ab8cacfea9c7e25cfa86
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -50,12 +60,11 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity_Attend" />
-        <activity android:name=".Activity_Material_Management_Admin" />
-        <activity android:name=".Activity_Material_Management_Client" />
-        <activity android:name=".Activity_Material_Management_Detail" />
-        <activity android:name=".Activity_Material_Management_Edit" />
-        <activity android:name=".Activity_Menu_User_Detail" />
+        <activity android:name=".AttendActivity" />
+        <activity android:name=".MaterialManagementActivity_Admin" />
+        <activity android:name=".MaterialManagementActivity_Detail" />
+        <activity android:name=".MaterialManagementActivity_Insert" />
+        <activity android:name=".UserDetailActivity" />
 
     </application>
 
