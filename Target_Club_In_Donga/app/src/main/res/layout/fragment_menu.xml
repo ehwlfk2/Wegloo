@@ -285,8 +285,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/activity_fragment_menu_RelativeLayout_scheduleActivity"
-                android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
@@ -302,7 +300,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fragment_home_btn_8"
                     android:layout_centerHorizontal="true"
-                    android:text="일정"
+                    android:text="버튼8"
                     android:textSize="18dp" />
             </RelativeLayout>
 
