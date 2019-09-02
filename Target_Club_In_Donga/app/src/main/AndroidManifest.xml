@@ -54,8 +54,13 @@
         <activity android:name=".MaterialManagementActivity_Admin" />
         <activity android:name=".MaterialManagementActivity_Detail" />
         <activity android:name=".UserDetailActivity" />
+
         <activity android:name=".History.HistoryActivity_Main"/>
         <activity android:name=".History.HistoryActivity_Insert"/>
+        <activity android:name=".Vote.VoteActivity_Result" />
+        <activity android:name=".Vote.VoteActivity_Execute" />
+        <activity android:name=".Vote.VoteActivity_Main" />
+        <activity android:name=".Vote.VoteActivity_Insert" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
