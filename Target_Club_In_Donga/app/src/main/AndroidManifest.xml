@@ -62,6 +62,9 @@
         <activity android:name=".Vote.VoteActivity_Main" />
         <activity android:name=".Vote.VoteActivity_Insert" />
 
+        <activity android:name=".Accountbook.AccountbookActivity_Main"/>
+
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}"
