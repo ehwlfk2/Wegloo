@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +30,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 
-
 public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000; // 갤러리에서 이미지를 받아오기 위한 세가지 변수
@@ -38,10 +38,12 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
+
     private ImageView activity_material_management_insert_imageview_image;
     private EditText activity_material_management_insert_edittext_item_name;
     private Button activity_material_management_insert_button_insert;
     private String imagePath;
+    private TextView activity_material_management_insert_textview_lender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         activity_material_management_insert_imageview_image = (ImageView) findViewById(R.id.activity_material_management_insert_imageview_image);
         activity_material_management_insert_edittext_item_name = (EditText) findViewById(R.id.activity_material_management_insert_edittext_item_name);
         activity_material_management_insert_button_insert = (Button) findViewById(R.id.activity_material_management_insert_button_insert);
+        activity_material_management_insert_textview_lender = (TextView) findViewById(R.id.activity_material_management_insert_textview_lender);
 
         activity_material_management_insert_imageview_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,23 +85,6 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 upload(imagePath);
                 Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
                 startActivity(intent);
-                finish();
-
-
-//                Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Detail.class);
-/*                Bitmap sendBitmap = BitmapFactory.decodeResource(getResources(), material_management_edit_image);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                intent.putExtra("image", byteArray);*/
-
-
-//                startActivity(intent);
-
-
-//                finish();
-/*                Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
-                startActivity(intent);*/
             }
         });
 
@@ -136,9 +122,9 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
             File f = new File(imagePath);
             activity_material_management_insert_imageview_image.setImageURI(Uri.fromFile(f));
 
-/*            Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
+            /*            Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
 
-*//*            Uri uri = (Uri)data.getData();
+             *//*            Uri uri = (Uri)data.getData();
             intent.putExtra("uri", uri.toString());*//*
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             Bitmap bitmap = ((BitmapDrawable)ImageViewChange.getDrawable()).getBitmap();
@@ -175,7 +161,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
     }
 
     private void upload(String uri) {
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://android-studio-firebase-872f2.appspot.com");
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
         final Uri file = Uri.fromFile(new File(uri));
         StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
@@ -189,17 +175,17 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUri = taskSnapshot.getDownloadUrl();
+                Uri downloadUri = taskSnapshot.getDownloadUrl();
 
-                    ImageDTO imageDTO = new ImageDTO();
-                    imageDTO.imageUri = downloadUri.toString();
-                    imageDTO.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
-//                    imageDTO.edit_lender_edittext = edit_lender_edittext.getText().toString();
-                    imageDTO.uId = auth.getCurrentUser().getUid();
-                    imageDTO.userId = auth.getCurrentUser().getEmail();
-                    imageDTO.imageName = file.getLastPathSegment();
+                ImageDTO imageDTO = new ImageDTO();
+                imageDTO.imageUri = downloadUri.toString();
+                imageDTO.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
+                imageDTO.edit_lender = activity_material_management_insert_textview_lender.getText().toString();
+                imageDTO.uId = auth.getCurrentUser().getUid();
+                imageDTO.userId = auth.getCurrentUser().getEmail();
+                imageDTO.imageName = file.getLastPathSegment();
 
-                    database.getReference().child("images").push().setValue(imageDTO);
+                database.getReference().child("images").push().setValue(imageDTO);
 
 
             }
