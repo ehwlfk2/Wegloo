@@ -5,16 +5,17 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/activity_material_management_item_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        android:weightSum="5">
+        android:weightSum="2">
 
         <ImageView
             android:id="@+id/activity_material_management_item_imageview_recyclerview_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:saveEnabled="false"
             android:scaleType="fitCenter"
             android:src="@mipmap/ic_launcher" />
@@ -22,7 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -33,6 +34,30 @@
                 android:singleLine="true"
                 android:text="물품명"
                 android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:singleLine="true"
+                android:text="대여자"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/activity_material_management_item_textview_recyclerview_lender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:singleLine="true"
+                android:text="없음"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="#4F000000" />
 
         </LinearLayout>
     </LinearLayout>

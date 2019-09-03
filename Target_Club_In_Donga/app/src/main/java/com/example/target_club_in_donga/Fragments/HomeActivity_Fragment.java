@@ -172,7 +172,7 @@ public class HomeActivity_Fragment extends Fragment {
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
+                public void onClick(final View v) {
                 slidingDrawer.animateOpen();
             }
         }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
@@ -230,4 +230,5 @@ public class HomeActivity_Fragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
