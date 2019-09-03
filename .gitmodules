@@ -1,0 +1,3 @@
+[submodule "remotes/origin/LSH"]
+	path = remotes/origin/LSH
+	url = https://github.com/ehwlfk2/TCID.git
