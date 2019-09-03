@@ -127,8 +127,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity_Fragment.class);
-                    finish();
+                    //Intent intent = new Intent(LoginActivity.this, HomeActivity_Fragment.class);
+                    //finish();
                 } else {
                     // User is signed out
                 }

@@ -52,7 +52,7 @@
     <string name="SignUp_identification_send_code">인증번호 전송</string>
     <string name="SignUp_identification_check_code">확인</string>
     <string name="SignUp_identification_insert_code">이메일로 발송된 인증번호를 입력해주세요</string>
-    <string name="SignUp_identification_timeCounter" formatted="true">%d : %d</string>\
+    <string name="SignUp_identification_timeCounter" formatted="true">%d : %d</string>
     <string name="SignUp_identification_timeCounter_single" formatted="true">%d : 0%d</string>
 
     <string name="SignUp_email_code_subject_content">TCID 인증코드입니다.</string>

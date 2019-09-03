@@ -68,7 +68,8 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
         });
 
         // 다음페이지 활성화
-        Button activity_signup_02_next_btn = findViewById(R.id.activity_signup_02_next_btn);
+
+        /*Button activity_signup_02_next_btn = findViewById(R.id.activity_signup_02_next_btn);
         activity_signup_02_next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +80,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                     startActivity(intent);
                 }
             }
-        });
+        });*/
 
         // 인증번호 전송
         activity_signup_02_send_code_btn.setOnClickListener(this);
@@ -221,6 +222,12 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                         activity_signup_02_EditText_email_Subjuct.setEnabled(false);
                         activity_signup_02_AutoCompleteTextView_email_Address.setEnabled(false);
                         signupDialog.cancel();
+
+                        Intent intent = new Intent(SignUpActivity_02.this, SignUpActivity_03.class);
+                        intent.putExtra("emailSubject",emailSubject);
+                        intent.putExtra("emailAddress",emailAddress);
+                        startActivity(intent);
+
                     } else {
                         Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();
                     }
