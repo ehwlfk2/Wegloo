@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class VoteActivity_Insert  extends AppCompatActivity {
+public class    VoteActivity_Insert  extends AppCompatActivity {
 
     private VoteActivity_Insert_ListAdapter adapter;
     private FloatingActionButton activityvote_insert_button_listinsert;

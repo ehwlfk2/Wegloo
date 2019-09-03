@@ -205,6 +205,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/fragment_home_main_btn_3"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
 
@@ -213,14 +214,14 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/accessibility_icon" />
+                            android:src="@drawable/ic_accountbook" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/fragment_home_btn_3"
                             android:layout_centerHorizontal="true"
-                            android:text="버튼3"
+                            android:text="가계부"
                             android:textSize="18dp" />
                     </RelativeLayout>
                 </TableRow>
