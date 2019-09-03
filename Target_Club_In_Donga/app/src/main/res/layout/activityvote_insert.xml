@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <EditText
+        android:id="@+id/activityvote_insert_edittext_title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:ems="10"
+        android:hint="투표 제목"
+        android:inputType="textPersonName" />
+
+
+    <ListView
+        android:id="@+id/activityvote_insert_listview"
+        android:layout_width="match_parent"
+        android:layout_height="230dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add"
+            android:id="@+id/activityvote_insert_button_listinsert"
+            fab:fab_colorNormal="@color/fbutton_color_turquoise"
+            fab:fab_colorPressed="@color/fbutton_color_green_sea"
+            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_type="mini"
+            />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_remove"
+            android:id="@+id/activityvote_insert_button_listremove"
+            fab:fab_colorNormal="@color/fbutton_color_turquoise"
+            fab:fab_colorPressed="@color/fbutton_color_green_sea"
+            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_type="mini"
+            />
+
+
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="기간 설정"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:id="@+id/activityvote_insert_textview_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="17dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/activityvote_insert_textview_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="17dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+
+    <com.melnykov.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_done"
+        android:id="@+id/activityvote_insert_button_result"
+        fab:fab_colorNormal="@color/fbutton_color_turquoise"
+        fab:fab_colorPressed="@color/fbutton_color_green_sea"
+        fab:fab_colorRipple="@color/fbutton_color_emerald"
+        fab:fab_type="mini"
+        />
+</LinearLayout>
