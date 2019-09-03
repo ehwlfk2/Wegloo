@@ -371,7 +371,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     Toast.makeText(v.getContext(), auth.getCurrentUser().getDisplayName() + "님 대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
                                     activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
-                                    database.getReference().child("images").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());
+                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());
 
 /*                                    imageDTOs.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());

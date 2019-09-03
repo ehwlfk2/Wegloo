@@ -164,7 +164,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
         final Uri file = Uri.fromFile(new File(uri));
-        StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("Material_Management/" + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -185,7 +185,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 imageDTO.userId = auth.getCurrentUser().getEmail();
                 imageDTO.imageName = file.getLastPathSegment();
 
-                database.getReference().child("images").push().setValue(imageDTO);
+                database.getReference().child("Material_Management").push().setValue(imageDTO);
 
 
             }
