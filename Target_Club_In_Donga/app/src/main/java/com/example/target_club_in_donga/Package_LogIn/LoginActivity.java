@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
+import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -35,6 +36,10 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
@@ -43,6 +48,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 10;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
     EditText activity_login_id_editText, activity_login_pw_editText;
@@ -51,6 +57,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        database = FirebaseDatabase.getInstance();
 
         // findById
         Button activity_login_signup_btn = findViewById(R.id.activity_login_signup_btn);
@@ -97,11 +104,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             Log.w("develop_check", "페이스북-파이어베이스 연동 실패");
-                            Toast.makeText(LoginActivity.this, "페이스북 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "페이스북 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("develop_check", "페이스북-파이어베이스 연동 성공");
-                            Toast.makeText(LoginActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-                            success_of_login();
+                            //Toast.makeText(LoginActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                            //success_of_login();
                         }
                     }
                 });
@@ -124,13 +131,51 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+
+                    database.getReference().child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            try{
+                                int tf = dataSnapshot.getValue(int.class);
+                                //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                if(tf >= 1){
+                                    Toast.makeText(LoginActivity.this, "관리자 로그인", Toast.LENGTH_SHORT).show();
+                                    //intent.putExtra("adminCheck",true);
+                                }
+                                else{
+                                    Toast.makeText(LoginActivity.this, "로그인", Toast.LENGTH_SHORT).show();
+                                    //intent.putExtra("adminCheck",false);
+                                }
+                                startActivity(intent);
+                                finish();
+                            }catch (NullPointerException e){
+                                /*database.getReference().child("User").child(user.getUid()).child("Admin").setValue(false);
+                                Toast.makeText(Login.this, "처음이시군요?", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, Menu.class);
+                                intent.putExtra("adminCheck",false);
+                                startActivity(intent);
+                                finish();*/
+                                Toast.makeText(LoginActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, SignUpActivity_03.class);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            //Toast.makeText(Vote_Login.this, "에러", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     // User is signed in
                     //Intent intent = new Intent(LoginActivity.this, HomeActivity_Fragment.class);
                     //finish();
                 } else {
                     // User is signed out
+                    //Toast.makeText(LoginActivity.this, "이메일 회원가입 해주세요", Toast.LENGTH_SHORT).show();
                 }
                 // ...
             }
@@ -194,13 +239,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("develop_check", "signInWithCredential : success");
-                    Toast.makeText(LoginActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-                    success_of_login();
+                    //Toast.makeText(LoginActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                    //success_of_login();
                     // FirebaseUser user = mAuth.getCurrentUser();
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("develop_check", "signInWithCredential : failure =>", task.getException());
-                    Toast.makeText(LoginActivity.this, "구글 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "구글 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -215,24 +260,26 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요\n아니면 가입이 안되있을지Do?", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "이메일 회원가입해주3", Toast.LENGTH_SHORT).show();
                         Log.w("develop_check", "로그인에 실패했습니다.");
                     } else {
-                        Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
                         Log.w("develop_check", "로그인에 성공했습니다.");
-                        success_of_login();
+                        //success_of_login();
+
                     }
                 }
             });
         }
         else{
             Log.w("develop_check","아이디와 비밀번호를 입력하지 않았습니다.");
-            Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
         }
     }
 
     private void success_of_login() {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity_04.class);
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity_03.class);
         startActivity(intent);
     }
 
@@ -252,6 +299,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         } else if (i == R.id.activity_login_login_btn) {
             Log.v("develop_check", "로그인 시도");
             loginUser();
+            //onStart();
         }
     }   // onClick
 }
