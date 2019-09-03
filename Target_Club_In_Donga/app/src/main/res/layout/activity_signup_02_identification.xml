@@ -277,6 +277,7 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_signup_02_LinearLayout_Email">
 
         </Button>
+
         <!--
         // 확인
 
@@ -317,6 +318,24 @@
         -->
 
         <!-- CheckBox -->
+
+
+        <EditText
+            android:id="@+id/activity_signup_02_EditText_pw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrayVeryBright"
+            android:hint="비밀번호 입력 6자리 이상"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:padding="10dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/activity_signup_02_guideline05_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_02_cancel_btn"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_02_next_btn"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_02_LinearLayout_Email"
+            android:visibility="invisible"/>
+
         <CheckBox
             android:id="@+id/activity_signup_02_checkBox_Agreement_total"
             android:layout_width="wrap_content"
@@ -350,7 +369,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/SignUp_Next"
-            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.15"
 

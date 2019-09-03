@@ -44,6 +44,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
         android:id="@+id/activity_signup_02_check_code_btn"
         android:layout_width="0dp"
@@ -58,6 +59,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_signup_02_EditText_insert_code"
         app:layout_constraintRight_toRightOf="@+id/activity_signup_02_EditText_insert_code"
         app:layout_constraintTop_toBottomOf="@+id/activity_signup_02_EditText_insert_code" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

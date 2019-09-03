@@ -348,9 +348,8 @@
             android:gravity="center"
             android:hint="@string/SignUp_information_email_id"
             android:inputType="textWebEmailAddress"
-            android:enabled="false"
 
-        app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline02_horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline02_horizontal"
             app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
             app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
             app:layout_constraintTop_toTopOf="parent" />

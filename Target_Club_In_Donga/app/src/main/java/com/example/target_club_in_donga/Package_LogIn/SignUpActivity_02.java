@@ -17,16 +17,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.target_club_in_donga.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity_02 extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnCancelListener {
     // 이메일 자동 완성 (1)
     String[] email_address = {"naver.com", "google.com", "gmail.com", "donga.ac.kr", "daum.net", "hanmail.net", "yahoo.com", "nate.com"};
 
     // 주소 받는 변수
-    EditText activity_signup_02_EditText_email_Subjuct;
+    EditText activity_signup_02_EditText_email_Subjuct, activity_signup_02_EditText_pw;
     AutoCompleteTextView activity_signup_02_AutoCompleteTextView_email_Address;
     Button activity_signup_02_send_code_btn;
     String emailSubject, emailAddress;
@@ -44,6 +49,8 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
     EditText activity_signup_02_EditText_insert_code;
     Button activity_signup_02_check_code_btn;
     CountDownTimer countDownTimer;
+
+    FirebaseAuth mAuth;
     int ms_StartTimer = 60 * 5 * 1000; // 5분
     int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
 
@@ -52,11 +59,12 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_02_identification);
 
+        mAuth = FirebaseAuth.getInstance();
         // 변수 선언
         activity_signup_02_EditText_email_Subjuct = findViewById(R.id.activity_signup_02_EditText_email_Subjuct);
         activity_signup_02_AutoCompleteTextView_email_Address = findViewById(R.id.activity_signup_02_AutoCompleteTextView_email_Address);
         activity_signup_02_send_code_btn = findViewById(R.id.activity_signup_02_send_code_btn);
-
+        activity_signup_02_EditText_pw = findViewById(R.id.activity_signup_02_EditText_pw);
         // 취소 버튼
         final Button activity_signup_02_cancel_btn = findViewById(R.id.activity_signup_02_cancel_btn);
         activity_signup_02_cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -69,18 +77,26 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
 
         // 다음페이지 활성화
 
-        /*Button activity_signup_02_next_btn = findViewById(R.id.activity_signup_02_next_btn);
+        Button activity_signup_02_next_btn = findViewById(R.id.activity_signup_02_next_btn);
         activity_signup_02_next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!activity_signup_02_send_code_btn.isEnabled()) {
+
+                if(activity_signup_02_EditText_pw.getText().toString().length() >= 6){
+                    createUser(emailSubject,emailAddress,activity_signup_02_EditText_pw.getText().toString());
+
                     Intent intent = new Intent(SignUpActivity_02.this, SignUpActivity_03.class);
                     intent.putExtra("emailSubject",emailSubject);
                     intent.putExtra("emailAddress",emailAddress);
                     startActivity(intent);
+                    finish();
                 }
+                else{
+                    Toast.makeText(SignUpActivity_02.this, "비밀번호 제대로 입력해 시불", Toast.LENGTH_SHORT).show();
+                }
+
             }
-        });*/
+        });
 
         // 인증번호 전송
         activity_signup_02_send_code_btn.setOnClickListener(this);
@@ -134,6 +150,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
         activity_signup_02_EditText_insert_code = dialogLayout.findViewById(R.id.activity_signup_02_EditText_insert_code);
         activity_signup_02_check_code_btn = dialogLayout.findViewById(R.id.activity_signup_02_check_code_btn);
 
+
         countDownTimer = new CountDownTimer(ms_StartTimer, COUNT_DOWN_INTERVAL) {
 
             @Override
@@ -163,6 +180,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
         }.start();
 
         activity_signup_02_check_code_btn.setOnClickListener(this);
+
     }   // countDownTimer
 
     @Override
@@ -217,16 +235,34 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                 if (activity_signup_02_EditText_insert_code.getText().length() != 0) {
                     String user_answer = activity_signup_02_EditText_insert_code.getText().toString();
                     if (user_answer.equals(emailCode)) {
-                        Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "이메일 인증 성공!!\n비밀번호 입력해줘요", Toast.LENGTH_SHORT).show();
+
+                        /*activity_signup_02_send_code_btn2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if(activity_signup_02_EditText_insert_pw.getText().toString().length() >= 6){
+                                    Toast.makeText(SignUpActivity_02.this, "비밀번호 다시치셈", Toast.LENGTH_SHORT).show();
+                                    activity_signup_02_EditText_insert_pw.setText("");
+                                }
+                                else{
+                                    createUser(emailSubject, emailAddress, activity_signup_02_EditText_insert_pw.getText().toString());
+
+                                    Intent intent = new Intent(SignUpActivity_02.this, SignUpActivity_03.class);
+                                    intent.putExtra("emailSubject",emailSubject);
+                                    intent.putExtra("emailAddress",emailAddress);
+                                    //intent.putExtra("emailPw",activity_signup_02_EditText_insert_pw.getText().toString());
+                                    startActivity(intent);
+                                }
+
+                                signupDialog.cancel();
+                            }
+                        });*/
+                        activity_signup_02_EditText_pw.setVisibility(View.VISIBLE);
                         activity_signup_02_send_code_btn.setEnabled(false);
                         activity_signup_02_EditText_email_Subjuct.setEnabled(false);
                         activity_signup_02_AutoCompleteTextView_email_Address.setEnabled(false);
                         signupDialog.cancel();
 
-                        Intent intent = new Intent(SignUpActivity_02.this, SignUpActivity_03.class);
-                        intent.putExtra("emailSubject",emailSubject);
-                        intent.putExtra("emailAddress",emailAddress);
-                        startActivity(intent);
 
                     } else {
                         Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();
@@ -244,11 +280,11 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
     }
 
     private String createEmailCode() {
-        String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
-                "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+        String[] str = {/*"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", */
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
         StringBuilder newCode = new StringBuilder();
 
-        for (int x = 0; x < 5; x++) {
+        for (int x = 0; x < 4; x++) {
             int random = (int) (Math.random() * str.length);
             newCode.append(str[random]);
         }
@@ -261,5 +297,54 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
         // 시간초를 초기화 하기위한 버튼
         finish();
         super.onBackPressed();
+    }
+
+    private void createUser(String emailSubject, String emailAddress, final String pw) {
+        final String email_All = emailSubject + "@" + emailAddress;
+        //LoginData data = new LoginData(name, phone, studentNumber, school, 0);
+        mAuth.createUserWithEmailAndPassword(email_All,pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("develop_check", "createUserWithEmail : success");
+                    loginUser(email_All, pw);
+                    //Toast.makeText(SignUpActivity_03.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SignUpActivity_03.this, ""+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("develop_check", "createUserWithEmail : failure => ", task.getException());
+                    //Toast.makeText(this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SignUpActivity_02.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void loginUser(String email, String pw){
+        //String email = activity_login_id_editText.getText().toString();
+        //String pw = activity_login_pw_editText.getText().toString();
+        if(email.length() != 0 && pw.length() != 0) {
+            mAuth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(SignUpActivity_02.this, "아이디와 비밀번호를 확인해주세요\n아니면 가입이 안되있을지Do?", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginActivity.this, "이메일 회원가입해주3", Toast.LENGTH_SHORT).show();
+                        Log.w("develop_check", "로그인에 실패했습니다.");
+                    } else {
+                        //Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+                        Log.w("develop_check", "로그인에 성공했습니다.");
+                        //success_of_login();
+
+                    }
+                }
+            });
+        }
+        else{
+            Log.w("develop_check","아이디와 비밀번호를 입력하지 않았습니다.");
+            //Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
+        }
     }
 }   // Activity class
