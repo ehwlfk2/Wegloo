@@ -1,12 +1,392 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.1" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#f1f3f5"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/activity_schedule_LinearLayout_monthLine"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_01"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_prev_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PREV"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tv_current_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/schedule_year_month"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_next_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEXT"
+            android:textSize="15dp" />
+    </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="스케줄"
-        android:textSize="60dp" />
+        android:id="@+id/activity_schedule_TextView_DayOfWeek_01"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e0e7ee"
 
-</FrameLayout>
+        android:gravity="center"
+        android:text="@string/DayOfWeek"
+        android:textColor="#969a9b"
+
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_01"
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
+
+    <TextView
+        android:id="@+id/activity_schedule_TextView_DayOfWeek_02"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e0e7ee"
+
+        android:gravity="center"
+        android:text="@string/DayOfWeek"
+        android:textColor="#969a9b"
+
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_schedule_Guideline_vertical_01"
+        app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_02"
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
+
+    <TextView
+        android:id="@+id/activity_schedule_TextView_DayOfWeek_03"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e0e7ee"
+
+        android:gravity="center"
+        android:text="@string/DayOfWeek"
+        android:textColor="#969a9b"
+
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_schedule_Guideline_vertical_02"
+        app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_03"
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
+
+    <TextView
+        android:id="@+id/activity_schedule_TextView_DayOfWeek_04"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e0e7ee"
+
+        android:gravity="center"
+        android:text="@string/DayOfWeek"
+        android:textColor="#969a9b"
+
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_schedule_Guideline_vertical_04"
+        app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_05"
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
+
+    <TextView
+        android:id="@+id/activity_schedule_TextView_DayOfWeek_05"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e0e7ee"
+
+        android:gravity="center"
+        android:text="@string/DayOfWeek"
+        android:textColor="#969a9b"
+
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_schedule_Guideline_vertical_05"
+        app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_06"
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
+
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        app:layout_constraintVertical_weight="9"
+
+
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine"
+        >
+    -->
+
+    <TextView
+        android:id="@+id/activity_schedule_TextView_DayOfWeek_06"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e0e7ee"
+
+        android:gravity="center"
+        android:text="@string/DayOfWeek"
+        android:textColor="#969a9b"
+
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_schedule_Guideline_vertical_06"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
+
+    <TextView
+        android:id="@+id/activity_schedule_TextView_DayOfWeek_07"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e0e7ee"
+
+        android:gravity="center"
+        android:text="@string/DayOfWeek"
+        android:textColor="#969a9b"
+
+        android:textStyle="bold"
+
+        app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_schedule_Guideline_vertical_03"
+        app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_04"
+        app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_01"
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_02"
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_03"
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_04"
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_05"
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_06"
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
+    <!-- 요일 1 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_01" />
+
+    <!-- 요일 2 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_02" />
+
+    <!-- 요일 3 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_03" />
+
+    <!-- 요일 4 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_04" />
+
+    <!-- 요일 5 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_05" />
+
+    <!-- 요일 6 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryBright"
+
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_06" />
+
+    <!-- 요일 7 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_horizontal_01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_horizontal_02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16"
+
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_horizontal_03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_horizontal_04"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.44" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_horizontal_05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.58" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_horizontal_06"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.72" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_horizontal_07"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.86" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_vertical_01"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.14" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_vertical_02"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.28" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_vertical_03"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.42" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_vertical_04"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.56" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_vertical_05"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.70" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_schedule_Guideline_vertical_06"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <!--
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_schedule"
+            android:layout_width="348dp"
+            android:layout_height="300dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
