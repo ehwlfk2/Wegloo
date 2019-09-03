@@ -39,6 +39,7 @@
             app:layout_constraintRight_toRightOf="@+id/activity_signup_02_Current"
             app:layout_constraintTop_toBottomOf="@+id/activity_signup_02_Current" />
 
+
         <ImageView
             android:id="@+id/activity_signup_02_Next01"
             android:layout_width="wrap_content"
@@ -342,11 +343,14 @@
             app:layout_constraintTop_toTopOf="@id/activity_signup_02_guideline05_horizontal"
             app:layout_constraintWidth_percent="0.4" />
         <!-- 다음페이지 -->
+
+
         <Button
             android:id="@+id/activity_signup_02_next_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/SignUp_Next"
+            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.15"
 
@@ -354,5 +358,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/activity_signup_02_guideline05_horizontal"
             app:layout_constraintWidth_percent="0.4" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
