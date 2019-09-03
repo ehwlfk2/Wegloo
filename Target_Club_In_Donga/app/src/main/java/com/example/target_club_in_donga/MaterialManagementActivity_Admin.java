@@ -96,7 +96,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
         activity_material_management_admin_recyclerview_main_list.setAdapter(boardRecyclerViewAdapter);
         boardRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child("images").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Material_Management").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 imageDTOs.clear();
@@ -189,12 +189,12 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
         private void delete_content(final int position) {
 
-            storage.getReference().child("images").child(imageDTOs.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            storage.getReference().child("Material_Management").child(imageDTOs.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
                     Toast.makeText(MaterialManagementActivity_Admin.this, "삭제 완료", Toast.LENGTH_SHORT).show();
 
-                    database.getReference().child("images").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    database.getReference().child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(final Void aVoid) {
                             Toast.makeText(MaterialManagementActivity_Admin.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
