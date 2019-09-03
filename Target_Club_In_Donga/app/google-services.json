@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "239909702281",
+    "firebase_url": "https://target-club-in-donga.firebaseio.com",
+    "project_id": "target-club-in-donga",
+    "storage_bucket": "target-club-in-donga.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239909702281:android:085cd8899a781b6a",
+        "android_client_info": {
+          "package_name": "com.example.target_club_in_donga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239909702281-oquea4pkn2qk5mct9aemuuijk8ev1io2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.target_club_in_donga",
+            "certificate_hash": "3357ad61b0f01d5367e64a1b759f7848c53d2722"
+          }
+        },
+        {
+          "client_id": "239909702281-7uqfv578bbfcunmptmhn49njhkqb0km1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD02jpteHlyZE_JYea3_Oo8K-HD_eDWbs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239909702281-7uqfv578bbfcunmptmhn49njhkqb0km1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="25dp"
+    android:weightSum="10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <!-- 대문 이미지 기작 -->
+        <ImageView
+            android:id="@+id/activity_signup_03_Current"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/SignUp_Agreement"
+            android:scaleType="fitCenter"
+            android:src="@drawable/signup_agreement"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/activity_signup_03_Next01"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/SignUp_Agreement"
+
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_Current"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_Current"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_Current" />
+
+        <ImageView
+            android:id="@+id/activity_signup_03_Next01"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/SignUp_Next"
+            android:scaleType="fitCenter"
+
+            android:src="@drawable/sigup_next"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_Current"
+            app:layout_constraintLeft_toRightOf="@+id/activity_signup_03_Current"
+            app:layout_constraintRight_toLeftOf="@+id/activity_signup_03_Identification"
+            app:layout_constraintTop_toTopOf="@id/activity_signup_03_Current" />
+
+        <ImageView
+            android:id="@+id/activity_signup_03_Identification"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/SignUp_Current"
+            android:scaleType="fitCenter"
+            android:src="@drawable/signup_identification"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_Current"
+            app:layout_constraintLeft_toRightOf="@+id/activity_signup_03_Next01"
+            app:layout_constraintRight_toLeftOf="@id/activity_signup_03_Next02" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/SignUp_Identification"
+
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_Identification"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_Identification"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_Identification" />
+
+        <ImageView
+            android:id="@+id/activity_signup_03_Next02"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/SignUp_Next"
+            android:scaleType="fitCenter"
+
+            android:src="@drawable/sigup_next"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_Current"
+            app:layout_constraintLeft_toRightOf="@+id/activity_signup_03_Identification"
+            app:layout_constraintRight_toLeftOf="@id/activity_signup_03_Information"
+            app:layout_constraintTop_toTopOf="@id/activity_signup_03_Current" />
+
+        <ImageView
+            android:id="@+id/activity_signup_03_Information"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/SignUP_Information"
+            android:scaleType="fitCenter"
+            android:src="@drawable/signup_current"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_Current"
+            app:layout_constraintLeft_toRightOf="@+id/activity_signup_03_Next02"
+            app:layout_constraintRight_toLeftOf="@id/activity_signup_03_Next03" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/SignUP_Information"
+
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_Information"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_Information"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_Information" />
+
+        <ImageView
+            android:id="@+id/activity_signup_03_Next03"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/SignUp_Next"
+            android:scaleType="fitCenter"
+
+            android:src="@drawable/sigup_next"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_Current"
+            app:layout_constraintLeft_toRightOf="@+id/activity_signup_03_Information"
+            app:layout_constraintRight_toLeftOf="@id/activity_signup_03_Finish"
+            app:layout_constraintTop_toTopOf="@id/activity_signup_03_Current" />
+
+        <ImageView
+            android:id="@+id/activity_signup_03_Finish"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/SignUp_Finish"
+            android:scaleType="fitCenter"
+            android:src="@drawable/signup_finish"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_Current"
+            app:layout_constraintLeft_toRightOf="@+id/activity_signup_03_Next03"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/SignUp_Finish"
+
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_Finish"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_Finish"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_Finish" />
+        <!-- 대문 이미지 끝 -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+        <!-- guideline01 vertical -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline01_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+        <!-- guideline01 vertical -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline02_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+        <!-- guideline01 horizontal -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline01_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+        <!-- guideline02 horizontal -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline02_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+        <!-- guideline03 horizontal -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline03_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.28" />
+        <!-- guideline04 horizontal -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline04_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.41" />
+        <!-- guideline05 horizontal -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline05_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.54" />
+        <!-- guideline06 horizontal -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline06_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.67" />
+        <!-- guideline08 horizontal -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/activity_signup_03_guideline08_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <!-- View 구분선 -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorGrayVeryBright"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline02_horizontal"
+            app:layout_constraintLeft_toLeftOf="@id/activity_signup_03_cancel_btn"
+            app:layout_constraintRight_toRightOf="@id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_TextView_email" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorGrayVeryBright"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline03_horizontal"
+            app:layout_constraintLeft_toLeftOf="@id/activity_signup_03_cancel_btn"
+            app:layout_constraintRight_toRightOf="@id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_TextView_pw" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorGrayVeryBright"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline04_horizontal"
+            app:layout_constraintLeft_toLeftOf="@id/activity_signup_03_cancel_btn"
+            app:layout_constraintRight_toRightOf="@id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_TextView_name" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorGrayVeryBright"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline05_horizontal"
+            app:layout_constraintLeft_toLeftOf="@id/activity_signup_03_cancel_btn"
+            app:layout_constraintRight_toRightOf="@id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_TextView_phone" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/colorGrayVeryBright"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline06_horizontal"
+            app:layout_constraintLeft_toLeftOf="@id/activity_signup_03_cancel_btn"
+            app:layout_constraintRight_toRightOf="@id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_TextView_school" />
+
+
+        <TextView
+            android:id="@+id/activity_signup_03_TextView_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SignUp_information_email_id"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline02_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/activity_signup_03_TextView_pw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SignUp_information_pw"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline03_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline02_horizontal" />
+
+        <TextView
+            android:id="@+id/activity_signup_03_TextView_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SignUp_information_name"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline04_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline03_horizontal" />
+
+        <TextView
+            android:id="@+id/activity_signup_03_TextView_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SignUp_information_phone"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline05_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline04_horizontal" />
+
+        <TextView
+            android:id="@+id/activity_signup_03_TextView_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SignUp_information_school"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline06_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline05_horizontal" />
+
+        <TextView
+            android:id="@+id/activity_signup_03_TextView_school_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/SignUp_information_school_number"
+
+            app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline08_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline06_horizontal" />
+
+        <!-- Email (ID) -->
+        <EditText
+            android:id="@+id/activity_signup_03_EditText_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:gravity="center"
+            android:hint="@string/SignUp_information_email_id"
+            android:inputType="textWebEmailAddress"
+            android:enabled="false"
+
+        app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline02_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- pw : 최소 자리수 6자리 -->
+        <EditText
+            android:id="@+id/activity_signup_03_EditText_pw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:gravity="center"
+            android:hint="@string/SignUp_information_pw"
+            android:inputType="textVisiblePassword"
+
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline03_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline02_horizontal" />
+
+        <!-- Name -->
+        <EditText
+            android:id="@+id/activity_signup_03_EditText_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:gravity="center"
+            android:hint="@string/SignUp_information_name"
+            android:inputType="textPersonName"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline04_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline03_horizontal" />
+
+        <!-- Phone -->
+        <EditText
+            android:id="@+id/activity_signup_03_EditText_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:gravity="center"
+            android:hint="@string/SignUp_information_phone"
+            android:inputType="phone"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline05_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline04_horizontal" />
+
+        <!-- School -->
+        <EditText
+            android:id="@+id/activity_signup_03_EditText_School"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:gravity="center"
+            android:hint="@string/SignUp_information_school"
+            android:inputType="text"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline06_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline05_horizontal" />
+
+        <!-- Phone -->
+        <EditText
+            android:id="@+id/activity_signup_03_EditText_school_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="no"
+            android:gravity="center"
+            android:hint="@string/SignUp_information_school_number"
+            android:inputType="number"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline08_horizontal"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
+            app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline06_horizontal" />
+
+
+        <!-- CheckBox -->
+        <CheckBox
+            android:id="@+id/activity_signup_03_checkBox_Agreement_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline01_horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/activity_signup_03_guideline01_vertical"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!-- 취소 -->
+        <Button
+            android:id="@+id/activity_signup_03_cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/SignUp_Cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.15"
+
+            app:layout_constraintHorizontal_chainStyle="spread"
+
+            app:layout_constraintLeft_toLeftOf="@id/activity_signup_03_checkBox_Agreement_total"
+            app:layout_constraintRight_toLeftOf="@+id/activity_signup_03_next_btn"
+            app:layout_constraintTop_toTopOf="@id/activity_signup_03_guideline08_horizontal"
+            app:layout_constraintWidth_percent="0.4" />
+        <!-- 다음페이지 -->
+        <Button
+            android:id="@+id/activity_signup_03_next_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/SignUp_Next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.15"
+
+            app:layout_constraintLeft_toRightOf="@id/activity_signup_03_cancel_btn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/activity_signup_03_guideline08_horizontal"
+            app:layout_constraintWidth_percent="0.4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
