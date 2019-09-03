@@ -15,6 +15,7 @@ public class ImageDTO {
     public String edit_name_edittext;
     public String uId;
     public String userId;
+    public String edit_lender;
 
     public ImageDTO(String id/*, String id2*/) {
         this.id = id;
