@@ -178,15 +178,15 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
             public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUri = taskSnapshot.getDownloadUrl();
 
-                ImageDTO imageDTO = new ImageDTO();
-                imageDTO.imageUri = downloadUri.toString();
-                imageDTO.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
-                imageDTO.edit_lender = activity_material_management_insert_textview_lender.getText().toString();
-                imageDTO.uId = auth.getCurrentUser().getUid();
-                imageDTO.userId = auth.getCurrentUser().getEmail();
-                imageDTO.imageName = file.getLastPathSegment();
+                MaterialManagement_Item materialManagementItem = new MaterialManagement_Item();
+                materialManagementItem.imageUri = downloadUri.toString();
+                materialManagementItem.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
+                materialManagementItem.edit_lender = activity_material_management_insert_textview_lender.getText().toString();
+                materialManagementItem.uId = auth.getCurrentUser().getUid();
+                materialManagementItem.userId = auth.getCurrentUser().getEmail();
+                materialManagementItem.imageName = file.getLastPathSegment();
 
-                database.getReference().child("Material_Management").push().setValue(imageDTO);
+                database.getReference().child("Material_Management").push().setValue(materialManagementItem);
 
             }
         });
