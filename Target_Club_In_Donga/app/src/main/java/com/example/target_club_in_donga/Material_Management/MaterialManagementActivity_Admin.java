@@ -104,7 +104,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MaterialManagement_Item materialManagementItem = snapshot.getValue(MaterialManagement_Item.class);
                     String uidKey = snapshot.getKey();
-                    materialManagementItems.add(materialManagementItem);
+                    materialManagementItems.add(0, materialManagementItem);
                     uidLists.add(uidKey);
                 }
                 boardRecyclerViewAdapter.notifyDataSetChanged();
@@ -130,7 +130,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
-
 
     }
 
@@ -184,8 +183,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
     // MaterialManagementActivity_Admin 어댑터
 
     class BoardRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-        int count = 0;
 
         private void delete_content(final int position) {
 
@@ -395,6 +392,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
                                     database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());
 
+
 //                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).removeValue();
 //                                    database.getReference().child("Material_Management").push().setValue(imageDTO);
 /*                                    materialManagementItems.remove(getAdapterPosition());
@@ -448,7 +446,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
             Glide.with(viewholder.itemView.getContext()).load(materialManagementItems.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_item_imageview_recyclerview_image);
 
             if (materialManagementItems.get(position).edit_lender.equals("없음")) {
-//                ((CustomViewHolder) viewholder).activity_material_management_item_linearlayout.setBackgroundColor(Color.WHITE);
             } else {
                 ((CustomViewHolder) viewholder).activity_material_management_item_linearlayout.setBackgroundColor(Color.LTGRAY);
             }

@@ -35,6 +35,13 @@
                 android:text="물품명"
                 android:textSize="20dp" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="#4F000000" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,13 +58,6 @@
                 android:singleLine="true"
                 android:text="없음"
                 android:textSize="20dp" />
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"
-                android:background="#4F000000" />
 
         </LinearLayout>
     </LinearLayout>
