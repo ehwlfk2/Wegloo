@@ -159,7 +159,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 startActivity(intent);
                                 finish();*/
                                 Toast.makeText(LoginActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, SignUpActivity_03.class);
+                                Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
+                                intent.putExtra("loginIdentity","google");
                                 startActivity(intent);
                                 finish();
                             }
@@ -247,7 +248,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     Log.w("develop_check", "signInWithCredential : failure =>", task.getException());
                     //Toast.makeText(LoginActivity.this, "구글 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -288,7 +288,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         int i = view.getId();
         if (i == R.id.activity_login_signup_btn) {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
+            intent.putExtra("loginIdentity","email");
             startActivity(intent);
+            finish();
         } else if (i == R.id.activity_login_google_btn) {
             Log.v("develop_check", "구글 로그인 시도");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
