@@ -47,8 +47,20 @@ public class SignUpActivity_01 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (activity_signup_01_checkBox_Agreement_total.isChecked()) {
-                    Intent intent = new Intent(SignUpActivity_01.this, SignUpActivity_02.class);
-                    startActivity(intent);
+
+                    Intent intent2 = getIntent();
+                    String loginIdentity = intent2.getExtras().getString("loginIdentity");
+                    if(loginIdentity.equals("email")){
+                        Intent intent = new Intent(SignUpActivity_01.this, SignUpActivity_02.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if(loginIdentity.equals("google")){
+                        Intent intent = new Intent(SignUpActivity_01.this, SignUpActivity_03.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 } else {
                     Toast.makeText(SignUpActivity_01.this, "동의하셔야 합니다.", Toast.LENGTH_SHORT).show();
                 }
