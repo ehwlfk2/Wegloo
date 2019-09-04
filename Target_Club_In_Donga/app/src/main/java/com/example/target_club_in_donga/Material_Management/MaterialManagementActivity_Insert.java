@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -185,6 +186,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 materialManagementItem.uId = auth.getCurrentUser().getUid();
                 materialManagementItem.userId = auth.getCurrentUser().getEmail();
                 materialManagementItem.imageName = file.getLastPathSegment();
+                materialManagementItem.timestamp = ServerValue.TIMESTAMP;
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
 

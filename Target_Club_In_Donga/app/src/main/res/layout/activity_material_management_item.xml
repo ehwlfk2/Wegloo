@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/activity_material_management_item_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -57,6 +57,29 @@
                 android:saveEnabled="false"
                 android:singleLine="true"
                 android:text="없음"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="#4F000000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:singleLine="true"
+                android:text="대여 끝나는 날짜"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/activity_material_management_item_timestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:singleLine="true"
                 android:textSize="20dp" />
 
         </LinearLayout>
