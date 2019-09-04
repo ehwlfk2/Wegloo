@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Material_Management;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,7 +60,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
     private static final int GALLARY_CODE = 10;
 
     RecyclerView activity_material_management_admin_recyclerview_main_list;
-    List<ImageDTO> imageDTOs = new ArrayList<>();
+    List<MaterialManagement_Item> materialManagementItems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
     private FirebaseAuth auth;
@@ -99,12 +99,12 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
         database.getReference().child("Material_Management").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                imageDTOs.clear();
+                materialManagementItems.clear();
                 uidLists.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ImageDTO imageDTO = snapshot.getValue(ImageDTO.class);
+                    MaterialManagement_Item materialManagementItem = snapshot.getValue(MaterialManagement_Item.class);
                     String uidKey = snapshot.getKey();
-                    imageDTOs.add(imageDTO);
+                    materialManagementItems.add(0, materialManagementItem);
                     uidLists.add(uidKey);
                 }
                 boardRecyclerViewAdapter.notifyDataSetChanged();
@@ -130,7 +130,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
-
 
     }
 
@@ -185,11 +184,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
     class BoardRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        int count = 0;
-
         private void delete_content(final int position) {
 
-            storage.getReference().child("Material_Management").child(imageDTOs.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            storage.getReference().child("Material_Management").child(materialManagementItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
                     Toast.makeText(MaterialManagementActivity_Admin.this, "삭제 완료", Toast.LENGTH_SHORT).show();
@@ -252,35 +249,57 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case 1001:
-
-/*                            storage.getReference().child("images").child(imageDTOs.get(getAdapterPosition()).imageName);
-                            database.getReference().child("images").child(imageDTOs.get(getAdapterPosition()).edit_name_edittext);*/
-
-/*                            Intent intent = new Intent(MaterialManagementActivity_Admin.this, NoticeActivity.class);
-                            final EditText editTextID = (EditText) findViewById(R.id.material_management_edit_name_edittext);
-                            editTextID.setText(imageDTOs.get(getAdapterPosition()).edit_name_edittext);
-                            startActivity(intent);*/
-
-
-//                            startActivity(new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_Insert.class));
-
-
-                            // 선택한 position에 있는 것들 수정할 수 있어야 함
-
+/*
                             AlertDialog.Builder builder = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
                             View view = LayoutInflater.from(MaterialManagementActivity_Admin.this)
                                     .inflate(R.layout.activity_material_management_insert, null, false);
                             builder.setView(view);
 
-                            final Button ButtonSubmit = (Button) view.findViewById(R.id.activity_material_management_insert_button_insert);
-                            final EditText editTextID = (EditText) view.findViewById(R.id.activity_material_management_insert_edittext_item_name);
+                            final Button editButton = (Button) view.findViewById(R.id.activity_material_management_insert_button_insert);
                             final ImageView editImageView = (ImageView) view.findViewById(R.id.activity_material_management_insert_imageview_image);
+                            final EditText editTextID = (EditText) view.findViewById(R.id.activity_material_management_insert_edittext_item_name);
+                            final TextView editTextName = (TextView) view.findViewById(R.id.activity_material_management_insert_textview_lender);
 
-//                            editTextID.setText(imageDTOs.get(getAdapterPosition()).getId());
+                            editTextID.setText(materialManagementItems.get(getAdapterPosition()).getId());
+                            editTextName.setText(auth.getCurrentUser().getDisplayName());
+                            Glide.with(itemView.getContext()).load(materialManagementItems.get(getAdapterPosition()).imageUri).into(editImageView);
 
-                            editTextID.setText(imageDTOs.get(getAdapterPosition()).edit_name_edittext);
-//                            editImageView.setImageURI(imageDTOs.get(getAdapterPosition()).imageUri);
-                            // 동작 함 굿굿
+                            final AlertDialog dialog = builder.create();
+
+                            editButton.setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+
+                                    Toast.makeText(v.getContext(),  "수정이 완료되었습니다..", Toast.LENGTH_SHORT).show();
+
+                                    activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
+                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());*/
+
+/*                                    materialManagementItems.remove(getAdapterPosition());
+                                    notifyItemRemoved(getAdapterPosition());
+                                    notifyItemRangeChanged(getAdapterPosition(), materialManagementItems.size());
+
+                                    String strID2 = detailTextID.getText().toString();
+
+                                    MaterialManagement_Item dict2 = new MaterialManagement_Item(strID2);
+
+                                    materialManagementItems.add(dict2);
+                                    notifyItemRangeChanged(getAdapterPosition(), materialManagementItems.size());*/
+
+/*                                mArrayList2.add(0, dict2); //첫 줄에 삽입
+                                //mArrayList.add(dict); //마지막 줄에 삽입
+                                mAdapter2.notifyDataSetChanged(); //변경된 데이터를 화면에 반영*/
+
+//                                notifyItemRangeChanged(getAdapterPosition(), mArrayList2.size());
+
+/*
+                                    dialog.dismiss();
+
+                                }
+                            });
+
+                            dialog.show();
+*/
+
 
 /*                            Bundle extras = ((Activity) mContext).getIntent().getExtras();
                             final Uri uri = Uri.parse(extras.getString("uri"));
@@ -296,9 +315,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                 public void onClick(View v) {
                                     String strID = editTextID.getText().toString();
 
-                                    ImageDTO dict = new ImageDTO(strID);
+                                    MaterialManagement_Item dict = new MaterialManagement_Item(strID);
 
-                                    imageDTOs.set(getAdapterPosition(), dict);
+                                    materialManagementItems.set(getAdapterPosition(), dict);
                                     notifyItemChanged(getAdapterPosition());
 
 //                                ((BitmapDrawable)editImageView.getDrawable()).getBitmap().recycle();
@@ -324,9 +343,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                             delete_content(getAdapterPosition());
 
-                            imageDTOs.remove(getAdapterPosition());
+                            materialManagementItems.remove(getAdapterPosition());
                             notifyItemRemoved(getAdapterPosition());
-                            notifyItemRangeChanged(getAdapterPosition(), imageDTOs.size());
+                            notifyItemRangeChanged(getAdapterPosition(), materialManagementItems.size());
 
                             break;
 
@@ -335,19 +354,19 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                             AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
 
                             View view2 = LayoutInflater.from(MaterialManagementActivity_Admin.this)
-                                    .inflate(R.layout.activity_material_management_detail, null, false);
+                                    .inflate(R.layout.activity_material_management_lend, null, false);
                             builder2.setView(view2);
 
-                            final Button detailButton = (Button) view2.findViewById(R.id.activity_material_management_detail_button_lend);
-                            final Button detailButtonPeriodCalendar = (Button) view2.findViewById(R.id.activity_material_management_detail_lend_period_calendar);
-                            final Button detailButtonPeriodTime = (Button) view2.findViewById(R.id.activity_material_management_detail_lend_period_time);
-                            final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_management_detail_item_name);
-                            final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_management_detail_lender);
-                            final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_detail_imageview_image);
+                            final Button detailButton = (Button) view2.findViewById(R.id.activity_material_management_lend_button_lend);
+                            final Button detailButtonPeriodCalendar = (Button) view2.findViewById(R.id.activity_material_management_lend_period_calendar);
+                            final Button detailButtonPeriodTime = (Button) view2.findViewById(R.id.activity_material_management_lend_period_time);
+                            final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_management_lend_item_name);
+                            final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_management_lend_lender);
+                            final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_lend_imageview_image);
 
-                            detailTextID.setText(imageDTOs.get(getAdapterPosition()).getId());
+                            detailTextID.setText(materialManagementItems.get(getAdapterPosition()).getId());
                             detailTextName.setText(auth.getCurrentUser().getDisplayName());
-                            Glide.with(itemView.getContext()).load(imageDTOs.get(getAdapterPosition()).imageUri).into(detailImageView);
+                            Glide.with(itemView.getContext()).load(materialManagementItems.get(getAdapterPosition()).imageUri).into(detailImageView);
 
                             final AlertDialog dialog2 = builder2.create();
 
@@ -373,16 +392,19 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
                                     database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());
 
-/*                                    imageDTOs.remove(getAdapterPosition());
+
+//                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).removeValue();
+//                                    database.getReference().child("Material_Management").push().setValue(imageDTO);
+/*                                    materialManagementItems.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());
-                                    notifyItemRangeChanged(getAdapterPosition(), imageDTOs.size());
+                                    notifyItemRangeChanged(getAdapterPosition(), materialManagementItems.size());
 
                                     String strID2 = detailTextID.getText().toString();
 
-                                    ImageDTO dict2 = new ImageDTO(strID2);
+                                    MaterialManagement_Item dict2 = new MaterialManagement_Item(strID2);
 
-                                    imageDTOs.add(dict2);
-                                    notifyItemRangeChanged(getAdapterPosition(), imageDTOs.size());*/
+                                    materialManagementItems.add(dict2);
+                                    notifyItemRangeChanged(getAdapterPosition(), materialManagementItems.size());*/
 
 /*                                mArrayList2.add(0, dict2); //첫 줄에 삽입
                                 //mArrayList.add(dict); //마지막 줄에 삽입
@@ -417,14 +439,13 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
             ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setGravity(Gravity.LEFT);
             ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_lender.setGravity(Gravity.LEFT);
 
-            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setText(imageDTOs.get(position).getId());
-            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setText(imageDTOs.get(position).edit_name_edittext);
-            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_lender.setText(imageDTOs.get(position).edit_lender);
+            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).getId());
+            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).edit_name_edittext);
+            ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_lender.setText(materialManagementItems.get(position).edit_lender);
 
-            Glide.with(viewholder.itemView.getContext()).load(imageDTOs.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_item_imageview_recyclerview_image);
+            Glide.with(viewholder.itemView.getContext()).load(materialManagementItems.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_item_imageview_recyclerview_image);
 
-            if (imageDTOs.get(position).edit_lender.equals("없음")) {
-//                ((CustomViewHolder) viewholder).activity_material_management_item_linearlayout.setBackgroundColor(Color.WHITE);
+            if (materialManagementItems.get(position).edit_lender.equals("없음")) {
             } else {
                 ((CustomViewHolder) viewholder).activity_material_management_item_linearlayout.setBackgroundColor(Color.LTGRAY);
             }
@@ -434,7 +455,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return imageDTOs.size();
+            return materialManagementItems.size();
         }
 
         void showDate() {

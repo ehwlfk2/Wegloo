@@ -1,7 +1,7 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Material_Management;
 
-public class ImageDTO {
-    private String id, id2;
+public class MaterialManagement_Item {
+    private String id;
 
     public String getId() {
         return id;
@@ -17,11 +17,10 @@ public class ImageDTO {
     public String userId;
     public String edit_lender;
 
-    public ImageDTO(String id/*, String id2*/) {
+    public MaterialManagement_Item(String id) {
         this.id = id;
-//        this.id2 = id2;
     }
-    public  ImageDTO(){
+    public MaterialManagement_Item(){
 
     }
 
