@@ -72,6 +72,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
             public void onClick(View view) {
                 Intent intent = new Intent(SignUpActivity_02.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
