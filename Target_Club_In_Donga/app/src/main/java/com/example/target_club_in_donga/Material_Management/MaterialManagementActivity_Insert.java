@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Material_Management;
 
 import android.Manifest;
 import android.content.CursorLoader;
@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -186,7 +187,6 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 imageDTO.imageName = file.getLastPathSegment();
 
                 database.getReference().child("Material_Management").push().setValue(imageDTO);
-
 
             }
         });

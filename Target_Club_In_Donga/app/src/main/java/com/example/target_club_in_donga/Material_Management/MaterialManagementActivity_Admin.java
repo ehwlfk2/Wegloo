@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Material_Management;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -252,35 +253,57 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                     switch (item.getItemId()) {
                         case 1001:
-
-/*                            storage.getReference().child("images").child(imageDTOs.get(getAdapterPosition()).imageName);
-                            database.getReference().child("images").child(imageDTOs.get(getAdapterPosition()).edit_name_edittext);*/
-
-/*                            Intent intent = new Intent(MaterialManagementActivity_Admin.this, NoticeActivity.class);
-                            final EditText editTextID = (EditText) findViewById(R.id.material_management_edit_name_edittext);
-                            editTextID.setText(imageDTOs.get(getAdapterPosition()).edit_name_edittext);
-                            startActivity(intent);*/
-
-
-//                            startActivity(new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_Insert.class));
-
-
-                            // 선택한 position에 있는 것들 수정할 수 있어야 함
-
+/*
                             AlertDialog.Builder builder = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
                             View view = LayoutInflater.from(MaterialManagementActivity_Admin.this)
                                     .inflate(R.layout.activity_material_management_insert, null, false);
                             builder.setView(view);
 
-                            final Button ButtonSubmit = (Button) view.findViewById(R.id.activity_material_management_insert_button_insert);
-                            final EditText editTextID = (EditText) view.findViewById(R.id.activity_material_management_insert_edittext_item_name);
+                            final Button editButton = (Button) view.findViewById(R.id.activity_material_management_insert_button_insert);
                             final ImageView editImageView = (ImageView) view.findViewById(R.id.activity_material_management_insert_imageview_image);
+                            final EditText editTextID = (EditText) view.findViewById(R.id.activity_material_management_insert_edittext_item_name);
+                            final TextView editTextName = (TextView) view.findViewById(R.id.activity_material_management_insert_textview_lender);
 
-//                            editTextID.setText(imageDTOs.get(getAdapterPosition()).getId());
+                            editTextID.setText(imageDTOs.get(getAdapterPosition()).getId());
+                            editTextName.setText(auth.getCurrentUser().getDisplayName());
+                            Glide.with(itemView.getContext()).load(imageDTOs.get(getAdapterPosition()).imageUri).into(editImageView);
 
-                            editTextID.setText(imageDTOs.get(getAdapterPosition()).edit_name_edittext);
-//                            editImageView.setImageURI(imageDTOs.get(getAdapterPosition()).imageUri);
-                            // 동작 함 굿굿
+                            final AlertDialog dialog = builder.create();
+
+                            editButton.setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+
+                                    Toast.makeText(v.getContext(),  "수정이 완료되었습니다..", Toast.LENGTH_SHORT).show();
+
+                                    activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
+                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());*/
+
+/*                                    imageDTOs.remove(getAdapterPosition());
+                                    notifyItemRemoved(getAdapterPosition());
+                                    notifyItemRangeChanged(getAdapterPosition(), imageDTOs.size());
+
+                                    String strID2 = detailTextID.getText().toString();
+
+                                    ImageDTO dict2 = new ImageDTO(strID2);
+
+                                    imageDTOs.add(dict2);
+                                    notifyItemRangeChanged(getAdapterPosition(), imageDTOs.size());*/
+
+/*                                mArrayList2.add(0, dict2); //첫 줄에 삽입
+                                //mArrayList.add(dict); //마지막 줄에 삽입
+                                mAdapter2.notifyDataSetChanged(); //변경된 데이터를 화면에 반영*/
+
+//                                notifyItemRangeChanged(getAdapterPosition(), mArrayList2.size());
+
+/*
+                                    dialog.dismiss();
+
+                                }
+                            });
+
+                            dialog.show();
+*/
+
 
 /*                            Bundle extras = ((Activity) mContext).getIntent().getExtras();
                             final Uri uri = Uri.parse(extras.getString("uri"));
@@ -335,15 +358,15 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                             AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
 
                             View view2 = LayoutInflater.from(MaterialManagementActivity_Admin.this)
-                                    .inflate(R.layout.activity_material_management_detail, null, false);
+                                    .inflate(R.layout.activity_material_management_lend, null, false);
                             builder2.setView(view2);
 
-                            final Button detailButton = (Button) view2.findViewById(R.id.activity_material_management_detail_button_lend);
-                            final Button detailButtonPeriodCalendar = (Button) view2.findViewById(R.id.activity_material_management_detail_lend_period_calendar);
-                            final Button detailButtonPeriodTime = (Button) view2.findViewById(R.id.activity_material_management_detail_lend_period_time);
-                            final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_management_detail_item_name);
-                            final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_management_detail_lender);
-                            final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_detail_imageview_image);
+                            final Button detailButton = (Button) view2.findViewById(R.id.activity_material_management_lend_button_lend);
+                            final Button detailButtonPeriodCalendar = (Button) view2.findViewById(R.id.activity_material_management_lend_period_calendar);
+                            final Button detailButtonPeriodTime = (Button) view2.findViewById(R.id.activity_material_management_lend_period_time);
+                            final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_management_lend_item_name);
+                            final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_management_lend_lender);
+                            final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_lend_imageview_image);
 
                             detailTextID.setText(imageDTOs.get(getAdapterPosition()).getId());
                             detailTextName.setText(auth.getCurrentUser().getDisplayName());
@@ -373,6 +396,8 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
                                     database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());
 
+//                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).removeValue();
+//                                    database.getReference().child("Material_Management").push().setValue(imageDTO);
 /*                                    imageDTOs.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());
                                     notifyItemRangeChanged(getAdapterPosition(), imageDTOs.size());

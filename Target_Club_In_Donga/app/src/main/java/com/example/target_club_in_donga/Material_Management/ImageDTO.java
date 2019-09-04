@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Material_Management;
 
 public class ImageDTO {
     private String id, id2;

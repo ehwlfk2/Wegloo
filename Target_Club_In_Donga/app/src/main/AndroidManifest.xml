@@ -50,9 +50,9 @@
 
         <activity android:name=".AttendActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".MaterialManagementActivity_Admin" />
-        <activity android:name=".MaterialManagementActivity_Detail" />
-        <activity android:name=".MaterialManagementActivity_Insert" />
+        <activity android:name=".Material_Management.MaterialManagementActivity_Admin" />
+        <activity android:name=".Material_Management.MaterialManagementActivity_Detail" />
+        <activity android:name=".Material_Management.MaterialManagementActivity_Insert" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".ScheduleActivity" />
         <activity android:name=".UserDetailActivity" />
