@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.target_club_in_donga.Accountbook.AccountbookActivity_Main;
 import com.example.target_club_in_donga.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
-import com.example.target_club_in_donga.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.ScheduleActivity;

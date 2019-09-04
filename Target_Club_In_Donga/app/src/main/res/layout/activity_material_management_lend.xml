@@ -19,7 +19,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/activity_material_management_detail_imageview_image"
+            android:id="@+id/activity_material_management_lend_imageview_image"
             android:layout_width="180dp"
             android:layout_height="300dp"
             android:saveEnabled="false"
@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/activity_material_management_detail_item_name"
+                android:id="@+id/activity_material_management_lend_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
@@ -48,7 +48,7 @@
                 android:background="#4F000000" />
 
             <TextView
-                android:id="@+id/activity_material_management_detail_lender"
+                android:id="@+id/activity_material_management_lend_lender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
@@ -72,7 +72,7 @@
                 android:textSize="20dp" />
 
             <Button
-                android:id="@+id/activity_material_management_detail_lend_period_calendar"
+                android:id="@+id/activity_material_management_lend_period_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
@@ -81,7 +81,7 @@
                 android:textSize="20dp" />
 
             <Button
-                android:id="@+id/activity_material_management_detail_lend_period_time"
+                android:id="@+id/activity_material_management_lend_period_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
@@ -129,7 +129,7 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/activity_material_management_detail_button_lend"
+            android:id="@+id/activity_material_management_lend_button_lend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
