@@ -67,48 +67,13 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
 
     }   // onCreate
 
-
-    private void createUser(String emailSubject, String emailAddress, String pw, String name, String phone, String school, String studentNumber) {
-        String email_All = emailSubject + "@" + emailAddress;
-        LoginData data = new LoginData(name, phone, studentNumber, school, 0);
-        if(!pw.equals("* * * * * *")){ //이메일 회원가입일시
-            mAuth.createUserWithEmailAndPassword(email_All,pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("develop_check", "createUserWithEmail : success");
-                        //Toast.makeText(SignUpActivity_03.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(SignUpActivity_03.this, ""+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w("develop_check", "createUserWithEmail : failure => ", task.getException());
-                        Toast.makeText(SignUpActivity_03.this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            //Toast.makeText(this, ""+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-            /*Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("emailLoginName",name);
-            intent.putExtra("emailLoginPhone",phone);
-            intent.putExtra("emailLoginStudentNumber",studentNumber);
-            intent.putExtra("emailLoginSchool",school);
-            startActivity(intent);
-            finish();*/
-        }
-        else{ //구글 페북 회원가입일시
-            //Toast.makeText(this, ""+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
     @Override
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.activity_signup_03_cancel_btn) {
             Intent intent = new Intent(SignUpActivity_03.this, LoginActivity.class);
             startActivity(intent);
+            finish();
         } else if (i == R.id.activity_signup_03_next_btn) {
             String pw = ((EditText) (findViewById(R.id.activity_signup_03_EditText_pw))).getText().toString();
             if(pw.length() >= 6 ) {
