@@ -329,11 +329,11 @@
             app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline05_horizontal" />
 
         <TextView
-            android:id="@+id/activity_signup_03_TextView_school_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/activity_signup_03_TextView_student_number"
+            android:layout_width="46dp"
+            android:layout_height="29dp"
             android:gravity="center"
-            android:text="@string/SignUp_information_school_number"
+            android:text="@string/SignUp_information_student_number"
 
             app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline08_horizontal"
             app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
@@ -393,7 +393,7 @@
             android:autofillHints="no"
             android:gravity="center"
             android:hint="@string/SignUp_information_phone"
-            android:inputType="phone"
+            android:inputType="number"
 
             app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline05_horizontal"
             app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
@@ -417,12 +417,12 @@
 
         <!-- Phone -->
         <EditText
-            android:id="@+id/activity_signup_03_EditText_school_number"
+            android:id="@+id/activity_signup_03_EditText_student_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:autofillHints="no"
             android:gravity="center"
-            android:hint="@string/SignUp_information_school_number"
+            android:hint="@string/SignUp_information_student_number"
             android:inputType="number"
 
             app:layout_constraintBottom_toBottomOf="@id/activity_signup_03_guideline08_horizontal"
