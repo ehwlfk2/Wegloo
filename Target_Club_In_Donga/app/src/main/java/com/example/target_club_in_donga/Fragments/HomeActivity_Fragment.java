@@ -20,7 +20,7 @@ import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
-import com.example.target_club_in_donga.ScheduleActivity;
+import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 
