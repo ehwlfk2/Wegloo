@@ -10,72 +10,66 @@
         style="@style/Top_Content_Text_Style"
         android:text="물품등록하기" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <ImageView
+            android:id="@+id/activity_material_management_insert_imageview_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:saveEnabled="false"
+            android:scaleType="fitStart"
+            android:src="@mipmap/ic_launcher" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/activity_material_management_insert_imageview_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:saveEnabled="false"
-                android:scaleType="fitStart"
-                android:src="@mipmap/ic_launcher" />
+            <EditText
+                android:id="@+id/activity_material_management_insert_edittext_item_name"
+                style="@style/Content_Text_Style"
+                android:text="물품명" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/activity_material_management_insert_edittext_item_name"
-                    style="@style/Content_Text_Style"
-                    android:text="물품명" />
+            <TextView
+                style="@style/Content_Text_Style"
+                android:text="대여자" />
 
-                <TextView
-                    style="@style/Content_Text_Style"
-                    android:text="대여자" />
+            <TextView
+                android:id="@+id/activity_material_management_insert_textview_lender"
+                style="@style/Content_Text_Style"
+                android:text="없음" />
 
-                <TextView
-                    android:id="@+id/activity_material_management_insert_textview_lender"
-                    style="@style/Content_Text_Style"
-                    android:text="없음" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="#4F000000" />
 
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginBottom="3dp"
-                    android:background="#4F000000" />
-
-            </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        </ScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                </LinearLayout>
-            </ScrollView>
-
-            <Button
-                android:id="@+id/activity_material_management_insert_button_insert"
-                style="@style/Content_Classification_Text_Style"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="-2dp"
-                android:text="등록하기" />
-
-        </RelativeLayout>
+        <Button
+            android:id="@+id/activity_material_management_insert_button_insert"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-2dp"
+            android:text="등록하기" />
+    </RelativeLayout>
 </LinearLayout>
