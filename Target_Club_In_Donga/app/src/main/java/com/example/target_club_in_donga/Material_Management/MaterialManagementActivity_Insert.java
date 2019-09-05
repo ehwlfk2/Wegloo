@@ -52,6 +52,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
     String material_path;
 
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +88,14 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         activity_material_management_insert_button_insert.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                upload(imagePath);
-                Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
-                startActivity(intent);
+                if(count > 0) {
+                    upload(imagePath);
+                    Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(MaterialManagementActivity_Insert.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -180,6 +186,8 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 materialManagementItem.timestamp = "없음";
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
+
+                count++;
 
             }
         });
