@@ -14,16 +14,6 @@ android {
     dataBinding{
         enabled = true
     }
-    sourceSets {
-        main {
-            res.srcDirs =
-                    [
-                            'src/main/res/layout/layout_Schedule',
-                            'src/main/res/layout',
-                            'src/main/res'
-                    ]
-        }
-    }
     buildTypes {
         release {
             minifyEnabled false
