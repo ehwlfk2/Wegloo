@@ -10,14 +10,21 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    // 앱에 애널리틱스 추가 (1)  com.google.firebase.analytics.FIrebaseAnalytics
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 앱에 대널리틱스 추가 (2) Obtain the FirebaseAnalytics instance
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // 인터넷 사용을 위한 권한을 허용 (2)
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()

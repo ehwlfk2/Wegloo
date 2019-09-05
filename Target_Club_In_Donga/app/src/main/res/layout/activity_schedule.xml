@@ -380,13 +380,19 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.85" />
 
-    <!--
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_schedule"
-            android:layout_width="348dp"
-            android:layout_height="300dp">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_schedule_RecyclerView_day_schedule"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-        </androidx.recyclerview.widget.RecyclerView>
-    -->
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/activity_schedule_Guideline_vertical_01"
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_Guideline_horizontal_02"
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_03"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
