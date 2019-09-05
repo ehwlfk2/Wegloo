@@ -25,12 +25,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
@@ -47,13 +48,15 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
     private String imagePath;
     private TextView activity_material_management_insert_textview_lender;
 
+    private long now;
+
+    String material_path;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material_management_insert);
-
-        // 홈에서 공지사항을 눌었을 떄, viewPager에서 ViewPagerAdapter_Notice로 공지사항화면이 나오고
-        // 오른쪽에서 왼쪽으로 슬라이드를 하면 홈 화면이 나오도록 한다.
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -124,26 +127,6 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
             File f = new File(imagePath);
             activity_material_management_insert_imageview_image.setImageURI(Uri.fromFile(f));
 
-            /*            Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
-
-             *//*            Uri uri = (Uri)data.getData();
-            intent.putExtra("uri", uri.toString());*//*
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            Bitmap bitmap = ((BitmapDrawable)ImageViewChange.getDrawable()).getBitmap();
-
-*//*            float scale = (float) (1024/(float)bitmap.getWidth());
-            int image_w = (int) (bitmap.getWidth() * scale);
-            int image_h = (int) (bitmap.getHeight() * scale);
-            Bitmap resize = Bitmap.createBitmap(bitmap, image_w, image_h, true);*//*
-
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-
-            intent.putExtra("image", byteArray);
-            startActivity(intent);*/
-
-//                backgrounduri = result.getUri();
-//                logo.setImageURI(backgrounduri);
         }
 //        }
     } // 위에 있는 변수값을 가져와서 앨범을 누르면 pickImageFromGallery() 실행되어 값 1000 들어오고 if문에 걸려 로고가 바뀌고,
@@ -163,10 +146,18 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
     }
 
     private void upload(String uri) {
+
+        now = System.currentTimeMillis();
+        // 현재시간을 date 변수에 저장한다.
+        Date date = new Date(now);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //"yyyy-MM-dd HH:mm:ss"
+        material_path = simpleDateFormat.format(date);
+
         StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
         final Uri file = Uri.fromFile(new File(uri));
-        StorageReference riversRef = storageRef.child("Material_Management/" + file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("Material_Management/" + material_path + '-' + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -185,8 +176,8 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 materialManagementItem.edit_lender = activity_material_management_insert_textview_lender.getText().toString();
                 materialManagementItem.uId = auth.getCurrentUser().getUid();
                 materialManagementItem.userId = auth.getCurrentUser().getEmail();
-                materialManagementItem.imageName = file.getLastPathSegment();
-                materialManagementItem.timestamp = ServerValue.TIMESTAMP;
+                materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();
+                materialManagementItem.timestamp = "없음";
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
 

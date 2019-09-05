@@ -28,12 +28,8 @@
 
             <TextView
                 android:id="@+id/activity_material_management_item_textview_recyclerview_item_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:text="물품명"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style"
+                android:text="물품명" />
 
             <View
                 android:layout_width="wrap_content"
@@ -43,21 +39,13 @@
                 android:background="#4F000000" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:text="대여자"
-                android:textSize="20dp" />
+                style="@style/Content_Classification_Text_Style"
+                android:text="대여자" />
 
             <TextView
                 android:id="@+id/activity_material_management_item_textview_recyclerview_lender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:text="없음"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style"
+                android:text="없음" />
 
             <View
                 android:layout_width="wrap_content"
@@ -67,20 +55,12 @@
                 android:background="#4F000000" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:text="대여 끝나는 날짜"
-                android:textSize="20dp" />
+                style="@style/Content_Classification_Text_Style"
+                android:text="대여 끝나는 날짜" />
 
             <TextView
                 android:id="@+id/activity_material_management_item_timestamp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style" />
 
         </LinearLayout>
     </LinearLayout>

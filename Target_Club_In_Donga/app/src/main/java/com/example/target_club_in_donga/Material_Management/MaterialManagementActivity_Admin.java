@@ -35,7 +35,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.R;
-import com.facebook.CustomTabMainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,15 +46,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
@@ -75,12 +71,13 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
     private FirebaseDatabase database;
 
     protected ImageView activity_material_management_item_imageview_recyclerview_image;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private long now;
     private String formatDate, formatHour, formatMin;
-    private String dateStr;
+    private String dateStr,timeStr;
 
     protected TextView activity_material_management_item_timestamp;
+
+    private int flag1 = 0, flag2 = 0, count = 0;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -118,7 +115,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MaterialManagement_Item materialManagementItem = snapshot.getValue(MaterialManagement_Item.class);
                     String uidKey = snapshot.getKey();
-                    materialManagementItems.add(0, materialManagementItem);
+                    materialManagementItems.add(materialManagementItem);
                     uidLists.add(uidKey);
                 }
                 boardRecyclerViewAdapter.notifyDataSetChanged();
@@ -135,6 +132,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                count++;
                 Intent intent = new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_Insert.class);
                 startActivity(intent);
                 boardRecyclerViewAdapter.notifyDataSetChanged(); //변경된 데이터를 화면에 반영
@@ -203,7 +201,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
             storage.getReference().child("Material_Management").child(materialManagementItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
-                    Toast.makeText(MaterialManagementActivity_Admin.this, "삭제 완료", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MaterialManagementActivity_Admin.this, "삭제 완료", Toast.LENGTH_SHORT).show();
 
                     database.getReference().child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -358,6 +356,8 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                         case 1002:
 
+                            count--;
+
                             delete_content(getAdapterPosition());
 
                             materialManagementItems.remove(getAdapterPosition());
@@ -388,35 +388,33 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                             now = System.currentTimeMillis();
                             // 현재시간을 date 변수에 저장한다.
                             Date date = new Date(now);
-                            formatDate = simpleDateFormat.format(date);//"yyyy/MM/dd HH:mm:ss"
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            //"yyyy-MM-dd"
+                            formatDate = simpleDateFormat.format(date);
                             detailButtonPeriodCalendar.setText(formatDate);
+
+                            simpleDateFormat = new SimpleDateFormat("HH:mm");
+                            // "HH:mm"
+                            formatHour = simpleDateFormat.format(date);
+                            detailButtonPeriodTime.setText(formatHour);
 
                             final AlertDialog dialog2 = builder2.create();
 
-                            detailButtonPeriodCalendar.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(final View v) {
-                                    showDate();
-                                }
-                            });
+                                    detailButton.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(View v) {
 
-                            detailButtonPeriodTime.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(final View v) {
-                                    showTime();
-                                }
-                            });
+                                            if (flag1 == 0) {
+                                                Toast.makeText(v.getContext(),  "대여날짜를 선택하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                            }
 
-                            detailButton.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View v) {
+                                            if (flag2 == 0) {
+                                                Toast.makeText(v.getContext(),  "대여시간을 선택하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                            }
 
-                                    Toast.makeText(v.getContext(), auth.getCurrentUser().getDisplayName() + "님 대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
-
-                                    activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
-                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());
-
-                                    activity_material_management_item_timestamp.setText(formatDate);
-                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("timestamp").setValue(activity_material_management_item_timestamp.getText().toString());
+                                    /*activity_material_management_item_timestamp.setText(formatDate);
+                                    database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("timestamp").setValue(activity_material_management_item_timestamp.getText().toString());*/
 
 //                                    materialManagementItems.remove(getAdapterPosition());
 /*                                    notifyItemRemoved(getAdapterPosition());
@@ -435,8 +433,79 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
 //                                notifyItemRangeChanged(getAdapterPosition(), mArrayList2.size());
 
-                                    dialog2.dismiss();
+                                            if(flag1 == 1 && flag2 == 1) {
+                                                Toast.makeText(v.getContext(), auth.getCurrentUser().getDisplayName() + "님 대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                                                activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
+                                                database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("edit_lender").setValue(activity_material_management_item_textview_recyclerview_lender.getText().toString());
+                                                activity_material_management_item_timestamp.setText(dateStr + '-' +  timeStr);
+                                                database.getReference().child("Material_Management").child(uidLists.get(getAdapterPosition())).child("timestamp").setValue(activity_material_management_item_timestamp.getText().toString());
+                                                flag1 = 0;
+                                                flag2 = 0;
+                                                dialog2.dismiss();
+                                            }
+                                        }
+                                    });
 
+                            detailButtonPeriodCalendar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(final View v) {
+
+                                        DatePickerDialog datePickerDialog = new DatePickerDialog(MaterialManagementActivity_Admin.this, new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(final DatePicker view, final int year, final int month, final int dayOfMonth) {
+                                                y = year;
+                                                m = month + 1;
+                                                d = dayOfMonth;
+
+                                                if(month < 10)
+                                                    dateStr = year+"-0"+(month+1)+"-";
+                                                else
+                                                    dateStr = year+"-"+(month+1)+"-";
+
+                                                if(dayOfMonth < 10)
+                                                    dateStr += ("0"+dayOfMonth);
+                                                else
+                                                    dateStr += dayOfMonth;
+
+                                                detailButtonPeriodCalendar.setText(dateStr);
+                                                flag1++;
+
+                                            }
+                                        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                                        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+                                        datePickerDialog.setMessage("날짜");
+                                        datePickerDialog.show();
+                                    }
+                                });
+
+                            detailButtonPeriodTime.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(final View v) {
+                                    TimePickerDialog timePickerDialog = new TimePickerDialog(MaterialManagementActivity_Admin.this, new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
+                                            h = hourOfDay;
+                                            mi = minute;
+
+                                            if(hourOfDay < 10)
+                                                timeStr = "0"+hourOfDay;
+                                            else
+                                                timeStr = hourOfDay+"";
+
+                                            if(minute < 10)
+                                                timeStr += ":0"+minute;
+                                            else
+                                                timeStr += ":"+minute;
+
+                                            detailButtonPeriodTime.setText(timeStr);
+                                            flag2++;
+
+                                        }
+                                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
+
+                                    timePickerDialog.setMessage("시간");
+                                    timePickerDialog.show();
                                 }
                             });
 
@@ -444,6 +513,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                     }
                     return true;
+
                 }
             };
         }
@@ -466,6 +536,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
             customViewHolder.activity_material_management_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).getId());
             customViewHolder.activity_material_management_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).edit_name_edittext);
             customViewHolder.activity_material_management_item_textview_recyclerview_lender.setText(materialManagementItems.get(position).edit_lender);
+            customViewHolder.activity_material_management_item_timestamp.setText(materialManagementItems.get(position).timestamp.toString());
 
             Glide.with(viewholder.itemView.getContext()).load(materialManagementItems.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_item_imageview_recyclerview_image);
 
@@ -474,12 +545,11 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                 customViewHolder.activity_material_management_item_linearlayout.setBackgroundColor(Color.LTGRAY);
             }
 
-            long unixTime = (long) materialManagementItems.get(position).getTimestamp();
+/*            long unixTime = (long) materialManagementItems.get(position).getTimestamp();
             Date date = new Date(unixTime);
 //            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-            String time = simpleDateFormat.format(date);
-            customViewHolder.activity_material_management_item_timestamp.setText(time);
-
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String time = simpleDateFormat.format(date);*/
 
         }
 
@@ -488,48 +558,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
             return materialManagementItems.size();
         }
 
-        void showDate() {
-            DatePickerDialog datePickerDialog = new DatePickerDialog(MaterialManagementActivity_Admin.this, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(final DatePicker view, final int year, final int month, final int dayOfMonth) {
-                    y = year;
-                    m = month + 1;
-                    d = dayOfMonth;
-
-                    if(month < 10)
-                        dateStr = year+"-0"+(month+1)+"-";
-                    else
-                        dateStr = year+"-"+(month+1)+"-";
-
-                    if(dayOfMonth < 10)
-                        dateStr += ("0"+dayOfMonth);
-                    else
-                        dateStr += dayOfMonth;
-
-//                    activity_material_management_item_timestamp.setText(dateStr);
-
-                }
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-            datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
-            datePickerDialog.setMessage("날짜");
-            datePickerDialog.show();
-        }
-
-        void showTime() {
-            TimePickerDialog timePickerDialog = new TimePickerDialog(MaterialManagementActivity_Admin.this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
-                    h = hourOfDay;
-                    mi = minute;
-                }
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
-
-            timePickerDialog.setMessage("시간");
-            timePickerDialog.show();
-        }
-
     }
-
 
 }
