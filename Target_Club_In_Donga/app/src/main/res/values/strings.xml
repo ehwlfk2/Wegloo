@@ -63,7 +63,7 @@
     <string name="SignUp_information_name">Name</string>
     <string name="SignUp_information_phone">Phone</string>
     <string name="SignUp_information_school">School</string>
-    <string name="SignUp_information_school_number">School\nNumber</string>
+    <string name="SignUp_information_student_number">Student\nNumber</string>
 
     <string name="SignUp_finish_greetings">가입을 진심으로 축하합니다!\n즐거운 시간보내세요.</string>
     <string name="Logout">Logout</string>
