@@ -59,6 +59,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                </LinearLayout>
+            </ScrollView>
+
             <Button
                 android:id="@+id/activity_material_management_insert_button_insert"
                 style="@style/Content_Classification_Text_Style"
@@ -66,9 +77,5 @@
                 android:layout_marginBottom="-2dp"
                 android:text="등록하기" />
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </ScrollView>
         </RelativeLayout>
 </LinearLayout>
