@@ -1,54 +1,32 @@
 <?xml version="1.1" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f1f3f5"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#f1f3f5">
 
-    >
 
-    <LinearLayout
-        android:id="@+id/activity_schedule_LinearLayout_monthLine"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
+    <LinearLayout android:id="@+id/activity_schedule_LinearLayout_monthLine"
+        android:layout_width="match_parent" android:layout_height="0dp" android:gravity="center"
 
         app:layout_constraintBottom_toBottomOf="@+id/activity_schedule_Guideline_horizontal_01"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_prev_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PREV"
-            android:textSize="15dp" />
+        <TextView android:id="@+id/tv_prev_month" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="PREV" android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/tv_current_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:text="@string/schedule_year_month"
+        <TextView android:id="@+id/tv_current_month" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" android:text="@string/schedule_year_month"
             android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/tv_next_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NEXT"
-            android:textSize="15dp" />
+        <TextView android:id="@+id/tv_next_month" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="NEXT" android:textSize="15dp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/activity_schedule_TextView_DayOfWeek_01"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#e0e7ee"
+    <TextView android:id="@+id/activity_schedule_TextView_DayOfWeek_01" android:layout_width="0dp"
+        android:layout_height="0dp" android:background="#e0e7ee"
 
-        android:gravity="center"
-        android:text="@string/DayOfWeek"
-        android:textColor="#969a9b"
+        android:gravity="center" android:text="@string/DayOfWeek" android:textColor="#969a9b"
 
         android:textStyle="bold"
 
@@ -57,15 +35,10 @@
         app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_01"
         app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
 
-    <TextView
-        android:id="@+id/activity_schedule_TextView_DayOfWeek_02"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#e0e7ee"
+    <TextView android:id="@+id/activity_schedule_TextView_DayOfWeek_02" android:layout_width="0dp"
+        android:layout_height="0dp" android:background="#e0e7ee"
 
-        android:gravity="center"
-        android:text="@string/DayOfWeek"
-        android:textColor="#969a9b"
+        android:gravity="center" android:text="@string/DayOfWeek" android:textColor="#969a9b"
 
         android:textStyle="bold"
 
@@ -74,15 +47,10 @@
         app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_02"
         app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
 
-    <TextView
-        android:id="@+id/activity_schedule_TextView_DayOfWeek_03"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#e0e7ee"
+    <TextView android:id="@+id/activity_schedule_TextView_DayOfWeek_03" android:layout_width="0dp"
+        android:layout_height="0dp" android:background="#e0e7ee"
 
-        android:gravity="center"
-        android:text="@string/DayOfWeek"
-        android:textColor="#969a9b"
+        android:gravity="center" android:text="@string/DayOfWeek" android:textColor="#969a9b"
 
         android:textStyle="bold"
 
@@ -91,15 +59,10 @@
         app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_03"
         app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
 
-    <TextView
-        android:id="@+id/activity_schedule_TextView_DayOfWeek_04"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#e0e7ee"
+    <TextView android:id="@+id/activity_schedule_TextView_DayOfWeek_04" android:layout_width="0dp"
+        android:layout_height="0dp" android:background="#e0e7ee"
 
-        android:gravity="center"
-        android:text="@string/DayOfWeek"
-        android:textColor="#969a9b"
+        android:gravity="center" android:text="@string/DayOfWeek" android:textColor="#969a9b"
 
         android:textStyle="bold"
 
@@ -108,15 +71,10 @@
         app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_05"
         app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
 
-    <TextView
-        android:id="@+id/activity_schedule_TextView_DayOfWeek_05"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#e0e7ee"
+    <TextView android:id="@+id/activity_schedule_TextView_DayOfWeek_05" android:layout_width="0dp"
+        android:layout_height="0dp" android:background="#e0e7ee"
 
-        android:gravity="center"
-        android:text="@string/DayOfWeek"
-        android:textColor="#969a9b"
+        android:gravity="center" android:text="@string/DayOfWeek" android:textColor="#969a9b"
 
         android:textStyle="bold"
 
@@ -138,15 +96,10 @@
         >
     -->
 
-    <TextView
-        android:id="@+id/activity_schedule_TextView_DayOfWeek_06"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#e0e7ee"
+    <TextView android:id="@+id/activity_schedule_TextView_DayOfWeek_06" android:layout_width="0dp"
+        android:layout_height="0dp" android:background="#e0e7ee"
 
-        android:gravity="center"
-        android:text="@string/DayOfWeek"
-        android:textColor="#969a9b"
+        android:gravity="center" android:text="@string/DayOfWeek" android:textColor="#969a9b"
 
         android:textStyle="bold"
 
@@ -155,15 +108,10 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
 
-    <TextView
-        android:id="@+id/activity_schedule_TextView_DayOfWeek_07"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#e0e7ee"
+    <TextView android:id="@+id/activity_schedule_TextView_DayOfWeek_07" android:layout_width="0dp"
+        android:layout_height="0dp" android:background="#e0e7ee"
 
-        android:gravity="center"
-        android:text="@string/DayOfWeek"
-        android:textColor="#969a9b"
+        android:gravity="center" android:text="@string/DayOfWeek" android:textColor="#969a9b"
 
         android:textStyle="bold"
 
@@ -172,103 +120,79 @@
         app:layout_constraintRight_toRightOf="@+id/activity_schedule_Guideline_vertical_04"
         app:layout_constraintTop_toBottomOf="@+id/activity_schedule_LinearLayout_monthLine" />
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
+    <View android:layout_width="1dp" android:layout_height="0dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_01"
         app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
+    <View android:layout_width="1dp" android:layout_height="0dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_02"
         app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
+    <View android:layout_width="1dp" android:layout_height="0dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_03"
         app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
+    <View android:layout_width="1dp" android:layout_height="0dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_04"
         app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
+    <View android:layout_width="1dp" android:layout_height="0dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_05"
         app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
 
-    <View
-        android:layout_width="1dp"
-        android:layout_height="0dp"
+    <View android:layout_width="1dp" android:layout_height="0dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/activity_schedule_Guideline_vertical_06"
         app:layout_constraintTop_toTopOf="@id/activity_schedule_TextView_DayOfWeek_01" />
     <!-- 요일 1 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_01" />
 
     <!-- 요일 2 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_02" />
 
     <!-- 요일 3 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_03" />
 
     <!-- 요일 4 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_04" />
 
     <!-- 요일 5 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_05" />
 
     <!-- 요일 6 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <View android:layout_width="match_parent" android:layout_height="1dp"
         android:background="@color/colorGrayVeryBright"
 
         app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_06" />
@@ -276,121 +200,93 @@
     <!-- 요일 7 -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_horizontal_01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
 
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+        android:orientation="horizontal" app:layout_constraintGuide_percent="0.08" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_horizontal_02"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
 
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.16"
+        android:orientation="horizontal" app:layout_constraintGuide_percent="0.16"
 
-        />
+    />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_horizontal_03"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
 
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
+        android:orientation="horizontal" app:layout_constraintGuide_percent="0.30" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_horizontal_04"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
 
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.44" />
+        android:orientation="horizontal" app:layout_constraintGuide_percent="0.44" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_horizontal_05"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
 
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.58" />
+        android:orientation="horizontal" app:layout_constraintGuide_percent="0.58" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_horizontal_06"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
 
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.72" />
+        android:orientation="horizontal" app:layout_constraintGuide_percent="0.72" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_horizontal_07"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
 
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.86" />
+        android:orientation="horizontal" app:layout_constraintGuide_percent="0.86" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_vertical_01"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
 
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.14" />
+        android:orientation="vertical" app:layout_constraintGuide_percent="0.14" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_vertical_02"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
 
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.28" />
+        android:orientation="vertical" app:layout_constraintGuide_percent="0.28" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_vertical_03"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
 
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.42" />
+        android:orientation="vertical" app:layout_constraintGuide_percent="0.42" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_vertical_04"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
 
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.56" />
+        android:orientation="vertical" app:layout_constraintGuide_percent="0.56" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_vertical_05"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
 
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.70" />
+        android:orientation="vertical" app:layout_constraintGuide_percent="0.70" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activity_schedule_Guideline_vertical_06"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
 
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        android:orientation="vertical" app:layout_constraintGuide_percent="0.85" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_schedule_RecyclerView_day_schedule"
-        android:layout_width="0dp"
+        android:id="@+id/activity_schedule_RecyclerView_day_schedule" android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
+        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_03"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@id/activity_schedule_Guideline_vertical_01"
-        app:layout_constraintTop_toTopOf="@id/activity_schedule_Guideline_horizontal_02"
-        app:layout_constraintBottom_toBottomOf="@id/activity_schedule_Guideline_horizontal_03"
-        >
+        app:layout_constraintTop_toTopOf="@id/activity_schedule_Guideline_horizontal_02">
 
     </androidx.recyclerview.widget.RecyclerView>
 

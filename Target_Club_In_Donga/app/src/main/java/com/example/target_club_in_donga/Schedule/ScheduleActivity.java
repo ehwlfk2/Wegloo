@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Schedule;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +15,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.target_club_in_donga.Activity_Adapters.ScheduleActivity_Adapter;
 import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
+import com.example.target_club_in_donga.R;
+
+import com.example.target_club_in_donga.Schedule.ScheduleListViewModel;
+import com.example.target_club_in_donga.Schedule.ScheduleAdapter;
 
 import org.w3c.dom.Text;
 
@@ -23,6 +27,7 @@ import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity implements HomeActivity_Fragment.OnFragmentInteractionListener {
     private ViewPager viewPager;
+    //private
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,8 @@ public class ScheduleActivity extends AppCompatActivity implements HomeActivity_
         // 홈에서 일정을 눌었을 떄, viewPager에서 ViewPagerAdapter_Schedule로 일정화면이 나오고
         // 오른쪽에서 왼쪽으로 슬라이드를 하면 홈 화면이 나오도록 한다.
 
-        RecyclerView Day_schedule = findViewById(R.id.activity_schedule_RecyclerView_day_schedule);
+
+
 
     }
 

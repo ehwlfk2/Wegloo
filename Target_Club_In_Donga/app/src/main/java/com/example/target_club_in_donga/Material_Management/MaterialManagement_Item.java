@@ -2,6 +2,7 @@ package com.example.target_club_in_donga.Material_Management;
 
 public class MaterialManagement_Item {
     private String id;
+    public Object timestamp;
 
     public String getId() {
         return id;
@@ -22,6 +23,13 @@ public class MaterialManagement_Item {
     }
     public MaterialManagement_Item(){
 
+    }
+
+    public Object getTimestamp(){
+        return timestamp;
+    }
+    public void setTimestamp(Object timestamp){
+        this.timestamp = timestamp;
     }
 
 }
