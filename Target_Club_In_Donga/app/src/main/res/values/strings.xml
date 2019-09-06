@@ -15,7 +15,7 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-
+    <string name="menu">MENU</string>
 
     <string name="facebook_app_id">750941012004334</string>
     <string name="fb_login_protocol_scheme">fb750941012004334</string>
@@ -72,6 +72,9 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
 
-    <string name="schedule_year_month" formatted="true">%d\t%d</string>
-    <string name="DayOfWeek" formatted="true">%s</string>
+    <string name="schedule_today">Today</string>
+    <string name="string" formatted="true">%s</string>
+    <string name="schedule_month" formatted="true">%d월</string>
+    <string name="schedule_year" formatted="true">%d년</string>
+
 </resources>

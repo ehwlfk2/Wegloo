@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="DayItemBinding">
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="com.example.target_club_in_donga.Schedule.ScheduleViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <!--
+        selectableItemBackgroundBorderless : 부모 뷰까지 물결이 퍼지는 클릭 효과!
+
+            LinearLayout 에 들어갈 속성 중 삭제한 속성
+            app:layout_constraintDimensionRatio="2:3"
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="?android:selectableItemBackgroundBorderless"
+            android:orientation="vertical"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <!-- 가로 줄 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGrayBright" />
+
+            <!-- tools : 안드로이드 스튜디오에서만 적용되며 실제 디바이스나 애뮬에서는 적용되지 않는 속성 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                tools:text="1"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
