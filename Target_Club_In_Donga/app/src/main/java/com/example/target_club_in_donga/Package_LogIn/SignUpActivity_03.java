@@ -2,6 +2,8 @@ package com.example.target_club_in_donga.Package_LogIn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.poi.ss.formula.functions.T;
 
+import java.util.regex.Pattern;
+
 public class SignUpActivity_03 extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
@@ -27,11 +31,33 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
     private String emailSubject;
     private String emailAddress;
     private String emailPw;
+    private EditText activity_signup_03_EditText_name, activity_signup_03_EditText_phone, activity_signup_03_EditText_School, activity_signup_03_EditText_student_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_03_information);
+
+        activity_signup_03_EditText_name = (EditText)findViewById(R.id.activity_signup_03_EditText_name);
+        activity_signup_03_EditText_phone = (EditText)findViewById(R.id.activity_signup_03_EditText_phone);
+        activity_signup_03_EditText_School = (EditText)findViewById(R.id.activity_signup_03_EditText_School);
+        activity_signup_03_EditText_student_number = (EditText)findViewById(R.id.activity_signup_03_EditText_student_number);
+
+        InputFilter filter_mail = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                Pattern ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$");
+                if (source.equals("") || ps.matcher(source).matches()) {
+                    return source;
+                }
+                //Toast.makeText(getContext(), "한글, 영문, 숫자만 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity_03.this, "한글 영문 숫자만 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                return "";
+            }
+        };
+
+        activity_signup_03_EditText_name.setFilters(new InputFilter[]{filter_mail});
+        activity_signup_03_EditText_School.setFilters(new InputFilter[]{filter_mail});
 
         EditText activity_signup_03_EditText_email = findViewById(R.id.activity_signup_03_EditText_email);
         EditText activity_signup_03_EditText_pw = findViewById(R.id.activity_signup_03_EditText_pw);
@@ -77,10 +103,17 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
         } else if (i == R.id.activity_signup_03_next_btn) {
             String pw = ((EditText) (findViewById(R.id.activity_signup_03_EditText_pw))).getText().toString();
             if(pw.length() >= 6 ) {
-                String name = ((EditText) (findViewById(R.id.activity_signup_03_EditText_name))).getText().toString();
-                String phone = ((EditText) (findViewById(R.id.activity_signup_03_EditText_phone))).getText().toString();
-                String school = ((EditText) (findViewById(R.id.activity_signup_03_EditText_School))).getText().toString();
-                String studentNumber = ((EditText) (findViewById(R.id.activity_signup_03_EditText_school_number))).getText().toString();
+
+                //String name = ((EditText) (findViewById(R.id.activity_signup_03_EditText_name))).getText().toString(); //이름 정규화 노필요
+                //String phone = ((EditText) (findViewById(R.id.activity_signup_03_EditText_phone))).getText().toString(); //폰이 보통 몇자리죠???
+                //String school = ((EditText) (findViewById(R.id.activity_signup_03_EditText_School))).getText().toString(); //동아대 --> 동아대학교
+                //String studentNumber = ((EditText) (findViewById(R.id.activity_signup_03_EditText_student_number))).getText().toString();
+
+                String name = activity_signup_03_EditText_name.getText().toString();
+                String phone = activity_signup_03_EditText_phone.getText().toString();
+                String school = activity_signup_03_EditText_School.getText().toString();
+                String studentNumber = activity_signup_03_EditText_student_number.getText().toString();
+
                 if(!name.isEmpty() && !phone.isEmpty() && !school.isEmpty() && !studentNumber.isEmpty() ) {
                     //createUser(emailSubject, emailAddress, pw, name, phone, school, schoolNumber);
 
