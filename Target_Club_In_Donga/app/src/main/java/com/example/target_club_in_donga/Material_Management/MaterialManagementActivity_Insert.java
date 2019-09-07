@@ -132,6 +132,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
             imagePath = getPath(data.getData());
             File f = new File(imagePath);
             activity_material_management_insert_imageview_image.setImageURI(Uri.fromFile(f));
+            count++;
 
         }
 //        }
@@ -186,8 +187,6 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 materialManagementItem.timestamp = "없음";
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
-
-                count++;
 
             }
         });
