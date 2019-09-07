@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGrayVeryBright"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/activity_signup_02_timeCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/SignUp_identification_timeCounter"
+        android:textSize="30sp"
+
+        android:layout_marginBottom="10dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/activity_signup_02_EditText_insert_code"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/SignUp_identification_insert_code"
+
+        app:layout_constraintBottom_toTopOf="@+id/activity_signup_02_EditText_insert_code"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_signup_02_EditText_insert_code" />
+
+    <EditText
+        android:id="@+id/activity_signup_02_EditText_insert_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="no"
+        android:background="@color/colorWhite"
+        android:hint="@string/SignUp_identification_insert_code"
+        android:inputType="text"
+
+        android:padding="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/activity_signup_02_check_code_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorWhite"
+
+        android:padding="20dp"
+        android:text="@string/SignUp_identification_check_code"
+
+        app:layout_constraintLeft_toLeftOf="@+id/activity_signup_02_EditText_insert_code"
+        app:layout_constraintRight_toRightOf="@+id/activity_signup_02_EditText_insert_code"
+        app:layout_constraintTop_toBottomOf="@+id/activity_signup_02_EditText_insert_code" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

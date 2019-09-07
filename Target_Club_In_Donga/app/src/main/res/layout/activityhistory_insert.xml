@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/activityhistory_insert_imageview"
+        android:src="@drawable/ic_launcher_foreground"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:id="@+id/activityhistory_insert_textview_date"
+        android:gravity="center"
+        />
+
+    <EditText
+        android:id="@+id/activityhistory_insert_edittext_content"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="top"
+        android:hint="내용"
+        android:inputType="textMultiLine" />
+
+    <com.melnykov.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_done"
+        android:id="@+id/activityhistory_insert_button_insert"
+        fab:fab_colorNormal="@color/fbutton_color_turquoise"
+        fab:fab_colorPressed="@color/fbutton_color_green_sea"
+        fab:fab_colorRipple="@color/fbutton_color_emerald"
+        fab:fab_type="mini"
+        />
+
+</LinearLayout>
