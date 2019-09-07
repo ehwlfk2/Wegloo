@@ -463,7 +463,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
             return materialManagementItems.size();
         }
 
-
     }
 
 }

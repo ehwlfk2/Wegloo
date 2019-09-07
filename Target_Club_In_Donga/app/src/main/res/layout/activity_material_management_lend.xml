@@ -63,6 +63,10 @@
                 style="@style/Content_Classification_Text_Style"
                 android:text="달력" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="5dp" />
+
             <Button
                 android:id="@+id/activity_material_management_lend_period_time"
                 style="@style/Content_Classification_Text_Style"
@@ -82,28 +86,31 @@
         style="@style/Content_Text_Style"
         android:text="기록사항" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#4F000000" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_material_management_lend_recyclerview_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="10dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical">
+    </androidx.recyclerview.widget.RecyclerView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#4F000000" />
-
-            </LinearLayout>
-        </ScrollView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/activity_material_management_lend_button_lend"
