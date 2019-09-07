@@ -33,8 +33,6 @@ import com.melnykov.fab.FloatingActionButton;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
-
 import static java.security.AccessController.getContext;
 
 public class NoticeActivity_Insert extends AppCompatActivity {
@@ -140,7 +138,7 @@ public class NoticeActivity_Insert extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     nowColor = activity_notice_insert_edittext_title.getCurrentTextColor();
-                    openColorPicker();
+                    //openColorPicker();
                 }
             });
 
@@ -157,7 +155,7 @@ public class NoticeActivity_Insert extends AppCompatActivity {
 
     }
 
-    public void openColorPicker() {
+    /*public void openColorPicker() {
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, nowColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
@@ -172,6 +170,6 @@ public class NoticeActivity_Insert extends AppCompatActivity {
             }
         });
         colorPicker.show();
-    }
+    }*/
 
 }
