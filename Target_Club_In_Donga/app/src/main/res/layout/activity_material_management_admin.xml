@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -11,17 +12,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="물품관리"
-            android:textSize="40dp" />
+            style="@style/Top_Content_Text_Style"
+            android:text="물품관리" />
 
         <View
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:background="#4F000000" />
 
         // 물품관리
@@ -52,10 +50,8 @@
 
                 <Button
                     android:id="@+id/activity_material_management_admin_button_insert"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    style="@style/Content_Classification_Text_Style"
                     android:text="새상품 추가"
-                    android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

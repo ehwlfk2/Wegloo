@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/activity_material_management_item_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2" >
 
         <ImageView
             android:id="@+id/activity_material_management_item_imageview_recyclerview_image"
@@ -28,12 +29,8 @@
 
             <TextView
                 android:id="@+id/activity_material_management_item_textview_recyclerview_item_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:text="물품명"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style"
+                android:text="물품명" />
 
             <View
                 android:layout_width="wrap_content"
@@ -43,21 +40,28 @@
                 android:background="#4F000000" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:text="대여자"
-                android:textSize="20dp" />
+                style="@style/Content_Classification_Text_Style"
+                android:text="대여자" />
 
             <TextView
                 android:id="@+id/activity_material_management_item_textview_recyclerview_lender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:singleLine="true"
-                android:text="없음"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style"
+                android:text="없음" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="#4F000000" />
+
+            <TextView
+                style="@style/Content_Classification_Text_Style"
+                android:text="대여 끝나는 날짜" />
+
+            <TextView
+                android:id="@+id/activity_material_management_item_recyclerview_timestamp"
+                style="@style/Content_Text_Style" />
 
         </LinearLayout>
     </LinearLayout>
