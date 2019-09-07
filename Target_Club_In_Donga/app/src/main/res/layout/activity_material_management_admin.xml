@@ -3,64 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="9dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="물품관리"
-            android:textSize="40dp" />
+            style="@style/Top_Content_Text_Style"
+            android:text="물품관리" />
 
         <View
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:background="#4F000000" />
 
         // 물품관리
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
+            tools:context=".Google_Login">
 
-            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <Button
+                android:id="@+id/activity_material_management_admin_button_insert"
+                style="@style/Content_Classification_Text_Style"
+                android:text="새상품 추가"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_material_management_admin_recyclerview_main_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".Google_Login">
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarSize="10dp"
+                android:scrollbarThumbVertical="@android:color/darker_gray"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/activity_material_management_admin_button_insert"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/activity_material_management_admin_recyclerview_main_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:scrollbarFadeDuration="0"
-                    android:scrollbarSize="10dp"
-                    android:scrollbarThumbVertical="@android:color/darker_gray"
-                    android:scrollbars="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/activity_material_management_admin_button_insert"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/activity_material_management_admin_button_insert"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="새상품 추가"
-                    android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,7 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    dataBinding {
+    dataBinding{
         enabled = true
     }
     buildTypes {
@@ -50,7 +50,6 @@ android {
         implementation files('libs/poi-3.17.jar')
 
         implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-        implementation 'com.github.yukuku:ambilwarna:2.0.1'
     }
 
     apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

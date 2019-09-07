@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.target_club_in_donga.R;
 
-public class MaterialManagementActivity_Detail extends AppCompatActivity {
+public class MaterialManagementActivity_History extends AppCompatActivity {
 
     ImageView activity_material_management_lend_imageview_image;
     Button activity_material_management_lend_button_lend;

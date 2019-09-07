@@ -2,43 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="3"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="10dp">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
-        android:text="물품대여하기"
-        android:textSize="30dp" />
+        style="@style/Top_Content_Text_Style"
+        android:text="물품대여하기"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <ImageView
             android:id="@+id/activity_material_management_lend_imageview_image"
-            android:layout_width="180dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:saveEnabled="false"
             android:scaleType="fitStart"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/activity_material_management_lend_item_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingBottom="10dp"
-                android:text="물품명"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style"
+                android:text="물품명" />
 
             <View
                 android:layout_width="wrap_content"
@@ -49,12 +44,8 @@
 
             <TextView
                 android:id="@+id/activity_material_management_lend_lender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingBottom="10dp"
-                android:text="대여자"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style"
+                android:text="대여자" />
 
             <View
                 android:layout_width="wrap_content"
@@ -64,30 +55,22 @@
                 android:background="#4F000000" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingBottom="10dp"
-                android:text="대여기간\n설정하기"
-                android:textSize="20dp" />
+                style="@style/Content_Text_Style"
+                android:text="대여기간 \n 설정하기" />
 
             <Button
                 android:id="@+id/activity_material_management_lend_period_calendar"
+                style="@style/Content_Classification_Text_Style"
+                android:text="달력" />
+
+            <View
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingBottom="10dp"
-                android:text="달력"
-                android:textSize="20dp" />
+                android:layout_height="5dp" />
 
             <Button
                 android:id="@+id/activity_material_management_lend_period_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingBottom="10dp"
-                android:text="시간"
-                android:textSize="20dp" />
+                style="@style/Content_Classification_Text_Style"
+                android:text="시간" />
 
         </LinearLayout>
     </LinearLayout>
@@ -99,43 +82,42 @@
         android:layout_marginBottom="10dp"
         android:background="#4F000000" />
 
+    <TextView
+        style="@style/Content_Text_Style"
+        android:text="기록사항" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#4F000000" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_material_management_lend_recyclerview_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="10dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical">
+    </androidx.recyclerview.widget.RecyclerView>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="기록사항"
-                    android:textSize="20dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#4F000000" />
-
-            </LinearLayout>
-        </ScrollView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/activity_material_management_lend_button_lend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/Content_Classification_Text_Style"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-2dp"
-            android:text="대여하기"
-            android:textSize="20dp" />
+            android:text="대여하기" />
 
     </RelativeLayout>
 </LinearLayout>

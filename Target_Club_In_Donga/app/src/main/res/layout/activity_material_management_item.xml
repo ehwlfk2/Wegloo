@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/activity_material_management_item_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2" >
 
         <ImageView
             android:id="@+id/activity_material_management_item_imageview_recyclerview_image"
@@ -22,7 +23,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -59,7 +60,7 @@
                 android:text="대여 끝나는 날짜" />
 
             <TextView
-                android:id="@+id/activity_material_management_item_timestamp"
+                android:id="@+id/activity_material_management_item_recyclerview_timestamp"
                 style="@style/Content_Text_Style" />
 
         </LinearLayout>

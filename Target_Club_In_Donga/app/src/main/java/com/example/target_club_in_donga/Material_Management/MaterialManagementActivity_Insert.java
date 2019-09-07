@@ -52,6 +52,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
     String material_path;
 
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +88,14 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         activity_material_management_insert_button_insert.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                upload(imagePath);
-                Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
-                startActivity(intent);
+                if(count > 0) {
+                    upload(imagePath);
+                    Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(MaterialManagementActivity_Insert.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -126,6 +132,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
             imagePath = getPath(data.getData());
             File f = new File(imagePath);
             activity_material_management_insert_imageview_image.setImageURI(Uri.fromFile(f));
+            count++;
 
         }
 //        }
@@ -168,16 +175,17 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadUri = taskSnapshot.getDownloadUrl();
+//                Uri downloadUri = taskSnapshot.getDownloadUrl();
 
                 MaterialManagement_Item materialManagementItem = new MaterialManagement_Item();
-                materialManagementItem.imageUri = downloadUri.toString();
                 materialManagementItem.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
                 materialManagementItem.edit_lender = activity_material_management_insert_textview_lender.getText().toString();
+                materialManagementItem.timestamp = "없음";
+
+/*                materialManagementItem.imageUri = downloadUri.toString();
                 materialManagementItem.uId = auth.getCurrentUser().getUid();
                 materialManagementItem.userId = auth.getCurrentUser().getEmail();
-                materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();
-                materialManagementItem.timestamp = "없음";
+                materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();*/
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
 
