@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.target_club_in_donga">
     <!-- 인터넷 권한 허용 (1) -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,14 +22,11 @@
         <activity android:name=".Package_LogIn.SignUpActivity_03" />
         <activity android:name=".Package_LogIn.SignUpActivity_04" />
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -47,7 +39,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity android:name=".AttendActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".Material_Management.MaterialManagementActivity_Admin" />
@@ -56,16 +47,17 @@
         <activity android:name=".NoticeActivity" />
         <activity android:name=".Schedule.ScheduleActivity" />
         <activity android:name=".UserDetailActivity" />
-
-        <activity android:name=".History.HistoryActivity_Main"/>
-        <activity android:name=".History.HistoryActivity_Insert"/>
+        <activity android:name=".History.HistoryActivity_Main" />
+        <activity android:name=".History.HistoryActivity_Insert" />
         <activity android:name=".Vote.VoteActivity_Result" />
         <activity android:name=".Vote.VoteActivity_Execute" />
         <activity android:name=".Vote.VoteActivity_Main" />
         <activity android:name=".Vote.VoteActivity_Insert" />
-
-        <activity android:name=".Accountbook.AccountbookActivity_Main"/>
-
+        <activity android:name=".Notice.NoticeActivity_Insert"/>
+        <activity android:name=".Accountbook.AccountbookActivity_Main" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -77,5 +69,9 @@
                 android:resource="@xml/provider" />
         </provider>
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
