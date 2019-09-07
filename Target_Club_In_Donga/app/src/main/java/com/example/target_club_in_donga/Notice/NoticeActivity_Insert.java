@@ -24,9 +24,6 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.core.content.ContextCompat;
 
 import com.example.target_club_in_donga.R;
-import com.example.target_club_in_donga.Vote.VoteActivity_Execute;
-import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.example.target_club_in_donga.Vote.VoteActivity_Result;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
 
