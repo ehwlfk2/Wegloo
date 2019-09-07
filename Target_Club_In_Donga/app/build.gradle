@@ -56,8 +56,3 @@ android {
     apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
 
 }
-
-dependencies {
-    implementation 'androidx.appcompat:appcompat:+'
-    implementation 'androidx.constraintlayout:constraintlayout:+'
-}
