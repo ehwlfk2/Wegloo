@@ -55,6 +55,18 @@
         fab:fab_type="mini"
         fab:fab_shadow="false"
         />
+    <com.melnykov.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_reply"
+        android:id="@+id/activity_notice_insert_popup_reply"
+        fab:fab_colorNormal="@color/fbutton_color_turquoise"
+        fab:fab_colorPressed="@color/fbutton_color_green_sea"
+        fab:fab_colorRipple="@color/fbutton_color_emerald"
+        fab:fab_type="mini"
+        fab:fab_shadow="false"
+        />
 
 
 
