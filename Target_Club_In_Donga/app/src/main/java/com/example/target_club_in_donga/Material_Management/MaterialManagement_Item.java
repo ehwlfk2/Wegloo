@@ -17,6 +17,9 @@ public class MaterialManagement_Item {
     public String uId;
     public String userId;
     public String edit_lender;
+    public String history_lend_date;
+    public String history_lend_name;
+
 
     public MaterialManagement_Item(String id) {
         this.id = id;

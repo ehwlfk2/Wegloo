@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.example.target_club_in_donga.Accountbook.AccountbookActivity_Main;
 import com.example.target_club_in_donga.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
+import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
@@ -53,6 +56,8 @@ public class HomeActivity_Fragment extends Fragment {
     private ImageView menu_btn,setting_btn;
     private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7;
     private SlidingDrawer slidingDrawer;
+    int menu_count = 0;
+
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
@@ -90,6 +95,7 @@ public class HomeActivity_Fragment extends Fragment {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
 
@@ -174,6 +180,7 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
                 public void onClick(final View v) {
                 slidingDrawer.animateOpen();
+                menu_count++;
             }
         }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
 
@@ -189,6 +196,27 @@ public class HomeActivity_Fragment extends Fragment {
                 slidingdrawer_title.setVisibility(View.INVISIBLE);
             }
         });
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(final View view, final int i, final KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_BACK && menu_count > 0) {
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("finishstatus", true);
+                    slidingDrawer.animateClose();
+                    menu_count--;
+//                    getActivity().finish();
+                    startActivity(intent);
+                    return  true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
         return view;
     }
 

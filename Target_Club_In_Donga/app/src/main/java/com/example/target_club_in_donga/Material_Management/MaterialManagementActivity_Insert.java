@@ -50,6 +50,8 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
     private long now;
 
+    String findkey;
+
     String material_path;
 
     int count = 0;
@@ -175,22 +177,41 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadUri = taskSnapshot.getDownloadUrl();
+                Uri downloadUri = taskSnapshot.getDownloadUrl();
 
                 MaterialManagement_Item materialManagementItem = new MaterialManagement_Item();
                 materialManagementItem.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
                 materialManagementItem.edit_lender = activity_material_management_insert_textview_lender.getText().toString();
                 materialManagementItem.timestamp = "없음";
+                materialManagementItem.imageUri = downloadUri.toString();
+                materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();
 
-/*                materialManagementItem.imageUri = downloadUri.toString();
-                materialManagementItem.uId = auth.getCurrentUser().getUid();
-                materialManagementItem.userId = auth.getCurrentUser().getEmail();
-                materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();*/
-
-                database.getReference().child("Material_Management").push().setValue(materialManagementItem);
+                findkey = database.getReference().push().getKey();
+                database.getReference().child("Material_Management").child(findkey).setValue(materialManagementItem);
 
             }
         });
+
+/*        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull final Exception e) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+//                Uri downloadUri = taskSnapshot.getDownloadUrl();
+
+                MaterialManagement_Item materialManagementItem = new MaterialManagement_Item();
+
+                materialManagementItem.history_lend_date = "없음";
+                materialManagementItem.history_lend_name = "없음";
+
+                database.getReference().child("Material_Management").child(findkey).child("lend_history").push().setValue(materialManagementItem);
+
+            }
+        });*/
+
 
     }
 
