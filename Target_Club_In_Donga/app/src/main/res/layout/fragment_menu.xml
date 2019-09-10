@@ -407,6 +407,10 @@
         android:layout_marginBottom="10dp"
         android:background="#4F000000" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -427,5 +431,6 @@
                     android:background="#ffffff" />
             </TableRow>
         </TableLayout>
+    </ScrollView>
 </LinearLayout>
 
