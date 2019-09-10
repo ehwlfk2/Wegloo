@@ -478,7 +478,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     Notice_item_color listcolor4 = new Notice_item_color();
                     listcolor4.setStart(start);
                     listcolor4.setEnd(end);
-                    listcolor4.setStyle(R.id.colorBlack+"");
+                    listcolor4.setStyle(""+R.color.colorBlack);
                     color_item.add(listcolor4);
 
                     return true;
