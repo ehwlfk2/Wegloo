@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -71,12 +70,11 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
     protected ImageView activity_material_management_admin_item_imageview_recyclerview_image;
     private long now;
     private String formatDate, formatHour, formatMin;
-    private String dateStr,timeStr, date_Now, date_End;
+    private String dateStr,timeStr, date_Now, date_End, date_Return;
 
     private int flag1 = 0, flag2 = 0;
-    String findkey;
-    String uidAminPath;
-    int ArrayCount = 0;
+    private String findkey;
+
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -115,8 +113,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                     String uidKey = snapshot.getKey();
                     materialManagementItems.add(materialManagementItem);
                     uidLists.add(uidKey);
-                    uidAminPath = uidKey;
-                    Log.e("리스트", uidAminPath);
                 }
                 materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
             }
@@ -237,7 +233,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     materialManagementItems.remove(position);
                                     notifyItemRemoved(position);
                                     notifyItemRangeChanged(position, materialManagementItems.size());
-                                    ArrayCount--;
                                     return true;
 
                                 case R.id.material_lend:
@@ -358,9 +353,8 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                                 // 대여를 하였을 떄 리사이클러뷰 리스트를 변경을 함
 
                                                 findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
-                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
-                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(formatDate + " ~ "  +((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
-                                                ArrayCount++;
+                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(formatDate + " ~ "  +((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
 
                                                 flag1 = 0;
                                                 flag2 = 0;
@@ -378,6 +372,17 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     database.getReference().child("Material_Management").child(uidLists.get(position)).child("edit_lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText("없음");
                                     database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+
+                                    // 반납을 했을시 물품기록사항에서 대여의 끝나는 날짜가 반납일로 바뀐다
+                                    now = System.currentTimeMillis();
+                                    // 현재시간을 date 변수에 저장한다.
+                                    Date returnDate = new Date(now);
+                                    SimpleDateFormat returnSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    //"yyyy-MM-dd HH:mm"
+                                    date_Return = returnSimpleDateFormat.format(returnDate);
+
+                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(formatDate + " ~ " + date_Return);
+
                                     return true;
 
                                 case R.id.material_history:
@@ -386,8 +391,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     MaterialManagement_History_Item materialHistoryItem = new MaterialManagement_History_Item();
                                     materialHistoryItem.history_lend_date = ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString();
                                     materialHistoryItem.history_lend_name = ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString();
-                                    intent.putExtra("uidListPath", uidAminPath);
-                                    intent.putExtra("ArrayCount", ArrayCount);
+                                    String uidAdminPath = database.getReference().child("Material_Management").child(uidLists.get(position)).getKey();
+                                    intent.putExtra("uidAdminPath", uidAdminPath);
+//                                    intent.putExtra("ArrayCount", ArrayCount);
                                     startActivity(intent);
 
                                     return true;
