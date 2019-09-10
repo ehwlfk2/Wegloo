@@ -26,7 +26,7 @@ import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-
+import com.example.target_club_in_donga.Gallery.*;
 
 // Home 프래그먼트
 
@@ -97,6 +97,7 @@ public class HomeActivity_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
+        btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
 
         menu_detail_btn = (TextView) view.findViewById(R.id.menu_detail_btn);
@@ -116,6 +117,14 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 Intent intent = new Intent(getActivity(), NoticeActivity.class);
+                startActivity(intent);
+            }
+        }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Intent intent = new Intent(getActivity(), Gallery_Board.class);
                 startActivity(intent);
             }
         }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜

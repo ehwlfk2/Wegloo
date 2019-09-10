@@ -3,52 +3,43 @@ package com.example.target_club_in_donga.Notice;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.view.menu.MenuPopupHelper;
-import androidx.core.content.ContextCompat;
 
-import com.example.target_club_in_donga.MainActivity;
 import com.example.target_club_in_donga.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.melnykov.fab.FloatingActionButton;
 
-import org.apache.poi.ss.formula.functions.T;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
-import static java.security.AccessController.getContext;
-
 public class NoticeActivity_Insert extends AppCompatActivity{
+
     private FloatingActionButton activity_notice_insert_button_fontChange;
     private FloatingActionButton activity_notice_insert_button_colorChange;
     private FloatingActionButton activity_notice_insert_button_result;
@@ -56,23 +47,79 @@ public class NoticeActivity_Insert extends AppCompatActivity{
     private EditText activity_notice_insert_edittext_content;
     private Switch activity_notice_insert_switch;
     private FirebaseDatabase database;
-    private ActionMode mActionMode;
-    private int editStart;
-    private int editEnd;
+    private FirebaseAuth auth;
+    private List<Notice_item_color> color_item = new ArrayList<>();
+    private String type;
+    private String dbKey;
+    private String updateWriter;
+    //private boolean updateSwitch;
     //private int nowColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_insert);
+
+
         activity_notice_insert_button_fontChange = (FloatingActionButton)findViewById(R.id.activity_notice_insert_button_fontChange);
         activity_notice_insert_button_colorChange = (FloatingActionButton)findViewById(R.id.activity_notice_insert_button_colorChange);
         activity_notice_insert_button_result = (FloatingActionButton)findViewById(R.id.activity_notice_insert_button_result);
-
-
         activity_notice_insert_edittext_title = (EditText)findViewById(R.id.activity_notice_insert_edittext_title);
         activity_notice_insert_edittext_content = (EditText)findViewById(R.id.activity_notice_insert_edittext_content);
         activity_notice_insert_switch = (Switch)findViewById(R.id.activity_notice_insert_switch);
         database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        Intent intent = getIntent();
+        type = intent.getExtras().getString("type");
+        if(type.equals("update")){
+            dbKey = intent.getExtras().getString("updateKey");
+            database.getReference().child("Notice").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Notice_Item update_item = dataSnapshot.getValue(Notice_Item.class);
+                    activity_notice_insert_edittext_content.setText(update_item.getContent());
+                    activity_notice_insert_switch.setChecked(update_item.isSwitchOnOff());
+                    updateWriter = update_item.getWriter();
+                    //updateSwitch = update_item.isSwitchOnOff();
+
+                    SpannableStringBuilder ssb = new SpannableStringBuilder(update_item.getTitle());
+                    for(int i=0;i<update_item.notice_item_colors.size();i++){
+                        color_item.add(update_item.notice_item_colors.get(i));
+
+                        int start = update_item.notice_item_colors.get(i).getStart();
+                        int end = update_item.notice_item_colors.get(i).getEnd();
+                        if(update_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
+                            ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
+                        }
+                        else if(update_item.notice_item_colors.get(i).getStyle().equals("ITALIC")){
+                            ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
+                        }
+                        else if(update_item.notice_item_colors.get(i).getStyle().equals("UnderLine")){
+                            ssb.setSpan(new UnderlineSpan(), start, end, 1);
+                        }
+                        else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack){
+                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
+                        }
+                        else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin){
+                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
+                        }
+                        else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole){
+                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
+                        }
+                        else{
+                            int color = Integer.parseInt(update_item.notice_item_colors.get(i).getStyle());
+                            ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
+                        }
+                    }
+                    activity_notice_insert_edittext_title.setText(ssb);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         activity_notice_insert_edittext_title.setCustomSelectionActionModeCallback(new StyleCallback());
 
@@ -80,7 +127,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
         activity_notice_insert_button_fontChange.setOnClickListener(new View.OnClickListener() { //글꼴 체인지 버튼 눌럿을때
             @Override
             public void onClick(View view) {
-
+                initiatePopupWindow2();
             }
         });
 
@@ -94,8 +141,12 @@ public class NoticeActivity_Insert extends AppCompatActivity{
         activity_notice_insert_button_result.setOnClickListener(new View.OnClickListener() { //올리기 눌럿을때
             @Override
             public void onClick(View view) {
-                String title = activity_notice_insert_edittext_title.getText().toString();
-                String content = activity_notice_insert_edittext_content.getText().toString();
+                //final String title = activity_notice_insert_edittext_title.getText().toString();
+                final String title = activity_notice_insert_edittext_title.getText().toString();
+                //title.get
+                //final CharacterStyle[] styleSpans2 = title.getSpans(0, title.length(), CharacterStyle.class);
+
+                final String content = activity_notice_insert_edittext_content.getText().toString();
                 if(title.length() <= 0){
                     Toast.makeText(NoticeActivity_Insert.this, "제목 입력해줘요", Toast.LENGTH_SHORT).show();
                 }
@@ -103,17 +154,136 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     Toast.makeText(NoticeActivity_Insert.this, "내용 입력해줘요", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Notice_Item notice_item = new Notice_Item(title,content,"green","san-serif",activity_notice_insert_switch.isChecked(), System.currentTimeMillis());
-                    database.getReference().child("Notice").push().setValue(notice_item);
-                    Toast.makeText(NoticeActivity_Insert.this, "공지 올렷스무디", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                    if(type.equals("insert")){
+                        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String uidName = dataSnapshot.getValue(String.class);
 
+                                //Notice_Item notice_item = new Notice_Item(uidName,title,content,activity_notice_insert_switch.isChecked(), System.currentTimeMillis());
+                                //
+                                Notice_Item notice_item = new Notice_Item();
+                                notice_item.setWriter(uidName);
+                                notice_item.setContent(content);
+                                notice_item.setSwitchOnOff(activity_notice_insert_switch.isChecked());
+                                notice_item.setTitle(title.toString());
+                                notice_item.notice_item_colors = color_item;
+                                //notice_item.style = (Object[]) styleSpans2;
+                                //notice_item.stars.put("title",title);
+
+                                notice_item.setTimestamp(-1*System.currentTimeMillis());
+                                database.getReference().child("Notice").push().setValue(notice_item);
+                                Toast.makeText(NoticeActivity_Insert.this, "공지 올렷스무디", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                    else{
+                        Notice_Item notice_item = new Notice_Item();
+                        notice_item.setWriter(updateWriter);
+                        notice_item.setContent(content);
+                        notice_item.setSwitchOnOff(activity_notice_insert_switch.isChecked());
+                        notice_item.setTitle(title.toString());
+                        notice_item.notice_item_colors = color_item;
+                        notice_item.setTimestamp(-1*System.currentTimeMillis());
+                        database.getReference().child("Notice").child(dbKey).setValue(notice_item);
+                        Toast.makeText(NoticeActivity_Insert.this, "수정완료", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                }
             }
         });
 
     }
 
+
+    private PopupWindow mDropdown2 = null;
+    LayoutInflater mInflater2;
+
+    private PopupWindow initiatePopupWindow2() {
+
+        try {
+            mInflater2 = (LayoutInflater) getApplicationContext()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = mInflater2.inflate(R.layout.activity_notice_insert_popup2, null);
+
+            //If you want to add any listeners to your textviews, these are two //textviews.
+            //final TextView itema = (TextView) layout.findViewById(R.id.ItemA);
+            //final TextView itemb = (TextView) layout.findViewById(R.id.ItemB);
+            FloatingActionButton boldBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_bold);
+            FloatingActionButton italicBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_italic);
+            FloatingActionButton underlineBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_underline);
+            FloatingActionButton replyBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_reply);
+
+            final SpannableStringBuilder ssb2 = new SpannableStringBuilder(activity_notice_insert_edittext_title.getText());
+            final int titleLen2 = activity_notice_insert_edittext_title.length();
+            boldBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                     ssb2.setSpan(new StyleSpan(Typeface.BOLD), 0, titleLen2, 1); // Color
+                    activity_notice_insert_edittext_title.setText(ssb2);
+                    Notice_item_color listcolor = new Notice_item_color();
+                    listcolor.setStart(0);
+                    listcolor.setEnd(titleLen2);
+                    listcolor.setStyle("BOLD");
+                    color_item.add(listcolor);
+                }
+            });
+            italicBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    ssb2.setSpan(new StyleSpan(Typeface.ITALIC), 0, titleLen2, 1); // Color
+                    Notice_item_color listcolor = new Notice_item_color();
+                    listcolor.setStart(0);
+                    listcolor.setEnd(titleLen2);
+                    listcolor.setStyle("ITALIC");
+                    color_item.add(listcolor);
+                    activity_notice_insert_edittext_title.setText(ssb2);
+                }
+            });
+            underlineBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    ssb2.setSpan(new UnderlineSpan(), 0, titleLen2, 1); // Color
+                    Notice_item_color listcolor = new Notice_item_color();
+                    listcolor.setStart(0);
+                    listcolor.setEnd(titleLen2);
+                    listcolor.setStyle("UnderLine");
+                    color_item.add(listcolor);
+                    activity_notice_insert_edittext_title.setText(ssb2);
+                }
+            });
+            replyBtn.setOnClickListener(new View.OnClickListener() { //전체 원래대로 되돌리기
+                @Override
+                public void onClick(View view) {
+                    //ssb.delete(0,titleLen);
+                    color_item.clear();
+                    ssb2.clearSpans();
+                    activity_notice_insert_edittext_title.setText(ssb2);
+                    //ssb.clear();
+                }
+            });
+
+            layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            mDropdown2 = new PopupWindow(layout, FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT,true);
+            //Drawable background = getResources().getDrawable(android.R.drawable.editbox_dropdown_dark_frame);
+            //mDropdown.setBackgroundDrawable(background);
+            mDropdown2.showAsDropDown(activity_notice_insert_button_fontChange, 0, 0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mDropdown2;
+
+    }
 
     private PopupWindow mDropdown = null;
     LayoutInflater mInflater;
@@ -123,7 +293,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
         try {
             mInflater = (LayoutInflater) getApplicationContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = mInflater.inflate(R.layout.popop, null);
+            View layout = mInflater.inflate(R.layout.activity_notice_insert_popup, null);
 
             //If you want to add any listeners to your textviews, these are two //textviews.
             //final TextView itema = (TextView) layout.findViewById(R.id.ItemA);
@@ -142,6 +312,12 @@ public class NoticeActivity_Insert extends AppCompatActivity{
 
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.colorBlack));
                     //activity_notice_insert_edittext_title.setTextColor(getResources().getColor(R.color.colorBlack));
+                    Notice_item_color listcolor = new Notice_item_color();
+                    listcolor.setStart(0);
+                    listcolor.setEnd(titleLen);
+                    listcolor.setStyle(R.color.colorBlack+"");
+                    color_item.add(listcolor);
+
                     ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), 0, titleLen, 1); // Color
                     activity_notice_insert_edittext_title.setText(ssb);
                 }
@@ -150,6 +326,11 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.fbutton_color_alizarin));
+                    Notice_item_color listcolor = new Notice_item_color();
+                    listcolor.setStart(0);
+                    listcolor.setEnd(titleLen);
+                    listcolor.setStyle(R.color.fbutton_color_alizarin+"");
+                    color_item.add(listcolor);
                     //activity_notice_insert_edittext_title.setTextColor(getResources().getColor(R.color.fbutton_color_alizarin));
                     ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), 0, titleLen, 1); // Color
                     activity_notice_insert_edittext_title.setText(ssb);
@@ -159,6 +340,11 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.fbutton_color_belize_hole));
+                    Notice_item_color listcolor = new Notice_item_color();
+                    listcolor.setStart(0);
+                    listcolor.setEnd(titleLen);
+                    listcolor.setStyle(R.color.fbutton_color_belize_hole+"");
+                    color_item.add(listcolor);
                     //activity_notice_insert_edittext_title.setTextColor(getResources().getColor(R.color.fbutton_color_belize_hole));
                     ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), 0, titleLen, 1); // Color
                     activity_notice_insert_edittext_title.setText(ssb);
@@ -177,6 +363,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                 @Override
                 public void onClick(View view) {
                     //ssb.delete(0,titleLen);
+                    color_item.clear();
                     ssb.clearSpans();
                     activity_notice_insert_edittext_title.setText(ssb);
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.colorBlack));
@@ -208,6 +395,12 @@ public class NoticeActivity_Insert extends AppCompatActivity{
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 //nowColor = color;
+                Notice_item_color listcolor = new Notice_item_color();
+                listcolor.setStart(start);
+                listcolor.setEnd(end);
+                listcolor.setStyle(color+"");
+                color_item.add(listcolor);
+
                 activity_notice_insert_button_colorChange.setColorFilter(color);
                 ssb.setSpan(new ForegroundColorSpan(color), start, end, 1); // Color
                 activity_notice_insert_edittext_title.setText(ssb);
@@ -245,34 +438,71 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     ssb.setSpan(cs, start, end, 1);
                     activity_notice_insert_edittext_title.setText(ssb);
 
+                    Notice_item_color listcolor = new Notice_item_color();
+                    listcolor.setStart(start);
+                    listcolor.setEnd(end);
+                    listcolor.setStyle("BOLD");
+                    color_item.add(listcolor);
                     return true;
 
                 case R.id.italic:
                     cs = new StyleSpan(Typeface.ITALIC);
                     ssb.setSpan(cs, start, end, 1);
                     activity_notice_insert_edittext_title.setText(ssb);
+
+                    Notice_item_color listcolor2 = new Notice_item_color();
+                    listcolor2.setStart(start);
+                    listcolor2.setEnd(end);
+                    listcolor2.setStyle("ITALIC");
+                    color_item.add(listcolor2);
                     return true;
 
                 case R.id.underline:
                     cs = new UnderlineSpan();
                     ssb.setSpan(cs, start, end, 1);
                     activity_notice_insert_edittext_title.setText(ssb);
+
+                    Notice_item_color listcolor3 = new Notice_item_color();
+                    listcolor3.setStart(start);
+                    listcolor3.setEnd(end);
+                    listcolor3.setStyle("UnderLine");
+                    color_item.add(listcolor3);
+
                     return true;
 
                 case R.id.colorBlack:
                     ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1); // Color
                     activity_notice_insert_edittext_title.setText(ssb);
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.colorBlack));
+
+                    Notice_item_color listcolor4 = new Notice_item_color();
+                    listcolor4.setStart(start);
+                    listcolor4.setEnd(end);
+                    listcolor4.setStyle(""+R.color.colorBlack);
+                    color_item.add(listcolor4);
+
                     return true;
                 case R.id.colorRed:
                     ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1); // Color
                     activity_notice_insert_edittext_title.setText(ssb);
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.fbutton_color_alizarin));
+
+                    Notice_item_color listcolor5 = new Notice_item_color();
+                    listcolor5.setStart(start);
+                    listcolor5.setEnd(end);
+                    listcolor5.setStyle(""+R.color.fbutton_color_alizarin);
+                    color_item.add(listcolor5);
+
                     return true;
                 case R.id.colorBlue:
                     ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1); // Color
                     activity_notice_insert_edittext_title.setText(ssb);
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.fbutton_color_belize_hole));
+                    Notice_item_color listcolor6 = new Notice_item_color();
+                    listcolor6.setStart(start);
+                    listcolor6.setEnd(end);
+                    listcolor6.setStyle(""+R.color.fbutton_color_belize_hole);
+                    color_item.add(listcolor6);
                     return true;
                 case R.id.colorPlus:
                     //nowColor = activity_notice_insert_edittext_title.getCurrentTextColor();
@@ -280,11 +510,10 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     return true;
                 case R.id.reply:
 
-                    //일부 원래대로 되돌리기
                     ssb.clearSpans();
                     activity_notice_insert_edittext_title.setText(ssb);
                     activity_notice_insert_button_colorChange.setColorFilter(getResources().getColor(R.color.colorBlack));
-
+                    color_item.clear();
                     return true;
 
 
