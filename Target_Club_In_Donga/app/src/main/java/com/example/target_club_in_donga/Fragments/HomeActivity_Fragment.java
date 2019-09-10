@@ -27,6 +27,12 @@ import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.example.target_club_in_donga.Gallery.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // Home 프래그먼트
 
@@ -92,6 +98,7 @@ public class HomeActivity_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -253,6 +260,7 @@ public class HomeActivity_Fragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
