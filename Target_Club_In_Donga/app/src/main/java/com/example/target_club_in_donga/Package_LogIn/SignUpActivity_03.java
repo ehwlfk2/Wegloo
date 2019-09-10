@@ -117,7 +117,7 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
                 if(!name.isEmpty() && !phone.isEmpty() && !school.isEmpty() && !studentNumber.isEmpty() ) {
                     //createUser(emailSubject, emailAddress, pw, name, phone, school, schoolNumber);
 
-                    LoginData data = new LoginData(name, phone, studentNumber, school, 0);
+                    LoginData data = new LoginData(name, phone, studentNumber, school, 0, true);
                     database.getReference().child("User").child(mAuth.getCurrentUser().getUid()).setValue(data);
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show();
 
