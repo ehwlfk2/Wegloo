@@ -55,6 +55,10 @@
         <activity android:name=".Vote.VoteActivity_Insert" />
         <activity android:name=".Notice.NoticeActivity_Insert"/>
         <activity android:name=".Accountbook.AccountbookActivity_Main" />
+        <activity android:name=".Gallery.Gallery_Viewpager" />
+        <activity android:name=".Gallery.Gallery_Detail" />
+        <activity android:name=".Gallery.Gallery_Write" />
+        <activity android:name=".Gallery.Gallery_Board" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
