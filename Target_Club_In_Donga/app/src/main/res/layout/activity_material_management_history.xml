@@ -1,29 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/material_edit_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp">
 
+    <TextView
+        style="@style/Top_Content_Text_Style"
+        android:text="물품기록사항" />
+
     <LinearLayout
-        android:id="@+id/activity_material_management_history_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/activity_material_management_history_date"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#4F000000" />
+
+    <TextView
+        style="@style/Content_Text_Style"
+        android:text="기록사항" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#4F000000" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_material_management_history_recyclerview_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/activity_material_management_history_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="10dp"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/activity_material_management_history_button_insert"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-2dp"
+            android:text="확인" />
+    </RelativeLayout>
 </LinearLayout>

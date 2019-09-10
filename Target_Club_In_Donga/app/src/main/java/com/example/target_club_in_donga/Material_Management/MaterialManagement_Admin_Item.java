@@ -1,6 +1,6 @@
 package com.example.target_club_in_donga.Material_Management;
 
-public class MaterialManagement_Item {
+public class MaterialManagement_Admin_Item {
     private String id;
     public Object timestamp;
 
@@ -14,14 +14,9 @@ public class MaterialManagement_Item {
     public String imageUri;
     public String imageName;
     public String edit_name_edittext;
-    public String uId;
-    public String userId;
     public String edit_lender;
 
-    public MaterialManagement_Item(String id) {
-        this.id = id;
-    }
-    public MaterialManagement_Item(){
+    public MaterialManagement_Admin_Item(){
 
     }
 
