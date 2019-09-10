@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +42,7 @@ public class VoteActivity_Result extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activityvote_result);
+        Toast.makeText(this, "항목 클릭하면 누군지 볼수있음!!!", Toast.LENGTH_SHORT).show();
 
         activityvote_result_listview = (ListView)findViewById(R.id.activityvote_result_listview);
         activityvote_result_textview_title = (TextView)findViewById(R.id.activityvote_result_textview_title);
@@ -58,16 +61,14 @@ public class VoteActivity_Result extends AppCompatActivity {
                 Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class);
                 //Toast.makeText(Vote_Excute.this, last_item.title+"", Toast.LENGTH_SHORT).show();
                 activityvote_result_textview_totalcount.setText("투표 수 : "+last_item.totalCount);
-                items = last_item.listItems;
-
+                //items = last_item.listItems;
                 // 호출 예제
-
-                Collections.sort(items, sortByTotalCall);
+                //Collections.sort(items, sortByTotalCall);
                 // 역순으로 정렬시 호출
 
-                Collections.reverse(items);
+                //Collections.reverse(items);
 
-                adapter = new VoteActivity_ResultListAdapter(items);
+                adapter = new VoteActivity_ResultListAdapter(last_item.listItems);
                 activityvote_result_listview.setAdapter(adapter);
 
                 activityvote_result_textview_title.setText(last_item.title);
@@ -78,6 +79,13 @@ public class VoteActivity_Result extends AppCompatActivity {
                 String time = simpleDateFormat.format(date);
 
                 activityvote_result_textview_date.setText(time);
+
+                activityvote_result_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        Toast.makeText(VoteActivity_Result.this, "position : "+position+"\n사실아직 구현안함", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -87,12 +95,12 @@ public class VoteActivity_Result extends AppCompatActivity {
         });
     }
 
-    private final static Comparator<Vote_Item_Count> sortByTotalCall= new Comparator<Vote_Item_Count>() { //정렬
+    /*private final static Comparator<Vote_Item_Count> sortByTotalCall= new Comparator<Vote_Item_Count>() { //정렬
         @Override
         public int compare(Vote_Item_Count object1, Vote_Item_Count object2) {
             return Integer.compare(object1.getCount(), object2.getCount());
         }
-    };
+    };*/
 
     public class VoteActivity_ResultListAdapter extends BaseAdapter {
         LayoutInflater inflater = null;
@@ -130,7 +138,7 @@ public class VoteActivity_Result extends AppCompatActivity {
             TextView oTextCount = (TextView) convertView.findViewById(R.id.vote_result_listview_textview_count);
 
             oTextName.setText(m_oData.get(position).getName());
-            oTextCount.setText("현재 : "+m_oData.get(position).getCount());
+            oTextCount.setText(m_oData.get(position).getCount()+" 명");
 
             return convertView;
         }
