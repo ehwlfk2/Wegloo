@@ -102,7 +102,7 @@ public class HomeActivity_Fragment extends Fragment {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        passPushTokenToServer();
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
@@ -275,6 +275,14 @@ public class HomeActivity_Fragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void passPushTokenToServer(){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pushToken",token);
+        FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
     }
 
 }
