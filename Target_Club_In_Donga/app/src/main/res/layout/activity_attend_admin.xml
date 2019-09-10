@@ -98,8 +98,6 @@
         android:layout_marginBottom="3dp"
         android:background="#4F000000" />
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

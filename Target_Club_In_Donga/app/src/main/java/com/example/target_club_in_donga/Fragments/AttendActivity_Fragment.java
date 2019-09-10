@@ -25,6 +25,10 @@ public class AttendActivity_Fragment extends Fragment {
     private Integer current_image_resource;
 
     private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc,R.drawable.dd,R.drawable.ee};
+
+    private Button activity_attend_attendance, activity_attend_cancel;
+    private int count;
+
     public AttendActivity_Fragment() {
         // Required empty public constructor
     }
@@ -37,6 +41,9 @@ public class AttendActivity_Fragment extends Fragment {
         Gallery_Adapter galleryAdapter = new Gallery_Adapter(getContext(), R.layout.activity_attend_sub_layout,img);
         gallery = (Gallery)view.findViewById(R.id.activity_attend_gallery);
         select_btn = (Button)view.findViewById(R.id.activity_attend_button_select);
+
+        activity_attend_attendance = (Button) view.findViewById(R.id.activity_attend_attendance);
+        activity_attend_cancel = (Button) view.findViewById(R.id.activity_attend_cancel);
 
         gallery.setAdapter(galleryAdapter);
         final ImageView imageView = (ImageView)view.findViewById(R.id.test);
@@ -57,6 +64,24 @@ public class AttendActivity_Fragment extends Fragment {
                 imageView.setImageResource(current_image_resource);
             }
         });
+
+        activity_attend_attendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+                count++;
+            }
+        });
+
+        activity_attend_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+            }
+        });
+
+
+
         return view;
     }
 
