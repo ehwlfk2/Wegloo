@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:id="@+id/notice_main_recyclerview_item_linarlayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:id="@+id/notice_main_recyclerview_item_textview_title"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:text="공지사항 제에에목"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="작성자"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="12sp"
+                android:id="@+id/notice_main_recyclerview_item_textview_writer"
+
+                android:paddingLeft="15dp"
+                android:paddingBottom="20dp"/>
+            <TextView
+                android:text="2019-08-09  3:45"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:id="@+id/notice_main_recyclerview_item_textview_date"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:paddingRight="15dp"
+                android:paddingBottom="20dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.melnykov.fab.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_add"
+        android:id="@+id/notice_main_recyclerview_item_plusBtn"
+        fab:fab_colorNormal="@color/fbutton_color_turquoise"
+        fab:fab_colorPressed="@color/fbutton_color_green_sea"
+        fab:fab_colorRipple="@color/fbutton_color_emerald"
+        fab:fab_type="mini"
+        fab:fab_shadow="false"
+        />
+</LinearLayout>
