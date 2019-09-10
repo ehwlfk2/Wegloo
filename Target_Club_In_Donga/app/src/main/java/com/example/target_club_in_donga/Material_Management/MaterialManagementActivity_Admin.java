@@ -69,7 +69,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
     protected ImageView activity_material_management_admin_item_imageview_recyclerview_image;
     private long now;
-    private String formatDate, formatHour, formatMin;
+    private String formatDate, formatHour, formatMin, startDate;
     private String dateStr,timeStr, date_Now, date_End, date_Return;
 
     private int flag1 = 0, flag2 = 0;
@@ -261,6 +261,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     formatDate = simpleDateFormat.format(date);
                                     detailButtonPeriodCalendar.setText(formatDate);
 
+                                    SimpleDateFormat startSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    startDate = startSimpleDateFormat.format(date);
+
                                     simpleDateFormat = new SimpleDateFormat("HH:mm");
                                     // "HH:mm"
                                     formatHour = simpleDateFormat.format(date);
@@ -353,7 +356,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                                 // 대여를 하였을 떄 리사이클러뷰 리스트를 변경을 함
 
                                                 findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
-                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(formatDate + " ~ "  +((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ "  +((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
                                                 database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
 
                                                 flag1 = 0;
@@ -381,7 +384,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     //"yyyy-MM-dd HH:mm"
                                     date_Return = returnSimpleDateFormat.format(returnDate);
 
-                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(formatDate + " ~ " + date_Return);
+                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + date_Return);
 
                                     return true;
 
