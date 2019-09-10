@@ -96,7 +96,7 @@ public class VoteActivity_Main extends AppCompatActivity {
                 list.clear();
                 dbKey.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    //MaterialManagement_Item imageDTO = snapshot.getValue(MaterialManagement_Item.class);
+                    //MaterialManagement_Admin_Item imageDTO = snapshot.getValue(MaterialManagement_Admin_Item.class);
                     Vote_Item vote_last_item = snapshot.getValue(Vote_Item.class);
                     //String title =
 

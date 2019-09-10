@@ -10,4 +10,7 @@
     <item android:id="@+id/material_turn_in"
           android:title="반납하기"
     />
+    <item android:id="@+id/material_history"
+        android:title="기록보기"
+        />
 </menu>
