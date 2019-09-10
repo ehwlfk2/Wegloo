@@ -3,18 +3,15 @@ package com.example.target_club_in_donga.Accountbook;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Accountbook_item {
         private String id;
-        private String pay;
+        private String price;
         private String detail;
+        private String today;
 
-        public String getPaytotal(String Pay, int oldPay) {
-                int i = Integer.valueOf(Pay);
-                int j = oldPay;
-                return "" + (i + j);
-        }
 
         public void setId(String id) {
                 this.id = id;
@@ -24,13 +21,20 @@ public class Accountbook_item {
                 return id;
         }
 
-
-        public void setPay(String pay) {
-                this.pay = pay;
+        public void setToday(String today) {
+                this.today = today;
         }
 
-        public String getPay() {
-                return pay;
+        public String getToday() {
+                return today;
+        }
+
+        public void setPrice(String price) {
+                this.price = price;
+        }
+
+        public int getPrice() {
+                return  Integer.valueOf(price);
         }
 
         public void setDetail(String detail) {
@@ -41,9 +45,16 @@ public class Accountbook_item {
                 return detail;
         }
 
-        public Accountbook_item(String id, String pay, String detail) {
+        public Accountbook_item(String id, String price, String detail) {
                 this.id = id;
-                this.pay = pay;
+                this.price = price;
                 this.detail = detail;
+        }
+
+        public Accountbook_item(String id,String price,String detail,String today) {
+                this.id = id;
+                this.price=price;
+                this.detail=detail;
+                this.today=today;
         }
 }
