@@ -1,6 +1,5 @@
 package com.example.target_club_in_donga.Fragments;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -62,7 +61,7 @@ public class AttendActivity_Fragment extends Fragment {
     }
 
 }
-class Gallery_Adapter extends BaseAdapter{
+class Gallery_Adapter extends BaseAdapter {
     Context context;
     int layout;
     int img[];

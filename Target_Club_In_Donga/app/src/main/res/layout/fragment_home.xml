@@ -92,14 +92,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:shrinkColumns="*"
-                android:stretchColumns="*">
+                android:stretchColumns="*"
+                android:weightSum="4">
 
                 <TableRow>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="60dp"
@@ -109,9 +111,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="60dp"
@@ -121,9 +124,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="60dp"
@@ -133,9 +137,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="60dp"
@@ -158,14 +163,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:shrinkColumns="*"
-                android:stretchColumns="*">
+                android:stretchColumns="*"
+                android:weightSum="3">
 
                 <TableRow>
 
                     <RelativeLayout
                         android:id="@+id/fragment_home_main_btn_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_1"
@@ -185,8 +192,9 @@
 
                     <RelativeLayout
                         android:id="@+id/fragment_home_main_btn_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_2"
@@ -206,8 +214,9 @@
 
                     <RelativeLayout
                         android:id="@+id/fragment_home_main_btn_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_3"
@@ -232,13 +241,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:shrinkColumns="*"
-                android:stretchColumns="*">
+                android:stretchColumns="*"
+                android:weightSum="3">
 
                 <TableRow>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_4"
@@ -257,8 +268,9 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_5"
@@ -278,8 +290,9 @@
 
                     <RelativeLayout
                         android:id="@+id/fragment_home_main_btn_6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_6"
@@ -304,14 +317,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:shrinkColumns="*"
-                android:stretchColumns="*">
+                android:stretchColumns="*"
+                android:weightSum="3">
 
                 <TableRow>
 
                     <RelativeLayout
                         android:id="@+id/fragment_home_main_btn_7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_7"
@@ -330,8 +345,9 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_8"
@@ -350,8 +366,9 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_9"
@@ -377,13 +394,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:shrinkColumns="*"
-                android:stretchColumns="*">
+                android:stretchColumns="*"
+                android:weightSum="3">
 
                 <TableRow>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_10"
@@ -402,8 +421,9 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_11"
@@ -422,8 +442,9 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/fragment_home_btn_12"
