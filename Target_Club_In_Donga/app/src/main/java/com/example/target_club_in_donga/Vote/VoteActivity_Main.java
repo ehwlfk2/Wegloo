@@ -89,19 +89,17 @@ public class VoteActivity_Main extends AppCompatActivity {
         adapter = new VoteActivity_Main_RecyclerviewAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
         activityvote_main_recyclerview.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
-        database = FirebaseDatabase.getInstance();
+        //database = FirebaseDatabase.getInstance();
         database.getReference().child("Vote").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
                 dbKey.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    //MaterialManagement_Item imageDTO = snapshot.getValue(MaterialManagement_Item.class);
+                    //MaterialManagement_Admin_Item imageDTO = snapshot.getValue(MaterialManagement_Admin_Item.class);
                     Vote_Item vote_last_item = snapshot.getValue(Vote_Item.class);
                     //String title =
 
-                    //Integer nowTime = (int) (long) System.currentTimeMillis();
-                    //Integer dbTime = (int) (long) vote_last_item.timestamp;
                     long nowTime = System.currentTimeMillis();
                     if(Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0){
                         list.add(new Vote_Item_Main(vote_last_item.title,vote_last_item.timestamp,"gray",vote_last_item.totalCount));

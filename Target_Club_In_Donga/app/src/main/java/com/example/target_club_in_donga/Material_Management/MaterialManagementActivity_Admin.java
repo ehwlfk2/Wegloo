@@ -60,19 +60,21 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
     private static final int GALLARY_CODE = 10;
 
     RecyclerView activity_material_management_admin_recyclerview_main_list;
-    List<MaterialManagement_Item> materialManagementItems = new ArrayList<>();
+    List<MaterialManagement_Admin_Item> materialManagementItems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
 
-    protected ImageView activity_material_management_item_imageview_recyclerview_image;
+    protected ImageView activity_material_management_admin_item_imageview_recyclerview_image;
     private long now;
-    private String formatDate, formatHour, formatMin;
-    private String dateStr,timeStr, date_Now, date_End;
+    private String formatDate, formatHour, formatMin, startDate;
+    private String dateStr,timeStr, date_Now, date_End, date_Return;
 
     private int flag1 = 0, flag2 = 0;
+    private String findkey;
+
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -91,15 +93,15 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 
 
-        this.activity_material_management_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_management_item_imageview_recyclerview_image);
+        this.activity_material_management_admin_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_management_admin_item_imageview_recyclerview_image);
 
         activity_material_management_admin_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_material_management_admin_recyclerview_main_list);
         activity_material_management_admin_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
 
-        final BoardRecyclerViewAdapter boardRecyclerViewAdapter = new BoardRecyclerViewAdapter();
+        final MaterialManagementActivity_AdminRecyclerViewAdapter materialManagementActivity_adminRecyclerViewAdapter = new MaterialManagementActivity_AdminRecyclerViewAdapter();
 
-        activity_material_management_admin_recyclerview_main_list.setAdapter(boardRecyclerViewAdapter);
-        boardRecyclerViewAdapter.notifyDataSetChanged();
+        activity_material_management_admin_recyclerview_main_list.setAdapter(materialManagementActivity_adminRecyclerViewAdapter);
+        materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
         database.getReference().child("Material_Management").addValueEventListener(new ValueEventListener() {
             @Override
@@ -107,12 +109,12 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                 materialManagementItems.clear();
                 uidLists.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MaterialManagement_Item materialManagementItem = snapshot.getValue(MaterialManagement_Item.class);
+                    MaterialManagement_Admin_Item materialManagementItem = snapshot.getValue(MaterialManagement_Admin_Item.class);
                     String uidKey = snapshot.getKey();
                     materialManagementItems.add(materialManagementItem);
                     uidLists.add(uidKey);
                 }
-                boardRecyclerViewAdapter.notifyDataSetChanged();
+                materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -128,7 +130,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                 Intent intent = new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_Insert.class);
                 startActivity(intent);
-                boardRecyclerViewAdapter.notifyDataSetChanged(); //변경된 데이터를 화면에 반영
+                materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged(); //변경된 데이터를 화면에 반영
             }
         });
 
@@ -187,32 +189,33 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
     // MaterialManagementActivity_Admin 어댑터
 
-    class BoardRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    class MaterialManagementActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
-            ImageView activity_material_management_item_imageview_recyclerview_image;
-            TextView activity_material_management_item_textview_recyclerview_item_name;
-            TextView activity_material_management_item_textview_recyclerview_lender;
-            LinearLayout activity_material_management_item_linearlayout;
-            TextView activity_material_management_item_recyclerview_timestamp;
+            ImageView activity_material_management_admin_item_imageview_recyclerview_image;
+            TextView activity_material_management_admin_item_textview_recyclerview_item_name;
+            TextView activity_material_management_admin_item_textview_recyclerview_lender;
+            LinearLayout activity_material_management_admin_item_linearlayout;
+            TextView activity_material_management_admin_item_recyclerview_timestamp;
 
             public CustomViewHolder(View view) {
                 super(view);
 
-                activity_material_management_item_textview_recyclerview_item_name = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_item_name);
-                activity_material_management_item_textview_recyclerview_lender = (TextView) view.findViewById(R.id.activity_material_management_item_textview_recyclerview_lender);
-                activity_material_management_item_imageview_recyclerview_image = (ImageView) view.findViewById(R.id.activity_material_management_item_imageview_recyclerview_image);
+                activity_material_management_admin_item_textview_recyclerview_item_name = (TextView) view.findViewById(R.id.activity_material_management_admin_item_textview_recyclerview_item_name);
+                activity_material_management_admin_item_textview_recyclerview_lender = (TextView) view.findViewById(R.id.activity_material_management_admin_item_textview_recyclerview_lender);
+                activity_material_management_admin_item_imageview_recyclerview_image = (ImageView) view.findViewById(R.id.activity_material_management_admin_item_imageview_recyclerview_image);
 
-                activity_material_management_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_material_management_item_linearlayout);
-                activity_material_management_item_recyclerview_timestamp = (TextView) view.findViewById(R.id.activity_material_management_item_recyclerview_timestamp);
+                activity_material_management_admin_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_material_management_admin_item_linearlayout);
+                activity_material_management_admin_item_recyclerview_timestamp = (TextView) view.findViewById(R.id.activity_material_management_admin_item_recyclerview_timestamp);
+
 
             }
 
         }
 
-        public void PopupMenu(final BoardRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
-            viewholder.activity_material_management_item_linearlayout.setOnClickListener(new View.OnClickListener() {
+        public void PopupMenu(final MaterialManagementActivity_AdminRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
+            viewholder.activity_material_management_admin_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //delete_item(position);
@@ -224,12 +227,14 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
                             //int x = item.getItemId();
                             switch (item.getItemId()){
+
                                 case R.id.material_delete:
                                     delete_content(position);
                                     materialManagementItems.remove(position);
                                     notifyItemRemoved(position);
                                     notifyItemRangeChanged(position, materialManagementItems.size());
                                     return true;
+
                                 case R.id.material_lend:
                                     AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
 
@@ -255,6 +260,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     //"yyyy-MM-dd"
                                     formatDate = simpleDateFormat.format(date);
                                     detailButtonPeriodCalendar.setText(formatDate);
+
+                                    SimpleDateFormat startSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    startDate = startSimpleDateFormat.format(date);
 
                                     simpleDateFormat = new SimpleDateFormat("HH:mm");
                                     // "HH:mm"
@@ -341,24 +349,56 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                                             if(flag1 == 1 && flag2 == 1) {
                                                 Toast.makeText(v.getContext(), auth.getCurrentUser().getDisplayName() + "님 대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                                                ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
-                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("edit_lender").setValue(((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_lender.getText().toString());
-                                                ((CustomViewHolder) viewholder).activity_material_management_item_recyclerview_timestamp.setText(dateStr + ' ' +  timeStr);
-                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_item_recyclerview_timestamp.getText().toString());
+                                                ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
+                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("edit_lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                                ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText(dateStr + ' ' +  timeStr);
+                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                                // 대여를 하였을 떄 리사이클러뷰 리스트를 변경을 함
+
+                                                findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
+                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ "  +((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                                database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+
                                                 flag1 = 0;
                                                 flag2 = 0;
                                                 dialog2.dismiss();
+
                                             }
                                         }
                                     });
 
                                     dialog2.show();
                                     return true;
+
                                 case R.id.material_turn_in:
-                                    ((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_lender.setText("없음");
-                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("edit_lender").setValue(((CustomViewHolder) viewholder).activity_material_management_item_textview_recyclerview_lender.getText().toString());
-                                    ((CustomViewHolder) viewholder).activity_material_management_item_recyclerview_timestamp.setText("없음");
-                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_item_recyclerview_timestamp.getText().toString());
+                                    ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText("없음");
+                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("edit_lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                    ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText("없음");
+                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+
+                                    // 반납을 했을시 물품기록사항에서 대여의 끝나는 날짜가 반납일로 바뀐다
+                                    now = System.currentTimeMillis();
+                                    // 현재시간을 date 변수에 저장한다.
+                                    Date returnDate = new Date(now);
+                                    SimpleDateFormat returnSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    //"yyyy-MM-dd HH:mm"
+                                    date_Return = returnSimpleDateFormat.format(returnDate);
+
+                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + date_Return);
+
+                                    return true;
+
+                                case R.id.material_history:
+
+                                    Intent intent = new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_History.class);
+                                    MaterialManagement_History_Item materialHistoryItem = new MaterialManagement_History_Item();
+                                    materialHistoryItem.history_lend_date = ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString();
+                                    materialHistoryItem.history_lend_name = ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString();
+                                    String uidAdminPath = database.getReference().child("Material_Management").child(uidLists.get(position)).getKey();
+                                    intent.putExtra("uidAdminPath", uidAdminPath);
+//                                    intent.putExtra("ArrayCount", ArrayCount);
+                                    startActivity(intent);
+
                                     return true;
 
                                 default:
@@ -367,7 +407,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                             //return false;
                         }
                     });
+
                     popup.inflate(R.menu.material_management_main_popup);
+
                     if(!auth.getCurrentUser().getDisplayName().equals(materialManagementItems.get(position).edit_lender)) {
                         popup.getMenu().getItem(2).setVisible(false);
                     }
@@ -389,7 +431,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.activity_material_management_item, viewGroup, false);
+                    .inflate(R.layout.activity_material_management_admin_item, viewGroup, false);
 
             return new CustomViewHolder(view);
         }
@@ -397,22 +439,22 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
             CustomViewHolder customViewHolder = ((CustomViewHolder) viewholder);
-            customViewHolder.activity_material_management_item_textview_recyclerview_item_name.setGravity(Gravity.LEFT);
-            customViewHolder.activity_material_management_item_textview_recyclerview_lender.setGravity(Gravity.LEFT);
+            customViewHolder.activity_material_management_admin_item_textview_recyclerview_item_name.setGravity(Gravity.LEFT);
+            customViewHolder.activity_material_management_admin_item_textview_recyclerview_lender.setGravity(Gravity.LEFT);
 
-            customViewHolder.activity_material_management_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).getId());
-            customViewHolder.activity_material_management_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).edit_name_edittext);
-            customViewHolder.activity_material_management_item_textview_recyclerview_lender.setText(materialManagementItems.get(position).edit_lender);
-            customViewHolder.activity_material_management_item_recyclerview_timestamp.setText(materialManagementItems.get(position).timestamp.toString());
+            customViewHolder.activity_material_management_admin_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).getId());
+            customViewHolder.activity_material_management_admin_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).edit_name_edittext);
+            customViewHolder.activity_material_management_admin_item_textview_recyclerview_lender.setText(materialManagementItems.get(position).edit_lender);
+            customViewHolder.activity_material_management_admin_item_recyclerview_timestamp.setText(materialManagementItems.get(position).timestamp.toString());
 
-            Glide.with(viewholder.itemView.getContext()).load(materialManagementItems.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_item_imageview_recyclerview_image);
+            Glide.with(viewholder.itemView.getContext()).load(materialManagementItems.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_admin_item_imageview_recyclerview_image);
 
             PopupMenu(customViewHolder, position);
 
             if (materialManagementItems.get(position).edit_lender.equals("없음")) {
-                customViewHolder.activity_material_management_item_linearlayout.setBackgroundResource(R.drawable.border_green);
+                customViewHolder.activity_material_management_admin_item_linearlayout.setBackgroundResource(R.drawable.border_green);
             } else {
-                customViewHolder.activity_material_management_item_linearlayout.setBackgroundResource(R.drawable.border_gray);
+                customViewHolder.activity_material_management_admin_item_linearlayout.setBackgroundResource(R.drawable.border_gray);
                 now = System.currentTimeMillis();
                 // 현재시간을 date 변수에 저장한다.
                 Date date = new Date(now);
@@ -424,7 +466,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                 Date d1 = simpleDateFormat.parse(date_End, new ParsePosition(0));
                 long diff = d1.getTime() - d2.getTime();
                 if(diff <= 0) {
-                    customViewHolder.activity_material_management_item_linearlayout.setBackgroundResource(R.drawable.border_orange);
+                    customViewHolder.activity_material_management_admin_item_linearlayout.setBackgroundResource(R.drawable.border_orange);
                 }
             }
 

@@ -9,14 +9,16 @@ public class LoginData {
     private String studentNumber;
     private String school;
     private int admin;
+    private boolean pushAlarmOnOff;
 
-    public LoginData(String name, String phone, String studentNumber, String school, int admin) {
+    /*public LoginData(String name, String phone, String studentNumber, String school, int admin, boolean pushAlarmOnOff) {
         this.name = name;
         this.phone = phone;
         this.studentNumber = studentNumber;
         this.school = school;
         this.admin = admin;
-    }
+        this.pushAlarmOnOff = pushAlarmOnOff;
+    }*/
 
     public int getAdmin() {
         return admin;
@@ -57,6 +59,14 @@ public class LoginData {
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    public boolean isPushAlarmOnOff() {
+        return pushAlarmOnOff;
+    }
+
+    public void setPushAlarmOnOff(boolean pushAlarmOnOff) {
+        this.pushAlarmOnOff = pushAlarmOnOff;
     }
 
 
