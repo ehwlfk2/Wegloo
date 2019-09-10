@@ -137,12 +137,6 @@ public class VoteActivity_Execute extends AppCompatActivity {
             }
         });
     }
-    private final static Comparator<Vote_Item_Count> sortByTotalCall= new Comparator<Vote_Item_Count>() { //정렬
-        @Override
-        public int compare(Vote_Item_Count object1, Vote_Item_Count object2) {
-            return Integer.compare(object1.getCount(), object2.getCount());
-        }
-    };
 
     public class VoteActivity_Execute_ListAdapter extends BaseAdapter {
         LayoutInflater inflater = null;
@@ -180,7 +174,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
             TextView oTextCount = (TextView) convertView.findViewById(R.id.vote_execute_listview_item_textview_count);
 
             oTextName.setText(m_oData.get(position).getName());
-            oTextCount.setText("현재 : "+m_oData.get(position).getCount());
+            oTextCount.setText(+m_oData.get(position).getCount()+" 명");
 
             return convertView;
         }
