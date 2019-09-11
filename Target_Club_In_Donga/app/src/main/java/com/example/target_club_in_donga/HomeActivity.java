@@ -12,6 +12,7 @@ import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
 
 public class HomeActivity extends AppCompatActivity implements HomeActivity_Fragment.OnFragmentInteractionListener {
     private ViewPager viewPager;
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,12 +21,14 @@ public class HomeActivity extends AppCompatActivity implements HomeActivity_Frag
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         HomeActivity_Adapter fragmentAdapter = new HomeActivity_Adapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
     // 홈에서 공지사항을 눌었을 떄, viewPager에서 ViewPagerAdapter_Notice로 공지사항화면이 나오고
     // 오른쪽에서 왼쪽으로 슬라이드를 하면 홈 화면이 나오도록 한다.
 
     @Override
     public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
     }
     // 뒤로가기 안먹히게 막아둠 (로그아웃으로 로그인화면으로 이동하게)
 
