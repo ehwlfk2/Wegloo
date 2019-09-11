@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.R;
@@ -68,7 +69,12 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+                View view2 = LayoutInflater.from(getActivity())
+                        .inflate(R.layout.activity_attend_check, null, false);
+                builder.setView(view2);
+//                intent.putExtra("finishstatus", true);
                 count++;
             }
         });
@@ -76,7 +82,7 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-
+                getActivity().finish();
             }
         });
 

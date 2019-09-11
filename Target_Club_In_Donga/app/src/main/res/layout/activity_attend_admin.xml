@@ -103,10 +103,11 @@
         android:layout_height="wrap_content" >
 
     <Button
+        android:id="@+id/activity_attend_admin_attendance_start"
         style="@style/Content_Classification_Text_Style"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="-2dp"
-        android:text="확인" />
+        android:text="출석시작하기" />
 
     </RelativeLayout>
 
