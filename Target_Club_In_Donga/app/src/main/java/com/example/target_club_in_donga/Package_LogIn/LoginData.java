@@ -10,6 +10,7 @@ public class LoginData {
     private String school;
     private int admin;
     private boolean pushAlarmOnOff;
+    private String pushToken;
 
     /*public LoginData(String name, String phone, String studentNumber, String school, int admin, boolean pushAlarmOnOff) {
         this.name = name;
@@ -67,6 +68,15 @@ public class LoginData {
 
     public void setPushAlarmOnOff(boolean pushAlarmOnOff) {
         this.pushAlarmOnOff = pushAlarmOnOff;
+    }
+
+
+    public String getPushToken() {
+        return pushToken;
+    }
+
+    public void setPushToken(String pushToken) {
+        this.pushToken = pushToken;
     }
 
 
