@@ -50,7 +50,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
     private long now;
 
-    String material_path;
+    String material_path, getEditName;
 
     int count = 0;
     //메뉴를 클릭했는지 안했는지 확인하기 위해서 사용
@@ -89,11 +89,20 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         activity_material_management_insert_button_insert.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                getEditName = activity_material_management_insert_edittext_item_name.getText().toString();
+                // 물품명을 쓰지 않았을 경우를 알기위해서 String값으로 받아옴
+                getEditName = getEditName.trim();
+                // 띄어쓰기만 했을 떄 입력이 안먹히도록 하기 위해서
+
                 if(count > 0) {
-                    upload(imagePath);
-                    Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
-                    startActivity(intent);
-                    finish();
+                    if(getEditName.getBytes().length > 0) {
+                        upload(imagePath);
+                        Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(MaterialManagementActivity_Insert.this, "물품명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(MaterialManagementActivity_Insert.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
                 }

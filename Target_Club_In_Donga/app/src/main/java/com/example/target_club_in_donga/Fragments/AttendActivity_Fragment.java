@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.target_club_in_donga.AttendActivity_Admin;
 import com.example.target_club_in_donga.R;
 
 /**
@@ -27,7 +29,7 @@ public class AttendActivity_Fragment extends Fragment {
 
     private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc,R.drawable.dd,R.drawable.ee};
 
-    private Button activity_attend_attendance, activity_attend_cancel;
+    private Button activity_attend_attendance, activity_attend_cancel, activity_attend_button_admin;
     private int count;
 
     public AttendActivity_Fragment() {
@@ -45,6 +47,7 @@ public class AttendActivity_Fragment extends Fragment {
 
         activity_attend_attendance = (Button) view.findViewById(R.id.activity_attend_attendance);
         activity_attend_cancel = (Button) view.findViewById(R.id.activity_attend_cancel);
+        activity_attend_button_admin = (Button) view.findViewById(R.id.activity_attend_button_admin);
 
         gallery.setAdapter(galleryAdapter);
         final ImageView imageView = (ImageView)view.findViewById(R.id.test);
@@ -83,6 +86,14 @@ public class AttendActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 getActivity().finish();
+            }
+        });
+
+        activity_attend_button_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Intent intent = new Intent(getActivity(), AttendActivity_Admin.class);
+                startActivity(intent);
             }
         });
 
