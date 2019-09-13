@@ -21,12 +21,31 @@ import com.example.target_club_in_donga.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.PushMessages.NotificationModel;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.example.target_club_in_donga.Gallery.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 // Home 프래그먼트
 
@@ -62,6 +81,8 @@ public class HomeActivity_Fragment extends Fragment {
         // Required empty public constructor
     }
 
+
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -92,9 +113,12 @@ public class HomeActivity_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        passPushTokenToServer();
+
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
@@ -116,6 +140,9 @@ public class HomeActivity_Fragment extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                //sendFcm("cteKj3zZD6w:APA91bGpjC2QFFq1NCicPkvQz6ojKBbynQXAOdmKh-uX9zUlPSYf1MDucKopzNHZ_JOTpZidbqTd-nwZ3w7bxsB6a98Xns8hqRxIbXycaAOavSNy2fo0Z0QOIzgjoaJFBoWtuXcqCVFa");
+                //위에 동운이꺼 밑에 내꺼
+                //sendFcm("dWsU0qzEDso:APA91bEC2NqKj2ROYvRvexMVjHj0y6n0aNRQ_Zo0UqDjRRVGgTE2D7jYmasPOd0iGz_EBBUtU14tyPVxNXvT3wVxXqbTFnBSMnv2yhsikNOQQHi2TIGwN1oqLkUqgDz_BwZJvfNLQIte");
                 Intent intent = new Intent(getActivity(), NoticeActivity.class);
                 startActivity(intent);
             }
@@ -254,6 +281,7 @@ public class HomeActivity_Fragment extends Fragment {
         mListener = null;
     }
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -269,4 +297,44 @@ public class HomeActivity_Fragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    public void passPushTokenToServer(){
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pushToken",token);
+        FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
+    }
+
+    /*void sendFcm(String toToken){
+        Gson gson = new Gson();
+
+        NotificationModel notificationModel = new NotificationModel();
+        notificationModel.to =  toToken;
+        notificationModel.notification.title = "공지사항";
+        notificationModel.notification.text = "백그라운드 푸시";
+        notificationModel.data.title = "공지사항";
+        notificationModel.data.text = "포그라운드 푸시";
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
+
+        Request request = new Request.Builder()
+                .header("Content-Type", "application/json")
+                .addHeader("Authorization", "key=AAAAN9u7iok:APA91bHiCw-fGchT3f4FDePrFXNtUQ0PpEBDZOtKuz6Az0x6gMgv2JEhVNcwKeOdJr1UWkX4JBYsShwkU2ZS00CyFNKqSet5JKJOBWxBxzy9Dh_--nbExEbPYWQCU9dwhfSaQqCeOfb3")
+                .url("https://fcm.googleapis.com/fcm/send")
+                .post(requestBody)
+                .build();
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        });
+    }*/
 }

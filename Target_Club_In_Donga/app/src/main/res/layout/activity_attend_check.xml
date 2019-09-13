@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Top_Content_Text_Style"
+        android:text="출석체크" />
+
+    <TextView
+        style="@style/Content_Classification_Text_Style"
+        android:text="인증번호를 입력해주세요" />
+
+    <EditText
+        style="@style/Content_Text_Style"
+        android:hint="인증번호 " />
+
+    <Button
+        style="@style/Content_Classification_Text_Style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인" />
+
+    <Button
+        style="@style/Content_Classification_Text_Style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소" />
+
+</LinearLayout>
