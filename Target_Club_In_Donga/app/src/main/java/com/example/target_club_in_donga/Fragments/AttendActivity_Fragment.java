@@ -3,12 +3,14 @@ package com.example.target_club_in_donga.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
@@ -17,6 +19,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.AttendActivity_Admin;
 import com.example.target_club_in_donga.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +37,10 @@ public class AttendActivity_Fragment extends Fragment {
 
     private Button activity_attend_attendance, activity_attend_cancel, activity_attend_button_admin;
     private int count;
+
+    private FirebaseDatabase database;
+
+    private int getEditCertificationNumber, getDatabaseCertificationNumber;
 
     public AttendActivity_Fragment() {
         // Required empty public constructor
@@ -48,6 +58,12 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_attendance = (Button) view.findViewById(R.id.activity_attend_attendance);
         activity_attend_cancel = (Button) view.findViewById(R.id.activity_attend_cancel);
         activity_attend_button_admin = (Button) view.findViewById(R.id.activity_attend_button_admin);
+
+        database = FirebaseDatabase.getInstance();
+
+        getDatabaseCertificationNumber = Integer.parseInt(database.getReference().child("Attend_Admin_Certification_Number").child("Number").getKey());
+
+        Log.e("뭐시기", getDatabaseCertificationNumber + "");
 
         gallery.setAdapter(galleryAdapter);
         final ImageView imageView = (ImageView)view.findViewById(R.id.test);
@@ -71,14 +87,40 @@ public class AttendActivity_Fragment extends Fragment {
 
         activity_attend_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View view) {
+            public void onClick(final View v) {
+
+                Log.e("값",getDatabaseCertificationNumber + "");
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                View view2 = LayoutInflater.from(getActivity())
+                View view = LayoutInflater.from(getActivity())
                         .inflate(R.layout.activity_attend_check, null, false);
-                builder.setView(view2);
+                builder.setView(view);
+
+                final EditText activity_attend_check_edittext_certification_number = (EditText) view.findViewById(R.id.activity_attend_check_edittext_certification_number);
+                final Button activity_attend_check_confirm = (Button) view.findViewById(R.id.activity_attend_check_button_confirm);
+                final Button activity_attend_check_cancel = (Button) view.findViewById(R.id.activity_attend_check_button_cancel);
+
+                final AlertDialog dialog = builder.create();
+
+                activity_attend_check_confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
+
+                    }
+                });
+
+                activity_attend_check_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        getActivity().finish();
+                    }
+                });
+
+                dialog.show();
 //                intent.putExtra("finishstatus", true);
-                count++;
+//                count++;
             }
         });
 

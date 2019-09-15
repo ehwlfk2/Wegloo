@@ -34,8 +34,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
             @Override
             public void onClick(final View view) {
                 certification_number = random_number.nextInt(100);
-                database.getReference().child("Attend_Admin_Certification_Number").setValue(certification_number);
+                database.getReference().child("Attend_Admin_Certification_Number").child("Number").setValue(certification_number);
                 Log.v("클릭", certification_number + "");
+                finish();
             }
         });
 

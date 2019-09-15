@@ -40,6 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AttendActivity" />
+        <activity android:name=".AttendActivity_Admin" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".Material_Management.MaterialManagementActivity_Admin" />
         <activity android:name=".Material_Management.MaterialManagementActivity_History" />

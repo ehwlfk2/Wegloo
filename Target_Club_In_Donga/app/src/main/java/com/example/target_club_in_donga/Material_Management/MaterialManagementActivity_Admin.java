@@ -396,7 +396,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     materialHistoryItem.history_lend_name = ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString();
                                     String uidAdminPath = database.getReference().child("Material_Management").child(uidLists.get(position)).getKey();
                                     intent.putExtra("uidAdminPath", uidAdminPath);
-//                                    intent.putExtra("ArrayCount", ArrayCount);
                                     startActivity(intent);
 
                                     return true;
