@@ -80,6 +80,8 @@ public class HomeActivity_Fragment extends Fragment {
         // Required empty public constructor
     }
 
+
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -137,7 +139,9 @@ public class HomeActivity_Fragment extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                sendFcm();
+                //sendFcm("cteKj3zZD6w:APA91bGpjC2QFFq1NCicPkvQz6ojKBbynQXAOdmKh-uX9zUlPSYf1MDucKopzNHZ_JOTpZidbqTd-nwZ3w7bxsB6a98Xns8hqRxIbXycaAOavSNy2fo0Z0QOIzgjoaJFBoWtuXcqCVFa");
+                //위에 동운이꺼 밑에 내꺼
+                //sendFcm("dWsU0qzEDso:APA91bEC2NqKj2ROYvRvexMVjHj0y6n0aNRQ_Zo0UqDjRRVGgTE2D7jYmasPOd0iGz_EBBUtU14tyPVxNXvT3wVxXqbTFnBSMnv2yhsikNOQQHi2TIGwN1oqLkUqgDz_BwZJvfNLQIte");
                 Intent intent = new Intent(getActivity(), NoticeActivity.class);
                 startActivity(intent);
             }
@@ -300,11 +304,11 @@ public class HomeActivity_Fragment extends Fragment {
         FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
     }
 
-    void sendFcm(){
+    /*void sendFcm(String toToken){
         Gson gson = new Gson();
 
         NotificationModel notificationModel = new NotificationModel();
-        notificationModel.to =  "cteKj3zZD6w:APA91bGpjC2QFFq1NCicPkvQz6ojKBbynQXAOdmKh-uX9zUlPSYf1MDucKopzNHZ_JOTpZidbqTd-nwZ3w7bxsB6a98Xns8hqRxIbXycaAOavSNy2fo0Z0QOIzgjoaJFBoWtuXcqCVFa";
+        notificationModel.to =  toToken;
         notificationModel.notification.title = "공지사항";
         notificationModel.notification.text = "백그라운드 푸시";
         notificationModel.data.title = "공지사항";
@@ -331,6 +335,5 @@ public class HomeActivity_Fragment extends Fragment {
 
             }
         });
-
-    }
+    }*/
 }
