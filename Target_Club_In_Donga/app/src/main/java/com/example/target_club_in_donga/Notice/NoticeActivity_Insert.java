@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.target_club_in_donga.Package_LogIn.LoginData;
 import com.example.target_club_in_donga.PushMessages.NotificationModel;
+import com.example.target_club_in_donga.PushMessages.SendPushMessages;
 import com.example.target_club_in_donga.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -167,7 +168,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     Toast.makeText(NoticeActivity_Insert.this, "내용 입력해줘요", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    if(type.equals("insert")){
+                    if(type.equals("insert")){ //추가
                         database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -188,26 +189,8 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                                 database.getReference().child("Notice").push().setValue(notice_item);
 
                                 if(activity_notice_insert_switch.isChecked()){
-                                    database.getReference().child("User").addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                                LoginData data = snapshot.getValue(LoginData.class);
-                                                if(data.isPushAlarmOnOff() && !(snapshot.getKey().equals(auth.getCurrentUser().getUid()))){ //자기한텐 안보내기 추가
-                                                    try{
-                                                        sendFcm(data.getPushToken(), "공지사항이 추가되었습니다.",title.toString());
-                                                    }catch (NullPointerException e){
-
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
+                                    SendPushMessages send = new SendPushMessages();
+                                    send.multipleSendMessage("공지사항이 추가되었습니다",title.toString());
                                 }
                                 Toast.makeText(NoticeActivity_Insert.this, "공지 올렷스무디", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -220,6 +203,11 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         });
                     }
                     else{
+                        if(activity_notice_insert_switch.isChecked()){
+                            SendPushMessages send = new SendPushMessages();
+                            send.multipleSendMessage("공지사항이 수정되었습니다",title.toString());
+                        }
+
                         Notice_Item notice_item = new Notice_Item();
                         notice_item.setWriter(updateWriter);
                         notice_item.setContent(content);
@@ -563,7 +551,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
         }
     }
 
-    void sendFcm(String toToken, String title, String text){
+    /*public void sendFcm(String toToken, String title, String text){
         Gson gson = new Gson();
 
         NotificationModel notificationModel = new NotificationModel();
@@ -594,5 +582,5 @@ public class NoticeActivity_Insert extends AppCompatActivity{
 
             }
         });
-    }
+    }*/
 }

@@ -11,6 +11,7 @@ public class Vote_Item {
     public ArrayList<Vote_Item_Count> listItems = new ArrayList<Vote_Item_Count>();
     public int totalCount = 0;
     public Map<String, Integer> stars = new HashMap<>();
+    public boolean deadline = false;
     //public String uid;
     /*public String getTitle() {
         return title;

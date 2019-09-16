@@ -58,6 +58,7 @@
         <activity android:name=".Gallery.Gallery_Detail" />
         <activity android:name=".Gallery.Gallery_Write" />
         <activity android:name=".Gallery.Gallery_Board" />
+        <activity android:name=".TimeLine.TimeLineActivity_Main"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
