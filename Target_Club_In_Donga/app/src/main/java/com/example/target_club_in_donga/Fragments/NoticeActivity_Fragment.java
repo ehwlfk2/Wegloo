@@ -117,27 +117,32 @@ public class NoticeActivity_Fragment extends Fragment {
                     for(int i=0;i<notice_item.notice_item_colors.size();i++){
                         int start = notice_item.notice_item_colors.get(i).getStart();
                         int end = notice_item.notice_item_colors.get(i).getEnd();
-                        if(notice_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
-                            ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
+                        try{
+                            if(notice_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
+                                ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
+                            }
+                            else if(notice_item.notice_item_colors.get(i).getStyle().equals("ITALIC")){
+                                ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
+                            }
+                            else if(notice_item.notice_item_colors.get(i).getStyle().equals("UnderLine")){
+                                ssb.setSpan(new UnderlineSpan(), start, end, 1);
+                            }
+                            else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack){
+                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
+                            }
+                            else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin){
+                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
+                            }
+                            else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole){
+                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
+                            }
+                            else{
+                                int color = Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle());
+                                ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
+                            }
                         }
-                        else if(notice_item.notice_item_colors.get(i).getStyle().equals("ITALIC")){
-                            ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
-                        }
-                        else if(notice_item.notice_item_colors.get(i).getStyle().equals("UnderLine")){
-                            ssb.setSpan(new UnderlineSpan(), start, end, 1);
-                        }
-                        else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack){
-                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
-                        }
-                        else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin){
-                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
-                        }
-                        else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole){
-                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
-                        }
-                        else{
-                            int color = Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle());
-                            ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
+                        catch (IllegalStateException e){ //무슨예외??
+
                         }
                     }
 

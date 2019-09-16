@@ -31,6 +31,8 @@ import com.melnykov.fab.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VoteActivity_Main extends AppCompatActivity {
     private RecyclerView activityvote_main_recyclerview;
@@ -101,7 +103,11 @@ public class VoteActivity_Main extends AppCompatActivity {
                     //String title =
 
                     long nowTime = System.currentTimeMillis();
-                    if(Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0){
+                    if(Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0){ //시간 끝났을때
+                        database.getReference().child("Vote").child(snapshot.getKey()).child("deadline").setValue(true);
+                    }
+
+                    if(/*Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0 ||*/ vote_last_item.deadline){
                         list.add(new Vote_Item_Main(vote_last_item.title,vote_last_item.timestamp,"gray",vote_last_item.totalCount));
                     }
                     else if(vote_last_item.stars.containsKey(auth.getCurrentUser().getUid())){
@@ -143,7 +149,6 @@ public class VoteActivity_Main extends AppCompatActivity {
         private FirebaseDatabase database;
         //getItemCount, onCreateViewHolder, MyViewHolder, onBindViewholder 순으로 들어오게 된다.
         // 뷰홀더에서 초기세팅해주고 바인드뷰홀더에서 셋텍스트해주는 값이 최종적으로 화면에 출력되는 값
-
 
         @Override
         public VoteActivity_Main_RecyclerviewAdapter.MyViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -249,6 +254,12 @@ public class VoteActivity_Main extends AppCompatActivity {
                                     intent2.putExtra("key",dbKey.get(position));
                                     startActivity(intent2);
                                     return true;
+                                case R.id.vote_deadline:
+                                    //holder.voteLayout.setBackgroundResource(R.drawable.border_gray);
+                                    //Map<String, Object> map = new HashMap<>();
+                                    //map.put("deadline",true);
+                                    FirebaseDatabase.getInstance().getReference().child("Vote").child(dbKey.get(position)).child("deadline").setValue(true);
+                                    return true;
                                 case R.id.vote_delete:
                                     delete_item(position);
                                     //Toast.makeText(activity, voteTitle.getText().toString()+"", Toast.LENGTH_SHORT).show();
@@ -263,6 +274,7 @@ public class VoteActivity_Main extends AppCompatActivity {
                     popup.inflate(R.menu.vote_main_popup);
                     if(!adminCheck){
                         popup.getMenu().getItem(2).setVisible(false);
+                        popup.getMenu().getItem(3).setVisible(false);
                     }
 
                     if(color == "orange"){
@@ -271,6 +283,7 @@ public class VoteActivity_Main extends AppCompatActivity {
                     else if(color == "gray"){
                         popup.getMenu().getItem(0).setVisible(false);
                         popup.getMenu().getItem(1).setTitle("결과 보기");
+                        popup.getMenu().getItem(2).setVisible(false);
                     }
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
