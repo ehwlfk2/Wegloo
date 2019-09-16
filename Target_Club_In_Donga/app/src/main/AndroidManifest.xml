@@ -58,6 +58,11 @@
         <activity android:name=".Gallery.Gallery_Detail" />
         <activity android:name=".Gallery.Gallery_Write" />
         <activity android:name=".Gallery.Gallery_Board" />
+
+
+
+
+
         <activity android:name=".MemberList.MemberList"></activity>
 
         <meta-data

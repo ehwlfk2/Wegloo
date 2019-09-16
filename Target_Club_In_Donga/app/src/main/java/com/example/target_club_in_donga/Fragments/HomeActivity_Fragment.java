@@ -73,7 +73,7 @@ public class HomeActivity_Fragment extends Fragment {
     private TextView menu_detail_btn;
     private TextView slidingdrawer_title;
 
-    private ImageView menu_btn,setting_btn, memberlist;
+    private ImageView menu_btn,setting_btn;
     private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7;
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
