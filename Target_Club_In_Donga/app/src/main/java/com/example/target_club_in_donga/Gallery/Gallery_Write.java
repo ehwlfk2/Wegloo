@@ -56,7 +56,6 @@ public class Gallery_Write extends AppCompatActivity {
     private static final int GALLERY_CODE = 10;
     private String imagepath;
     private ArrayList<Uri> uris = new ArrayList<>(); // 이미지 uri 리스트
-    private ArrayList<Uri> uriList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     RecyclerViewDecoration recyclerViewDecoration = new RecyclerViewDecoration(30);
     private FirebaseStorage storage;
