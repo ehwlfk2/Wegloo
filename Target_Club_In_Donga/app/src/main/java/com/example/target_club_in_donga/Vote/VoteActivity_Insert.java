@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,10 +21,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.target_club_in_donga.Package_LogIn.LoginData;
+import com.example.target_club_in_donga.PushMessages.SendPushMessages;
 import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.text.ParseException;
@@ -41,6 +48,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
     private TextView activityvote_insert_textview_calendar;
     private TextView activityvote_insert_textview_time;
     private EditText activityvote_insert_edittext_title;
+    private Switch activityvote_insert_switch;
 
     private String dateStr;
     private String timeStr;
@@ -50,6 +58,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
     private FloatingActionButton ctivityvote_insert_button_result;
 
     private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth auth;
 
     public  ArrayList<Vote_Item_Count> listViewItemList = new ArrayList<Vote_Item_Count>();
     private ArrayList<Vote_Item_Count> filteredItemList = listViewItemList;
@@ -67,12 +76,13 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
             activityvote_insert_textview_time=(TextView)findViewById(R.id.activityvote_insert_textview_time);
             ctivityvote_insert_button_result = (FloatingActionButton)findViewById(R.id.activityvote_insert_button_result);
             activityvote_insert_edittext_title = (EditText)findViewById(R.id.activityvote_insert_edittext_title);
-
+            activityvote_insert_switch = (Switch)findViewById(R.id.activity_vote_insert_switch);
             activityvote_insert_button_listremove.show(false);
             activityvote_insert_button_listinsert.show(false);
             ctivityvote_insert_button_result.show(false);
 
             firebaseDatabase = FirebaseDatabase.getInstance();
+            auth = FirebaseAuth.getInstance();
             //firebaseDatabase.getReference().child("images").push().setValue(imageDTO);
 
         now = System.currentTimeMillis();
@@ -106,6 +116,8 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
 
         adapter = new VoteActivity_Insert_ListAdapter();
         activityvote_insert_listview.setAdapter(adapter);
+        adapter.addItem("",0); //기본적으로 일단 두개 항목!
+        adapter.addItem("",0);
 
         activityvote_insert_button_listinsert.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,7 +156,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    String title = activityvote_insert_edittext_title.getText().toString(); //제목 거르기
+                    final String title = activityvote_insert_edittext_title.getText().toString(); //제목 거르기
 
                     int cnt = listViewItemList.size(); //항목 없는거 거르기
 
@@ -171,6 +183,10 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                         Toast.makeText(VoteActivity_Insert.this, "기간설정 다시!", Toast.LENGTH_SHORT).show();
                     }
                     else{
+                        if(activityvote_insert_switch.isChecked()){ //push
+                            SendPushMessages send = new SendPushMessages();
+                            send.multipleSendMessage("투표가 추가되었습니다",title);
+                        }
                         //Toast.makeText(Vote_Insert.this, nowTime+" 현재시간", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Vote_Insert.this, dbTime+" 디비시간", Toast.LENGTH_SHORT).show();
                         Vote_Item last_item = new Vote_Item();

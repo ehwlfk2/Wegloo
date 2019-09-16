@@ -58,7 +58,11 @@
         <activity android:name=".Gallery.Gallery_Detail" />
         <activity android:name=".Gallery.Gallery_Write" />
         <activity android:name=".Gallery.Gallery_Board" />
+<<<<<<< HEAD
         <activity android:name=".MemberList.MemberList"></activity>
+=======
+        <activity android:name=".TimeLine.TimeLineActivity_Main"/>
+>>>>>>> 127db9ddfa603133b0931215fa31a0dfd469d3e0
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
