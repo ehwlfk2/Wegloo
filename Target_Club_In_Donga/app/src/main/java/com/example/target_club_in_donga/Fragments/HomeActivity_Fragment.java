@@ -22,6 +22,7 @@ import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.PushMessages.NotificationModel;
+import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.Schedule.ScheduleActivity;
@@ -72,7 +73,7 @@ public class HomeActivity_Fragment extends Fragment {
     private TextView menu_detail_btn;
     private TextView slidingdrawer_title;
 
-    private ImageView menu_btn,setting_btn;
+    private ImageView menu_btn,setting_btn, timeline_btn;
     private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7;
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
@@ -133,6 +134,7 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_7 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_7);
 
         menu_btn = (ImageView)view.findViewById(R.id.frgment_home_menu_btn);
+        timeline_btn = (ImageView)view.findViewById(R.id.fragment_home_timeline_btn);
 
         slidingDrawer = (SlidingDrawer)view.findViewById(R.id.frgment_home_slidingdrawer);
         slidingdrawer_title = (TextView)view.findViewById(R.id.frgment_home_slidingdrawer_title);
@@ -219,6 +221,14 @@ public class HomeActivity_Fragment extends Fragment {
                 menu_count++;
             }
         }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
+
+        timeline_btn.setOnClickListener(new View.OnClickListener() { //홈에서 오른쪽 상단 종버튼 타임라인으로 만들꺼임
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(getActivity(), TimeLineActivity_Main.class);
+                startActivity(intent);
+            }
+        });
 
         slidingDrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
             @Override

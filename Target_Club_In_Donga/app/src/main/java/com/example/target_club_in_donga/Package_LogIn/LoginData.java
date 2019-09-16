@@ -2,9 +2,6 @@ package com.example.target_club_in_donga.Package_LogIn;
 
 public class LoginData {
     private String name;
-
-
-
     private String phone;
     private String studentNumber;
     private String school;

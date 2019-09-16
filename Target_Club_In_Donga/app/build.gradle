@@ -11,7 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    dataBinding{
+    dataBinding {
         enabled = true
     }
     buildTypes {
@@ -63,4 +63,9 @@ android {
 
     apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
 
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:+'
+    implementation 'androidx.constraintlayout:constraintlayout:+'
 }
