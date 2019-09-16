@@ -74,7 +74,7 @@ public class HomeActivity_Fragment extends Fragment {
     private TextView menu_detail_btn;
     private TextView slidingdrawer_title;
 
-    private ImageView menu_btn,setting_btn, timeline_btn;
+    private ImageView menu_btn,setting_btn, timeline_btn, memberlist;
     private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7;
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
@@ -136,6 +136,14 @@ public class HomeActivity_Fragment extends Fragment {
 
         menu_btn = (ImageView)view.findViewById(R.id.frgment_home_menu_btn);
         timeline_btn = (ImageView)view.findViewById(R.id.fragment_home_timeline_btn);
+        memberlist = view.findViewById(R.id.fragment_home_btn_8);
+        memberlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MemberList.class);
+                startActivity(intent);
+            }
+        });
 
         slidingDrawer = (SlidingDrawer)view.findViewById(R.id.frgment_home_slidingdrawer);
         slidingdrawer_title = (TextView)view.findViewById(R.id.frgment_home_slidingdrawer_title);
