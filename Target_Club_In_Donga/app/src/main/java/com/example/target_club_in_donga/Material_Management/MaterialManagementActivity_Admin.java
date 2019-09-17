@@ -69,7 +69,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
     protected ImageView activity_material_management_admin_item_imageview_recyclerview_image;
     private long now;
-    private String formatDate, formatHour, formatMin, startDate, startTime;
+    private String formatDate, formatHour, formatMin, startDate;
     private String dateStr, timeStr, date_Now, date_End, date_Return;
 
     private String findkey;
@@ -248,21 +248,21 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     // 현재시간을 date 변수에 저장한다.
                                     Date date = new Date(now);
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                    //"yyyy-MM-dd"
+                                    // "yyyy-MM-dd"
                                     formatDate = simpleDateFormat.format(date);
                                     detailButtonPeriodCalendar.setText(formatDate);
 
                                     SimpleDateFormat startSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    // "yyyy-MM-dd HH:mm"
                                     startDate = startSimpleDateFormat.format(date);
 
-                                    simpleDateFormat = new SimpleDateFormat("HH:mm");
+                                    SimpleDateFormat startSimpleTimeFormat = new SimpleDateFormat("HH:mm");
                                     // "HH:mm"
-                                    formatHour = simpleDateFormat.format(date);
+                                    formatHour = startSimpleTimeFormat.format(date);
                                     detailButtonPeriodTime.setText(formatHour);
 
                                     dateStr = formatDate;
                                     timeStr = formatHour;
-                                    startTime = formatHour;
 
                                     final AlertDialog dialog2 = builder2.create();
 
@@ -320,10 +320,9 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                                             timeStr += ":" + minute;
 
                                                         detailButtonPeriodTime.setText(timeStr);
-//                                                    flag2++;
 
                                                     } else {
-                                                        Toast.makeText(v.getContext(), "대여시간이 올바르지 않습니다", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(v.getContext(), "이미 지난 시간은 선택할 수 없습니다", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
@@ -350,7 +349,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                                             dialog2.dismiss();
 
-//                                            }
                                         }
                                     });
 
