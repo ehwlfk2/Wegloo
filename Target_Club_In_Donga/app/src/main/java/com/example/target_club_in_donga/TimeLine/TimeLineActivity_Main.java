@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
@@ -108,8 +109,10 @@ public class TimeLineActivity_Main extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
-                    else{ //다른것들 추가해줘야해
-
+                    else if(data.getType().equals("Material_Management")){ //다른것들 추가해줘야해
+                        Intent intent = new Intent(TimeLineActivity_Main.this, MaterialManagementActivity_Admin.class);
+                        startActivity(intent);
+                        finish();
                     }
                 }
             });
