@@ -535,11 +535,11 @@
                 android:src="@drawable/menu_icon" />
 
             <ImageView
+                android:id="@+id/fragment_home_timeline_btn"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/notification_icon"
-                android:id="@+id/fragment_home_timeline_btn"/>
+                android:src="@drawable/notification_icon" />
 
         </RelativeLayout>
 
