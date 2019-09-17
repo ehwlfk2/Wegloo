@@ -7,6 +7,9 @@
     <item android:id="@+id/vote_status"
           android:title="투표 진행 현황"
     />
+    <item android:id="@+id/vote_deadline"
+        android:title="마감하기"
+        />
     <item android:id="@+id/vote_delete"
           android:title="삭제"
     />

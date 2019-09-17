@@ -40,6 +40,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.example.target_club_in_donga.Gallery.*;
+import com.sangcomz.fishbun.FishBun;
+import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter;
+import com.sangcomz.fishbun.define.Define;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -99,16 +102,9 @@ public class Gallery_Write extends AppCompatActivity {
             @Override
             public void onClick(View v) { //사진등록
                 try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-                    }
                     recyclerView.removeAllViewsInLayout();
                     uris.clear();
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                    startActivityForResult(intent.createChooser(intent,"'포토'를 선택해주세요."), GALLERY_CODE);
+                    FishBun.with(Gallery_Write.this).setImageAdapter(new GlideAdapter()).setMaxCount(15).setMinCount(1).setActionBarTitle("사진을 선택해주세요").setPickerSpanCount(4).textOnNothingSelected("nothing selected").startAlbum();
                 } catch (Exception e) {
                     Log.e("gallery pick error", " ..");
                 }
@@ -211,23 +207,13 @@ public class Gallery_Write extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) { // 갤러리 uri 리스트 받아오기
-        super.onActivityResult(requestCode, resultCode, data); // 문제되면 여기 지워보기
-        if(requestCode == GALLERY_CODE){
-            ClipData clipData = data.getClipData();
-            if( clipData.getItemCount() == 1){ //한장만 선택시
-                imagepath = getPath(clipData.getItemAt(0).getUri()); //  //로 시작하는 주소
-                File f = new File(imagepath);
-                Uri uri = Uri.fromFile(f); // file:// 로 변환
-                uris.add(uri); // 리스트 쌓음
-            }
-            else if( clipData.getItemCount() > 1 ){ //한장 이상 선택시
-                for( int i =0; i< clipData.getItemCount(); i++){
-                    imagepath = getPath(clipData.getItemAt(i).getUri());
-                    File f = new File(imagepath);
-                    Uri uri = Uri.fromFile(f);
-                    uris.add(uri);
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Define.ALBUM_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    uris = data.getParcelableArrayListExtra(Define.INTENT_PATH);
+                    break;
                 }
-            }
         }
         adapter.notifyDataSetChanged(); // 리사이클러 갱신
     }

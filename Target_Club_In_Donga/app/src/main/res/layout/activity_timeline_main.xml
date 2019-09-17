@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:text="타임라인"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:layout_height="60dp"
+        android:gravity="center_horizontal" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/activity_timeline_main_recyclerview">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

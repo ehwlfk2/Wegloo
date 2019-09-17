@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.target_club_in_donga">
-    <!-- 인터넷 권한 허용 (1) -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,12 +22,10 @@
         <activity android:name=".Package_LogIn.SignUpActivity_02" />
         <activity android:name=".Package_LogIn.SignUpActivity_03" />
         <activity android:name=".Package_LogIn.SignUpActivity_04" />
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -54,12 +53,14 @@
         <activity android:name=".Vote.VoteActivity_Execute" />
         <activity android:name=".Vote.VoteActivity_Main" />
         <activity android:name=".Vote.VoteActivity_Insert" />
-        <activity android:name=".Notice.NoticeActivity_Insert"/>
+        <activity android:name=".Notice.NoticeActivity_Insert" />
         <activity android:name=".Accountbook.AccountbookActivity_Main" />
         <activity android:name=".Gallery.Gallery_Viewpager" />
         <activity android:name=".Gallery.Gallery_Detail" />
         <activity android:name=".Gallery.Gallery_Write" />
         <activity android:name=".Gallery.Gallery_Board" />
+        <activity android:name=".MemberList.MemberList"/>
+        <activity android:name=".TimeLine.TimeLineActivity_Main"/>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -81,11 +82,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
