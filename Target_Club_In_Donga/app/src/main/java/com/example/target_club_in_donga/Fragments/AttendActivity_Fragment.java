@@ -1,18 +1,24 @@
 package com.example.target_club_in_donga.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.target_club_in_donga.AttendActivity_Admin;
 import com.example.target_club_in_donga.R;
 
 /**
@@ -26,8 +32,10 @@ public class AttendActivity_Fragment extends Fragment {
 
     private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc,R.drawable.dd,R.drawable.ee};
 
-    private Button activity_attend_attendance, activity_attend_cancel;
-    private int count;
+    private Button activity_attend_attendance, activity_attend_cancel, activity_attend_button_admin;
+    private int count, certification_number;
+
+    private int getEditCertificationNumber;
 
     public AttendActivity_Fragment() {
         // Required empty public constructor
@@ -44,6 +52,7 @@ public class AttendActivity_Fragment extends Fragment {
 
         activity_attend_attendance = (Button) view.findViewById(R.id.activity_attend_attendance);
         activity_attend_cancel = (Button) view.findViewById(R.id.activity_attend_cancel);
+        activity_attend_button_admin = (Button) view.findViewById(R.id.activity_attend_button_admin);
 
         gallery.setAdapter(galleryAdapter);
         final ImageView imageView = (ImageView)view.findViewById(R.id.test);
@@ -67,16 +76,59 @@ public class AttendActivity_Fragment extends Fragment {
 
         activity_attend_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View view) {
+            public void onClick(final View v) {
 
-                count++;
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                View view = LayoutInflater.from(getActivity())
+                        .inflate(R.layout.activity_attend_check, null, false);
+                builder.setView(view);
+
+                final EditText activity_attend_check_edittext_certification_number = (EditText) view.findViewById(R.id.activity_attend_check_edittext_certification_number);
+                final Button activity_attend_check_confirm = (Button) view.findViewById(R.id.activity_attend_check_button_confirm);
+                final Button activity_attend_check_cancel = (Button) view.findViewById(R.id.activity_attend_check_button_cancel);
+
+                final AlertDialog dialog = builder.create();
+
+                activity_attend_check_confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
+                        
+                        if(getEditCertificationNumber == certification_number) {
+                            Toast.makeText(getActivity(), "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+                activity_attend_check_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        getActivity().finish();
+                    }
+                });
+
+                dialog.show();
+//                intent.putExtra("finishstatus", true);
+//                count++;
             }
         });
 
         activity_attend_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                getActivity().finish();
+            }
+        });
 
+        activity_attend_button_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Intent intent = new Intent(getActivity(), AttendActivity_Admin.class);
+                startActivity(intent);
             }
         });
 

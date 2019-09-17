@@ -13,8 +13,9 @@ public class MaterialManagement_Admin_Item {
 
     public String imageUri;
     public String imageName;
-    public String edit_name_edittext;
-    public String edit_lender;
+    public String title;
+    public String lender;
+    public int state;
 
     public MaterialManagement_Admin_Item(){
 

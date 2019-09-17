@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AttendActivity" />
+        <activity android:name=".AttendActivity_Admin" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".Material_Management.MaterialManagementActivity_Admin" />
         <activity android:name=".Material_Management.MaterialManagementActivity_History" />
@@ -58,8 +59,8 @@
         <activity android:name=".Gallery.Gallery_Detail" />
         <activity android:name=".Gallery.Gallery_Write" />
         <activity android:name=".Gallery.Gallery_Board" />
+        <activity android:name=".MemberList.MemberList"/>
         <activity android:name=".TimeLine.TimeLineActivity_Main"/>
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
