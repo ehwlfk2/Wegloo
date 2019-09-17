@@ -137,8 +137,25 @@ public class AccountbookActivity_Main extends AppCompatActivity {
 //
 //            }
 //        });
+        firebaseDatabase.getReference().child("Account_Book").child("totalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot==null){
 
-        firebaseDatabase.getReference().child("Board").child(qq + "").addValueEventListener(new ValueEventListener() {
+                }
+                else{
+//                    int post = dataSnapshot.getValue(int.class);
+               //     outcome.setText("" + post);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        firebaseDatabase.getReference().child("Account_Book").child(qq + "").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mArrayList.clear();
@@ -169,25 +186,14 @@ public class AccountbookActivity_Main extends AppCompatActivity {
 
             }
         });
-        firebaseDatabase.getReference().child("Board").child("totalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int post =dataSnapshot.getValue(int.class);
-                outcome.setText(""+post);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         showeall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 total_income = 0;
                 total_pay = 0;
                 minus_total = 0;
-                firebaseDatabase.getReference().child("Board").addListenerForSingleValueEvent(new ValueEventListener() {
+                firebaseDatabase.getReference().child("Account_Book").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mArrayList.clear();
@@ -274,7 +280,7 @@ public class AccountbookActivity_Main extends AppCompatActivity {
                         // msg += " 00:00:00";
                         long qq = dateToMills(msg);
 
-                        firebaseDatabase.getReference().child("Board").child(qq + "").addListenerForSingleValueEvent(new ValueEventListener() {
+                        firebaseDatabase.getReference().child("Account_Book").child(qq + "").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 mArrayList.clear();
@@ -375,7 +381,7 @@ public class AccountbookActivity_Main extends AppCompatActivity {
                                 paytotals.setText("" + total_pay);
                             }
 
-                            databaseReference.child("Board").child("" + tt).push().setValue(item);
+                            databaseReference.child("Account_Book").child("" + tt).push().setValue(item);
                             //databaseReference.child("Board").child("total").setValue(outcome.getText().toString());
                             mAdapter.notifyDataSetChanged(); //변경된 데이터를 화면에 반영
 // 편집삭제시 내가선택한 어뎁터부분 ㅇㅇ 에서 pay 가져옴
