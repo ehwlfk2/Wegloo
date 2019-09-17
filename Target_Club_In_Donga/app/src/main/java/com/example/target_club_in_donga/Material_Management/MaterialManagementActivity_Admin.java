@@ -226,14 +226,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             //int x = item.getItemId();
-                            switch (item.getItemId()){
-
-                                case R.id.material_delete:
-                                    delete_content(position);
-                                    materialManagementItems.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, materialManagementItems.size());
-                                    return true;
+                            switch (item.getItemId()) {
 
                                 case R.id.material_lend:
                                     AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Admin.this);
@@ -391,6 +384,13 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                                     return true;
 
+                                case R.id.material_delete:
+                                    delete_content(position);
+                                    materialManagementItems.remove(position);
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position, materialManagementItems.size());
+                                    return true;
+
                                 case R.id.material_history:
 
                                     Intent intent = new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_History.class);
@@ -413,13 +413,13 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                     popup.inflate(R.menu.material_management_main_popup);
 
                     if(!auth.getCurrentUser().getDisplayName().equals(materialManagementItems.get(position).lender)) {
-                        popup.getMenu().getItem(2).setVisible(false);
+                        popup.getMenu().getItem(3).setVisible(false);
                     }
                     if(!materialManagementItems.get(position).lender.equals("없음")) {
+                        popup.getMenu().getItem(2).setVisible(false);
                         popup.getMenu().getItem(0).setVisible(false);
-                        popup.getMenu().getItem(1).setVisible(false);
                         if(!auth.getCurrentUser().getDisplayName().equals(materialManagementItems.get(position).lender)) {
-                            popup.getMenu().getItem(2).setVisible(false);
+                            popup.getMenu().getItem(3).setVisible(false);
                         }
                     }
 
