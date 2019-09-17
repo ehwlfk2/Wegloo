@@ -188,11 +188,12 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 Uri downloadUri = taskSnapshot.getDownloadUrl();
 
                 MaterialManagement_Admin_Item materialManagementItem = new MaterialManagement_Admin_Item();
-                materialManagementItem.edit_name_edittext = activity_material_management_insert_edittext_item_name.getText().toString();
-                materialManagementItem.edit_lender = activity_material_management_insert_textview_lender.getText().toString();
+                materialManagementItem.title = activity_material_management_insert_edittext_item_name.getText().toString();
+                materialManagementItem.lender = activity_material_management_insert_textview_lender.getText().toString();
                 materialManagementItem.timestamp = "없음";
                 materialManagementItem.imageUri = downloadUri.toString();
                 materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();
+                materialManagementItem.state = 0;
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
 

@@ -13,16 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.AttendActivity_Admin;
 import com.example.target_club_in_donga.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,11 +33,9 @@ public class AttendActivity_Fragment extends Fragment {
     private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc,R.drawable.dd,R.drawable.ee};
 
     private Button activity_attend_attendance, activity_attend_cancel, activity_attend_button_admin;
-    private int count;
+    private int count, certification_number;
 
-    private FirebaseDatabase database;
-
-    private int getEditCertificationNumber, getDatabaseCertificationNumber;
+    private int getEditCertificationNumber;
 
     public AttendActivity_Fragment() {
         // Required empty public constructor
@@ -58,12 +53,6 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_attendance = (Button) view.findViewById(R.id.activity_attend_attendance);
         activity_attend_cancel = (Button) view.findViewById(R.id.activity_attend_cancel);
         activity_attend_button_admin = (Button) view.findViewById(R.id.activity_attend_button_admin);
-
-        database = FirebaseDatabase.getInstance();
-
-        getDatabaseCertificationNumber = Integer.parseInt(database.getReference().child("Attend_Admin_Certification_Number").child("Number").getKey());
-
-        Log.e("뭐시기", getDatabaseCertificationNumber + "");
 
         gallery.setAdapter(galleryAdapter);
         final ImageView imageView = (ImageView)view.findViewById(R.id.test);
@@ -89,8 +78,6 @@ public class AttendActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View v) {
 
-                Log.e("값",getDatabaseCertificationNumber + "");
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                 View view = LayoutInflater.from(getActivity())
@@ -107,6 +94,12 @@ public class AttendActivity_Fragment extends Fragment {
                     @Override
                     public void onClick(final View view) {
                         getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
+                        
+                        if(getEditCertificationNumber == certification_number) {
+                            Toast.makeText(getActivity(), "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });

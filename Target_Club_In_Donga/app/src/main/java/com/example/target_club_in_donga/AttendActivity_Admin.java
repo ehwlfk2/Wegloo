@@ -1,12 +1,12 @@
 package com.example.target_club_in_donga;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,7 +35,10 @@ public class AttendActivity_Admin extends AppCompatActivity {
             public void onClick(final View view) {
                 certification_number = random_number.nextInt(100);
                 database.getReference().child("Attend_Admin_Certification_Number").child("Number").setValue(certification_number);
-                Log.v("클릭", certification_number + "");
+                Fragment fragment = new Fragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("Certification_Number",certification_number);
+                fragment.setArguments(bundle);
                 finish();
             }
         });

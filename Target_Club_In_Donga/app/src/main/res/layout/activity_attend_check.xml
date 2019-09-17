@@ -15,7 +15,7 @@
     <EditText
         android:id="@+id/activity_attend_check_edittext_certification_number"
         style="@style/Content_Text_Style"
-        android:hint="인증번호 숫자만 입력해주세요"
+        android:hint="숫자만 입력해주세요"
         android:inputType="number"
         android:digits="0123456789"/>
 
