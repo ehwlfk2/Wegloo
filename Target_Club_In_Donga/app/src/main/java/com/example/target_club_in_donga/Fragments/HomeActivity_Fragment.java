@@ -29,6 +29,8 @@ import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.example.target_club_in_donga.Gallery.*;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -39,15 +41,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
 // Home 프래그먼트
 
 /**
@@ -72,12 +65,11 @@ public class HomeActivity_Fragment extends Fragment {
     private TextView btn1,btn2,btn3,btn4;
     private TextView menu_detail_btn;
     private TextView slidingdrawer_title;
-
     private ImageView menu_btn,setting_btn, timeline_btn, memberlist;
     private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7;
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
-
+    private AdView mAdView;
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
@@ -120,6 +112,13 @@ public class HomeActivity_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         passPushTokenToServer();
 
+        /*MobileAds.initialize(getContext(), "ca-app-pub-3940256099942544~3347511713");
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
