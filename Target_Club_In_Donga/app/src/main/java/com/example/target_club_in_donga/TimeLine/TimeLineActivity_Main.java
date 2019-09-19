@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.target_club_in_donga.Accountbook.AccountbookActivity_Main;
+import com.example.target_club_in_donga.Board.Board_Main;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
@@ -101,15 +104,25 @@ public class TimeLineActivity_Main extends AppCompatActivity {
                     if(data.getType().equals("Notice")){
                         Intent intent  = new Intent(TimeLineActivity_Main.this, NoticeActivity.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                     }
                     else if(data.getType().equals("Vote")){
                         Intent intent = new Intent(TimeLineActivity_Main.this, VoteActivity_Main.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                     }
-                    else{ //다른것들 추가해줘야해
-
+                    else if(data.getType().equals("Material_Management")){ //다른것들 추가해줘야해
+                        Intent intent = new Intent(TimeLineActivity_Main.this, MaterialManagementActivity_Admin.class);
+                        startActivity(intent);
+                        //finish();
+                    }
+                    else if(data.getType().equals("Board")){
+                        Intent intent = new Intent(TimeLineActivity_Main.this, Board_Main.class);
+                        startActivity(intent);
+                    }
+                    else if(data.getType().equals("Account_Book")){
+                        Intent intent = new Intent(TimeLineActivity_Main.this, AccountbookActivity_Main.class);
+                        startActivity(intent);
                     }
                 }
             });

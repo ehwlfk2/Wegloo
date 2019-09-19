@@ -19,35 +19,24 @@ import com.example.target_club_in_donga.Accountbook.AccountbookActivity_Main;
 import com.example.target_club_in_donga.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
+import com.example.target_club_in_donga.MainActivity;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.MemberList.MemberList;
-import com.example.target_club_in_donga.PushMessages.NotificationModel;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.example.target_club_in_donga.Gallery.*;
+import com.example.target_club_in_donga.Board.*;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
 // Home 프래그먼트
 
 /**
@@ -72,12 +61,11 @@ public class HomeActivity_Fragment extends Fragment {
     private TextView btn1,btn2,btn3,btn4;
     private TextView menu_detail_btn;
     private TextView slidingdrawer_title;
-
-    private ImageView menu_btn,setting_btn, timeline_btn, memberlist;
-    private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7;
+    private ImageView menu_btn,setting_btn, timeline_btn;
+    private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7,main_btn_8 ,main_btn_12;
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
-
+    private AdView mAdView;
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
@@ -120,6 +108,13 @@ public class HomeActivity_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         passPushTokenToServer();
 
+        /*MobileAds.initialize(getContext(), "ca-app-pub-3940256099942544~3347511713");
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
@@ -132,17 +127,20 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_3 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_3);
         main_btn_6 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_6);
         main_btn_7 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_7);
+        main_btn_8 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_8);
+        main_btn_12 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_12);
 
         menu_btn = (ImageView)view.findViewById(R.id.frgment_home_menu_btn);
         timeline_btn = (ImageView)view.findViewById(R.id.fragment_home_timeline_btn);
-        memberlist = view.findViewById(R.id.fragment_home_btn_8);
+
+        /*memberlist = view.findViewById(R.id.fragment_home_btn_8);
         memberlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MemberList.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         slidingDrawer = (SlidingDrawer)view.findViewById(R.id.frgment_home_slidingdrawer);
         slidingdrawer_title = (TextView)view.findViewById(R.id.frgment_home_slidingdrawer_title);
@@ -162,7 +160,7 @@ public class HomeActivity_Fragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Intent intent = new Intent(getActivity(), Gallery_Board.class);
+                Intent intent = new Intent(getActivity(), Board_Main.class);
                 startActivity(intent);
             }
         }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
@@ -222,6 +220,24 @@ public class HomeActivity_Fragment extends Fragment {
             }
         }); //투표
 
+        main_btn_12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        }); //로그아웃
+
+        main_btn_8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MemberList.class);
+                startActivity(intent);
+            }
+        }); //회원정보
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override

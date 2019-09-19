@@ -46,8 +46,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -94,6 +96,7 @@ public class AccountbookActivity_Main extends AppCompatActivity {
     TextView incometotal;
     TextView outcome;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,8 +140,25 @@ public class AccountbookActivity_Main extends AppCompatActivity {
 //
 //            }
 //        });
+        firebaseDatabase.getReference().child("Account_Book").child("totalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot==null){
+                    int post = dataSnapshot.getValue(int.class);
+                    outcome.setText("" + post);
+                }
+                else{
 
-        firebaseDatabase.getReference().child("Board").child(qq + "").addValueEventListener(new ValueEventListener() {
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        firebaseDatabase.getReference().child("Account_Book").child(qq + "").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mArrayList.clear();
@@ -169,25 +189,14 @@ public class AccountbookActivity_Main extends AppCompatActivity {
 
             }
         });
-        firebaseDatabase.getReference().child("Board").child("totalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int post =dataSnapshot.getValue(int.class);
-                outcome.setText(""+post);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         showeall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 total_income = 0;
                 total_pay = 0;
                 minus_total = 0;
-                firebaseDatabase.getReference().child("Board").addListenerForSingleValueEvent(new ValueEventListener() {
+                firebaseDatabase.getReference().child("Account_Book").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         mArrayList.clear();
@@ -214,6 +223,24 @@ public class AccountbookActivity_Main extends AppCompatActivity {
 
                         }
                         mAdapter.notifyDataSetChanged();
+                        firebaseDatabase.getReference().child("Account_Book").child("totalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if(dataSnapshot==null){
+
+                                }
+                                else{
+                                    int post = dataSnapshot.getValue(int.class);
+                                    outcome.setText("" + post);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -274,7 +301,7 @@ public class AccountbookActivity_Main extends AppCompatActivity {
                         // msg += " 00:00:00";
                         long qq = dateToMills(msg);
 
-                        firebaseDatabase.getReference().child("Board").child(qq + "").addListenerForSingleValueEvent(new ValueEventListener() {
+                        firebaseDatabase.getReference().child("Account_Book").child(qq + "").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 mArrayList.clear();
@@ -363,7 +390,7 @@ public class AccountbookActivity_Main extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
 
                         } else {
-                            Accountbook_item item = new Accountbook_item(strID, strPrice  , strDetail, msg);
+                            Accountbook_item item = new Accountbook_item(strID, strPrice  , strDetail, tt);
                             mArrayList.add(item); //첫 줄에 삽입
                             //mArrayList.add(dict); //마지막 줄에 삽입
                             if (strID.equals("income")) {
@@ -375,7 +402,9 @@ public class AccountbookActivity_Main extends AppCompatActivity {
                                 paytotals.setText("" + total_pay);
                             }
 
-                            databaseReference.child("Board").child("" + tt).push().setValue(item);
+                            databaseReference.child("Account_Book").child("" + tt).push().setValue(item);
+
+
                             //databaseReference.child("Board").child("total").setValue(outcome.getText().toString());
                             mAdapter.notifyDataSetChanged(); //변경된 데이터를 화면에 반영
 // 편집삭제시 내가선택한 어뎁터부분 ㅇㅇ 에서 pay 가져옴
@@ -384,10 +413,27 @@ public class AccountbookActivity_Main extends AppCompatActivity {
                     }
 
                 });
-
                 dialog.show();
             }
 
+        });
+        firebaseDatabase.getReference().child("Account_Book").child("totalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot==null){
+                    int post = dataSnapshot.getValue(int.class);
+                    outcome.setText("" + post);
+                }
+                else{
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
     }
 
@@ -439,7 +485,7 @@ public class AccountbookActivity_Main extends AppCompatActivity {
             ((CustomViewHolder) holder).textView1.setText(mArrayList.get(position).getId());
             ((CustomViewHolder) holder).textView2.setText(""+mArrayList.get(position).getPrice());
             ((CustomViewHolder) holder).textView3.setText(mArrayList.get(position).getDetail());
-            ((CustomViewHolder) holder).textView4.setText(mArrayList.get(position).getToday());
+            ((CustomViewHolder) holder).textView4.setText(""+mArrayList.get(position).getToday());
 
 
             //글라인드 라이브러리로 어뎁터에 이미지 넣기
@@ -489,83 +535,16 @@ public class AccountbookActivity_Main extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
-                            case 1001:
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                // 다이얼로그를 보여주기 위해 edit_box.xml 파일을 사용합니다.
-                                View view = LayoutInflater.from(mContext)
-                                        .inflate(R.layout.accountbook_editbox, null, false);
-                                builder.setView(view);
-                                //   final Button ButtonSubmit = view.findViewById(R.id.button_dialog_submit);
-                                final CheckBox checkBox = view.findViewById(R.id.account_pay);
-                                final Button ButtonSubmit = view.findViewById(R.id.button_dialog_submit);
-                                final CheckBox checkBox1 = view.findViewById(R.id.account_income);
-                                final EditText editTextPay = view.findViewById(R.id.edittext_dialog_pay);
-                                final EditText editTextDetail = view.findViewById(R.id.edittext_dialog_detail);
-                                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                    @Override
-                                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                        checkBox1.setChecked(false);
-                                    }
-                                });
-                                checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                    @Override
-                                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                        checkBox.setChecked(false);
-                                    }
-                                });
-                                // 6. 해당 줄에 입력되어 있던 데이터를 불러와서 다이얼로그에 보여줍니다.
-                                textView1.setText(mArrayList.get(getAdapterPosition()).getId());
-                                editTextPay.setText(mArrayList.get(getAdapterPosition()).getPrice());
-                                editTextDetail.setText(mArrayList.get(getAdapterPosition()).getDetail());
-                                if (textView1.getText().toString() == "지출") {
-                                    checkBox.setChecked(true);
-                                } else if (textView1.getText().toString() == "수입") {
-                                    checkBox1.setChecked(true);
-                                }
-
-                                final AlertDialog dialog = builder.create();
-                                ButtonSubmit.setOnClickListener(new View.OnClickListener() {
-                                    @SuppressLint("SetTextI18n")
-                                    public void onClick(View view) {
-                                        String strID = ID;
-
-                                        if (checkBox.isChecked() == true) {
-                                            strID = "pay";
-                                            checkBox1.setChecked(false);
-                                        }
-                                        if (checkBox1.isChecked() == true) {
-                                            strID ="income";
-                                            checkBox.setChecked(false);
-                                        }
-
-                                        String strPrice = editTextPay.getText().toString() ;
-
-                                        String strDetail = editTextDetail.getText().toString();
-
-                                        Accountbook_item item = new Accountbook_item(strID,strPrice, strDetail, msg);
-
-                                        mArrayList.set(getAdapterPosition(), item); //첫 줄에 삽입
-                                        notifyItemChanged(getAdapterPosition());
-                                        dialog.dismiss();
-
-                                    }
-                                });
-                                dialog.show();
-
-                                break;
-
                             case 1002:
                                 mArrayList.remove(getAdapterPosition());
 
-//                                databaseReference.child("Board").getKey().removeValue();
                                 notifyItemRemoved(getAdapterPosition());
                                 notifyItemRangeChanged(getAdapterPosition(), mArrayList.size());
 
                                 break;
 
                             default:
-                                throw new IllegalStateException("Unexpected value: " + menuItem.getItemId());
+                           //     throw new IllegalStateException("Unexpected value: " + menuItem.getItemId());
                         }
                         return true;
                     }
