@@ -72,7 +72,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
     private String formatDate, formatHour, formatMin, startDate;
     private String dateStr, timeStr, date_Now, date_End, date_Return;
 
-    private String findkey;
+    private String findkey, uidName;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -140,6 +140,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLARY_CODE) {
 
             StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
@@ -207,7 +208,6 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                 activity_material_management_admin_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_material_management_admin_item_linearlayout);
                 activity_material_management_admin_item_recyclerview_timestamp = (TextView) view.findViewById(R.id.activity_material_management_admin_item_recyclerview_timestamp);
 
-
             }
 
         }
@@ -217,7 +217,7 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //delete_item(position);
-                    PopupMenu popup = new PopupMenu(view.getContext(), view);
+                    final PopupMenu popup = new PopupMenu(view.getContext(), view);
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
@@ -241,7 +241,19 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_lend_imageview_image);
 
                                     detailTextID.setText(materialManagementItems.get(position).title);
-                                    detailTextName.setText(auth.getCurrentUser().getDisplayName());
+//                                    detailTextName.setText(auth.getCurrentUser().getDisplayName());
+                                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            uidName = dataSnapshot.getValue(String.class);
+                                            detailTextName.setText(uidName);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                        }
+                                    });
                                     Glide.with(view2).load(materialManagementItems.get(position).imageUri).into(detailImageView);
 
                                     now = System.currentTimeMillis();
@@ -335,16 +347,38 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                     detailButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
 
-                                            Toast.makeText(v.getContext(), auth.getCurrentUser().getDisplayName() + "님 대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                                            ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText(auth.getCurrentUser().getDisplayName());
-                                            database.getReference().child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                            Toast.makeText(v.getContext(),  "대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                                            database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                    uidName = dataSnapshot.getValue(String.class);
+                                                    ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText(uidName);
+                                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                                }
+
+                                                @Override
+                                                public void onCancelled(final DatabaseError databaseError) {
+
+                                                }
+                                            });
                                             ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText(dateStr + ' ' + timeStr);
                                             database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
                                             // 대여를 하였을 떄 리사이클러뷰 리스트를 변경을 함
 
                                             findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
                                             database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
-                                            database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                            database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                    uidName = dataSnapshot.getValue(String.class);
+                                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(final DatabaseError databaseError) {
+
+                                                }
+                                            });
                                             database.getReference().child("Material_Management").child(uidLists.get(position)).child("state").setValue(1);
 
                                             dialog2.dismiss();
@@ -385,9 +419,20 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
                                 case R.id.material_history:
 
                                     Intent intent = new Intent(MaterialManagementActivity_Admin.this, MaterialManagementActivity_History.class);
-                                    MaterialManagement_History_Item materialHistoryItem = new MaterialManagement_History_Item();
+                                    final MaterialManagement_History_Item materialHistoryItem = new MaterialManagement_History_Item();
                                     materialHistoryItem.history_lend_date = ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString();
-                                    materialHistoryItem.history_lend_name = ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString();
+                                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            uidName = dataSnapshot.getValue(String.class);
+                                            materialHistoryItem.history_lend_name = uidName;
+                                        }
+
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                        }
+                                    });
                                     String uidAdminPath = database.getReference().child("Material_Management").child(uidLists.get(position)).getKey();
                                     intent.putExtra("uidAdminPath", uidAdminPath);
                                     startActivity(intent);
@@ -403,15 +448,42 @@ public class MaterialManagementActivity_Admin extends AppCompatActivity {
 
                     popup.inflate(R.menu.material_management_main_popup);
 
-                    if (!auth.getCurrentUser().getDisplayName().equals(materialManagementItems.get(position).lender)) {
-                        popup.getMenu().getItem(3).setVisible(false);
-                    }
+                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            uidName = dataSnapshot.getValue(String.class);
+                            if (!uidName.equals(materialManagementItems.get(position).lender)) {
+                                popup.getMenu().getItem(3).setVisible(false);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+                    });
+
                     if (!materialManagementItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(2).setVisible(false);
                         popup.getMenu().getItem(0).setVisible(false);
-                        if (!auth.getCurrentUser().getDisplayName().equals(materialManagementItems.get(position).lender)) {
-                            popup.getMenu().getItem(3).setVisible(false);
-                        }
+
+                        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(final DataSnapshot dataSnapshot) {
+                                uidName = dataSnapshot.getValue(String.class);
+                                if (!uidName.equals(materialManagementItems.get(position).lender)) {
+                                    popup.getMenu().getItem(3).setVisible(false);
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(final DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
