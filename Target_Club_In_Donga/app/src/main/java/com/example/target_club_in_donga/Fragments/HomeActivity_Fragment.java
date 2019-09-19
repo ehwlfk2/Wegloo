@@ -22,25 +22,19 @@ import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.MemberList.MemberList;
-import com.example.target_club_in_donga.PushMessages.NotificationModel;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.example.target_club_in_donga.Gallery.*;
+import com.example.target_club_in_donga.Board.*;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 // Home 프래그먼트
@@ -166,7 +160,7 @@ public class HomeActivity_Fragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Intent intent = new Intent(getActivity(), Gallery_Board.class);
+                Intent intent = new Intent(getActivity(), Board_Main.class);
                 startActivity(intent);
             }
         }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜

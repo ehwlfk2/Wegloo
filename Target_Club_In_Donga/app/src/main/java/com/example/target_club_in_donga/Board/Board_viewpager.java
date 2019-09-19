@@ -1,29 +1,22 @@
-package com.example.target_club_in_donga.Gallery;
+package com.example.target_club_in_donga.Board;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.R;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.example.target_club_in_donga.Gallery.*;
 
 import java.util.ArrayList;
 
-public class Gallery_Viewpager extends AppCompatActivity {
+public class Board_viewpager extends AppCompatActivity {
     private ViewPager viewPager;
     PagerAdapter pagerAdapter;
     ArrayList<String> imglist;
@@ -31,8 +24,8 @@ public class Gallery_Viewpager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_gallery__viewpager);
-        viewPager = (ViewPager) findViewById(R.id.gallery_viewpager);
+        setContentView(R.layout.board_viewpager);
+        viewPager = findViewById(R.id.board_viewpager);
         Intent intent = getIntent();
         imglist = (ArrayList<String>) intent.getSerializableExtra("imglist");
         final int idx = intent.getIntExtra("position", 0);
@@ -45,7 +38,7 @@ public class Gallery_Viewpager extends AppCompatActivity {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                View view = getLayoutInflater().inflate(R.layout.item_gallery_viewpager, null);
+                View view = getLayoutInflater().inflate(R.layout.item_board_viewpager, null);
                 final ImageView imageView = (ImageView) view.findViewById(R.id.item_viewpager_imgview);
                 Glide.with(view).load(imglist.get(position)).into(imageView);
                 container.addView(view);

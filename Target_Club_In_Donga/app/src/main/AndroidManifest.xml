@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,12 +54,13 @@
         <activity android:name=".Vote.VoteActivity_Insert" />
         <activity android:name=".Notice.NoticeActivity_Insert" />
         <activity android:name=".Accountbook.AccountbookActivity_Main" />
-        <activity android:name=".Gallery.Gallery_Viewpager" />
-        <activity android:name=".Gallery.Gallery_Detail" />
-        <activity android:name=".Gallery.Gallery_Write" />
-        <activity android:name=".Gallery.Gallery_Board" />
-        <activity android:name=".MemberList.MemberList"/>
-        <activity android:name=".TimeLine.TimeLineActivity_Main"/>
+        <activity android:name=".Board.Board_viewpager" />
+        <activity android:name=".Board.Board_Detail" />
+        <activity android:name=".Board.Board_Write" />
+        <activity android:name=".Board.Board_Main" />
+        <activity android:name=".MemberList.MemberList" />
+        <activity android:name=".TimeLine.TimeLineActivity_Main" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -87,9 +87,9 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713"/>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
