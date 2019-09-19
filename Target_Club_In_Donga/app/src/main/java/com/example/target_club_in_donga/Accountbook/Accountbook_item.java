@@ -10,7 +10,7 @@ public class Accountbook_item {
         private String id;
         private String price;
         private String detail;
-        private String today;
+        private Object today;
 
 
         public void setId(String id) {
@@ -25,8 +25,8 @@ public class Accountbook_item {
                 this.today = today;
         }
 
-        public String getToday() {
-                return today;
+        public Object getToday() {
+                return  today;
         }
 
         public void setPrice(String price) {
@@ -51,7 +51,7 @@ public class Accountbook_item {
                 this.detail = detail;
         }
 
-        public Accountbook_item(String id,String price,String detail,String today) {
+        public Accountbook_item(String id,String price,String detail,Object today) {
                 this.id = id;
                 this.price=price;
                 this.detail=detail;
