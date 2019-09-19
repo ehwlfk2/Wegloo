@@ -107,7 +107,7 @@ public class AttendActivity_Fragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         formatDate = simpleDateFormat.format(date);
 
-        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+/*        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 setAttendStatue = dataSnapshot.getValue().toString();
@@ -117,7 +117,7 @@ public class AttendActivity_Fragment extends Fragment {
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
         // TextView를 갱신 하고 싶어
 
         activity_attend_button_attendance.setOnClickListener(new View.OnClickListener() {
