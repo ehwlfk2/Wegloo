@@ -13,19 +13,33 @@
         android:text="인증번호를 입력해주세요" />
 
     <EditText
+        android:id="@+id/activity_attend_check_edittext_certification_number"
         style="@style/Content_Text_Style"
-        android:hint="인증번호 " />
+        android:hint="숫자만 입력해주세요"
+        android:inputType="number"
+        android:digits="0123456789"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
     <Button
+        android:id="@+id/activity_attend_check_button_confirm"
         style="@style/Content_Classification_Text_Style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="확인" />
+        android:text="확인"
+        android:layout_centerHorizontal="true"/>
 
-    <Button
-        style="@style/Content_Classification_Text_Style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="취소" />
+        <Button
+            android:id="@+id/activity_attend_check_button_cancel"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:layout_toRightOf="@+id/activity_attend_check_button_confirm"/>
 
+
+    </RelativeLayout>
 </LinearLayout>

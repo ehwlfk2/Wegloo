@@ -22,9 +22,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity_02 extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnCancelListener {
     // 이메일 자동 완성 (1)
@@ -34,7 +43,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
     EditText activity_signup_02_EditText_email_Subjuct, activity_signup_02_EditText_pw;
     AutoCompleteTextView activity_signup_02_AutoCompleteTextView_email_Address;
     Button activity_signup_02_send_code_btn;
-    String emailSubject, emailAddress;
+    String emailSubject, emailAddress, emailplus;
 
     // random 숫자
     String emailCode;
@@ -51,6 +60,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
     CountDownTimer countDownTimer;
 
     FirebaseAuth mAuth;
+    FirebaseDatabase database;
     int ms_StartTimer = 60 * 5 * 1000; // 5분
     int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
 
@@ -60,6 +70,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_signup_02_identification);
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         // 변수 선언
         activity_signup_02_EditText_email_Subjuct = findViewById(R.id.activity_signup_02_EditText_email_Subjuct);
         activity_signup_02_AutoCompleteTextView_email_Address = findViewById(R.id.activity_signup_02_AutoCompleteTextView_email_Address);
@@ -192,10 +203,11 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                     emailSubject = activity_signup_02_EditText_email_Subjuct.getText().toString();
                     emailAddress = activity_signup_02_AutoCompleteTextView_email_Address.getText().toString();
                     emailCode = createEmailCode();
+                    emailplus = emailSubject+"@"+emailAddress;
                     Log.v("develop_check","emailCode : " + emailCode);
 
                     // 이메일 자동 완성 (1)
-                    try {
+                    /*try {
                         Log.v("develop_check", "이메일 전송 시도");
                         GMailSender sender = new GMailSender("1334381@donga.ac.kr", "thdeh@0408");
                         sender.sendMail(getString(R.string.SignUp_email_code_subject_content),
@@ -206,7 +218,14 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("develo_check", "이메일 전송에 에러 발생 ; " + e.toString());
-                    }
+                    }*/
+
+                    Map<String, String> map = new HashMap<>();
+                    map.put("email",emailplus);
+                    map.put("code",emailCode);
+                    //FirebaseDatabase.getInstance().getReference().child("TempUser").push().setValue(map);
+
+                    database.getReference().child("TempUser").push().setValue(map);
 
                     dialog = LayoutInflater.from(this);
                     dialogLayout = dialog.inflate(R.layout.activity_signup_02_dialog, null); // LayoutInflater 를 통해 XML 에 정의된 Resource 들을 View 의 형태로 반환 시켜 줌
@@ -238,32 +257,38 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                     if (user_answer.equals(emailCode)) {
                         Toast.makeText(this, "이메일 인증 성공!!\n비밀번호 입력해줘요", Toast.LENGTH_SHORT).show();
 
-                        /*activity_signup_02_send_code_btn2.setOnClickListener(new View.OnClickListener() {
+                        final ArrayList<String> dbKey = new ArrayList<String>();
+
+                        database.getReference().child("TempUser").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onClick(View view) {
-                                if(activity_signup_02_EditText_insert_pw.getText().toString().length() >= 6){
-                                    Toast.makeText(SignUpActivity_02.this, "비밀번호 다시치셈", Toast.LENGTH_SHORT).show();
-                                    activity_signup_02_EditText_insert_pw.setText("");
-                                }
-                                else{
-                                    createUser(emailSubject, emailAddress, activity_signup_02_EditText_insert_pw.getText().toString());
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                dbKey.clear();
 
-                                    Intent intent = new Intent(SignUpActivity_02.this, SignUpActivity_03.class);
-                                    intent.putExtra("emailSubject",emailSubject);
-                                    intent.putExtra("emailAddress",emailAddress);
-                                    //intent.putExtra("emailPw",activity_signup_02_EditText_insert_pw.getText().toString());
-                                    startActivity(intent);
+                                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                    CertificationData data = snapshot.getValue(CertificationData.class);
+
+                                    if(data.email.equals(emailplus)){
+                                        dbKey.add(snapshot.getKey());
+                                    }
                                 }
 
-                                signupDialog.cancel();
+                                for(int i=0;i<dbKey.size();i++){
+                                    //Log.e("asdf",""+dbKey.get(i));
+                                    database.getReference().child("TempUser").child(dbKey.get(i)).removeValue();
+                                }
                             }
-                        });*/
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                         activity_signup_02_EditText_pw.setVisibility(View.VISIBLE);
                         activity_signup_02_send_code_btn.setEnabled(false);
                         activity_signup_02_EditText_email_Subjuct.setEnabled(false);
                         activity_signup_02_AutoCompleteTextView_email_Address.setEnabled(false);
                         signupDialog.cancel();
-
 
                     } else {
                         Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();

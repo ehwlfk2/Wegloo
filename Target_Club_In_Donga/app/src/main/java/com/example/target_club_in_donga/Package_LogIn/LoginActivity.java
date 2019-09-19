@@ -188,8 +188,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     public void onStart() {
         try {
-            mAuth.signOut();
-            LoginManager.getInstance().logOut();
+            //mAuth.signOut();
+            //LoginManager.getInstance().logOut();
             Log.v("develop_check", "기존 아이디 로그아웃");
         } catch (Exception exception) {
             Log.v("develop_check", "기존 로그인 되어있던게 없습니다. => " + exception);
