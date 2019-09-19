@@ -5,5 +5,5 @@ public class Accountbook_Item2 {
     public String id;
     public int price;
     public String detail;
-    public String today;
+    public Object today;
 }
