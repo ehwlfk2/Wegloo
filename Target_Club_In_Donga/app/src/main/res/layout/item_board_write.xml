@@ -7,7 +7,7 @@
     android:layout_height="100dp">
 
     <ImageView
-        android:id="@+id/item_gallery__detail_img"
+        android:id="@+id/item_board_img_plus"
         android:layout_width="100dp"
         android:scaleType="centerCrop"
         android:layout_height="100dp"

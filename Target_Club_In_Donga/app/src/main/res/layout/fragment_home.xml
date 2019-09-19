@@ -361,7 +361,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/fragment_home_btn_8"
                             android:layout_centerHorizontal="true"
-                            android:text="버튼8"
+                            android:text="회원목록"
                             android:textSize="18dp" />
                     </RelativeLayout>
 
