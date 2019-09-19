@@ -34,7 +34,7 @@
             <EditText
                 android:id="@+id/activity_material_management_insert_edittext_item_name"
                 style="@style/Content_Text_Style"
-                android:text="물품명" />
+                android:hint="물품명" />
 
 
             <TextView

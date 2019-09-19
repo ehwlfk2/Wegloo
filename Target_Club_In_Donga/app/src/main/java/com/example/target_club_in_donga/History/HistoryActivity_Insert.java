@@ -109,16 +109,16 @@ public class HistoryActivity_Insert extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == GALLERY_CODE){
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_CODE) {
             //String path = data.getData();
-            try{
+            try {
                 historyInsertImagePath = getPath(data.getData());
                 File f = new File(historyInsertImagePath);
                 activityhistory_insert_imageview.setImageURI(Uri.fromFile(f));
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
-
 
         }
     }

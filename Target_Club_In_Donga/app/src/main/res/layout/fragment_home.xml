@@ -247,6 +247,7 @@
                 <TableRow>
 
                     <RelativeLayout
+                        android:id="@+id/fragment_home_main_btn_4"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
@@ -263,7 +264,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/fragment_home_btn_4"
                             android:layout_centerHorizontal="true"
-                            android:text="버튼4"
+                            android:text="게시판"
                             android:textSize="18dp" />
                     </RelativeLayout>
 
@@ -345,6 +346,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/fragment_home_main_btn_8"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
@@ -361,7 +363,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/fragment_home_btn_8"
                             android:layout_centerHorizontal="true"
-                            android:text="버튼8"
+                            android:text="회원목록"
                             android:textSize="18dp" />
                     </RelativeLayout>
 
@@ -442,6 +444,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/fragment_home_main_btn_12"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
@@ -458,7 +461,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/fragment_home_btn_12"
                             android:layout_centerHorizontal="true"
-                            android:text="버튼12"
+                            android:text="로그아웃"
                             android:textSize="18dp" />
                     </RelativeLayout>
                 </TableRow>
@@ -535,6 +538,7 @@
                 android:src="@drawable/menu_icon" />
 
             <ImageView
+                android:id="@+id/fragment_home_timeline_btn"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
@@ -589,15 +593,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/search_icon" />
 
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            </com.google.android.gms.ads.AdView>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
