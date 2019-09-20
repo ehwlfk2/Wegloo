@@ -44,7 +44,6 @@
             fab:fab_colorNormal="@color/fbutton_color_turquoise"
             fab:fab_colorPressed="@color/fbutton_color_green_sea"
             fab:fab_colorRipple="@color/fbutton_color_emerald"
-            fab:fab_type="mini"
             />
 
         <com.melnykov.fab.FloatingActionButton
