@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
 import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
@@ -199,7 +198,7 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Admin.class);
+                Intent intent = new Intent(getActivity(), MaterialManagementActivity.class);
                 startActivity(intent);
             }
         }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜

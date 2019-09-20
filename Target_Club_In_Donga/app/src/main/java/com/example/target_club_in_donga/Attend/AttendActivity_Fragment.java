@@ -58,6 +58,8 @@ public class AttendActivity_Fragment extends Fragment {
     private String nowDate, formatDate, attendTimeLimitDate, tardyTimeLimitDate;
     private String getAttendStatue, setAttendStatue;
 
+    private int admin;
+
     public AttendActivity_Fragment() {
         // Required empty public constructor
     }
@@ -302,6 +304,25 @@ public class AttendActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 getActivity().finish();
+            }
+        });
+
+
+        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                admin = Integer.parseInt(dataSnapshot.getValue().toString());
+
+                if(admin > 0) {
+                    activity_attend_button_admin.setVisibility(View.VISIBLE);
+                } else {
+                    activity_attend_button_admin.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
             }
         });
 
