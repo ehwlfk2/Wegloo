@@ -474,7 +474,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                            if(admin > 1) {
+                            if(admin > 0) {
                                 popup.getMenu().getItem(1).setVisible(true);
                                 popup.getMenu().getItem(2).setVisible(true);
                             } else {
