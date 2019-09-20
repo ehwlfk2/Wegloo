@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
 import com.example.target_club_in_donga.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
@@ -117,6 +118,7 @@ public class HomeActivity_Fragment extends Fragment {
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
+        btn3 = (TextView)view.findViewById(R.id.frgment_home_favorite_3);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
 
         menu_detail_btn = (TextView) view.findViewById(R.id.menu_detail_btn);
@@ -162,8 +164,14 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), Board_Main.class);
                 startActivity(intent);
             }
-        }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
+        }); // btn2 게시판
 
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        }); //btn3 앨범
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -198,9 +206,10 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), AccountBookActivity_Main.class);
+                startActivity(intent);
             }
-        }); //가계부 파업중
+        }); //가계부
         main_btn_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,6 +251,7 @@ public class HomeActivity_Fragment extends Fragment {
                 public void onClick(final View v) {
                 slidingDrawer.animateOpen();
                 menu_count++;
+                everyBtnEnable(false);
             }
         }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
 
@@ -278,6 +288,7 @@ public class HomeActivity_Fragment extends Fragment {
                     intent.putExtra("finishstatus", true);
                     slidingDrawer.animateClose();
                     menu_count--;
+                    everyBtnEnable(true);
 //                    getActivity().finish();
                     startActivity(intent);
                     return  true;
@@ -337,37 +348,13 @@ public class HomeActivity_Fragment extends Fragment {
         map.put("pushToken",token);
         FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
     }
-
-    /*void sendFcm(String toToken){
-        Gson gson = new Gson();
-
-        NotificationModel notificationModel = new NotificationModel();
-        notificationModel.to =  toToken;
-        notificationModel.notification.title = "공지사항";
-        notificationModel.notification.text = "백그라운드 푸시";
-        notificationModel.data.title = "공지사항";
-        notificationModel.data.text = "포그라운드 푸시";
-
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
-
-        Request request = new Request.Builder()
-                .header("Content-Type", "application/json")
-                .addHeader("Authorization", "key=AAAAN9u7iok:APA91bHiCw-fGchT3f4FDePrFXNtUQ0PpEBDZOtKuz6Az0x6gMgv2JEhVNcwKeOdJr1UWkX4JBYsShwkU2ZS00CyFNKqSet5JKJOBWxBxzy9Dh_--nbExEbPYWQCU9dwhfSaQqCeOfb3")
-                .url("https://fcm.googleapis.com/fcm/send")
-                .post(requestBody)
-                .build();
-
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-            }
-        });
-    }*/
+    public void everyBtnEnable(boolean boo) {
+        btn1.setEnabled(boo);
+        btn2.setEnabled(boo);
+        btn3.setEnabled(boo);
+        btn4.setEnabled(boo);
+        mAdView.setEnabled(boo);
+        menu_btn.setEnabled(boo);
+        timeline_btn.setEnabled(boo);
+    }
 }
