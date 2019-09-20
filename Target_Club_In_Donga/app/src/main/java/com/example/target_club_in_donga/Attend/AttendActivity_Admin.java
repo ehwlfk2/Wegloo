@@ -1,7 +1,6 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Attend;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -10,6 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.target_club_in_donga.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,13 +30,13 @@ public class AttendActivity_Admin extends AppCompatActivity {
     private String date_Attend, date_Trady;
 
     private FirebaseDatabase database;
+    private FirebaseAuth auth;
 
     private Date attenddate;
 
-    private int flag = 0, flag2 = 0, flag3 = 0;
+    private int flag = 0, flag2 = 0;
 
     private String formatDate;
-
     private String getName, getPhone;
 
 
@@ -47,6 +48,7 @@ public class AttendActivity_Admin extends AppCompatActivity {
         final Random random_number = new Random();
 
         database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         activity_attend_admin_radiogroup_attend = (RadioGroup) findViewById(R.id.activity_attend_admin_radiogroup_attend);
         activity_attend_admin_radiogroup_tardy = (RadioGroup) findViewById(R.id.activity_attend_admin_radiogroup_tardy);
@@ -124,9 +126,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     formatDate = simpleDateFormat.format(date);
 
                     certification_number = random_number.nextInt(9999);
-                    database.getReference().child("Attend_Admin").child(formatDate).child("Attend_Certification_Number").setValue(certification_number);
-                    database.getReference().child("Attend_Admin").child(formatDate).child("Attend_Time_Limit").setValue(date_Attend);
-                    database.getReference().child("Attend_Admin").child(formatDate).child("Tardy_Time_Limit").setValue(date_Trady);
+                    database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Certification_Number").setValue(certification_number);
+                    database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Time_Limit").setValue(date_Attend);
+                    database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").setValue(date_Trady);
 
                     database.getReference().child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -135,9 +137,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
                                 // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
                                 getName = snapshot.child("name").getValue(String.class);
                                 getPhone = snapshot.child("phone").getValue(String.class);
-                                database.getReference().child("Attend_Admin").child(formatDate).child("User_statue").child(snapshot.getKey()).child("name").setValue(getName);
-                                database.getReference().child("Attend_Admin").child(formatDate).child("User_statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                database.getReference().child("Attend_Admin").child(formatDate).child("User_statue").child(snapshot.getKey()).child("attend_Statue").setValue("미출결");
+                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("name").setValue(getName);
+                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
                             }
                         }
 
@@ -147,7 +149,6 @@ public class AttendActivity_Admin extends AppCompatActivity {
                         }
                     });
 
-//                    database.getReference().child("Attend_Admin").child(formatDate).child("User_statue").setValue();
                     Toast.makeText(AttendActivity_Admin.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
                     finish();
                 } else if (flag == 0) {

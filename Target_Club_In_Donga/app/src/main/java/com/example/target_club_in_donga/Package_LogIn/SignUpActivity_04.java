@@ -6,9 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.target_club_in_donga.AttendActivity;
 import com.example.target_club_in_donga.HomeActivity;
-import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.R;
 
 public class SignUpActivity_04 extends AppCompatActivity {
