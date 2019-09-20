@@ -191,19 +191,24 @@ public class AttendActivity_Fragment extends Fragment {
                 database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
-                        now = System.currentTimeMillis();
-                        // 현재시간을 date 변수에 저장한다.
-                        Date date = new Date(now);
-                        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                        nowtardyTimeLimit = simpleDateFormat.format(date);
-
-                        getTardyTimeLimit = dataSnapshot.getValue().toString();
-                        Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                        Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                        long diff = d1.getTime() - d2.getTime();
-                        if(diff < 0) {
+                        if(dataSnapshot.getValue() == null) {
                             Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                        } else {
+                            now = System.currentTimeMillis();
+                            // 현재시간을 date 변수에 저장한다.
+                            Date date = new Date(now);
+                            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                            nowtardyTimeLimit = simpleDateFormat.format(date);
+
+                            getTardyTimeLimit = dataSnapshot.getValue().toString();
+                            Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                            Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                            long diff = d1.getTime() - d2.getTime();
+                            if(diff < 0) {
+                                Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
                         }
                     }
                     @Override
