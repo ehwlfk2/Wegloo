@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.target_club_in_donga.AttendActivity;
+import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
@@ -183,8 +183,8 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getActivity(), AttendActivity.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(getActivity(), AttendActivity.class);
+                startActivity(intent);
             }
         }); // main_btn1 메뉴에서 출석버튼인데, 클릭하면 메뉴에서 출석으로 activity가 바뀌
 
