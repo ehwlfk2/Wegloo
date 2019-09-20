@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
@@ -105,7 +106,7 @@ public class HomeActivity_Fragment extends Fragment {
 
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
         passPushTokenToServer();
 
         /*MobileAds.initialize(getContext(), "ca-app-pub-3940256099942544~3347511713");
@@ -145,7 +146,6 @@ public class HomeActivity_Fragment extends Fragment {
 
         slidingDrawer = (SlidingDrawer)view.findViewById(R.id.frgment_home_slidingdrawer);
         slidingdrawer_title = (TextView)view.findViewById(R.id.frgment_home_slidingdrawer_title);
-
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,12 +267,36 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onDrawerOpened() {
                 slidingdrawer_title.setVisibility(View.VISIBLE);
+                everyBtnEnable(false);
+
+                view.setFocusableInTouchMode(true);
+                view.requestFocus();
+                view.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(final View view, final int i, final KeyEvent keyEvent) {
+                        if(i == KeyEvent.KEYCODE_BACK) {
+                            Intent intent = new Intent(getActivity(), HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            intent.putExtra("finishstatus", true);
+                            slidingDrawer.animateClose();
+                            menu_count--;
+                            everyBtnEnable(true);
+//                    getActivity().finish();
+                            startActivity(intent);
+                            return  true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+
             }
         });
         slidingDrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
             @Override
             public void onDrawerClosed() {
                 slidingdrawer_title.setVisibility(View.INVISIBLE);
+                everyBtnEnable(true);
             }
         });
 
