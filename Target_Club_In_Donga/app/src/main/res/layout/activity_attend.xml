@@ -35,9 +35,10 @@
                     android:textSize="20dp" />
 
                 <TextView
+                    android:id="@+id/activity_attend_textview_people_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5 명"
+                    android:text=""
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -55,9 +56,10 @@
                     android:textSize="20dp" />
 
                 <TextView
+                    android:id="@+id/activity_attend_textview_people_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20% (1명)"
+                    android:text=""
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -136,11 +138,10 @@
                     android:id="@+id/activity_attend_textview_attend_statue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="미출결"
-                    android:textSize="30dp"
+                    android:layout_alignParentRight="true"
                     android:background="@drawable/border_orange"
-                    android:layout_alignParentRight="true" />
-
+                    android:text="미출결"
+                    android:textSize="30dp" />
             </RelativeLayout>
 
             <Button

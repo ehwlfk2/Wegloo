@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.target_club_in_donga.AttendActivity;
+import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;

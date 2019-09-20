@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga.Fragments;
+package com.example.target_club_in_donga.Attend;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,9 +19,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.target_club_in_donga.AttendActivity_Admin;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
-import com.example.target_club_in_donga.Material_Management.MaterialManagement_Admin_Item;
 import com.example.target_club_in_donga.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -50,7 +47,8 @@ public class AttendActivity_Fragment extends Fragment {
     private FirebaseAuth auth;
 
     private Button activity_attend_button_attendance, activity_attend_button_cancel, activity_attend_button_admin;
-    private int count;
+    private TextView activity_attend_textview_people_count, activity_attend_textview_people_percent;
+    private int peopleCount = 0, peopleAttendCount = 0;
 
     private int getEditCertificationNumber;
     private String getCertificationNumber, EditCertificationNumber;
@@ -77,6 +75,8 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_button_attendance = (Button) view.findViewById(R.id.activity_attend_button_attendance);
         activity_attend_button_cancel = (Button) view.findViewById(R.id.activity_attend_button_cancel);
         activity_attend_textview_attend_statue = (TextView) view.findViewById(R.id.activity_attend_textview_attend_statue);
+        activity_attend_textview_people_count = (TextView) view.findViewById(R.id.activity_attend_textview_people_count);
+        activity_attend_textview_people_percent = (TextView) view.findViewById(R.id.activity_attend_textview_people_percent);
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -107,18 +107,53 @@ public class AttendActivity_Fragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         formatDate = simpleDateFormat.format(date);
 
-/*        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                setAttendStatue = dataSnapshot.getValue().toString();
+                if(dataSnapshot.getValue() != null) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        peopleCount++;
+                        getAttendStatue = snapshot.child("attend_statue").getValue(String.class);
+                        if(getAttendStatue.equals("출석") || getAttendStatue.equals("지각")) {
+                            peopleAttendCount++;
+                            Log.d("값", peopleAttendCount + "");
+                        }
+                        activity_attend_textview_people_count.setText(peopleAttendCount + "명");
+                        activity_attend_textview_people_percent.setText((peopleAttendCount*100/peopleCount) + "%");
+                    }
+                }
             }
 
             @Override
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });*/
-        // TextView를 갱신 하고 싶어
+        });
+
+        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue(String.class) != null) {
+                    setAttendStatue = dataSnapshot.getValue().toString();
+                    activity_attend_textview_attend_statue.setText(setAttendStatue);
+                    if(setAttendStatue.equals("출석")) {
+                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_green);
+                    } else if(setAttendStatue.equals("지각")) {
+                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_orange);
+                    } else if(setAttendStatue.equals("결석")) {
+                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_gray);
+                    } else {
+                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_orange);
+                    }
+                }
+                return;
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
 
         activity_attend_button_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +171,20 @@ public class AttendActivity_Fragment extends Fragment {
 
                 final AlertDialog dialog = builder.create();
 
+                database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() == null) {
+                            Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(final DatabaseError databaseError) {
+
+                    }
+                });
+
                 activity_attend_check_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View view) {
@@ -144,14 +193,14 @@ public class AttendActivity_Fragment extends Fragment {
 
                         if (EditCertificationNumber.getBytes().length > 0) {
                             getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
-                            database.getReference().child("Attend_Admin").child(formatDate).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     getCertificationNumber = dataSnapshot.getValue().toString();
 
                                     if (Integer.parseInt(getCertificationNumber) == getEditCertificationNumber) {
 
-                                        database.getReference().child("Attend_Admin").child(formatDate).child("Attend_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                                 getAttend_Time_Limit = dataSnapshot.getValue().toString();
@@ -169,23 +218,10 @@ public class AttendActivity_Fragment extends Fragment {
 
                                                 if (diff > 0) {
                                                     Toast.makeText(getActivity(), "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                                    database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_Statue").setValue("출석");
-                                                    database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_Statue").addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                            getAttendStatue = dataSnapshot.getValue().toString();
-                                                            activity_attend_textview_attend_statue.setText(getAttendStatue);
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(final DatabaseError databaseError) {
-
-                                                        }
-                                                    });
-
+                                                    database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("출석");
                                                     dialog.dismiss();
                                                 } else {
-                                                    database.getReference().child("Attend_Admin").child(formatDate).child("Tardy_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                                             getTardy_Time_Limit = dataSnapshot.getValue().toString();
@@ -205,38 +241,11 @@ public class AttendActivity_Fragment extends Fragment {
                                                                 Toast.makeText(getActivity(), "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
                                                                 activity_attend_textview_attend_statue.setText("지각");
                                                                 database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("지각").toString();
-                                                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addValueEventListener(new ValueEventListener() {
-                                                                    @Override
-                                                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                                        getAttendStatue = dataSnapshot.getValue().toString();
-                                                                        activity_attend_textview_attend_statue.setText(getAttendStatue);
-                                                                    }
-
-                                                                    @Override
-                                                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                                                    }
-                                                                });
-
-
                                                                 dialog.dismiss();
                                                             } else {
                                                                 Toast.makeText(getActivity(), "출석시간이 지났습니다(결석)", Toast.LENGTH_SHORT).show();
                                                                 activity_attend_textview_attend_statue.setText("결석");
                                                                 database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("결석").toString();
-                                                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addValueEventListener(new ValueEventListener() {
-                                                                    @Override
-                                                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                                        getAttendStatue = dataSnapshot.getValue().toString();
-                                                                        activity_attend_textview_attend_statue.setText(getAttendStatue);
-                                                                    }
-
-                                                                    @Override
-                                                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                                                    }
-                                                                });
-
                                                                 dialog.dismiss();
                                                             }
 
