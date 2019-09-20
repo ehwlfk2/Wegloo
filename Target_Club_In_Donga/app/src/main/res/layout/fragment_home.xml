@@ -23,7 +23,7 @@
         <LinearLayout
             android:id="@+id/frgment_home_handle"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="#ff6d61"
             android:gravity="center">
 
