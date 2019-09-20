@@ -33,8 +33,15 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 // Home 프래그먼트
@@ -66,6 +73,10 @@ public class HomeActivity_Fragment extends Fragment {
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
     private AdView mAdView;
+    private FirebaseDatabase database;
+    private FirebaseAuth auth;
+    private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
+    private long now;
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
@@ -115,6 +126,51 @@ public class HomeActivity_Fragment extends Fragment {
         mAdView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+        database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        now = System.currentTimeMillis();
+        // 현재시간을 date 변수에 저장한다.
+        Date date = new Date(now);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        formatDate = simpleDateFormat.format(date);
+
+        database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                now = System.currentTimeMillis();
+                // 현재시간을 date 변수에 저장한다.
+                Date date = new Date(now);
+                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                nowtardyTimeLimit = simpleDateFormat.format(date);
+
+                getTardyTimeLimit = dataSnapshot.getValue().toString();
+                Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                long diff = d1.getTime() - d2.getTime();
+                if(diff < 0 ) {
+                    database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue().toString().equals("미출결")) {
+                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("결석");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
