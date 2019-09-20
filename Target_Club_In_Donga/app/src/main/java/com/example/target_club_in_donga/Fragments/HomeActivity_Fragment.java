@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.target_club_in_donga.Accountbook.AccountbookActivity_Main;
 import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
@@ -199,8 +198,7 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(), AccountbookActivity_Main.class);
-                startActivity(intent);
+                
             }
         });
         main_btn_6.setOnClickListener(new View.OnClickListener() {
