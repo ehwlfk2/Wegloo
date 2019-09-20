@@ -20,7 +20,7 @@ import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
 import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
@@ -33,8 +33,15 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 // Home 프래그먼트
@@ -66,6 +73,10 @@ public class HomeActivity_Fragment extends Fragment {
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
     private AdView mAdView;
+    private FirebaseDatabase database;
+    private FirebaseAuth auth;
+    private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
+    private long now;
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
@@ -105,7 +116,7 @@ public class HomeActivity_Fragment extends Fragment {
 
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
         passPushTokenToServer();
 
         /*MobileAds.initialize(getContext(), "ca-app-pub-3940256099942544~3347511713");
@@ -115,6 +126,51 @@ public class HomeActivity_Fragment extends Fragment {
         mAdView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+        database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        now = System.currentTimeMillis();
+        // 현재시간을 date 변수에 저장한다.
+        Date date = new Date(now);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        formatDate = simpleDateFormat.format(date);
+
+        database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                now = System.currentTimeMillis();
+                // 현재시간을 date 변수에 저장한다.
+                Date date = new Date(now);
+                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                nowtardyTimeLimit = simpleDateFormat.format(date);
+
+                getTardyTimeLimit = dataSnapshot.getValue().toString();
+                Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                long diff = d1.getTime() - d2.getTime();
+                if(diff < 0 ) {
+                    database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue().toString().equals("미출결")) {
+                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("결석");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
@@ -145,7 +201,6 @@ public class HomeActivity_Fragment extends Fragment {
 
         slidingDrawer = (SlidingDrawer)view.findViewById(R.id.frgment_home_slidingdrawer);
         slidingdrawer_title = (TextView)view.findViewById(R.id.frgment_home_slidingdrawer_title);
-
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +254,7 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Admin.class);
+                Intent intent = new Intent(getActivity(), MaterialManagementActivity.class);
                 startActivity(intent);
             }
         }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
@@ -267,12 +322,36 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onDrawerOpened() {
                 slidingdrawer_title.setVisibility(View.VISIBLE);
+                everyBtnEnable(false);
+
+                view.setFocusableInTouchMode(true);
+                view.requestFocus();
+                view.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(final View view, final int i, final KeyEvent keyEvent) {
+                        if(i == KeyEvent.KEYCODE_BACK) {
+                            Intent intent = new Intent(getActivity(), HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            intent.putExtra("finishstatus", true);
+                            slidingDrawer.animateClose();
+                            menu_count--;
+                            everyBtnEnable(true);
+//                    getActivity().finish();
+                            startActivity(intent);
+                            return  true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
+
             }
         });
         slidingDrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
             @Override
             public void onDrawerClosed() {
                 slidingdrawer_title.setVisibility(View.INVISIBLE);
+                everyBtnEnable(true);
             }
         });
 

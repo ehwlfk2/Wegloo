@@ -55,8 +55,10 @@ public class AttendActivity_Fragment extends Fragment {
     private String getAttend_Time_Limit, getTardy_Time_Limit;
 
     private long now;
-    private String nowDate, formatDate, attendTimeLimitDate, tardyTimeLimitDate;
-    private String getAttendStatue, setAttendStatue;
+    private String nowDate, formatDate, attendTimeLimitDate, nowtardyTimeLimit;
+    private String getAttendStatue, setAttendStatue, getTardyTimeLimit;
+
+    private int admin;
 
     public AttendActivity_Fragment() {
         // Required empty public constructor
@@ -110,6 +112,7 @@ public class AttendActivity_Fragment extends Fragment {
         database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
+                dataSnapshot.getValue();
                 if(dataSnapshot.getValue() != null) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         peopleCount++;
@@ -175,6 +178,30 @@ public class AttendActivity_Fragment extends Fragment {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
+                            Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(final DatabaseError databaseError) {
+
+                    }
+                });
+
+                database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                        now = System.currentTimeMillis();
+                        // 현재시간을 date 변수에 저장한다.
+                        Date date = new Date(now);
+                        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        nowtardyTimeLimit = simpleDateFormat.format(date);
+
+                        getTardyTimeLimit = dataSnapshot.getValue().toString();
+                        Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                        Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                        long diff = d1.getTime() - d2.getTime();
+                        if(diff < 0) {
                             Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
@@ -293,8 +320,6 @@ public class AttendActivity_Fragment extends Fragment {
                 });
 
                 dialog.show();
-//                intent.putExtra("finishstatus", true);
-//                count++;
             }
         });
 
@@ -302,6 +327,25 @@ public class AttendActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 getActivity().finish();
+            }
+        });
+
+
+        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                admin = Integer.parseInt(dataSnapshot.getValue().toString());
+
+                if(admin > 0) {
+                    activity_attend_button_admin.setVisibility(View.VISIBLE);
+                } else {
+                    activity_attend_button_admin.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
             }
         });
 
