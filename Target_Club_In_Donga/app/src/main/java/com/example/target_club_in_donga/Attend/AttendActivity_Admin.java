@@ -39,6 +39,7 @@ public class AttendActivity_Admin extends AppCompatActivity {
     private String formatDate;
     private String getName, getPhone;
 
+    private int minNumber = 1000, maxNumber = 9999;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -125,7 +126,8 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     formatDate = simpleDateFormat.format(date);
 
-                    certification_number = random_number.nextInt(9999);
+                    certification_number = random_number.nextInt(maxNumber - minNumber + 1) + minNumber;
+                    // 인즌번호가 1000~9999 4자리 수중에서 랜덤으로 결정된다.
                     database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Certification_Number").setValue(certification_number);
                     database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Time_Limit").setValue(date_Attend);
                     database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").setValue(date_Trady);
