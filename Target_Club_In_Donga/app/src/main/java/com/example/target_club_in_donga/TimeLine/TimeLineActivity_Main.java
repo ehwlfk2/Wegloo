@@ -1,6 +1,5 @@
 package com.example.target_club_in_donga.TimeLine;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.target_club_in_donga.Accountbook.AccountbookActivity_Main;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
 import com.example.target_club_in_donga.NoticeActivity;
@@ -121,8 +119,7 @@ public class TimeLineActivity_Main extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else if(data.getType().equals("Account_Book")){
-                        Intent intent = new Intent(TimeLineActivity_Main.this, AccountbookActivity_Main.class);
-                        startActivity(intent);
+
                     }
                 }
             });
