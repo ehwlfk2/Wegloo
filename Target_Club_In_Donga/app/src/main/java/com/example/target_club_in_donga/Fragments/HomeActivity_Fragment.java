@@ -130,7 +130,7 @@ public class HomeActivity_Fragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        /*now = System.currentTimeMillis();
+        now = System.currentTimeMillis();
         // 현재시간을 date 변수에 저장한다.
         Date date = new Date(now);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -170,7 +170,7 @@ public class HomeActivity_Fragment extends Fragment {
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });*/
+        });
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
