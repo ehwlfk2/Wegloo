@@ -4,27 +4,68 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     >
     <TextView
         android:text="가계부"
         android:layout_width="match_parent"
         android:textSize="20sp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal" />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/activity_accountbook_main_totalPrice"
-        android:text="동아리 자산 : 0원"
-        android:paddingRight="20dp"
-        android:textSize="25sp"
-        android:gravity="right|center"
-        android:background="@drawable/border_green"/>
+        android:layout_height="wrap_content"
+        android:text="Every day"
+        android:textSize="18sp"
+        android:gravity="right"
+        android:id="@+id/activity_accountbook_main_textview"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/activity_accountbook_main_totalPrice"
+            android:text="자산 : 100,000,000원"
+            android:paddingRight="20dp"
+            android:textSize="20sp"
+            android:gravity="center|right"
+            />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/ic_today"
+
+            android:id="@+id/activity_accountbook_main_today_intent"
+            fab:fab_colorNormal="@color/fbutton_color_turquoise"
+            fab:fab_colorPressed="@color/fbutton_color_green_sea"
+            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_type="mini"
+            />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/calendar_today_icon"
+            android:id="@+id/activity_accountbook_main_everyday_intent"
+            fab:fab_colorNormal="@color/fbutton_color_turquoise"
+            fab:fab_colorPressed="@color/fbutton_color_green_sea"
+            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_type="mini"
+            />
+    </LinearLayout>
+
 
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -33,19 +74,6 @@
             android:layout_height="match_parent"
             android:id="@+id/activity_accountbook_main_recyclerview"/>
 
-        <com.melnykov.fab.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_gravity="bottom|left"
-            android:src="@drawable/calendar_today_icon"
-
-            android:id="@+id/activity_accountbook_main_today_intent"
-            fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
-            fab:fab_type="mini"
-            />
 
         <com.melnykov.fab.FloatingActionButton
             android:layout_width="wrap_content"
