@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,15 +34,9 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 // Home 프래그먼트
@@ -73,15 +68,10 @@ public class HomeActivity_Fragment extends Fragment {
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
     private AdView mAdView;
-    private FirebaseDatabase database;
-    private FirebaseAuth auth;
-    private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
-    private long now;
 
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
-
 
     /**
      * Use this factory method to create a new instance of
@@ -126,9 +116,6 @@ public class HomeActivity_Fragment extends Fragment {
         mAdView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
-        database = FirebaseDatabase.getInstance();
-        auth = FirebaseAuth.getInstance();;
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
@@ -263,8 +250,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View v) {
                 slidingDrawer.animateOpen();
-                menu_count++;
-                everyBtnEnable(false);
             }
         }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
 
@@ -281,28 +266,7 @@ public class HomeActivity_Fragment extends Fragment {
             public void onDrawerOpened() {
                 slidingdrawer_title.setVisibility(View.VISIBLE);
                 everyBtnEnable(false);
-
-                view.setFocusableInTouchMode(true);
-                view.requestFocus();
-                view.setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(final View view, final int i, final KeyEvent keyEvent) {
-                        if (i == KeyEvent.KEYCODE_BACK) {
-                            Intent intent = new Intent(getActivity(), HomeActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            intent.putExtra("finishstatus", true);
-                            slidingDrawer.animateClose();
-                            menu_count--;
-                            everyBtnEnable(true);
-//                    getActivity().finish();
-                            startActivity(intent);
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-
+                menu_count++;
             }
         });
         slidingDrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
@@ -310,6 +274,7 @@ public class HomeActivity_Fragment extends Fragment {
             public void onDrawerClosed() {
                 slidingdrawer_title.setVisibility(View.INVISIBLE);
                 everyBtnEnable(true);
+                menu_count--;
             }
         });
 
@@ -324,7 +289,6 @@ public class HomeActivity_Fragment extends Fragment {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("finishstatus", true);
                     slidingDrawer.animateClose();
-                    menu_count--;
                     everyBtnEnable(true);
 //                    getActivity().finish();
                     startActivity(intent);
