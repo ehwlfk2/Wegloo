@@ -1,19 +1,20 @@
 package com.example.target_club_in_donga.Attend;
 
-import android.content.Context;
+//import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+//import android.util.Log;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+/*import android.widget.AdapterView;
+import android.widget.BaseAdapter;*/
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Gallery;
-import android.widget.ImageView;
+/*import android.widget.Gallery;
+import android.widget.ImageView;*/
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,18 +46,20 @@ import java.util.Date;
  */
 public class AttendActivity_Fragment extends Fragment {
 
-    private Gallery gallery;
+/*    private Gallery gallery;
     private Button select_btn;
-    private Integer current_image_resource;
+    private Integer current_image_resource;*/
     private TextView activity_attend_textview_attend_statue;
 
-    private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc, R.drawable.dd, R.drawable.ee};
+//    private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc, R.drawable.dd, R.drawable.ee};
 
     private FirebaseDatabase database;
     private FirebaseAuth auth;
 
     private Button activity_attend_button_attendance, activity_attend_button_cancel, activity_attend_button_admin;
     private TextView activity_attend_textview_people_count, activity_attend_textview_people_percent;
+    private TextView activity_attend_textview_certification_number, activity_attend_textview_time_limit, activity_attend_textview_tardy_limit;
+
     private int peopleCount = 0, peopleAttendCount = 0;
 
     private int getEditCertificationNumber;
@@ -65,9 +68,9 @@ public class AttendActivity_Fragment extends Fragment {
 
     private long now;
     private String nowDate, formatDate, nowtardyTimeLimit;
-    private String getAttendStatue, setAttendStatue, getTardyTimeLimit;
+    private String getAttendStatue, setAttendStatue, getTardyTimeLimit, getAttendStatue2;
 
-    private int admin;
+    private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0;
 
     PieChart activity_attend_piechart;
 
@@ -80,9 +83,9 @@ public class AttendActivity_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_attend, container, false);
-        Gallery_Adapter galleryAdapter = new Gallery_Adapter(getContext(), R.layout.activity_attend_sub_layout, img);
-        gallery = (Gallery) view.findViewById(R.id.activity_attend_gallery);
-        select_btn = (Button) view.findViewById(R.id.activity_attend_button_select);
+//        Gallery_Adapter galleryAdapter = new Gallery_Adapter(getContext(), R.layout.activity_attend_sub_layout, img);
+//        gallery = (Gallery) view.findViewById(R.id.activity_attend_gallery);
+//        select_btn = (Button) view.findViewById(R.id.activity_attend_button_select);
 
         activity_attend_button_admin = (Button) view.findViewById(R.id.activity_attend_button_admin);
         activity_attend_button_attendance = (Button) view.findViewById(R.id.activity_attend_button_attendance);
@@ -90,12 +93,16 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_textview_attend_statue = (TextView) view.findViewById(R.id.activity_attend_textview_attend_statue);
         activity_attend_textview_people_count = (TextView) view.findViewById(R.id.activity_attend_textview_people_count);
         activity_attend_textview_people_percent = (TextView) view.findViewById(R.id.activity_attend_textview_people_percent);
+        activity_attend_textview_certification_number = (TextView) view.findViewById(R.id.activity_attend_textview_certification_number);
+        activity_attend_textview_time_limit = (TextView) view.findViewById(R.id.activity_attend_textview_time_limit);
+        activity_attend_textview_tardy_limit = (TextView) view.findViewById(R.id.activity_attend_textview_tardy_limit);
+
         activity_attend_piechart = (PieChart) view.findViewById(R.id.activity_attend_piechart);
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        gallery.setAdapter(galleryAdapter);
+/*        gallery.setAdapter(galleryAdapter);
         final ImageView imageView = (ImageView) view.findViewById(R.id.test);
         gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -113,7 +120,7 @@ public class AttendActivity_Fragment extends Fragment {
             public void onClick(View v) {
                 imageView.setImageResource(current_image_resource);
             }
-        });
+        });*/
 
         now = System.currentTimeMillis();
         // 현재시간을 date 변수에 저장한다.
@@ -172,10 +179,8 @@ public class AttendActivity_Fragment extends Fragment {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         peopleCount++;
                         getAttendStatue = snapshot.child("attend_statue").getValue(String.class);
-                        Log.d("오류", getAttendStatue);
                         if (getAttendStatue.equals("출석") || getAttendStatue.equals("지각")) {
                             peopleAttendCount++;
-                            Log.d("값", peopleAttendCount + "");
                         }
                         activity_attend_textview_people_count.setText(peopleAttendCount + "명");
                         activity_attend_textview_people_percent.setText((peopleAttendCount * 100 / peopleCount) + "%");
@@ -372,7 +377,7 @@ public class AttendActivity_Fragment extends Fragment {
                 activity_attend_check_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View view) {
-                        getActivity().finish();
+                        dialog.dismiss();
                     }
                 });
 
@@ -387,7 +392,6 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-
         database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -395,8 +399,14 @@ public class AttendActivity_Fragment extends Fragment {
 
                 if (admin > 0) {
                     activity_attend_button_admin.setVisibility(View.VISIBLE);
+                    activity_attend_textview_certification_number.setVisibility(View.VISIBLE);
+                    activity_attend_textview_time_limit.setVisibility(View.VISIBLE);
+                    activity_attend_textview_tardy_limit.setVisibility(View.VISIBLE);
                 } else {
-                    activity_attend_button_admin.setVisibility(View.GONE);
+                    activity_attend_button_admin.setVisibility(View.INVISIBLE);
+                    activity_attend_textview_certification_number.setVisibility(View.INVISIBLE);
+                    activity_attend_textview_time_limit.setVisibility(View.INVISIBLE);
+                    activity_attend_textview_tardy_limit.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -414,49 +424,99 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-/*        activity_attend_piechart.setUsePercentValues(true);
+        activity_attend_piechart.setUsePercentValues(true);
         activity_attend_piechart.getDescription().setEnabled(true);
         activity_attend_piechart.setExtraOffsets(5, 10, 5, 5);
 
         activity_attend_piechart.setDragDecelerationFrictionCoef(0.95f);
 
-        activity_attend_piechart.setDrawHoleEnabled(false);
+        activity_attend_piechart.setDrawHoleEnabled(true);
         activity_attend_piechart.setHoleColor(Color.WHITE);
         activity_attend_piechart.setTransparentCircleRadius(61f);
 
-        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        final ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
-        pieEntries.add(new PieEntry(34f, "Japan"));
-        pieEntries.add(new PieEntry(23f, "USA"));
-        pieEntries.add(new PieEntry(14f, "UK"));
-        pieEntries.add(new PieEntry(35f, "India"));
-        pieEntries.add(new PieEntry(40f, "Russia"));
-        pieEntries.add(new PieEntry(40f, "Korea"));
+        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if(snapshot.child("attend_statue").getValue() != null) {
+                            getAttendStatue2 = snapshot.child("attend_statue").getValue(String.class);
+                            if(getAttendStatue2.equals("출석")) {
+                                attendCount++;
+                            } else if(getAttendStatue2.equals("지각")) {
+                                tardyCount++;
+                            } else if(getAttendStatue2.equals("미출결")) {
+                                unsentCount++;
+                            } else {
+                                absentCount++;
+                            }
+                        }
+                    }
 
-        Description description = new Description();
-        description.setText("세계 국가");
-        description.setTextSize(15);
-        activity_attend_piechart.setDescription(description);
+                    if(attendCount > 0) {
+                        pieEntries.add(new PieEntry(attendCount, "출석"));
+                    }
+                    if(tardyCount > 0) {
+                        pieEntries.add(new PieEntry(tardyCount, "지각"));
+                    }
+                    if(unsentCount > 0) {
+                        pieEntries.add(new PieEntry(unsentCount, "미출결"));
+                    }
+                    if(absentCount > 0) {
+                        pieEntries.add(new PieEntry(absentCount, "결석"));
+                    }
 
-        activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+                    Description description = new Description();
+                    description.setText("출석률");
+                    description.setTextSize(15);
+                    activity_attend_piechart.setDescription(description);
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "country");
-        pieDataSet.setSliceSpace(3f);
-        pieDataSet.setSelectionShift(5f);
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                    activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
-        PieData pieData = new PieData();
-        pieData.setValueTextSize(10f);
-        pieData.setValueTextColor(Color.YELLOW);
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
+                    pieDataSet.setSliceSpace(3f);
+                    pieDataSet.setSelectionShift(4f);
+                    pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+//                    pieDataSet.setColors(new int [] {R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
 
-        activity_attend_piechart.setData(pieData);*/
+                    PieData pieData = new PieData((pieDataSet));
+                    pieData.setValueTextSize(15f);
+                    pieData.setValueTextColor(Color.WHITE);
+
+                    activity_attend_piechart.setData(pieData);
+                }
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
+
+        database.getReference().child("Attend_Admin").child(formatDate).child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() != null) {
+                    activity_attend_textview_certification_number.setText(dataSnapshot.child("Attend_Certification_Number").getValue().toString());
+                    activity_attend_textview_time_limit.setText(dataSnapshot.child("Attend_Time_Limit").getValue().toString() + " 까지");
+                    activity_attend_textview_tardy_limit.setText(dataSnapshot.child("Tardy_Time_Limit").getValue().toString() + " 까지");
+                }
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
 
         return view;
     }
 
 }
 
-class Gallery_Adapter extends BaseAdapter {
+/*class Gallery_Adapter extends BaseAdapter {
     Context context;
     int layout;
     int img[];
@@ -494,4 +554,4 @@ class Gallery_Adapter extends BaseAdapter {
         imageView.setImageResource(img[position]);
         return convertView;
     }
-}
+}*/
