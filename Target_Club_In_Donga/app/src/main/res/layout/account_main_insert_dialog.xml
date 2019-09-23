@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/account_dialog_radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/account_dialog_radio_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="지출"
+                    android:textSize="25sp"
+                    android:layout_marginBottom="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/account_dialog_radio_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수입"
+                    android:textSize="25sp"
+                    />
+
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/account_dialog_imageview"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_foreground"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/account_dialog_edittext_name"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:hint="내역" />
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/account_dialog_edittext_price"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:hint="금액"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/account_dialog_layout_date">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="날짜 설정"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="23sp"
+                android:text="2019-09-20"
+                android:id="@+id/account_dialog_textview_date"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_done"
+            android:id="@+id/account_dialog_button_result"
+            fab:fab_colorNormal="@color/fbutton_color_turquoise"
+            fab:fab_colorPressed="@color/fbutton_color_green_sea"
+            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_type="mini"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>

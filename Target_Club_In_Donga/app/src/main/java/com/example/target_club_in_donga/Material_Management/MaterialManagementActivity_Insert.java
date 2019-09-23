@@ -97,7 +97,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 if(count > 0) {
                     if(getEditName.getBytes().length > 0) {
                         upload(imagePath);
-                        Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity_Admin.class);
+                        Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
@@ -187,7 +187,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
             public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUri = taskSnapshot.getDownloadUrl();
 
-                MaterialManagement_Admin_Item materialManagementItem = new MaterialManagement_Admin_Item();
+                MaterialManagement_Item materialManagementItem = new MaterialManagement_Item();
                 materialManagementItem.title = activity_material_management_insert_edittext_item_name.getText().toString();
                 materialManagementItem.lender = activity_material_management_insert_textview_lender.getText().toString();
                 materialManagementItem.timestamp = "없음";

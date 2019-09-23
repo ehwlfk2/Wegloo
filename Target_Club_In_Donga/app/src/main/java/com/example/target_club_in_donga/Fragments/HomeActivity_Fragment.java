@@ -14,8 +14,8 @@ import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-//
-//import com.example.target_club_in_donga.Accountbook.AccountbookActivity_main;
+
+import com.example.target_club_in_donga.Accountbook.AccountbookActivity_main;
 import com.example.target_club_in_donga.AttendActivity;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
@@ -196,13 +196,13 @@ public class HomeActivity_Fragment extends Fragment {
                 startActivity(intent);
             }
         }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
-//        main_btn_3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(getActivity(), .class);
-//                startActivity(intent);
-//            }
-//        }); //가계부
+        main_btn_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), AccountbookActivity_main.class);
+                startActivity(intent);
+            }
+        }); //가계부
         main_btn_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
