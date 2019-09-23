@@ -65,11 +65,11 @@ public class HomeActivity_Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    private TextView btn1,btn2,btn3,btn4;
+    private TextView btn1, btn2, btn3, btn4;
     private TextView menu_detail_btn;
     private TextView slidingdrawer_title;
-    private ImageView menu_btn,setting_btn, timeline_btn;
-    private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7,main_btn_8 ,main_btn_12;
+    private ImageView menu_btn, setting_btn, timeline_btn;
+    private RelativeLayout main_btn_1, main_btn_2, main_btn_3, main_btn_6, main_btn_7, main_btn_8, main_btn_12;
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
     private AdView mAdView;
@@ -77,10 +77,10 @@ public class HomeActivity_Fragment extends Fragment {
     private FirebaseAuth auth;
     private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
     private long now;
+
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
-
 
 
     /**
@@ -128,67 +128,25 @@ public class HomeActivity_Fragment extends Fragment {
         mAdView.loadAd(adRequest);
 
         database = FirebaseDatabase.getInstance();
-        auth = FirebaseAuth.getInstance();
-
-        now = System.currentTimeMillis();
-        // 현재시간을 date 변수에 저장한다.
-        Date date = new Date(now);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        formatDate = simpleDateFormat.format(date);
-
-        database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                now = System.currentTimeMillis();
-                // 현재시간을 date 변수에 저장한다.
-                Date date = new Date(now);
-                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                nowtardyTimeLimit = simpleDateFormat.format(date);
-
-                getTardyTimeLimit = dataSnapshot.getValue().toString();
-                Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                long diff = d1.getTime() - d2.getTime();
-                if(diff < 0 ) {
-                    database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.getValue().toString().equals("미출결")) {
-                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("결석");
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(final DatabaseError databaseError) {
-
-            }
-        });
+        auth = FirebaseAuth.getInstance();;
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
-        btn3 = (TextView)view.findViewById(R.id.frgment_home_favorite_3);
+        btn3 = (TextView) view.findViewById(R.id.frgment_home_favorite_3);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
 
         menu_detail_btn = (TextView) view.findViewById(R.id.menu_detail_btn);
 
-        main_btn_1 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_1);
-        main_btn_2 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_2);
-        main_btn_3 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_3);
-        main_btn_6 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_6);
-        main_btn_7 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_7);
-        main_btn_8 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_8);
-        main_btn_12 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_12);
+        main_btn_1 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_1);
+        main_btn_2 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_2);
+        main_btn_3 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_3);
+        main_btn_6 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_6);
+        main_btn_7 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_7);
+        main_btn_8 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_8);
+        main_btn_12 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_12);
 
-        menu_btn = (ImageView)view.findViewById(R.id.frgment_home_menu_btn);
-        timeline_btn = (ImageView)view.findViewById(R.id.fragment_home_timeline_btn);
+        menu_btn = (ImageView) view.findViewById(R.id.frgment_home_menu_btn);
+        timeline_btn = (ImageView) view.findViewById(R.id.fragment_home_timeline_btn);
 
         /*memberlist = view.findViewById(R.id.fragment_home_btn_8);
         memberlist.setOnClickListener(new View.OnClickListener() {
@@ -199,8 +157,8 @@ public class HomeActivity_Fragment extends Fragment {
             }
         });*/
 
-        slidingDrawer = (SlidingDrawer)view.findViewById(R.id.frgment_home_slidingdrawer);
-        slidingdrawer_title = (TextView)view.findViewById(R.id.frgment_home_slidingdrawer_title);
+        slidingDrawer = (SlidingDrawer) view.findViewById(R.id.frgment_home_slidingdrawer);
+        slidingdrawer_title = (TextView) view.findViewById(R.id.frgment_home_slidingdrawer_title);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,7 +261,7 @@ public class HomeActivity_Fragment extends Fragment {
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(final View v) {
+            public void onClick(final View v) {
                 slidingDrawer.animateOpen();
                 menu_count++;
                 everyBtnEnable(false);
@@ -313,7 +271,7 @@ public class HomeActivity_Fragment extends Fragment {
         timeline_btn.setOnClickListener(new View.OnClickListener() { //홈에서 오른쪽 상단 종버튼 타임라인으로 만들꺼임
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getActivity(), TimeLineActivity_Main.class);
+                Intent intent = new Intent(getActivity(), TimeLineActivity_Main.class);
                 startActivity(intent);
             }
         });
@@ -329,7 +287,7 @@ public class HomeActivity_Fragment extends Fragment {
                 view.setOnKeyListener(new View.OnKeyListener() {
                     @Override
                     public boolean onKey(final View view, final int i, final KeyEvent keyEvent) {
-                        if(i == KeyEvent.KEYCODE_BACK) {
+                        if (i == KeyEvent.KEYCODE_BACK) {
                             Intent intent = new Intent(getActivity(), HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             intent.putExtra("finishstatus", true);
@@ -338,7 +296,7 @@ public class HomeActivity_Fragment extends Fragment {
                             everyBtnEnable(true);
 //                    getActivity().finish();
                             startActivity(intent);
-                            return  true;
+                            return true;
                         } else {
                             return false;
                         }
@@ -361,7 +319,7 @@ public class HomeActivity_Fragment extends Fragment {
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(final View view, final int i, final KeyEvent keyEvent) {
-                if(i == KeyEvent.KEYCODE_BACK && menu_count > 0) {
+                if (i == KeyEvent.KEYCODE_BACK && menu_count > 0) {
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("finishstatus", true);
@@ -370,7 +328,7 @@ public class HomeActivity_Fragment extends Fragment {
                     everyBtnEnable(true);
 //                    getActivity().finish();
                     startActivity(intent);
-                    return  true;
+                    return true;
                 } else {
                     return false;
                 }
@@ -420,13 +378,14 @@ public class HomeActivity_Fragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void passPushTokenToServer(){
+    public void passPushTokenToServer() {
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String token = FirebaseInstanceId.getInstance().getToken();
         Map<String, Object> map = new HashMap<>();
-        map.put("pushToken",token);
+        map.put("pushToken", token);
         FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
     }
+
     public void everyBtnEnable(boolean boo) {
         btn1.setEnabled(boo);
         btn2.setEnabled(boo);
