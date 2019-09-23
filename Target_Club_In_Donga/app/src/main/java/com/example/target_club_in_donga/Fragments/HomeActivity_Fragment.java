@@ -128,58 +128,7 @@ public class HomeActivity_Fragment extends Fragment {
         mAdView.loadAd(adRequest);
 
         database = FirebaseDatabase.getInstance();
-        auth = FirebaseAuth.getInstance();
-
-        now = System.currentTimeMillis();
-        // 현재시간을 date 변수에 저장한다.
-        Date date = new Date(now);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        formatDate = simpleDateFormat.format(date);
-
-        database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    now = System.currentTimeMillis();
-                    // 현재시간을 date 변수에 저장한다.
-                    Date date = new Date(now);
-                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    nowtardyTimeLimit = simpleDateFormat.format(date);
-
-                    getTardyTimeLimit = dataSnapshot.getValue().toString();
-                    Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                    Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                    long diff = d1.getTime() - d2.getTime();
-                    if (diff < 0) {
-                        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(final DataSnapshot dataSnapshot) {
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    snapshot.child("attend_statue").getValue(String.class);
-                                    if (snapshot.child("attend_statue").getValue(String.class).equals("미출결")) {
-                                        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("결석");
-                                    }
-                                }
-                                database.getReference().child("Attend_Admin").child(formatDate).child("Admin").removeValue();
-                            }
-
-                            @Override
-                            public void onCancelled(final DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(final DatabaseError databaseError) {
-
-            }
-        });
+        auth = FirebaseAuth.getInstance();;
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
