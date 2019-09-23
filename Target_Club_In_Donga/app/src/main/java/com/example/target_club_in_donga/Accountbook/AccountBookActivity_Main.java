@@ -61,7 +61,8 @@ import java.util.Date;
 
 public class AccountBookActivity_Main extends AppCompatActivity {
     private AccountBookActivity_Main_RecyclerviewAdapter adapter;
-    private FloatingActionButton activity_accountbook_main_intent, activity_accountbook_main_today_intent, activity_accountbook_main_everyday_intent;
+    private FloatingActionButton activity_accountbook_main_intent, activity_accountbook_main_today_intent, activity_accountbook_main_everyday_intent,
+            activity_accountbook_main_export, activity_accountbook_main_clear;
     private RecyclerView activity_accountbook_recyclerview;
     private TextView activity_accountbook_main_totalPrice, activity_accountbook_main_textview;
     private ArrayList<AccountBook_Main_Item> list = new ArrayList<>();//ItemFrom을 통해 받게되는 데이터를 어레이 리스트화 시킨다.
@@ -72,6 +73,8 @@ public class AccountBookActivity_Main extends AppCompatActivity {
     private static final int GALLERY_CODE = 10;
     private ImageView account_dialog_imageview;
     private String dateStr;
+    private CheckBox activity_accountbook_main_checkbox;
+    private boolean backFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +86,15 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         activity_accountbook_main_everyday_intent = findViewById(R.id.activity_accountbook_main_everyday_intent);
         activity_accountbook_recyclerview = findViewById(R.id.activity_accountbook_main_recyclerview);
         activity_accountbook_main_textview = findViewById(R.id.activity_accountbook_main_textview);
-        activity_accountbook_main_intent.attachToRecyclerView(activity_accountbook_recyclerview);
-        activity_accountbook_main_intent.show();
+        activity_accountbook_main_checkbox = findViewById(R.id.activity_accountbook_main_allChbox);
+        activity_accountbook_main_export = findViewById(R.id.activity_accountbook_main_export);
+        activity_accountbook_main_clear = findViewById(R.id.activity_accountbook_main_clear);
+        //activity_accountbook_main_intent.attachToRecyclerView(activity_accountbook_recyclerview);
+        activity_accountbook_main_intent.show(false);
         activity_accountbook_main_everyday_intent.show(false);
         activity_accountbook_main_today_intent.show(false);
+        activity_accountbook_main_export.show(false);
+        activity_accountbook_main_clear.show(false);
         activity_accountbook_main_everyday_intent.setColorFilter(getResources().getColor(R.color.fbutton_color_peter_river));
         activity_accountbook_main_today_intent.setColorFilter(getResources().getColor(R.color.fbutton_color_peter_river));
 
@@ -114,7 +122,31 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                 everyDayDB();
             }
         });
+        activity_accountbook_main_clear.setOnClickListener(new View.OnClickListener() { //롱클릭 중일때 클리어
+            @Override
+            public void onClick(View view) {
+                checkBoxClose();
+            }
+        });
+        activity_accountbook_main_export.setOnClickListener(new View.OnClickListener() { //롱클릭 중일때 내보내기
+            @Override
+            public void onClick(View view) {
+                //내보내고
+                checkBoxClose(); //닫고
+            }
+        });
 
+        activity_accountbook_main_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(activity_accountbook_main_checkbox.isChecked()){
+                    adapter.setRealSelect(true);
+                }
+                else{
+                    adapter.setRealSelect(false);
+                }
+            }
+        });
 
         activity_accountbook_main_intent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,12 +170,18 @@ public class AccountBookActivity_Main extends AppCompatActivity {
 
                 final AlertDialog dialog = builder.create();
 
-                long unixTime = (long) System.currentTimeMillis();
-                final Date date = new Date(unixTime);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                //simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-                String time = simpleDateFormat.format(date);
-                account_dialog_textview_date.setText(time);
+                if(activity_accountbook_main_textview.getText().toString().equals("Every day")){
+                    long unixTime = (long) System.currentTimeMillis();
+                    final Date date = new Date(unixTime);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    //simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+                    String time = simpleDateFormat.format(date);
+                    account_dialog_textview_date.setText(time);
+                }
+                else{
+                    account_dialog_textview_date.setText(activity_accountbook_main_textview.getText().toString());
+                }
+
 
                 account_dialog_layout_date.setOnClickListener(new View.OnClickListener() { //날짜 다이얼로그
                     @Override
@@ -212,7 +250,15 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onBackPressed() {
+        if(backFlag){
+            super.onBackPressed();
+        }
+        else{
+            checkBoxClose();
+        }
+    }
 
     public class AccountBookActivity_Main_RecyclerviewAdapter extends RecyclerView.Adapter<AccountBookActivity_Main.AccountBookActivity_Main_RecyclerviewAdapter.MyViewholder> {
 
@@ -220,6 +266,16 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         private ArrayList<AccountBook_Main_Item> datalist;
         //getItemCount, onCreateViewHolder, MyViewHolder, onBindViewholder 순으로 들어오게 된다.
         // 뷰홀더에서 초기세팅해주고 바인드뷰홀더에서 셋텍스트해주는 값이 최종적으로 화면에 출력되는 값
+        private boolean selectState = false;
+        private boolean realSelect = false;
+        public void setCheckBoxState(boolean select){
+            selectState = select;
+            notifyDataSetChanged();
+        }
+        public void setRealSelect(boolean select){
+            realSelect = select;
+            notifyDataSetChanged();
+        }
 
         @Override
         public AccountBookActivity_Main.AccountBookActivity_Main_RecyclerviewAdapter.MyViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -255,6 +311,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             holder.accountPrice.setText(data.getPrice()+"원");
             if(data.getImageUrl().equals("None")){
                 holder.accountImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                //holder.accountImage.setVisibility(View.GONE);
             }
             else{
                 Glide.with(activity).load(data.getImageUrl()).into(holder.accountImage);
@@ -266,7 +323,61 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                 }
             });
             //PopupMenu(holder,position);
+            holder.accountLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    setCheckBoxState(true);
+                    backFlag = false;
+                    return false;
 
+                }
+
+            });
+
+            if(selectState){
+                activity_accountbook_main_checkbox.setVisibility(View.VISIBLE);
+                //holder.accountImage.setVisibility(View.GONE);
+                holder.accountCheckbox.setVisibility(View.VISIBLE);
+                activity_accountbook_main_intent.setVisibility(View.GONE);
+                activity_accountbook_main_today_intent.setVisibility(View.GONE);
+                activity_accountbook_main_everyday_intent.setVisibility(View.GONE);
+                activity_accountbook_main_export.setVisibility(View.VISIBLE);
+                activity_accountbook_main_clear.setVisibility(View.VISIBLE);
+            }
+            else{
+                activity_accountbook_main_checkbox.setVisibility(View.INVISIBLE);
+                //holder.accountImage.setVisibility(View.VISIBLE);
+                holder.accountCheckbox.setVisibility(View.GONE);
+                activity_accountbook_main_intent.setVisibility(View.VISIBLE);
+                activity_accountbook_main_today_intent.setVisibility(View.VISIBLE);
+                activity_accountbook_main_everyday_intent.setVisibility(View.VISIBLE);
+                activity_accountbook_main_export.setVisibility(View.GONE);
+                activity_accountbook_main_clear.setVisibility(View.GONE);
+            }
+
+            holder.accountCheckbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(list.get(position).isSelected()){
+                        list.get(position).setSelected(false);
+                    }
+                    else{
+                        list.get(position).setSelected(true);
+                    }
+                }
+            });
+            holder.accountCheckbox.setChecked(list.get(position).isSelected());
+
+            if(realSelect){
+                holder.accountCheckbox.setChecked(true);
+                list.get(position).setSelected(true);
+                //list.get(position).setSelected(false);
+            }
+            else{
+                holder.accountCheckbox.setChecked(false);
+                list.get(position).setSelected(false);
+                //list.get(position).setSelected(true);
+            }
         }
         public void delete_item(final int position){
             database = FirebaseDatabase.getInstance();
@@ -297,6 +408,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             TextView accountTitle;
             ImageView accountImage;
             LinearLayout accountLayout;
+            CheckBox accountCheckbox;
 
             public MyViewholder(final View v){
                 super(v);
@@ -306,6 +418,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                 accountTitle = v.findViewById(R.id.accountbook_main_item_title);
                 accountDate = v.findViewById(R.id.accountbook_main_item_date);
                 accountImage = v.findViewById(R.id.accountbook_main_item_imageview);
+                accountCheckbox = v.findViewById(R.id.accountbook_main_item_chbox);
             }
         }
         public AccountBookActivity_Main_RecyclerviewAdapter(Activity activity, ArrayList<AccountBook_Main_Item> datalist){
@@ -350,8 +463,8 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                 .inflate(R.layout.account_main_image_dialog, null, false);
         builder2.setView(view2);
 
-        final ImageView exportBtn = (ImageView) view2.findViewById(R.id.account_main_image_dialog_imageview_export);
-        final ImageView imageView = (ImageView) view2.findViewById(R.id.account_main_image_dialog_imageview);
+        final ImageView exportBtn = view2.findViewById(R.id.account_main_image_dialog_imageview_export);
+        final ImageView imageView = view2.findViewById(R.id.account_main_image_dialog_imageview);
 
         if(imageUrl.equals("None")){
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
@@ -432,10 +545,23 @@ public class AccountBookActivity_Main extends AppCompatActivity {
     }
 
     private void Dialog_DatePicker2(){
-        Calendar c = Calendar.getInstance();
-        int cyear = c.get(Calendar.YEAR);
-        int cmonth = c.get(Calendar.MONTH);
-        int cday = c.get(Calendar.DAY_OF_MONTH);
+        int cyear;
+        int cmonth;
+        int cday;
+        String ac = activity_accountbook_main_textview.getText().toString();
+        if(ac.equals("Every day")){
+            Calendar c = Calendar.getInstance();
+            cyear = c.get(Calendar.YEAR);
+            cmonth = c.get(Calendar.MONTH);
+            cday = c.get(Calendar.DAY_OF_MONTH);
+        }
+        else{
+
+            cyear = Integer.parseInt(ac.substring(0,4));
+            cmonth = Integer.parseInt(ac.substring(5,7))-1;
+            cday = Integer.parseInt(ac.substring(8,10));
+        }
+
 
         DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -556,7 +682,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             itemDTO.setTitle(title);
             itemDTO.setPrice(price);
             itemDTO.setPriceId(priceId);
-
+            accountInsertImagePath = null;
             //itemDTO.uid = auth.getCurrentUser().getUid();
             //itemDTO.userid = auth.getCurrentUser().getEmail();
 
@@ -576,7 +702,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         return trans_date.getTime();
     }
     private void everyDayDB(){
-        activity_accountbook_main_textview.setText("Every day");
+
         database.getReference().child("AccountBook").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)                                                                                                                               {
@@ -588,6 +714,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                     list.add(item);
                     dbKey.add(snapshot.getKey());
                 }
+                activity_accountbook_main_textview.setText("Every day");
                 adapter.notifyDataSetChanged();
             }
 
@@ -597,4 +724,15 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             }
         });
     }
+    private void checkBoxClose(){
+        adapter.setCheckBoxState(false);
+        /*for(int i=0;i<list.size();i++){
+            list.get(i).setSelected(false);
+        }*/
+        adapter.setRealSelect(false);
+        activity_accountbook_main_checkbox.setChecked(false);
+        adapter.notifyDataSetChanged();
+        backFlag = true;
+    }
+
 }

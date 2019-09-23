@@ -66,6 +66,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
     private SimpleDateFormat simpleDateFormat3 = new SimpleDateFormat("MM-dd");
     private HistoryActivity_Main_ListViewAdapter adapter = new HistoryActivity_Main_ListViewAdapter();
     private ListView activityhistory_main_listview;
+    private boolean backFlag = true;
 
     //private CheckBox historyCheckbox;
     @Override
@@ -142,6 +143,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
         activityhistory_main_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int positon, long l) {
+                backFlag = false;
                 activityhistory_main_button_intent.setVisibility(View.GONE);
 
                 adapter.setCheckBoxState(true,true);
@@ -178,7 +180,15 @@ public class HistoryActivity_Main extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onBackPressed() {
+        if(backFlag){
+            super.onBackPressed();
+        }
+        else{
+            checkBoxClose();
+        }
+    }
 
 
     public class HistoryActivity_Main_ListViewAdapter extends BaseAdapter {
@@ -475,6 +485,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
             historyList.get(i).setSelectedYear(false);
         }
         adapter.notifyDataSetChanged();
+        backFlag = true;
     }
     private void imageviewDialog(final int positon, String imageUrl){
         AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
