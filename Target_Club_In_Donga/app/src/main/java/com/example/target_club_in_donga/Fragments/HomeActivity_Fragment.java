@@ -13,30 +13,31 @@ import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
-import com.example.target_club_in_donga.Accountbook.AccountbookActivity_main;
-import com.example.target_club_in_donga.AttendActivity;
+import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
+import com.example.target_club_in_donga.Attend.AttendActivity;
+import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
 import com.example.target_club_in_donga.MemberList.MemberList;
+import com.example.target_club_in_donga.NoticeActivity;
+import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.Schedule.ScheduleActivity;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
-import com.example.target_club_in_donga.NoticeActivity;
-import com.example.target_club_in_donga.Schedule.ScheduleActivity;
-import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.example.target_club_in_donga.Board.*;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.fragment.app.Fragment;
 // Home 프래그먼트
 
 /**
@@ -192,14 +193,14 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Admin.class);
+                Intent intent = new Intent(getActivity(), MaterialManagementActivity.class);
                 startActivity(intent);
             }
         }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
         main_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(), AccountbookActivity_main.class);
+                Intent intent=new Intent(getActivity(), AccountBookActivity_Main.class);
                 startActivity(intent);
             }
         }); //가계부
