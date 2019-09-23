@@ -71,3 +71,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:+'
     implementation 'androidx.constraintlayout:constraintlayout:+'
 }
+
+repositories {
+    maven {url "https://jitpack.io"}
+}
+
+dependencies {
+    implementation 'com.github.PhilJay:MpAndroidChart:v3.0.2'
+}
