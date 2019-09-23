@@ -61,9 +61,9 @@ import java.util.Date;
 
 public class AccountBookActivity_Main extends AppCompatActivity {
     private AccountBookActivity_Main_RecyclerviewAdapter adapter;
-    private FloatingActionButton activity_accountbook_main_intent, activity_accountbook_main_today_intent;
+    private FloatingActionButton activity_accountbook_main_intent, activity_accountbook_main_today_intent, activity_accountbook_main_everyday_intent;
     private RecyclerView activity_accountbook_recyclerview;
-    private TextView activity_accountbook_main_totalPrice;
+    private TextView activity_accountbook_main_totalPrice, activity_accountbook_main_textview;
     private ArrayList<AccountBook_Main_Item> list = new ArrayList<>();//ItemFrom을 통해 받게되는 데이터를 어레이 리스트화 시킨다.
     private ArrayList<String> dbKey = new ArrayList<String>();
     private FirebaseDatabase database;
@@ -80,12 +80,15 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         activity_accountbook_main_totalPrice = findViewById(R.id.activity_accountbook_main_totalPrice);
         activity_accountbook_main_intent = findViewById(R.id.activity_accountbook_main_intent);
         activity_accountbook_main_today_intent = findViewById(R.id.activity_accountbook_main_today_intent);
-
+        activity_accountbook_main_everyday_intent = findViewById(R.id.activity_accountbook_main_everyday_intent);
         activity_accountbook_recyclerview = findViewById(R.id.activity_accountbook_main_recyclerview);
+        activity_accountbook_main_textview = findViewById(R.id.activity_accountbook_main_textview);
         activity_accountbook_main_intent.attachToRecyclerView(activity_accountbook_recyclerview);
         activity_accountbook_main_intent.show();
+        activity_accountbook_main_everyday_intent.show(false);
         activity_accountbook_main_today_intent.show(false);
-        activity_accountbook_main_today_intent.setColorFilter(getResources().getColor(R.color.colorWhite));
+        activity_accountbook_main_everyday_intent.setColorFilter(getResources().getColor(R.color.fbutton_color_peter_river));
+        activity_accountbook_main_today_intent.setColorFilter(getResources().getColor(R.color.fbutton_color_peter_river));
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -96,30 +99,19 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         adapter = new AccountBookActivity_Main_RecyclerviewAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
         activity_accountbook_recyclerview.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
-        database.getReference().child("AccountBook").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                list.clear();
-                dbKey.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    AccountBook_Main_Item item = snapshot.getValue(AccountBook_Main_Item.class);
-                    item.setTimestamp(-1*(long)item.getTimestamp());
-                    list.add(item);
-                    dbKey.add(snapshot.getKey());
-                }
-                adapter.notifyDataSetChanged();
-            }
+        everyDayDB();
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         activity_accountbook_main_today_intent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //list.clear();
                 Dialog_DatePicker2();
+            }
+        });
+        activity_accountbook_main_everyday_intent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                everyDayDB();
             }
         });
 
@@ -208,9 +200,9 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
                     int totalPrice = dataSnapshot.getValue(int.class);
-                    activity_accountbook_main_totalPrice.setText("동아리 자산 : "+totalPrice+"원");
+                    activity_accountbook_main_totalPrice.setText("자산 : "+totalPrice+"원");
                 }catch(NullPointerException e){
-                    activity_accountbook_main_totalPrice.setText("동아리 자산 : "+0+"원");
+                    activity_accountbook_main_totalPrice.setText("자산 : "+0+"원");
                 }
             }
             @Override
@@ -448,6 +440,18 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                String viewDate;
+                if(month < 10)
+                    viewDate = year+"-0"+(month+1)+"-";
+                else
+                    viewDate = year+"-"+(month+1)+"-";
+
+                if(day < 10)
+                    viewDate += ("0"+day);
+                else
+                    viewDate += day;
+                activity_accountbook_main_textview.setText(viewDate);
+
                 String date = year+"-"+(month+1)+"-"+day;
                 long dately = dateToMills(date);
                 //Toast.makeText(AccountBookActivity_Main.this, ""+datel, Toast.LENGTH_SHORT).show();
@@ -569,5 +573,26 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         }
         return trans_date.getTime();
     }
+    private void everyDayDB(){
+        activity_accountbook_main_textview.setText("Every day");
+        database.getReference().child("AccountBook").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)                                                                                                                               {
+                list.clear();
+                dbKey.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    AccountBook_Main_Item item = snapshot.getValue(AccountBook_Main_Item.class);
+                    item.setTimestamp(-1*(long)item.getTimestamp());
+                    list.add(item);
+                    dbKey.add(snapshot.getKey());
+                }
+                adapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

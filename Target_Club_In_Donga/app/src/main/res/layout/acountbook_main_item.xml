@@ -51,14 +51,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textSize="20sp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:text="회의비"/>
 
             <TextView
                 android:id="@+id/accountbook_main_item_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.9"
                 android:text="2019-09-20 12:06"
                 android:textSize="13sp"
                 android:gravity="right"/>
