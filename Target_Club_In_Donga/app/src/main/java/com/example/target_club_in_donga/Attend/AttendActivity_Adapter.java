@@ -1,9 +1,10 @@
-package com.example.target_club_in_donga.Activity_Adapters;
+package com.example.target_club_in_donga.Attend;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.target_club_in_donga.Attend.AttendActivity_Fragment;
 import com.example.target_club_in_donga.Fragments.*;
 
 import java.util.ArrayList;

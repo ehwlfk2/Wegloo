@@ -21,26 +21,30 @@
         android:text="출석시간" />
 
     <RadioGroup
+        android:id="@+id/activity_attend_admin_radiogroup_attend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/activity_attend_admin_radiobutton_attend_5_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5분"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/activity_attend_admin_radiobutton_attend_10_min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10분"
             android:layout_weight="1"/>
 
         <RadioButton
+            android:id="@+id/activity_attend_admin_radiobutton_attend_15_min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20분"
-            android:layout_weight="1"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30분"
+            android:text="15분"
             android:layout_weight="1"/>
     </RadioGroup>
 
@@ -56,23 +60,27 @@
         android:text="지각시간" />
 
     <RadioGroup
+        android:id="@+id/activity_attend_admin_radiogroup_tardy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/activity_attend_admin_radiobutton_tardy_10_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10분"
                 android:layout_weight="1"/>
 
             <RadioButton
+                android:id="@+id/activity_attend_admin_radiobutton_tardy_20_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20분"
                 android:layout_weight="1"/>
 
             <RadioButton
+                android:id="@+id/activity_attend_admin_radiobutton_tardy_30_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="30분"
@@ -91,7 +99,7 @@
         android:layout_height="wrap_content" >
 
     <Button
-        android:id="@+id/activity_attend_admin_attendance_start"
+        android:id="@+id/activity_attend_admin_button_attendance_start"
         style="@style/Content_Classification_Text_Style"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="-2dp"

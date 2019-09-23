@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivity_Frag
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
     }
-    // 뒤로가기 안먹히게 막아둠 (로그아웃으로 로그인화면으로 이동하게)
+    // 메인에서 뒤로가기를 두번 1초안에 눌러야 앱을 종료할 수 있다.
 
     @Override
     public void onFragmentInteraction(final Uri uri) {

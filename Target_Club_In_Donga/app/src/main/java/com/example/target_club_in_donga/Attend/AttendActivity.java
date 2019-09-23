@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.Attend;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,8 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.target_club_in_donga.Activity_Adapters.AttendActivity_Adapter;
 import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
+import com.example.target_club_in_donga.R;
 
 public class AttendActivity extends AppCompatActivity implements HomeActivity_Fragment.OnFragmentInteractionListener {
     private ViewPager viewPager;
