@@ -424,7 +424,7 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_piechart.setHoleColor(Color.WHITE);
         activity_attend_piechart.setTransparentCircleRadius(61f);
 
-        ArrayList<PieEntry> pieEntries = new ArrayList<PieEntry>();
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
         pieEntries.add(new PieEntry(34f, "Japan"));
         pieEntries.add(new PieEntry(23f, "USA"));
