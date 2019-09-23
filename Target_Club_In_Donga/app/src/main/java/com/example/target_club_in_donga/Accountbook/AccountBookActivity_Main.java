@@ -540,10 +540,12 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                     itemDTO.setTitle(title);
                     itemDTO.setPrice(price);
                     itemDTO.setPriceId(priceId);
+                    accountInsertImagePath = null;
                     database.getReference().child("AccountBook").push().setValue(itemDTO);
                 }
             });
         }catch (NullPointerException e){
+
             AccountBook_Main_Item itemDTO = new AccountBook_Main_Item();
             itemDTO.setImageUrl("None");
             itemDTO.setImageDeleteName("None");
