@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/activity_accountbook_main_totalPrice"
-            android:text="자산 : 0원"
+            android:text="자산 : 0 원"
             android:paddingRight="20dp"
             android:textSize="20sp"
             android:gravity="center|right"
@@ -50,9 +50,9 @@
             android:src="@drawable/ic_get_app"
 
             android:id="@+id/activity_accountbook_main_export"
-            fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_colorNormal="@color/fbutton_color_sun_flower"
+            fab:fab_colorPressed="@color/fbutton_color_orange"
+            fab:fab_colorRipple="@color/fbutton_color_sun_flower"
             fab:fab_type="mini"
             android:visibility="gone"
             />
@@ -74,12 +74,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:paddingBottom="10dp"
-            android:src="@drawable/ic_clear"
+            android:src="@drawable/ic_delete"
 
-            android:id="@+id/activity_accountbook_main_clear"
-            fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            android:id="@+id/activity_accountbook_main_delete"
+            fab:fab_colorNormal="@color/fbutton_color_sun_flower"
+            fab:fab_colorPressed="@color/fbutton_color_orange"
+            fab:fab_colorRipple="@color/fbutton_color_sun_flower"
             fab:fab_type="mini"
             android:visibility="gone"
             />
@@ -116,10 +116,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.baoyz.widget.PullRefreshLayout
+            android:id="@+id/activity_accountbook_main_reLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/activity_accountbook_main_recyclerview"/>
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/activity_accountbook_main_recyclerview"/>
+        </com.baoyz.widget.PullRefreshLayout>
+
 
         <com.melnykov.fab.FloatingActionButton
             android:layout_width="wrap_content"
