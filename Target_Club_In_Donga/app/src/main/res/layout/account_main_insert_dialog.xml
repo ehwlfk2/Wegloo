@@ -72,7 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="40sp"
             android:hint="금액"
-            android:inputType="number" />
+            android:inputType="number"
+            android:gravity="end"/>
 
     </LinearLayout>
 
