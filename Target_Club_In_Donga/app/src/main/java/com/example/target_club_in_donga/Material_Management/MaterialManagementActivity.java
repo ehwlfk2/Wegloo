@@ -248,6 +248,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                             switch (item.getItemId()) {
 
                                 case R.id.material_lend:
+
                                     AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity.this);
 
                                     View view2 = LayoutInflater.from(MaterialManagementActivity.this)
@@ -368,7 +369,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     detailButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
 
-                                            Toast.makeText(v.getContext(),  "대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(v.getContext(), database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").toString() + "님 대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
                                             database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -412,6 +413,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                 case R.id.material_turn_in:
 
+                                    Toast.makeText(MaterialManagementActivity.this, database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").toString() + "님 반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText("없음");
                                     database.getReference().child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText("없음");
@@ -431,6 +433,8 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     return true;
 
                                 case R.id.material_delete:
+
+                                    Toast.makeText(MaterialManagementActivity.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     delete_content(position);
                                     materialManagementItems.remove(position);
                                     notifyItemRemoved(position);
@@ -508,22 +512,6 @@ public class MaterialManagementActivity extends AppCompatActivity {
                     if (!materialManagementItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(2).setVisible(false);
                         popup.getMenu().getItem(0).setVisible(false);
-
-                        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(final DataSnapshot dataSnapshot) {
-                                uidName = dataSnapshot.getValue(String.class);
-                                if (!uidName.equals(materialManagementItems.get(position).lender)) {
-                                    popup.getMenu().getItem(3).setVisible(false);
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(final DatabaseError databaseError) {
-
-                            }
-                        });
 
                     }
 

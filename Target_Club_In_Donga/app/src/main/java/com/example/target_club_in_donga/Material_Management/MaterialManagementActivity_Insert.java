@@ -96,6 +96,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
                 if(count > 0) {
                     if(getEditName.getBytes().length > 0) {
+                        Toast.makeText(MaterialManagementActivity_Insert.this, "상품이 추가되었습니다.", Toast.LENGTH_SHORT).show();
                         upload(imagePath);
                         Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity.class);
                         startActivity(intent);
