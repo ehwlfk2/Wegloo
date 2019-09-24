@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -128,10 +129,8 @@ public class MaterialManagementActivity extends AppCompatActivity {
         activity_material_management_admin_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(MaterialManagementActivity.this, MaterialManagementActivity_Insert.class);
                 startActivity(intent);
-                materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged(); //변경된 데이터를 화면에 반영
             }
         });
 
@@ -473,47 +472,32 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                     popup.inflate(R.menu.material_management_main_popup);
 
-                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            admin = Integer.parseInt(dataSnapshot.getValue().toString());
+                    popup.getMenu().getItem(2).setVisible(false);
+                    popup.getMenu().getItem(3).setVisible(false);
 
-                            if(admin > 0) {
-                                popup.getMenu().getItem(1).setVisible(true);
-                                popup.getMenu().getItem(2).setVisible(true);
-                            } else {
-                                popup.getMenu().getItem(1).setVisible(false);
-                                popup.getMenu().getItem(2).setVisible(false);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            uidName = dataSnapshot.getValue(String.class);
-                            if (!uidName.equals(materialManagementItems.get(position).lender)) {
-                                popup.getMenu().getItem(3).setVisible(false);
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    if (!materialManagementItems.get(position).lender.equals("없음")) {
-                        popup.getMenu().getItem(2).setVisible(false);
+                    if(!materialManagementItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(0).setVisible(false);
-
                     }
+
+                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                            if(materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
+                                popup.getMenu().getItem(2).setVisible(true);
+                            }
+
+                            uidName = dataSnapshot.child("name").getValue().toString();
+                            if (uidName.equals(materialManagementItems.get(position).lender)) {
+                                popup.getMenu().getItem(3).setVisible(true);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+                    });
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
