@@ -442,6 +442,8 @@ public class AttendActivity_Fragment extends Fragment {
                 if (dataSnapshot.getValue() != null) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         if(snapshot.child("attend_statue").getValue() != null) {
+
+                            pieEntries.clear();
                             getAttendStatue2 = snapshot.child("attend_statue").getValue(String.class);
                             if(getAttendStatue2.equals("출석")) {
                                 attendCount++;
@@ -493,7 +495,7 @@ public class AttendActivity_Fragment extends Fragment {
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+    });
 
         database.getReference().child("Attend_Admin").child(formatDate).child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

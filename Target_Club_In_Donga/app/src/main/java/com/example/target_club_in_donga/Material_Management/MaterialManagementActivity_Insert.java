@@ -195,11 +195,8 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 materialManagementItem.state = 0;
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
-
             }
         });
-
-
     }
 
 }
