@@ -96,15 +96,14 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
                 if(count > 0) {
                     if(getEditName.getBytes().length > 0) {
+                        Toast.makeText(MaterialManagementActivity_Insert.this, "상품이 추가되었습니다", Toast.LENGTH_SHORT).show();
                         upload(imagePath);
-                        Intent intent = new Intent(MaterialManagementActivity_Insert.this, MaterialManagementActivity.class);
-                        startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(MaterialManagementActivity_Insert.this, "물품명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MaterialManagementActivity_Insert.this, "물품명을 입력해주세요", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(MaterialManagementActivity_Insert.this, "이미지를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MaterialManagementActivity_Insert.this, "이미지를 선택해주세요", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -196,11 +195,8 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 materialManagementItem.state = 0;
 
                 database.getReference().child("Material_Management").push().setValue(materialManagementItem);
-
             }
         });
-
-
     }
 
 }
