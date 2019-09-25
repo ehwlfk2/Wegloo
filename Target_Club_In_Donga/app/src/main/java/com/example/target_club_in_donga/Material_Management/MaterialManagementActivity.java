@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -236,14 +235,14 @@ public class MaterialManagementActivity extends AppCompatActivity {
             viewholder.activity_material_management_admin_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //delete_item(position);
+
                     final PopupMenu popup = new PopupMenu(view.getContext(), view);
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            //int x = item.getItemId();
+
                             switch (item.getItemId()) {
 
                                 case R.id.material_lend:
@@ -262,7 +261,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_lend_imageview_image);
 
                                     detailTextID.setText(materialManagementItems.get(position).title);
-//                                    detailTextName.setText(auth.getCurrentUser().getDisplayName());
+
                                     database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -556,7 +555,6 @@ public class MaterialManagementActivity extends AppCompatActivity {
             storage.getReference().child("Material_Management").child(materialManagementItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
-//                    Toast.makeText(MaterialManagementActivity.this, "삭제 완료", Toast.LENGTH_SHORT).show();
 
                     database.getReference().child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
