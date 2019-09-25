@@ -61,7 +61,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         database = FirebaseDatabase.getInstance();
-
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitDiskReads()
@@ -160,7 +159,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 startActivity(intent);
                                 finish();
                             }catch (NullPointerException e){
-
+                                /*database.getReference().child("User").child(user.getUid()).child("Admin").setValue(false);
+                                Toast.makeText(Login.this, "처음이시군요?", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, Menu.class);
+                                intent.putExtra("adminCheck",false);
+                                startActivity(intent);
+                                finish();*/
                                 Toast.makeText(LoginActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
                                 intent.putExtra("loginIdentity","google");

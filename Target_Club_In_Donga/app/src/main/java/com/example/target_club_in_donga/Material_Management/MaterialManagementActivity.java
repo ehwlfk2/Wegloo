@@ -128,8 +128,10 @@ public class MaterialManagementActivity extends AppCompatActivity {
         activity_material_management_admin_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MaterialManagementActivity.this, MaterialManagementActivity_Insert.class);
                 startActivity(intent);
+                materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged(); //변경된 데이터를 화면에 반영
             }
         });
 
@@ -235,18 +237,17 @@ public class MaterialManagementActivity extends AppCompatActivity {
             viewholder.activity_material_management_admin_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    //delete_item(position);
                     final PopupMenu popup = new PopupMenu(view.getContext(), view);
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-
+                            //int x = item.getItemId();
                             switch (item.getItemId()) {
 
                                 case R.id.material_lend:
-
                                     AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity.this);
 
                                     View view2 = LayoutInflater.from(MaterialManagementActivity.this)
@@ -261,7 +262,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_lend_imageview_image);
 
                                     detailTextID.setText(materialManagementItems.get(position).title);
-
+//                                    detailTextName.setText(auth.getCurrentUser().getDisplayName());
                                     database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -367,7 +368,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     detailButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
 
-                                            Toast.makeText(v.getContext(),"대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(v.getContext(),  "대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
                                             database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -411,7 +412,6 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                 case R.id.material_turn_in:
 
-                                    Toast.makeText(MaterialManagementActivity.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText("없음");
                                     database.getReference().child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText("없음");
@@ -431,8 +431,6 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     return true;
 
                                 case R.id.material_delete:
-
-                                    Toast.makeText(MaterialManagementActivity.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     delete_content(position);
                                     materialManagementItems.remove(position);
                                     notifyItemRemoved(position);
@@ -471,24 +469,17 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                     popup.inflate(R.menu.material_management_main_popup);
 
-                    popup.getMenu().getItem(2).setVisible(false);
-                    popup.getMenu().getItem(3).setVisible(false);
-
-                    if(!materialManagementItems.get(position).lender.equals("없음")) {
-                        popup.getMenu().getItem(0).setVisible(false);
-                    }
-
-                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
-                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                            if(materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
-                                popup.getMenu().getItem(2).setVisible(true);
-                            }
+                            admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                            uidName = dataSnapshot.child("name").getValue().toString();
-                            if (uidName.equals(materialManagementItems.get(position).lender)) {
-                                popup.getMenu().getItem(3).setVisible(true);
+                            if(admin > 0) {
+                                popup.getMenu().getItem(1).setVisible(true);
+                                popup.getMenu().getItem(2).setVisible(true);
+                            } else {
+                                popup.getMenu().getItem(1).setVisible(false);
+                                popup.getMenu().getItem(2).setVisible(false);
                             }
                         }
 
@@ -497,6 +488,44 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                         }
                     });
+
+                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            uidName = dataSnapshot.getValue(String.class);
+                            if (!uidName.equals(materialManagementItems.get(position).lender)) {
+                                popup.getMenu().getItem(3).setVisible(false);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    if (!materialManagementItems.get(position).lender.equals("없음")) {
+                        popup.getMenu().getItem(2).setVisible(false);
+                        popup.getMenu().getItem(0).setVisible(false);
+
+                        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(final DataSnapshot dataSnapshot) {
+                                uidName = dataSnapshot.getValue(String.class);
+                                if (!uidName.equals(materialManagementItems.get(position).lender)) {
+                                    popup.getMenu().getItem(3).setVisible(false);
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(final DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
@@ -555,6 +584,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
             storage.getReference().child("Material_Management").child(materialManagementItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
+//                    Toast.makeText(MaterialManagementActivity.this, "삭제 완료", Toast.LENGTH_SHORT).show();
 
                     database.getReference().child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

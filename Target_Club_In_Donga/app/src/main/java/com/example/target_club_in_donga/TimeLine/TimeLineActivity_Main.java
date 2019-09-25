@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
 import com.example.target_club_in_donga.NoticeActivity;
@@ -119,9 +118,8 @@ public class TimeLineActivity_Main extends AppCompatActivity {
                         Intent intent = new Intent(TimeLineActivity_Main.this, Board_Main.class);
                         startActivity(intent);
                     }
-                    else if(data.getType().equals("AccountBook")){
-                        Intent intent = new Intent(TimeLineActivity_Main.this, AccountBookActivity_Main.class);
-                        startActivity(intent);
+                    else if(data.getType().equals("Account_Book")){
+
                     }
                 }
             });

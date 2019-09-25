@@ -158,6 +158,7 @@ public class AttendActivity_Admin extends AppCompatActivity {
                 } else if (flag2 == 0) {
                     Toast.makeText(AttendActivity_Admin.this, "지각시간을 정해주세요", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
