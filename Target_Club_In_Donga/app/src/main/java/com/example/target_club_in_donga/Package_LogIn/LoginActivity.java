@@ -3,7 +3,6 @@ package com.example.target_club_in_donga.Package_LogIn;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +30,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -50,7 +48,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private static final int RC_SIGN_IN = 10;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-    private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseDatabase database;
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
@@ -61,11 +58,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         database = FirebaseDatabase.getInstance();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .permitDiskReads()
-                .permitDiskWrites()
-                .permitNetwork().build());
+
         // findById
         Button activity_login_signup_btn = findViewById(R.id.activity_login_signup_btn);
         Button activity_login_login_btn = findViewById(R.id.activity_login_login_btn);
@@ -159,12 +152,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 startActivity(intent);
                                 finish();
                             }catch (NullPointerException e){
-                                /*database.getReference().child("User").child(user.getUid()).child("Admin").setValue(false);
-                                Toast.makeText(Login.this, "처음이시군요?", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, Menu.class);
-                                intent.putExtra("adminCheck",false);
-                                startActivity(intent);
-                                finish();*/
+
                                 Toast.makeText(LoginActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
                                 intent.putExtra("loginIdentity","google");

@@ -10,6 +10,8 @@ public class AccountBook_Main_Item {
     private String imageUrl;
     private String imageDeleteName;
 
+    private boolean selected;
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -59,5 +61,11 @@ public class AccountBook_Main_Item {
         this.timestamp = timestamp;
     }
 
+    public boolean isSelected() {
+        return selected;
+    }
 
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }
