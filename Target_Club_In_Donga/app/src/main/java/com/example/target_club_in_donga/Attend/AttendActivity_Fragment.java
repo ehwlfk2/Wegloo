@@ -144,7 +144,7 @@ public class AttendActivity_Fragment extends Fragment {
                     Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
                     long diff = d1.getTime() - d2.getTime();
                     if (diff < 0) {
-                        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").addListenerForSingleValueEvent(new ValueEventListener() {
+                        database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -154,6 +154,10 @@ public class AttendActivity_Fragment extends Fragment {
                                     }
                                 }
                                 database.getReference().child("Attend_Admin").child(formatDate).child("Admin").removeValue();
+                                activity_attend_textview_certification_number.setVisibility(View.INVISIBLE);
+                                activity_attend_textview_attend_time_limit.setVisibility(View.INVISIBLE);
+                                activity_attend_textview_tardy_time_limit.setVisibility(View.INVISIBLE);
+
                             }
 
                             @Override
@@ -176,6 +180,7 @@ public class AttendActivity_Fragment extends Fragment {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
+                    peopleCount = 0; peopleAttendCount = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         if (snapshot.child("attend_statue").getValue() != null) {
                             peopleCount++;
