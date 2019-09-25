@@ -310,7 +310,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
-                    int totalPrice = dataSnapshot.getValue(int.class);
+                    long totalPrice = dataSnapshot.getValue(long.class);
                     String total = String.format("%,d", totalPrice);
                     activity_accountbook_main_totalPrice.setText("자산 : "+total+" 원");
                 }catch(NullPointerException e){
