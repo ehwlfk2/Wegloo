@@ -61,6 +61,7 @@ android {
         implementation 'com.sangcomz:FishBun:0.11.0'
 
         implementation 'com.google.firebase:firebase-ads:12.0.1'
+        implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
     }
 
     apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
