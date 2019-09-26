@@ -142,7 +142,7 @@
                     android:text="출석관리자 (출석시간설정)" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview"
+                    android:id="@+id/activity_attend_textview_certification_number_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="인증번호: "
@@ -155,10 +155,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:layout_below="@+id/activity_attend_button_admin"
-                    android:layout_toRightOf="@+id/activity_attend_textview" />
+                    android:layout_toRightOf="@+id/activity_attend_textview_certification_number_name" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview2"
+                    android:id="@+id/activity_attend_textview_attend_time_limit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="출석인정시간: "
@@ -172,10 +172,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:layout_below="@+id/activity_attend_textview_certification_number"
-                    android:layout_toRightOf="@+id/activity_attend_textview2" />
+                    android:layout_toRightOf="@+id/activity_attend_textview_attend_time_limit_name" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview3"
+                    android:id="@+id/activity_attend_textview_tardy_time_limit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="지각인정시간: "
@@ -188,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:layout_below="@+id/activity_attend_textview_attend_time_limit"
-                    android:layout_toRightOf="@+id/activity_attend_textview3"/>
+                    android:layout_toRightOf="@+id/activity_attend_textview_tardy_time_limit_name"/>
 
                 <TextView
                     android:layout_width="wrap_content"
