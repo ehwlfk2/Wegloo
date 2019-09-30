@@ -71,7 +71,6 @@ public class HomeActivity_Fragment extends Fragment {
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
     private AdView mAdView;
-    private String clubName = "TCID";
 
     public HomeActivity_Fragment() {
         // Required empty public constructor
@@ -159,9 +158,7 @@ public class HomeActivity_Fragment extends Fragment {
                 //위에 동운이꺼 밑에 내꺼
                 //sendFcm("dWsU0qzEDso:APA91bEC2NqKj2ROYvRvexMVjHj0y6n0aNRQ_Zo0UqDjRRVGgTE2D7jYmasPOd0iGz_EBBUtU14tyPVxNXvT3wVxXqbTFnBSMnv2yhsikNOQQHi2TIGwN1oqLkUqgDz_BwZJvfNLQIte");
                 Intent intent = new Intent(getActivity(), NoticeActivity.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
-                //getActivity().finish();
             }
         }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
 
@@ -169,7 +166,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 Intent intent = new Intent(getActivity(), Board_Main.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         }); // btn2 게시판
@@ -184,7 +180,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View v) {
                 Intent intent = new Intent(getActivity(), ScheduleActivity.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         }); // btn4 홈에서 일정인데, 클릭하면 홈에서 일정으로 activity가 바뀜
@@ -193,7 +188,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), UserDetailActivity.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         });
@@ -202,7 +196,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AttendActivity.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         }); // main_btn1 메뉴에서 출석버튼인데, 클릭하면 메뉴에서 출석으로 activity가 바뀌
@@ -211,7 +204,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MaterialManagementActivity.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
@@ -219,7 +211,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AccountBookActivity_Main.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         }); //가계부
@@ -227,7 +218,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HistoryActivity_Main.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
 
             }
@@ -237,7 +227,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), VoteActivity_Main.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         }); //투표
@@ -248,7 +237,6 @@ public class HomeActivity_Fragment extends Fragment {
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -258,7 +246,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MemberList.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         }); //회원정보
@@ -274,7 +261,6 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), TimeLineActivity_Main.class);
-                intent.putExtra("clubName", clubName);
                 startActivity(intent);
             }
         });
@@ -366,7 +352,6 @@ public class HomeActivity_Fragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
