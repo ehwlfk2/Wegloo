@@ -267,6 +267,7 @@
             app:layout_constraintRight_toRightOf="@id/activity_signup_03_next_btn"
             app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_TextView_phone" />
 
+        <!--
         <View
             android:layout_width="0dp"
             android:layout_height="2dp"
@@ -276,7 +277,7 @@
             app:layout_constraintLeft_toLeftOf="@id/activity_signup_03_cancel_btn"
             app:layout_constraintRight_toRightOf="@id/activity_signup_03_next_btn"
             app:layout_constraintTop_toBottomOf="@+id/activity_signup_03_TextView_school" />
-
+        -->
 
         <TextView
             android:id="@+id/activity_signup_03_TextView_email"
@@ -317,7 +318,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline05_horizontal"
             app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
             app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline04_horizontal" />
-
+        <!--
         <TextView
             android:id="@+id/activity_signup_03_TextView_school"
             android:layout_width="wrap_content"
@@ -338,7 +339,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/activity_signup_03_guideline08_horizontal"
             app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_cancel_btn"
             app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline06_horizontal" />
-
+        -->
         <!-- Email (ID) -->
         <EditText
             android:id="@+id/activity_signup_03_EditText_email"
@@ -400,7 +401,7 @@
             app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
             app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline04_horizontal" />
 
-        <!-- School -->
+        <!-- School
         <EditText
             android:id="@+id/activity_signup_03_EditText_School"
             android:layout_width="0dp"
@@ -414,8 +415,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
             app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
             app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline05_horizontal" />
-
-        <!-- Phone -->
+        -->
+        <!-- Phone
         <EditText
             android:id="@+id/activity_signup_03_EditText_student_number"
             android:layout_width="0dp"
@@ -429,7 +430,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/activity_signup_03_guideline02_vertical"
             app:layout_constraintRight_toRightOf="@+id/activity_signup_03_next_btn"
             app:layout_constraintTop_toTopOf="@+id/activity_signup_03_guideline06_horizontal" />
-
+            -->
 
         <!-- CheckBox -->
         <CheckBox
