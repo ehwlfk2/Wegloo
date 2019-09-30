@@ -123,14 +123,14 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     now = System.currentTimeMillis();
                     // 현재시간을 date 변수에 저장한다.
                     Date date = new Date(now);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                     formatDate = simpleDateFormat.format(date);
 
                     certification_number = random_number.nextInt(maxNumber - minNumber + 1) + minNumber;
                     // 인즌번호가 1000~9999 4자리 수중에서 랜덤으로 결정된다.
-                    database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Certification_Number").setValue(certification_number);
-                    database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Attend_Time_Limit").setValue(date_Attend);
-                    database.getReference().child("Attend_Admin").child(formatDate).child("Admin").child("Tardy_Time_Limit").setValue(date_Trady);
+                    database.getReference().child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Certification_Number").setValue(certification_number);
+                    database.getReference().child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Time_Limit").setValue(date_Attend);
+                    database.getReference().child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Tardy_Time_Limit").setValue(date_Trady);
 
                     database.getReference().child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -139,9 +139,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
                                 // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
                                 getName = snapshot.child("name").getValue(String.class);
                                 getPhone = snapshot.child("phone").getValue(String.class);
-                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("name").setValue(getName);
-                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                database.getReference().child("Attend_Admin").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
+                                database.getReference().child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("name").setValue(getName);
+                                database.getReference().child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                database.getReference().child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
                             }
                         }
 
