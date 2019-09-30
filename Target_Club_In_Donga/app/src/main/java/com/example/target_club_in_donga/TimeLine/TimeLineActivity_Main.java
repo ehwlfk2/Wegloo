@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
+import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
@@ -123,6 +124,10 @@ public class TimeLineActivity_Main extends AppCompatActivity {
                     }
                     else if(data.getType().equals("AccountBook")){
                         Intent intent = new Intent(TimeLineActivity_Main.this, AccountBookActivity_Main.class);
+                        startActivity(intent);
+                    }
+                    else if(data.getType().equals("User")){
+                        Intent intent = new Intent(TimeLineActivity_Main.this, MemberList.class);
                         startActivity(intent);
                     }
                 }

@@ -68,15 +68,12 @@ public class MainActivity extends AppCompatActivity {
                                 int tf = dataSnapshot.getValue(int.class);
                                 //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                if(tf >= 1){
+
+                                if(tf < 0){
                                     Toast.makeText(MainActivity.this, "관리자 로그인", Toast.LENGTH_SHORT).show();
                                     //intent.putExtra("adminCheck",true);
                                 }
-                                else{
-                                    Toast.makeText(MainActivity.this, "로그인", Toast.LENGTH_SHORT).show();
-                                    //intent.putExtra("adminCheck",false);
-                                }
-                                intent.putExtra("clubName",clubName);
+
                                 startActivity(intent);
                                 finish();
                             }catch (NullPointerException e){
@@ -89,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, SignUpActivity_01.class);
                                 intent.putExtra("loginIdentity","google");
-                                intent.putExtra("clubName",clubName);
                                 startActivity(intent);
                                 finish();
                             }
@@ -105,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                     //finish();
                 } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    intent.putExtra("clubName",clubName);
                     startActivity(intent);
                     finish();
                     // User is signed out
