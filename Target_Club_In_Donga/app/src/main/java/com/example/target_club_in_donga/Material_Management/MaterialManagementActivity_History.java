@@ -29,6 +29,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class MaterialManagementActivity_History extends AppCompatActivity {
 
     RecyclerView activity_material_management_history_recyclerview_list;
@@ -62,7 +64,7 @@ public class MaterialManagementActivity_History extends AppCompatActivity {
          Intent intent = getIntent();
         uidHistoryPath = intent.getExtras().getString("uidAdminPath");
 
-        database.getReference().child("Material_Management").child(uidHistoryPath).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("Material_Management").child(uidHistoryPath).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 materialHistoryItems.clear();
