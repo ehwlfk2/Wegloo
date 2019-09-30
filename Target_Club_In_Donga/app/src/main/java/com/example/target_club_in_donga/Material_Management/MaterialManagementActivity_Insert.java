@@ -33,6 +33,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
     private static final int IMAGE_PICK_CODE = 1000; // 갤러리에서 이미지를 받아오기 위한 세가지 변수
@@ -173,7 +175,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
         final Uri file = Uri.fromFile(new File(uri));
-        StorageReference riversRef = storageRef.child("Material_Management/" + material_path + '-' + file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child(clubName).child("Material_Management/" + material_path + '-' + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -194,7 +196,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
                 materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();
                 materialManagementItem.state = 0;
 
-                database.getReference().child("Material_Management").push().setValue(materialManagementItem);
+                database.getReference().child(clubName).child("Material_Management").push().setValue(materialManagementItem);
             }
         });
     }
