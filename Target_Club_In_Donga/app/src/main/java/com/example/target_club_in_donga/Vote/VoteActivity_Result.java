@@ -27,6 +27,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class VoteActivity_Result extends AppCompatActivity {
 
     private String dbKey;
@@ -55,7 +57,7 @@ public class VoteActivity_Result extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         items = new ArrayList<Vote_Item_Count>();
 
-        database.getReference().child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class);

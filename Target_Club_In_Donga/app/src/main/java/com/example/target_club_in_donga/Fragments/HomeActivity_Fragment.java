@@ -42,6 +42,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 // Home 프래그먼트
 
 /**
@@ -282,7 +284,7 @@ public class HomeActivity_Fragment extends Fragment {
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fragment_home_profile_name.setText(dataSnapshot.getValue(String.class));
@@ -362,7 +364,7 @@ public class HomeActivity_Fragment extends Fragment {
         String token = FirebaseInstanceId.getInstance().getToken();
         Map<String, Object> map = new HashMap<>();
         map.put("pushToken", token);
-        FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
+        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(uid).updateChildren(map);
     }
 
     public void everyBtnEnable(boolean boo) {

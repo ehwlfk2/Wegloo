@@ -34,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class HistoryActivity_Insert extends AppCompatActivity {
 
     private static final int GALLERY_CODE = 10;
@@ -172,7 +174,7 @@ public class HistoryActivity_Insert extends AppCompatActivity {
                     //itemDTO.userid = auth.getCurrentUser().getEmail();
                     itemDTO.setImageDeleteName(file.getLastPathSegment());
 
-                    firebaseDatabase.getReference().child("History").push().setValue(itemDTO);
+                    firebaseDatabase.getReference().child(clubName).child("History").push().setValue(itemDTO);
                 }
             });
         }catch (NullPointerException e){
@@ -191,7 +193,7 @@ public class HistoryActivity_Insert extends AppCompatActivity {
             //itemDTO.userid = auth.getCurrentUser().getEmail();
             itemDTO.setImageDeleteName("None");
 
-            firebaseDatabase.getReference().child("History").push().setValue(itemDTO);
+            firebaseDatabase.getReference().child(clubName).child("History").push().setValue(itemDTO);
         }
 
     }

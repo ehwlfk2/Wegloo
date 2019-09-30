@@ -24,6 +24,8 @@ import org.apache.poi.ss.formula.functions.T;
 
 import java.util.regex.Pattern;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class SignUpActivity_03 extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
@@ -124,7 +126,7 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
                     data.setStudentNumber(studentNumber);
                     data.setPushAlarmOnOff(true);
                     //LoginData data = new LoginData(name, phone, studentNumber, school, 0, true);
-                    database.getReference().child("User").child(mAuth.getCurrentUser().getUid()).setValue(data);
+                    database.getReference().child(clubName).child("User").child(mAuth.getCurrentUser().getUid()).setValue(data);
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(this, SignUpActivity_04.class);

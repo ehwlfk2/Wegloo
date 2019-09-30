@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class MemberList extends AppCompatActivity {
     ImageButton backbtn;
     private RecyclerView recyclerView;
@@ -51,7 +53,7 @@ public class MemberList extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        database.getReference().child("User").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("User").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 loginDataArrayList.clear();

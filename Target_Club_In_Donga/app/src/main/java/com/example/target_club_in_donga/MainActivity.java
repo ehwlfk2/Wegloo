@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
-    private String clubName = "TCID";
+    public static String clubName = "TCID";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

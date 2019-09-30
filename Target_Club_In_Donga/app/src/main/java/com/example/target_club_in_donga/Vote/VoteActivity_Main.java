@@ -34,6 +34,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class VoteActivity_Main extends AppCompatActivity {
     private RecyclerView activityvote_main_recyclerview;
     private VoteActivity_Main_RecyclerviewAdapter adapter;
@@ -92,7 +94,7 @@ public class VoteActivity_Main extends AppCompatActivity {
         activityvote_main_recyclerview.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
         //database = FirebaseDatabase.getInstance();
-        database.getReference().child("Vote").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Vote").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
@@ -104,7 +106,7 @@ public class VoteActivity_Main extends AppCompatActivity {
 
                     long nowTime = System.currentTimeMillis();
                     if(Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0){ //시간 끝났을때
-                        database.getReference().child("Vote").child(snapshot.getKey()).child("deadline").setValue(true);
+                        database.getReference().child(clubName).child("Vote").child(snapshot.getKey()).child("deadline").setValue(true);
                     }
 
                     if(/*Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0 ||*/ vote_last_item.deadline){
@@ -191,7 +193,7 @@ public class VoteActivity_Main extends AppCompatActivity {
             //ArrayList<String> dbKey = new ArrayList<String>();
 
             database = FirebaseDatabase.getInstance();
-            database.getReference().child("Vote").child(dbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            database.getReference().child(clubName).child("Vote").child(dbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     //Toast.makeText(MainActivity.this, "삭제성공", Toast.LENGTH_SHORT).show();
@@ -258,7 +260,7 @@ public class VoteActivity_Main extends AppCompatActivity {
                                     //holder.voteLayout.setBackgroundResource(R.drawable.border_gray);
                                     //Map<String, Object> map = new HashMap<>();
                                     //map.put("deadline",true);
-                                    FirebaseDatabase.getInstance().getReference().child("Vote").child(dbKey.get(position)).child("deadline").setValue(true);
+                                    FirebaseDatabase.getInstance().getReference().child(clubName).child("Vote").child(dbKey.get(position)).child("deadline").setValue(true);
                                     return true;
                                 case R.id.vote_delete:
                                     delete_item(position);
