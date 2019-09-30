@@ -59,6 +59,7 @@
                     android:src="@drawable/person_icon" />
 
                 <LinearLayout
+                    android:id="@+id/menu_detail_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -73,7 +74,6 @@
                         android:textSize="25dp" />
 
                     <TextView
-                        android:id="@+id/menu_detail_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="> 상세보기"
