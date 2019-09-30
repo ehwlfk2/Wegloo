@@ -207,7 +207,7 @@ public class HistoryActivity_Insert extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                if(month < 10)
+                if(month < 9)
                     dateStr = year+"-0"+(month+1)+"-";
                 else
                     dateStr = year+"-"+(month+1)+"-";

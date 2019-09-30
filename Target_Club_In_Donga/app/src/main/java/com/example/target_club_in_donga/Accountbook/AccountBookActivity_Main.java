@@ -594,7 +594,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                if(month < 10)
+                if(month < 9)
                     dateStr = year+"-0"+(month+1)+"-";
                 else
                     dateStr = year+"-"+(month+1)+"-";
@@ -637,7 +637,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String viewDate;
-                if(month < 10)
+                if(month < 9)
                     viewDate = year+"-0"+(month+1)+"-";
                 else
                     viewDate = year+"-"+(month+1)+"-";
@@ -697,7 +697,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             final long flagTime = System.currentTimeMillis();
             final Uri file = Uri.fromFile(new File(uri));
             accountInsertImagePath = null;
-            StorageReference riversRef = storageRef.child("AccountBookImages/"+file.getLastPathSegment()+flagTime);
+            StorageReference riversRef = storageRef.child(clubName).child("AccountBookImages/"+file.getLastPathSegment()+flagTime);
             UploadTask uploadTask = riversRef.putFile(file);
 
             // Register observers to listen for when the download is done or if it fails
