@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -75,7 +76,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
     private String findkey, uidName;
 
-    private int admin;
+    private int admin, monthInt, dayOfMonthInt, flag = 0;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -142,7 +143,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if(admin > 0) {
+                if (admin > 0) {
                     activity_material_management_admin_button_insert.setVisibility(View.VISIBLE);
                 } else {
                     activity_material_management_admin_button_insert.setVisibility(View.GONE);
@@ -308,8 +309,10 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                                     y = year;
                                                     m = month + 1;
                                                     d = dayOfMonth;
+                                                    monthInt = month;
+                                                    dayOfMonthInt = dayOfMonth;
 
-                                                    if (month < 10)
+                                                    if (month < 9)
                                                         dateStr = year + "-0" + (month + 1) + "-";
                                                     else
                                                         dateStr = year + "-" + (month + 1) + "-";
@@ -340,7 +343,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                                     mi = minute;
                                                     Date now = new Date();
 
-                                                    if (hourOfDay >= now.getHours() && minute > now.getMinutes()) {
+                                                    if ((monthInt > now.getMonth() || dayOfMonthInt > now.getDay()) || (hourOfDay > now.getHours() || hourOfDay >= now.getHours() && minute > now.getMinutes())) {
                                                         if (hourOfDay < 10)
                                                             timeStr = "0" + hourOfDay;
                                                         else
@@ -367,7 +370,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     detailButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
 
-                                            Toast.makeText(v.getContext(),"대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(v.getContext(), "대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
                                             database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -405,6 +408,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                         }
                                     });
+
 
                                     dialog2.show();
                                     return true;
@@ -471,32 +475,48 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                     popup.inflate(R.menu.material_management_main_popup);
 
-                    popup.getMenu().getItem(2).setVisible(false);
-                    popup.getMenu().getItem(3).setVisible(false);
+                    popup.getMenu().
 
-                    if(!materialManagementItems.get(position).lender.equals("없음")) {
+                            getItem(2).
+
+                            setVisible(false);
+                    popup.getMenu().
+
+                            getItem(3).
+
+                            setVisible(false);
+
+                    if (!materialManagementItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(0).setVisible(false);
                     }
 
-                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                            if(materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
-                                popup.getMenu().getItem(2).setVisible(true);
-                            }
+                    database.getReference().
 
-                            uidName = dataSnapshot.child("name").getValue().toString();
-                            if (uidName.equals(materialManagementItems.get(position).lender)) {
-                                popup.getMenu().getItem(3).setVisible(true);
-                            }
-                        }
+                            child("User").
 
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
+                            child(auth.getCurrentUser().
 
-                        }
-                    });
+                                    getUid()).
+
+                            addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                    admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                                    if (materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
+                                        popup.getMenu().getItem(2).setVisible(true);
+                                    }
+
+                                    uidName = dataSnapshot.child("name").getValue().toString();
+                                    if (uidName.equals(materialManagementItems.get(position).lender)) {
+                                        popup.getMenu().getItem(3).setVisible(true);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(final DatabaseError databaseError) {
+
+                                }
+                            });
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
