@@ -119,7 +119,7 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
                 if(!name.isEmpty() && !phone.isEmpty() /*&& !school.isEmpty() && !studentNumber.isEmpty()*/ ) {
                     //createUser(emailSubject, emailAddress, pw, name, phone, school, schoolNumber);
                     LoginData data = new LoginData();
-                    data.setAdmin(0);
+                    data.setAdmin(3);
                     data.setName(name);
                     data.setPhone(phone);
                     data.setPushAlarmOnOff(true);
