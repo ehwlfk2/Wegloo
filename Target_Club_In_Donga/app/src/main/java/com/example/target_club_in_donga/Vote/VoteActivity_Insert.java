@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class    VoteActivity_Insert  extends AppCompatActivity {
 
     private VoteActivity_Insert_ListAdapter adapter;
@@ -201,7 +203,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                         //last_item.uid =
 
                         //Toast.makeText(Vote_Insert.this, last_item.listItems.get(0).getName()+"", Toast.LENGTH_SHORT).show();
-                        firebaseDatabase.getReference().child("Vote").push().setValue(last_item).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        firebaseDatabase.getReference().child(clubName).child("Vote").push().setValue(last_item).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 //Toast.makeText(Vote_Insert.this, "추가 성공", Toast.LENGTH_SHORT).show();

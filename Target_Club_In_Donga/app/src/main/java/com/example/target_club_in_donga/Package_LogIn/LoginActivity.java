@@ -43,6 +43,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class LoginActivity extends Activity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 10;
@@ -134,7 +136,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
-                    database.getReference().child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference().child(clubName).child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             try{

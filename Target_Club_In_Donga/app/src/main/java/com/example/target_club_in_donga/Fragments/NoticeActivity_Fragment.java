@@ -49,6 +49,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 // 게시판 프래그먼트
 /**
  * A simple {@link Fragment} subclass.
@@ -98,7 +100,7 @@ public class NoticeActivity_Fragment extends Fragment {
         activity_notice_main_recyclerview.setAdapter(adapter);
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 data.clear();
