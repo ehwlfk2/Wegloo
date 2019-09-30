@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 // 게시판 프래그먼트
 
 /**
@@ -47,7 +49,7 @@ public class UserDetailActivity_Fragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
-        database.getReference().child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 LoginData loginData = dataSnapshot.getValue(LoginData.class);

@@ -50,6 +50,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class HistoryActivity_Main extends AppCompatActivity {
 
     private ImageView activityhistory_main_imageview_export;
@@ -98,7 +100,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        Query query = firebaseDatabase.getReference().child("History").orderByChild("timestamp");
+        Query query = firebaseDatabase.getReference().child(clubName).child("History").orderByChild("timestamp");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -507,7 +509,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
-                    storageRef.child("HistoryImages/"+historyList.get(positon).getImageDeleteName()).getFile(xlsFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    storageRef.child(clubName).child("HistoryImages/"+historyList.get(positon).getImageDeleteName()).getFile(xlsFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             //Toast.makeText(History_Main.this, ""+localFile.toString(), Toast.LENGTH_SHORT).show();

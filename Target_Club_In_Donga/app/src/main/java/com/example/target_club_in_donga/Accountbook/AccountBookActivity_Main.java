@@ -75,6 +75,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class AccountBookActivity_Main extends AppCompatActivity {
     private AccountBookActivity_Main_RecyclerviewAdapter adapter;
     private FloatingActionButton activity_accountbook_main_intent, activity_accountbook_main_today_intent, activity_accountbook_main_everyday_intent,
@@ -306,7 +308,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                 dialog.show();
             }
         });
-        database.getReference().child("AccountBook_totalPrice").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("AccountBook_totalPrice").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
@@ -486,7 +488,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
     }
     public void delete_item(final String valueKey, final String storageKey){
         if(storageKey.equals("None")){
-            database.getReference().child("AccountBook").child(valueKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            database.getReference().child(clubName).child("AccountBook").child(valueKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
 
@@ -499,7 +501,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             });
         }
         else{
-            storage.getReference().child("AccountBookImages").child(storageKey).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            storage.getReference().child(clubName).child("AccountBookImages").child(storageKey).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
 
@@ -510,7 +512,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                     Toast.makeText(AccountBookActivity_Main.this, "스토리지 삭제실패", Toast.LENGTH_SHORT).show();
                 }
             });
-            database.getReference().child("AccountBook").child(valueKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            database.getReference().child(clubName).child("AccountBook").child(valueKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
 
@@ -554,7 +556,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
-                    storageRef.child("AccountBookImages/"+list.get(positon).getImageDeleteName()).getFile(xlsFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    storageRef.child(clubName).child("AccountBookImages/"+list.get(positon).getImageDeleteName()).getFile(xlsFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             //Toast.makeText(History_Main.this, ""+localFile.toString(), Toast.LENGTH_SHORT).show();
@@ -719,7 +721,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                     itemDTO.setPrice(price);
                     itemDTO.setPriceId(priceId);
                     //accountInsertImagePath = null;
-                    database.getReference().child("AccountBook").push().setValue(itemDTO);
+                    database.getReference().child(clubName).child("AccountBook").push().setValue(itemDTO);
                     activity_accountbook_main_textview.setText(time);
                     dbCheck();
                 }
@@ -739,7 +741,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             //accountInsertImagePath = null;
             //itemDTO.uid = auth.getCurrentUser().getUid();
             //itemDTO.userid = auth.getCurrentUser().getEmail();
-            database.getReference().child("AccountBook").push().setValue(itemDTO);
+            database.getReference().child(clubName).child("AccountBook").push().setValue(itemDTO);
             activity_accountbook_main_textview.setText(time);
             dbCheck();
         }
@@ -757,7 +759,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         return trans_date.getTime();
     }
     private void everyDayDB(){
-        database.getReference().child("AccountBook").orderByChild("timestamp").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("AccountBook").orderByChild("timestamp").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)                                                                                                                               {
                 list.clear();
@@ -796,7 +798,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
     }
     private void dayDB(String date){
         long dately = dateToMills(date);
-        database.getReference().child("AccountBook").orderByChild("timestamp").equalTo(-1*dately).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("AccountBook").orderByChild("timestamp").equalTo(-1*dately).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
