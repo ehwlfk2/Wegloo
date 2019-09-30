@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존재하는 게시글 목록창
 
     private RecyclerView recyclerView;
@@ -61,7 +63,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         boardRecy_adapter.notifyDataSetChanged();
 
 
-        database.getReference().child("Board").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Board").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boardModels.clear();
