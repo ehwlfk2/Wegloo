@@ -34,6 +34,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class Board_Detail extends AppCompatActivity {
     ImageButton detail_back;
     TextView name, timestamp, title, contents;
@@ -99,7 +101,7 @@ public class Board_Detail extends AppCompatActivity {
                 }
                 else if (i == 1){ // 삭제
                     if( boardModel.idx == 0 ){ // 사진이 없으면
-                        database.getReference().child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        database.getReference().child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(getApplicationContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
@@ -193,7 +195,7 @@ public class Board_Detail extends AppCompatActivity {
 
     public void delete_content(){ // 이미지 여러개 삭제후 데이터베이스 하나를 날려야된다
         for(int i = 0; i < boardModel.imgName.size() ; i++){
-            storage.getReference().child("Board").child(boardModel.imgName.get(i)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            storage.getReference().child(clubName).child("Board").child(boardModel.imgName.get(i)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                 }
@@ -204,7 +206,7 @@ public class Board_Detail extends AppCompatActivity {
                 }
             });
         }
-        database.getReference().child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getApplicationContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
