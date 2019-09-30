@@ -586,10 +586,21 @@ public class AccountBookActivity_Main extends AppCompatActivity {
     }
     private void Dialog_DatePicker(final TextView textView){
 
-        Calendar c = Calendar.getInstance();
-        int cyear = c.get(Calendar.YEAR);
-        int cmonth = c.get(Calendar.MONTH);
-        int cday = c.get(Calendar.DAY_OF_MONTH);
+        int cyear;
+        int cmonth;
+        int cday;
+        String ac = textView.getText().toString();
+        if(ac.equals("Every day")){
+            Calendar c = Calendar.getInstance();
+            cyear = c.get(Calendar.YEAR);
+            cmonth = c.get(Calendar.MONTH);
+            cday = c.get(Calendar.DAY_OF_MONTH);
+        }
+        else{
+            cyear = Integer.parseInt(ac.substring(0,4));
+            cmonth = Integer.parseInt(ac.substring(5,7))-1;
+            cday = Integer.parseInt(ac.substring(8,10));
+        }
 
         DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
