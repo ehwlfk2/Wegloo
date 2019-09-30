@@ -43,9 +43,9 @@ public class UserDetailActivity_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_user_detail, container, false);
         name = view.findViewById(R.id.user_detail_name);
         phone = view.findViewById(R.id.user_detail_phoneNumber);
-        school = view.findViewById(R.id.user_detail_school);
+        //school = view.findViewById(R.id.user_detail_school);
         email = view.findViewById(R.id.user_detail_email);
-        studentID = view.findViewById(R.id.user_detail_studentID);
+        //studentID = view.findViewById(R.id.user_detail_studentID);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -56,8 +56,8 @@ public class UserDetailActivity_Fragment extends Fragment {
                 name.setText(loginData.getName());
                 email.setText(auth.getCurrentUser().getEmail());
                 phone.setText(loginData.getPhone());
-                school.setText(loginData.getSchool());
-                studentID.setText(loginData.getStudentNumber());
+                //school.setText(loginData.getSchool());
+                //studentID.setText(loginData.getStudentNumber());
             }
 
             @Override

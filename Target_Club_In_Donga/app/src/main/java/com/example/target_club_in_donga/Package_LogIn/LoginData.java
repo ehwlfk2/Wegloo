@@ -3,8 +3,8 @@ package com.example.target_club_in_donga.Package_LogIn;
 public class LoginData {
     private String name;
     private String phone;
-    private String studentNumber;
-    private String school;
+    //private String studentNumber;
+    //private String school;
     private int admin;
     private boolean pushAlarmOnOff;
     private String pushToken;
@@ -43,7 +43,7 @@ public class LoginData {
         this.phone = phone;
     }
 
-    public String getStudentNumber() {
+   /*public String getStudentNumber() {
         return studentNumber;
     }
 
@@ -57,7 +57,7 @@ public class LoginData {
 
     public void setSchool(String school) {
         this.school = school;
-    }
+    }*/
 
     public boolean isPushAlarmOnOff() {
         return pushAlarmOnOff;
