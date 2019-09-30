@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.target_club_in_donga.Fragments.NoticeActivity_Fragment.noticeDbKey;
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private FirebaseDatabase database;
@@ -206,7 +207,7 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         //ArrayList<String> dbKey = new ArrayList<String>();
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("Notice").child(noticeDbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child(clubName).child("Notice").child(noticeDbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 //Toast.makeText(, "", Toast.LENGTH_SHORT).show();

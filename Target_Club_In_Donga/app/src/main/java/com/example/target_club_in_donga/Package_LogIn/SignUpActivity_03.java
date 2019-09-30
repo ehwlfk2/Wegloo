@@ -24,6 +24,8 @@ import org.apache.poi.ss.formula.functions.T;
 
 import java.util.regex.Pattern;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class SignUpActivity_03 extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
@@ -31,7 +33,7 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
     private String emailSubject;
     private String emailAddress;
     private String emailPw;
-    private EditText activity_signup_03_EditText_name, activity_signup_03_EditText_phone, activity_signup_03_EditText_School, activity_signup_03_EditText_student_number;
+    private EditText activity_signup_03_EditText_name, activity_signup_03_EditText_phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,8 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
 
         activity_signup_03_EditText_name = (EditText)findViewById(R.id.activity_signup_03_EditText_name);
         activity_signup_03_EditText_phone = (EditText)findViewById(R.id.activity_signup_03_EditText_phone);
-        activity_signup_03_EditText_School = (EditText)findViewById(R.id.activity_signup_03_EditText_School);
-        activity_signup_03_EditText_student_number = (EditText)findViewById(R.id.activity_signup_03_EditText_student_number);
+        //activity_signup_03_EditText_School = (EditText)findViewById(R.id.activity_signup_03_EditText_School);
+        //activity_signup_03_EditText_student_number = (EditText)findViewById(R.id.activity_signup_03_EditText_student_number);
 
         InputFilter filter_mail = new InputFilter() {
             @Override
@@ -57,7 +59,7 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
         };
 
         activity_signup_03_EditText_name.setFilters(new InputFilter[]{filter_mail});
-        activity_signup_03_EditText_School.setFilters(new InputFilter[]{filter_mail});
+        //activity_signup_03_EditText_School.setFilters(new InputFilter[]{filter_mail});
 
         EditText activity_signup_03_EditText_email = findViewById(R.id.activity_signup_03_EditText_email);
         EditText activity_signup_03_EditText_pw = findViewById(R.id.activity_signup_03_EditText_pw);
@@ -111,20 +113,18 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
 
                 String name = activity_signup_03_EditText_name.getText().toString();
                 String phone = activity_signup_03_EditText_phone.getText().toString();
-                String school = activity_signup_03_EditText_School.getText().toString();
-                String studentNumber = activity_signup_03_EditText_student_number.getText().toString();
+                //String school = activity_signup_03_EditText_School.getText().toString();
+                //String studentNumber = activity_signup_03_EditText_student_number.getText().toString();
 
-                if(!name.isEmpty() && !phone.isEmpty() && !school.isEmpty() && !studentNumber.isEmpty() ) {
+                if(!name.isEmpty() && !phone.isEmpty() /*&& !school.isEmpty() && !studentNumber.isEmpty()*/ ) {
                     //createUser(emailSubject, emailAddress, pw, name, phone, school, schoolNumber);
                     LoginData data = new LoginData();
                     data.setAdmin(0);
                     data.setName(name);
                     data.setPhone(phone);
-                    data.setSchool(school);
-                    data.setStudentNumber(studentNumber);
                     data.setPushAlarmOnOff(true);
                     //LoginData data = new LoginData(name, phone, studentNumber, school, 0, true);
-                    database.getReference().child("User").child(mAuth.getCurrentUser().getUid()).setValue(data);
+                    database.getReference().child(clubName).child("User").child(mAuth.getCurrentUser().getUid()).setValue(data);
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(this, SignUpActivity_04.class);

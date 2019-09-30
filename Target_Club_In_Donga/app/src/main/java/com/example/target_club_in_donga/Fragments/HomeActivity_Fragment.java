@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
@@ -33,11 +34,16 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 // Home 프래그먼트
 
 /**
@@ -60,8 +66,8 @@ public class HomeActivity_Fragment extends Fragment {
     private String mParam2;
     private OnFragmentInteractionListener mListener;
     private TextView btn1, btn2, btn3, btn4;
-    private TextView menu_detail_btn;
-    private TextView slidingdrawer_title;
+    private LinearLayout menu_detail_btn;
+    private TextView slidingdrawer_title, fragment_home_profile_name;
     private ImageView menu_btn, setting_btn, timeline_btn;
     private RelativeLayout main_btn_1, main_btn_2, main_btn_3, main_btn_6, main_btn_7, main_btn_8, main_btn_12;
     private SlidingDrawer slidingDrawer;
@@ -121,7 +127,7 @@ public class HomeActivity_Fragment extends Fragment {
         btn3 = (TextView) view.findViewById(R.id.frgment_home_favorite_3);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
 
-        menu_detail_btn = (TextView) view.findViewById(R.id.menu_detail_btn);
+        menu_detail_btn = view.findViewById(R.id.menu_detail_btn);
 
         main_btn_1 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_1);
         main_btn_2 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_2);
@@ -133,6 +139,7 @@ public class HomeActivity_Fragment extends Fragment {
 
         menu_btn = (ImageView) view.findViewById(R.id.frgment_home_menu_btn);
         timeline_btn = (ImageView) view.findViewById(R.id.fragment_home_timeline_btn);
+        fragment_home_profile_name = view.findViewById(R.id.fragment_home_profile_name);
 
         /*memberlist = view.findViewById(R.id.fragment_home_btn_8);
         memberlist.setOnClickListener(new View.OnClickListener() {
@@ -277,6 +284,18 @@ public class HomeActivity_Fragment extends Fragment {
             }
         });
 
+        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                fragment_home_profile_name.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         // 홈에서 메뉴(슬라이딩드로우)를 열었을 경우에만 뒤로가기 버튼을 누르면 슬라이딩드로우가 닫힘
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -345,7 +364,7 @@ public class HomeActivity_Fragment extends Fragment {
         String token = FirebaseInstanceId.getInstance().getToken();
         Map<String, Object> map = new HashMap<>();
         map.put("pushToken", token);
-        FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
+        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(uid).updateChildren(map);
     }
 
     public void everyBtnEnable(boolean boo) {

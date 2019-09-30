@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
+    public static String clubName = "TCID";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
-                    FirebaseDatabase.getInstance().getReference().child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             try{
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "로그인", Toast.LENGTH_SHORT).show();
                                     //intent.putExtra("adminCheck",false);
                                 }
+                                intent.putExtra("clubName",clubName);
                                 startActivity(intent);
                                 finish();
                             }catch (NullPointerException e){
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, SignUpActivity_01.class);
                                 intent.putExtra("loginIdentity","google");
+                                intent.putExtra("clubName",clubName);
                                 startActivity(intent);
                                 finish();
                             }
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     //finish();
                 } else {
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    intent.putExtra("clubName",clubName);
                     startActivity(intent);
                     finish();
                     // User is signed out

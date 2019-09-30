@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 // 게시판 프래그먼트
 
 /**
@@ -41,21 +43,21 @@ public class UserDetailActivity_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_user_detail, container, false);
         name = view.findViewById(R.id.user_detail_name);
         phone = view.findViewById(R.id.user_detail_phoneNumber);
-        school = view.findViewById(R.id.user_detail_school);
+        //school = view.findViewById(R.id.user_detail_school);
         email = view.findViewById(R.id.user_detail_email);
-        studentID = view.findViewById(R.id.user_detail_studentID);
+        //studentID = view.findViewById(R.id.user_detail_studentID);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
-        database.getReference().child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 LoginData loginData = dataSnapshot.getValue(LoginData.class);
                 name.setText(loginData.getName());
                 email.setText(auth.getCurrentUser().getEmail());
                 phone.setText(loginData.getPhone());
-                school.setText(loginData.getSchool());
-                studentID.setText(loginData.getStudentNumber());
+                //school.setText(loginData.getSchool());
+                //studentID.setText(loginData.getStudentNumber());
             }
 
             @Override

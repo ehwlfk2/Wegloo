@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -52,6 +53,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class MaterialManagementActivity extends AppCompatActivity {
 
     int y = 0, m = 0, d = 0, h = 0, mi = 0;
@@ -75,7 +78,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
     private String findkey, uidName;
 
-    private int admin;
+    private int admin, monthInt, dayOfMonthInt, flag = 0;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -104,7 +107,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
         activity_material_management_admin_recyclerview_main_list.setAdapter(materialManagementActivity_adminRecyclerViewAdapter);
         materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child("Material_Management").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Material_Management").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 materialManagementItems.clear();
@@ -137,12 +140,12 @@ public class MaterialManagementActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
 
-        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if(admin > 0) {
+                if (admin > 0) {
                     activity_material_management_admin_button_insert.setVisibility(View.VISIBLE);
                 } else {
                     activity_material_management_admin_button_insert.setVisibility(View.GONE);
@@ -262,7 +265,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                     detailTextID.setText(materialManagementItems.get(position).title);
 
-                                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             uidName = dataSnapshot.getValue(String.class);
@@ -308,8 +311,10 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                                     y = year;
                                                     m = month + 1;
                                                     d = dayOfMonth;
+                                                    monthInt = month;
+                                                    dayOfMonthInt = dayOfMonth;
 
-                                                    if (month < 10)
+                                                    if (month < 9)
                                                         dateStr = year + "-0" + (month + 1) + "-";
                                                     else
                                                         dateStr = year + "-" + (month + 1) + "-";
@@ -340,7 +345,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                                     mi = minute;
                                                     Date now = new Date();
 
-                                                    if (hourOfDay >= now.getHours() && minute > now.getMinutes()) {
+                                                    if ((monthInt > now.getMonth() || dayOfMonthInt > now.getDay()) || (hourOfDay > now.getHours() || hourOfDay >= now.getHours() && minute > now.getMinutes())) {
                                                         if (hourOfDay < 10)
                                                             timeStr = "0" + hourOfDay;
                                                         else
@@ -367,13 +372,13 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     detailButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
 
-                                            Toast.makeText(v.getContext(),"대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                            database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            Toast.makeText(v.getContext(), "대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                            database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                                     uidName = dataSnapshot.getValue(String.class);
                                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText(uidName);
-                                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
                                                 }
 
                                                 @Override
@@ -382,16 +387,16 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                                 }
                                             });
                                             ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText(dateStr + ' ' + timeStr);
-                                            database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                            database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
                                             // 대여를 하였을 떄 리사이클러뷰 리스트를 변경을 함
 
                                             findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
-                                            database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
-                                            database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                            database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                                     uidName = dataSnapshot.getValue(String.class);
-                                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
+                                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
                                                 }
 
                                                 @Override
@@ -399,12 +404,13 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                                 }
                                             });
-                                            database.getReference().child("Material_Management").child(uidLists.get(position)).child("state").setValue(1);
+                                            database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("state").setValue(1);
 
                                             dialog2.dismiss();
 
                                         }
                                     });
+
 
                                     dialog2.show();
                                     return true;
@@ -413,9 +419,9 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                     Toast.makeText(MaterialManagementActivity.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText("없음");
-                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText("없음");
-                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
 
                                     // 반납을 했을시 물품기록사항에서 대여의 끝나는 날짜가 반납일로 바뀐다
                                     now = System.currentTimeMillis();
@@ -425,8 +431,8 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     //"yyyy-MM-dd HH:mm"
                                     date_Return = returnSimpleDateFormat.format(returnDate);
 
-                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + date_Return);
-                                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("state").setValue(0);
+                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + date_Return);
+                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("state").setValue(0);
 
                                     return true;
 
@@ -444,7 +450,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MaterialManagementActivity.this, MaterialManagementActivity_History.class);
                                     final MaterialManagement_History_Item materialHistoryItem = new MaterialManagement_History_Item();
                                     materialHistoryItem.history_lend_date = ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString();
-                                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             uidName = dataSnapshot.getValue(String.class);
@@ -456,7 +462,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                    String uidAdminPath = database.getReference().child("Material_Management").child(uidLists.get(position)).getKey();
+                                    String uidAdminPath = database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).getKey();
                                     intent.putExtra("uidAdminPath", uidAdminPath);
                                     startActivity(intent);
 
@@ -474,29 +480,29 @@ public class MaterialManagementActivity extends AppCompatActivity {
                     popup.getMenu().getItem(2).setVisible(false);
                     popup.getMenu().getItem(3).setVisible(false);
 
-                    if(!materialManagementItems.get(position).lender.equals("없음")) {
+                    if (!materialManagementItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(0).setVisible(false);
                     }
 
-                    database.getReference().child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                            if(materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
-                                popup.getMenu().getItem(2).setVisible(true);
-                            }
+                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                    admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                                    if (materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
+                                        popup.getMenu().getItem(2).setVisible(true);
+                                    }
 
-                            uidName = dataSnapshot.child("name").getValue().toString();
-                            if (uidName.equals(materialManagementItems.get(position).lender)) {
-                                popup.getMenu().getItem(3).setVisible(true);
-                            }
-                        }
+                                    uidName = dataSnapshot.child("name").getValue().toString();
+                                    if (uidName.equals(materialManagementItems.get(position).lender)) {
+                                        popup.getMenu().getItem(3).setVisible(true);
+                                    }
+                                }
 
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(final DatabaseError databaseError) {
 
-                        }
-                    });
+                                }
+                            });
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
@@ -544,7 +550,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                 long diff = d1.getTime() - d2.getTime();
                 if (diff <= 0) {
                     customViewHolder.activity_material_management_admin_item_linearlayout.setBackgroundResource(R.drawable.border_orange);
-                    database.getReference().child("Material_Management").child(uidLists.get(position)).child("state").setValue(2);
+                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("state").setValue(2);
                 }
             }
 
@@ -552,11 +558,11 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
         private void delete_content(final int position) {
 
-            storage.getReference().child("Material_Management").child(materialManagementItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            storage.getReference().child(clubName).child("Material_Management").child(materialManagementItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
 
-                    database.getReference().child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(final Void aVoid) {
                             Toast.makeText(MaterialManagementActivity.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();

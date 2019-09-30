@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class TimeLineActivity_Main extends AppCompatActivity {
 
     private FirebaseDatabase database;
@@ -47,7 +49,7 @@ public class TimeLineActivity_Main extends AppCompatActivity {
         adapter = new TimeLineActivity_Main_RecyclerviewAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
         recyclerView.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
-        database.getReference().child("TimeLine").orderByChild("nowTimeStamp").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("TimeLine").orderByChild("nowTimeStamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
