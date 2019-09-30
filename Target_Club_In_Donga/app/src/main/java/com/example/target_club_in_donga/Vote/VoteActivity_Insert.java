@@ -120,6 +120,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
         activityvote_insert_listview.setAdapter(adapter);
         adapter.addItem("",0); //기본적으로 일단 두개 항목!
         adapter.addItem("",0);
+        //activityvote_insert_edittext_title.requestFocus();
 
         activityvote_insert_button_listinsert.setOnClickListener(new View.OnClickListener() {
                 @Override

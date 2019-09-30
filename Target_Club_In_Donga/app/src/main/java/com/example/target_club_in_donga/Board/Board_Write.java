@@ -43,6 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class Board_Write extends AppCompatActivity {
     ImageButton board_img_upload_btn,x_btn;
     Button upload_btn;
@@ -149,7 +151,7 @@ public class Board_Write extends AppCompatActivity {
         task.execute();
         for (int i = 0; i < uris.size(); i++) {
             final Uri individualImage = uris.get(i);
-            final StorageReference ImageName = storageRef.child("Board/" + individualImage.getLastPathSegment() + '-' + times);
+            final StorageReference ImageName = storageRef.child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
             UploadTask uploadTask = ImageName.putFile(individualImage);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -169,7 +171,7 @@ public class Board_Write extends AppCompatActivity {
         }
     }
     private void StoreDatabase(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Board");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(clubName).child("Board");
         FirebaseUser currentuser = auth.getCurrentUser();
         boardModel.title = title.getText().toString();
         boardModel.contents = contents.getText().toString();
