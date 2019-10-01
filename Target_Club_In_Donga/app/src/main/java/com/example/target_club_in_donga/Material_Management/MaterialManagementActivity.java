@@ -168,7 +168,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
             StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
             Uri file = Uri.fromFile(new File(getPath(data.getData())));
-            StorageReference riversRef = storageRef.child("Material_Management/" + file.getLastPathSegment());
+            StorageReference riversRef = storageRef.child(clubName).child("Material_Management/" + file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
             uploadTask.addOnFailureListener(new OnFailureListener() {

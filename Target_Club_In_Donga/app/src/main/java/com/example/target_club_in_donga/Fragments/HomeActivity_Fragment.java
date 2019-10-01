@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
 import com.example.target_club_in_donga.Attend.AttendActivity;
+import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
@@ -162,7 +163,7 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), NoticeActivity.class);
                 startActivity(intent);
             }
-        }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
+        }); // btn1 공지사항
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +185,7 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ScheduleActivity.class);
                 startActivity(intent);
             }
-        }); // btn4 홈에서 일정인데, 클릭하면 홈에서 일정으로 activity가 바뀜
+        }); // btn4 일정
 
         menu_detail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,10 +198,10 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AttendActivity.class);
+                Intent intent = new Intent(getActivity(), AttendActivity_Home.class);
                 startActivity(intent);
             }
-        }); // main_btn1 메뉴에서 출석버튼인데, 클릭하면 메뉴에서 출석으로 activity가 바뀌
+        }); // main_btn1 출석
 
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,7 +209,7 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MaterialManagementActivity.class);
                 startActivity(intent);
             }
-        }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
+        }); // main_btb2 물품관리
         main_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -257,7 +258,7 @@ public class HomeActivity_Fragment extends Fragment {
             public void onClick(final View v) {
                 slidingDrawer.animateOpen();
             }
-        }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
+        }); // menu_btn 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
 
         timeline_btn.setOnClickListener(new View.OnClickListener() { //홈에서 오른쪽 상단 종버튼 타임라인으로 만들꺼임
             @Override
