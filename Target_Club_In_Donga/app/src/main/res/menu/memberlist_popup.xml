@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/member_president"
+        android:title="회장 위임"
+        />
+    <item android:id="@+id/member_vicePresident"
+          android:title="부회장으로 변경"
+    />
+    <item android:id="@+id/member_executives"
+          android:title="임원으로 변경"
+    />
+    <item android:id="@+id/member_member"
+        android:title="회원으로 변경"
+        />
+    <item android:id="@+id/member_kickOut"
+          android:title="모임 추방"
+    />
+</menu>

@@ -7,6 +7,10 @@
     android:layout_marginTop="10dp"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -15,31 +19,26 @@
             android:paddingLeft="15dp"
             android:textSize="15sp"
             android:textColor="@color/fbutton_color_orange"
-            />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/timeline_main_item_title"
-            android:text="title"
-            android:paddingLeft="15dp"
-            android:textSize="18sp"
             />
         <TextView
             android:id="@+id/timeline_main_item_timestamp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2.5"
             android:gravity="right"
-            android:text="timestamp"
+            android:text="2019-09-30 20:20"
             android:paddingRight="15dp"
             android:textSize="13sp"/>
     </LinearLayout>
+        <TextView
 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/timeline_main_item_title"
+            android:text="title"
+            android:paddingLeft="15dp"
+            android:textSize="15sp"
+            />
 
 </LinearLayout>
