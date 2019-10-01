@@ -586,15 +586,26 @@ public class AccountBookActivity_Main extends AppCompatActivity {
     }
     private void Dialog_DatePicker(final TextView textView){
 
-        Calendar c = Calendar.getInstance();
-        int cyear = c.get(Calendar.YEAR);
-        int cmonth = c.get(Calendar.MONTH);
-        int cday = c.get(Calendar.DAY_OF_MONTH);
+        int cyear;
+        int cmonth;
+        int cday;
+        String ac = textView.getText().toString();
+        if(ac.equals("Every day")){
+            Calendar c = Calendar.getInstance();
+            cyear = c.get(Calendar.YEAR);
+            cmonth = c.get(Calendar.MONTH);
+            cday = c.get(Calendar.DAY_OF_MONTH);
+        }
+        else{
+            cyear = Integer.parseInt(ac.substring(0,4));
+            cmonth = Integer.parseInt(ac.substring(5,7))-1;
+            cday = Integer.parseInt(ac.substring(8,10));
+        }
 
         DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                if(month < 10)
+                if(month < 9)
                     dateStr = year+"-0"+(month+1)+"-";
                 else
                     dateStr = year+"-"+(month+1)+"-";
@@ -637,7 +648,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String viewDate;
-                if(month < 10)
+                if(month < 9)
                     viewDate = year+"-0"+(month+1)+"-";
                 else
                     viewDate = year+"-"+(month+1)+"-";
@@ -697,7 +708,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             final long flagTime = System.currentTimeMillis();
             final Uri file = Uri.fromFile(new File(uri));
             accountInsertImagePath = null;
-            StorageReference riversRef = storageRef.child("AccountBookImages/"+file.getLastPathSegment()+flagTime);
+            StorageReference riversRef = storageRef.child(clubName).child("AccountBookImages/"+file.getLastPathSegment()+flagTime);
             UploadTask uploadTask = riversRef.putFile(file);
 
             // Register observers to listen for when the download is done or if it fails
