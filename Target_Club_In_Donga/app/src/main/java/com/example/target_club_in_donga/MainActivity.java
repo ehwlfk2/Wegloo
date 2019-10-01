@@ -12,8 +12,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
+import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_01;
+import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_04;
+import com.facebook.login.LoginManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
-    public static String clubName = "TCID";
+    public static String clubName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,48 +62,34 @@ public class MainActivity extends AppCompatActivity {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser(); //Auth에 있으면 바아로 자동로그인
                 if (user != null) {
-
-                    FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference().child("AppUser").child(user.getUid()).child("recentClub").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
                             try{
-                                int tf = dataSnapshot.getValue(int.class);
+                                String recentClub = dataSnapshot.getValue(String.class);
+                                clubName = recentClub;
                                 //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Main로그인", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-
-                                if(tf < 0){
-                                    Toast.makeText(MainActivity.this, "관리자 로그인", Toast.LENGTH_SHORT).show();
-                                    //intent.putExtra("adminCheck",true);
-                                }
-
                                 startActivity(intent);
                                 finish();
-                            }catch (NullPointerException e){
-                                /*database.getReference().child("User").child(user.getUid()).child("Admin").setValue(false);
-                                Toast.makeText(Login.this, "처음이시군요?", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, Menu.class);
-                                intent.putExtra("adminCheck",false);
-                                startActivity(intent);
-                                finish();*/
-                                Toast.makeText(MainActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, SignUpActivity_01.class);
-                                intent.putExtra("loginIdentity","google");
+
+                            }catch (NullPointerException e){ //recent가없음
+                                Toast.makeText(MainActivity.this, "recent결정하자", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, SignUpActivity_04.class);
+                                //intent.putExtra("loginIdentity","google");
                                 startActivity(intent);
                                 finish();
                             }
-
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             //Toast.makeText(Vote_Login.this, "에러", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    // User is signed in
-                    //Intent intent = new Intent(LoginActivity.this, HomeActivity_Fragment.class);
-                    //finish();
-                } else {
+                } else { //Auth에 없으면 ㅈㅈ
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
