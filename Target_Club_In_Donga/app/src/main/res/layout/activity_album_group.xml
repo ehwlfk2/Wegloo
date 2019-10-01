@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/folder_icon"
+        android:src="@drawable/folder_icon"
         android:layout_alignParentLeft="true"
         android:paddingLeft="20px" />
 
