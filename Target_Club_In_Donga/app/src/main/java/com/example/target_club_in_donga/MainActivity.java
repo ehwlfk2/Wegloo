@@ -69,12 +69,21 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
                             try{
                                 String recentClub = dataSnapshot.getValue(String.class);
-                                clubName = recentClub;
-                                //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
-                                Toast.makeText(MainActivity.this, "Main로그인", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
+                                if(recentClub == null){
+                                    Toast.makeText(MainActivity.this, "recent결정하자", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, SignUpActivity_04.class);
+                                    //intent.putExtra("loginIdentity","google");
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else{
+                                    clubName = recentClub;
+                                    //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
 
                             }catch (NullPointerException e){ //recent가없음
                                 Toast.makeText(MainActivity.this, "recent결정하자", Toast.LENGTH_SHORT).show();
