@@ -227,7 +227,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                     map.put("code",emailCode);
                     //FirebaseDatabase.getInstance().getReference().child("TempUser").push().setValue(map);
 
-                    database.getReference().child(clubName).child("TempUser").push().setValue(map);
+                    database.getReference().child("AppUser").child("TempUser").push().setValue(map);
 
                     dialog = LayoutInflater.from(this);
                     dialogLayout = dialog.inflate(R.layout.activity_signup_02_dialog, null); // LayoutInflater 를 통해 XML 에 정의된 Resource 들을 View 의 형태로 반환 시켜 줌
@@ -261,7 +261,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
 
                         final ArrayList<String> dbKey = new ArrayList<String>();
 
-                        database.getReference().child(clubName).child("TempUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        database.getReference().child("AppUser").child("TempUser").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 dbKey.clear();
@@ -276,7 +276,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
 
                                 for(int i=0;i<dbKey.size();i++){
                                     //Log.e("asdf",""+dbKey.get(i));
-                                    database.getReference().child(clubName).child("TempUser").child(dbKey.get(i)).removeValue();
+                                    database.getReference().child("AppUser").child("TempUser").child(dbKey.get(i)).removeValue();
                                 }
                             }
 

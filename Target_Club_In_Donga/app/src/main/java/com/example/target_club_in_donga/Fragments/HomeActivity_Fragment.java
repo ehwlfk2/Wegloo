@@ -113,7 +113,6 @@ public class HomeActivity_Fragment extends Fragment {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-        passPushTokenToServer();
 
         /*MobileAds.initialize(getContext(), "ca-app-pub-3940256099942544~3347511713");
         mAdView = view.findViewById(R.id.adView);
@@ -358,14 +357,6 @@ public class HomeActivity_Fragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public void passPushTokenToServer() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Map<String, Object> map = new HashMap<>();
-        map.put("pushToken", token);
-        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(uid).updateChildren(map);
     }
 
     public void everyBtnEnable(boolean boo) {
