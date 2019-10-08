@@ -7,7 +7,7 @@
 
     <TextView
         style="@style/Top_Content_Text_Style"
-        android:text="출석관리자" />
+        android:text="출결관리자" />
 
     <View
         android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
         style="@style/Content_Classification_Text_Style"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="-2dp"
-        android:text="출석시작하기" />
+        android:text="출결시작하기" />
 
     </RelativeLayout>
 

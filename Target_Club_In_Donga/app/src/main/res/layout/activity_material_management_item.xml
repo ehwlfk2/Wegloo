@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2" >
+        android:weightSum="2">
 
         <ImageView
             android:id="@+id/activity_material_management_admin_item_imageview_recyclerview_image"

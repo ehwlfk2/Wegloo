@@ -139,7 +139,7 @@
                     android:id="@+id/activity_attend_button_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="출석관리자 (출석시간설정)" />
+                    android:text="출결관리자 (출결수정)" />
 
                 <TextView
                     android:id="@+id/activity_attend_textview_certification_number_name"
@@ -230,21 +230,19 @@
 
                 <Button
                     android:id="@+id/activity_attend_button_attendance"
+                    style="@style/Content_Classification_Text_Style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:text="출석"
-                    android:textSize="30dp" />
+                    android:text="출석" />
 
                 <Button
                     android:id="@+id/activity_attend_button_cancel"
+                    style="@style/Content_Classification_Text_Style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:text="취소"
-                    android:textSize="30dp" />
+                    android:text="취소" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
