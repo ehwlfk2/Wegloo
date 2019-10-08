@@ -60,6 +60,7 @@ public class AttendActivity_Home extends AppCompatActivity {
 
     private long now;
     private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
+    private static int adminNumber = 2;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class AttendActivity_Home extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if (admin > 0) {
+                if (admin > adminNumber) {
                     activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
                 } else {
                     activity_attend_home_admin_button_insert.setVisibility(View.GONE);
@@ -255,7 +256,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                            if (admin > 0) {
+                            if (admin > adminNumber) {
                                 popup.getMenu().getItem(1).setVisible(true);
                             }
                         }

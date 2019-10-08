@@ -78,6 +78,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
     private String findkey, uidName;
 
     private int admin, monthInt, dayOfMonthInt, flag = 0;
+    private static int adminNumber = 2;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -144,7 +145,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if (admin > 0) {
+                if (admin > adminNumber) {
                     activity_material_management_admin_button_insert.setVisibility(View.VISIBLE);
                 } else {
                     activity_material_management_admin_button_insert.setVisibility(View.GONE);
@@ -487,7 +488,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                                    if (materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
+                                    if (materialManagementItems.get(position).lender.equals("없음") && admin > adminNumber) {
                                         popup.getMenu().getItem(2).setVisible(true);
                                     }
 

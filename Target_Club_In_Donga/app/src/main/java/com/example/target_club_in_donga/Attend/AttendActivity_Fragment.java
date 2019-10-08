@@ -76,6 +76,7 @@ public class AttendActivity_Fragment extends Fragment {
     private String getAttendStatue, setAttendStatue, getTardyTimeLimit, getAttendStatue2;
 
     private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0;
+    private static int adminNumber = 2;
 
     PieChart activity_attend_piechart;
     private String findkey, getStatue;
@@ -395,7 +396,7 @@ public class AttendActivity_Fragment extends Fragment {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if (admin > 0) {
+                if (admin > adminNumber) {
                     activity_attend_button_admin.setVisibility(View.VISIBLE);
                     activity_attend_textview_certification_number_name.setVisibility(View.VISIBLE);
                     activity_attend_textview_certification_number.setVisibility(View.VISIBLE);
