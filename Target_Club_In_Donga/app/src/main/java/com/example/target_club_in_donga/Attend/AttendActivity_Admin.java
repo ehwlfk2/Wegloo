@@ -68,7 +68,7 @@ public class AttendActivity_Admin extends AppCompatActivity {
         // 출석시간을 결정
         activity_attend_admin_radiogroup_attend.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+            public void onCheckedChanged(final RadioGroup radioGroup, final int checkedId) {
                 now = System.currentTimeMillis();
                 // 현재시간을 date 변수에 저장한다.
                 Date date = new Date(now);
@@ -78,11 +78,11 @@ public class AttendActivity_Admin extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
 
-                if (i == R.id.activity_attend_admin_radiobutton_attend_5_min) {
+                if (checkedId == R.id.activity_attend_admin_radiobutton_attend_5_min) {
                     calendar.add(Calendar.MINUTE, 5);
                     date_Attend = simpleDateFormat.format(calendar.getTime());
                     attenddate = calendar.getTime();
-                } else if (i == R.id.activity_attend_admin_radiobutton_attend_10_min) {
+                } else if (checkedId == R.id.activity_attend_admin_radiobutton_attend_10_min) {
                     calendar.add(Calendar.MINUTE, 10);
                     date_Attend = simpleDateFormat.format(calendar.getTime());
                     attenddate = calendar.getTime();
@@ -99,17 +99,17 @@ public class AttendActivity_Admin extends AppCompatActivity {
         // 지각시간을 결정
         activity_attend_admin_radiogroup_tardy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+            public void onCheckedChanged(final RadioGroup radioGroup, final int checkedId) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 //"yyyy-MM-dd HH:mm"
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(attenddate);
 
-                if (i == R.id.activity_attend_admin_radiobutton_tardy_10_min) {
+                if (checkedId == R.id.activity_attend_admin_radiobutton_tardy_10_min) {
                     calendar.add(Calendar.MINUTE, 10);
                     date_Trady = simpleDateFormat.format(calendar.getTime());
-                } else if (i == R.id.activity_attend_admin_radiobutton_tardy_20_min) {
+                } else if (checkedId == R.id.activity_attend_admin_radiobutton_tardy_20_min) {
                     calendar.add(Calendar.MINUTE, 20);
                     date_Trady = simpleDateFormat.format(calendar.getTime());
                 } else {
@@ -157,8 +157,8 @@ public class AttendActivity_Admin extends AppCompatActivity {
                                 database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
 
                                 Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
-                                attendAdminChangeItem.Name = getName;
-                                attendAdminChangeItem.attendStatue = "미출결";
+                                attendAdminChangeItem.name = getName;
+                                attendAdminChangeItem.attend_statue = "미출결";
                                 attendAdminChangeItem.phone = getPhone;
                             }
                         }

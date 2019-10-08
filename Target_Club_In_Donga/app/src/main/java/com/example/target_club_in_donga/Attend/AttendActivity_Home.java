@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -60,7 +59,7 @@ public class AttendActivity_Home extends AppCompatActivity {
     public static String uidAdminPath;
 
     private long now;
-    private String formatDate, nowtardyTimeLimit, getTardyTimeLimit, getKey;
+    private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -248,7 +247,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                         }
                     });
 
-                    popup.inflate(R.menu.attend_home_main_popup);
+                    popup.inflate(R.menu.attend_home_popup);
 
                     popup.getMenu().getItem(1).setVisible(false);
 
@@ -302,7 +301,7 @@ public class AttendActivity_Home extends AppCompatActivity {
             database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.getValue() == null) {
+                    if (dataSnapshot.getValue() == null) {
                         customViewHolder.activity_attend_home_admin_item_recyclerview_attend_time_limit.setVisibility(View.GONE);
                         customViewHolder.activity_attend_home_admin_item_textview_recyclerview_tardy_time_limit.setVisibility(View.GONE);
                         customViewHolder.activity_attend_home_admin_item_recyclerview_attend_time_limit_tilte.setVisibility(View.GONE);
@@ -339,9 +338,6 @@ public class AttendActivity_Home extends AppCompatActivity {
             database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
-                    getKey = dataSnapshot.getKey();
-/*                    Log.e("키값", getKey);
-                    Log.e("키값2", dataSnapshot.child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").getValue() + "");*/
                     getTardyTimeLimit = dataSnapshot.child("tardyTimeLimit").getValue(String.class);
                     if (getTardyTimeLimit != null) {
                         now = System.currentTimeMillis();
@@ -373,30 +369,6 @@ public class AttendActivity_Home extends AppCompatActivity {
                                 }
                             });
 
-//                                dataSnapshot.child("User_Statue").getValue();
-/*                                database.getReference().child(clubName).child("Attend").child(getKey).child("User_Statue").addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            snapshot.child("attend_statue").getValue(String.class);
-                                            if (snapshot.child("attend_statue").getValue(String.class).equals("미출결")) {
-                                                database.getReference().child(clubName).child("Attend").child(getKey).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("결석");
-                                            }
-                                        }
-                                        database.getReference().child(clubName).child("Attend").child(getKey).child("Attend_Certification_Number").removeValue();
-                                        database.getReference().child(clubName).child("Attend").child(getKey).child("attendTimeLimit").removeValue();
-                                        database.getReference().child(clubName).child("Attend").child(getKey).child("tardyTimeLimit").removeValue();
-                                        customViewHolder.activity_attend_home_admin_item_recyclerview_attend_time_limit.setVisibility(View.GONE);
-                                        customViewHolder.activity_attend_home_admin_item_textview_recyclerview_tardy_time_limit.setVisibility(View.GONE);
-                                        customViewHolder.activity_attend_home_admin_item_recyclerview_attend_time_limit_tilte.setVisibility(View.GONE);
-                                        customViewHolder.activity_attend_home_admin_item_textview_recyclerview_tardy_time_limit_title.setVisibility(View.GONE);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                    }
-                                });*/
                         }
 
                     }
@@ -408,77 +380,6 @@ public class AttendActivity_Home extends AppCompatActivity {
 
                 }
             });
-
-/*            uidAdminPath = database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).getKey();
-
-            database.getReference().child(clubName).child("Attend").child(uidAdminPath).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(final DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.getValue() != null) {
-                        customViewHolder.activity_attend_home_admin_item_textview_recyclerview_attend_statue.setText(dataSnapshot.getValue().toString());
-                    }
-                }
-
-                @Override
-                public void onCancelled(final DatabaseError databaseError) {
-
-                }
-            });
-
-            now = System.currentTimeMillis();
-            // 현재시간을 date 변수에 저장한다.
-            Date date = new Date(now);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            formatDate = simpleDateFormat.format(date);
-
-            database.getReference().child(clubName).child("Attend").child(uidAdminPath).child("tardyTimeLimit").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(final DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.getValue() != null) {
-                        now = System.currentTimeMillis();
-                        // 현재시간을 date 변수에 저장한다.
-                        Date date = new Date(now);
-                        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                        nowtardyTimeLimit = simpleDateFormat.format(date);
-
-                        getTardyTimeLimit = dataSnapshot.getValue().toString();
-                        Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                        Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                        long diff = d1.getTime() - d2.getTime();
-                        if (diff < 0) {
-                            database.getReference().child(clubName).child("Attend").child(uidAdminPath).child("User_Statue").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(final DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                        snapshot.child("attend_statue").getValue(String.class);
-                                        if (snapshot.child("attend_statue").getValue(String.class).equals("미출결")) {
-                                            database.getReference().child(clubName).child("Attend").child(uidAdminPath).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("결석");
-                                        }
-                                    }
-                                    database.getReference().child(clubName).child("Attend").child(uidAdminPath).child("Attend_Certification_Number").removeValue();
-                                    database.getReference().child(clubName).child("Attend").child(uidAdminPath).child("attendTimeLimit").removeValue();
-                                    database.getReference().child(clubName).child("Attend").child(uidAdminPath).child("tardyTimeLimit").removeValue();
-                                    customViewHolder.activity_attend_home_admin_item_recyclerview_attend_time_limit.setVisibility(View.GONE);
-                                    customViewHolder.activity_attend_home_admin_item_textview_recyclerview_tardy_time_limit.setVisibility(View.GONE);
-                                    customViewHolder.activity_attend_home_admin_item_recyclerview_attend_time_limit_tilte.setVisibility(View.GONE);
-                                    customViewHolder.activity_attend_home_admin_item_textview_recyclerview_tardy_time_limit_title.setVisibility(View.GONE);
-                                }
-
-                                @Override
-                                public void onCancelled(final DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onCancelled(final DatabaseError databaseError) {
-
-                }
-            });*/
 
         }
 

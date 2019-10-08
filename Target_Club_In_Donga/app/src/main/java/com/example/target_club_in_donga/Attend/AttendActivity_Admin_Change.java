@@ -11,13 +11,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,10 +53,16 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseDatabase database;
 
+    private String findkey;
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attend_admin_change);
+
+        Intent intent = getIntent();
+
+        findkey = intent.getExtras().getString("findKey");
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -67,7 +76,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
         activity_attend_admin_change_recyclerview_main_list.setAdapter(attendAdminChangeActivity_adminRecyclerViewAdapter);
         attendAdminChangeActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child(clubName).child("Attend").child("Attend_Admin").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
@@ -158,7 +167,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
         }
 
-/*        public void PopupMenu(final AttendActivity_Admin_Change.AttendAdminChangeActivity_AdminRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
+        public void PopupMenu(final AttendActivity_Admin_Change.AttendAdminChangeActivity_AdminRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
             viewholder.activity_attend_admin_change_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -172,6 +181,42 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
                             switch (item.getItemId()) {
 
+                                case R.id.attend_change:
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(AttendActivity_Admin_Change.this);
+
+                                    View view = LayoutInflater.from(AttendActivity_Admin_Change.this)
+                                            .inflate(R.layout.activity_attend_change, null, false);
+                                    builder.setView(view);
+
+                                    final RadioGroup activity_attend_change_radiogroup = (RadioGroup) view.findViewById(R.id.activity_attend_change_radiogroup);
+                                    final Button activity_attend_change_button_attendance_change = (Button) view.findViewById(R.id.activity_attend_change_button_attendance_change);
+
+                                    final AlertDialog dialog = builder.create();
+
+                                    activity_attend_change_radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                                        @Override
+                                        public void onCheckedChanged(final RadioGroup group, final int checkedId) {
+                                            if(checkedId == R.id.activity_attend_change_attend) {
+                                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("출석");
+                                                //출석으로 변경
+                                            } else {
+                                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("지각");
+                                                //지각으로 변경
+                                            }
+                                        }
+                                    });
+
+                                    activity_attend_change_button_attendance_change.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    dialog.show();
+                                    return true;
+
                                 default:
                                     return false;
                             }
@@ -179,13 +224,13 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
                         }
                     });
 
-                    popup.inflate(R.menu.attend_home_main_popup);
+                    popup.inflate(R.menu.attend_admin_change_popup);
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
                 }
             });
-        }*/
+        }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -203,11 +248,11 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
             customViewHolder.activity_attend_admin_change_item_textview_attend_statue.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_admin_change_item_textview_phone_number.setGravity(Gravity.LEFT);
 
-            customViewHolder.activity_attend_admin_change_item_textview_name.setText(attendAdminItems.get(position).Name);
-            customViewHolder.activity_attend_admin_change_item_textview_attend_statue.setText(attendAdminItems.get(position).attendStatue);
+            customViewHolder.activity_attend_admin_change_item_textview_name.setText(attendAdminItems.get(position).name);
+            customViewHolder.activity_attend_admin_change_item_textview_attend_statue.setText(attendAdminItems.get(position).attend_statue);
             customViewHolder.activity_attend_admin_change_item_textview_phone_number.setText(attendAdminItems.get(position).phone);
 
-//            PopupMenu(customViewHolder, position);
+            PopupMenu(customViewHolder, position);
 
         }
 

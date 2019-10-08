@@ -22,7 +22,7 @@
 
         <TextView
             style="@style/Top_Content_Text_Style"
-            android:text="출석수정" />
+            android:text="출결변경" />
 
         <View
             android:layout_width="wrap_content"

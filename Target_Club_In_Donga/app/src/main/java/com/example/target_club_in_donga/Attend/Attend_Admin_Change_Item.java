@@ -10,8 +10,8 @@ public class Attend_Admin_Change_Item {
         this.id = id;
     }
 
-    public String Name;
-    public String attendStatue;
+    public String name;
+    public String attend_statue;
     public String phone;
 
     public Attend_Admin_Change_Item() {

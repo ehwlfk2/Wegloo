@@ -324,7 +324,7 @@ public class AttendActivity_Fragment extends Fragment {
                                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                                             getStatue = snapshot.child("attend_statue").getValue(String.class);
-                                                                            if (getStatue.equals("미출결")) {
+                                                                            if(getStatue.equals("미출결")) {
                                                                                 database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).setValue("결석");
                                                                             }
                                                                         }
@@ -416,6 +416,7 @@ public class AttendActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 Intent intent = new Intent(getActivity(), AttendActivity_Admin_Change.class);
+                intent.putExtra("findKey", findkey);
                 startActivity(intent);
             }
         });

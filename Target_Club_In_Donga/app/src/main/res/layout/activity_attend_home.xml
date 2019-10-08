@@ -22,7 +22,7 @@
 
         <TextView
             style="@style/Top_Content_Text_Style"
-            android:text="출석관리" />
+            android:text="출결관리" />
 
         <View
             android:layout_width="wrap_content"

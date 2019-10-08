@@ -474,7 +474,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                         }
                     });
 
-                    popup.inflate(R.menu.material_management_main_popup);
+                    popup.inflate(R.menu.material_management_home_popup);
 
                     popup.getMenu().getItem(2).setVisible(false);
                     popup.getMenu().getItem(3).setVisible(false);
