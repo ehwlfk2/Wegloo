@@ -5,4 +5,8 @@
         android:id="@+id/attend_detail"
         android:title="상세보기" />
 
+    <item
+        android:id="@+id/attend_delete"
+        android:title="삭제하기" />
+
 </menu>

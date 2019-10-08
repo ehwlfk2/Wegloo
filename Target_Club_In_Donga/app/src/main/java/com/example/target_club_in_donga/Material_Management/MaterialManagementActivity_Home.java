@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,7 +54,7 @@ import java.util.List;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
-public class MaterialManagementActivity extends AppCompatActivity {
+public class MaterialManagementActivity_Home extends AppCompatActivity {
 
     int y = 0, m = 0, d = 0, h = 0, mi = 0;
     Calendar calendar = Calendar.getInstance();
@@ -131,7 +130,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
         activity_material_management_admin_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MaterialManagementActivity.this, MaterialManagementActivity_Insert.class);
+                Intent intent = new Intent(MaterialManagementActivity_Home.this, MaterialManagementActivity_Insert.class);
                 startActivity(intent);
             }
         });
@@ -208,7 +207,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 
 
-    // MaterialManagementActivity 어댑터
+    // MaterialManagementActivity_Home 어댑터
 
     class MaterialManagementActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -250,9 +249,9 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                 case R.id.material_lend:
 
-                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity.this);
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Home.this);
 
-                                    View view2 = LayoutInflater.from(MaterialManagementActivity.this)
+                                    View view2 = LayoutInflater.from(MaterialManagementActivity_Home.this)
                                             .inflate(R.layout.activity_material_management_lend, null, false);
                                     builder2.setView(view2);
 
@@ -305,7 +304,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(final View v) {
 
-                                            DatePickerDialog datePickerDialog = new DatePickerDialog(MaterialManagementActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                            DatePickerDialog datePickerDialog = new DatePickerDialog(MaterialManagementActivity_Home.this, new DatePickerDialog.OnDateSetListener() {
                                                 @Override
                                                 public void onDateSet(final DatePicker view, final int year, final int month, final int dayOfMonth) {
                                                     y = year;
@@ -338,7 +337,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                                     detailButtonPeriodTime.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(final View v) {
-                                            TimePickerDialog timePickerDialog = new TimePickerDialog(MaterialManagementActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                            TimePickerDialog timePickerDialog = new TimePickerDialog(MaterialManagementActivity_Home.this, new TimePickerDialog.OnTimeSetListener() {
                                                 @Override
                                                 public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
                                                     h = hourOfDay;
@@ -417,7 +416,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                 case R.id.material_turn_in:
 
-                                    Toast.makeText(MaterialManagementActivity.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MaterialManagementActivity_Home.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText("없음");
                                     database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
                                     ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText("없음");
@@ -438,7 +437,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                 case R.id.material_delete:
 
-                                    Toast.makeText(MaterialManagementActivity.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MaterialManagementActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     delete_content(position);
                                     materialManagementItems.remove(position);
                                     notifyItemRemoved(position);
@@ -447,7 +446,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
 
                                 case R.id.material_history:
 
-                                    Intent intent = new Intent(MaterialManagementActivity.this, MaterialManagementActivity_History.class);
+                                    Intent intent = new Intent(MaterialManagementActivity_Home.this, MaterialManagementActivity_History.class);
                                     final MaterialManagement_History_Item materialHistoryItem = new MaterialManagement_History_Item();
                                     materialHistoryItem.history_lend_date = ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString();
                                     database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -565,7 +564,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
                     database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(final Void aVoid) {
-                            Toast.makeText(MaterialManagementActivity.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MaterialManagementActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -577,7 +576,7 @@ public class MaterialManagementActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull final Exception e) {
-                    Toast.makeText(MaterialManagementActivity.this, "삭제 실패", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MaterialManagementActivity_Home.this, "삭제 실패", Toast.LENGTH_SHORT).show();
                 }
             });
 

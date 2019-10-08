@@ -6,7 +6,7 @@
     android:padding="10dp">
 
     <LinearLayout
-        android:id="@+id/activity_attend_home_admin_item_linearlayout"
+        android:id="@+id/activity_attend_admin_change_item_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -24,9 +24,9 @@
                 android:weightSum="2">
 
                 <TextView
-                    android:id="@+id/activity_attend_home_admin_item_textview_recyclerview_club_name"
+                    android:id="@+id/activity_attend_admin_change_item_textview_name"
                     style="@style/Content_Text_Style"
-                    android:text="동아리이름"
+                    android:text="이름"
                     android:layout_weight="1"/>
 
                 <LinearLayout
@@ -42,7 +42,7 @@
                         android:layout_weight="2"/>
 
                     <TextView
-                        android:id="@+id/activity_attend_home_admin_item_textview_recyclerview_attend_statue"
+                        android:id="@+id/activity_attend_admin_change_item_textview_attend_statue"
                         style="@style/Content_Text_Style"
                         android:text="미출결"
                         android:layout_weight="1"/>
@@ -61,30 +61,10 @@
 
             <TextView
                 style="@style/Content_Classification_Text_Style"
-                android:text="출석일" />
+                android:text="전화번호" />
 
             <TextView
-                android:id="@+id/activity_attend_home_admin_item_textview_recyclerview_start_time"
-                style="@style/Content_Text_Style"
-                android:text="없음" />
-
-            <TextView
-                android:id="@+id/activity_attend_home_admin_item_recyclerview_attend_time_limit_tilte"
-                style="@style/Content_Classification_Text_Style"
-                android:text="출석 인정 시간" />
-
-            <TextView
-                android:id="@+id/activity_attend_home_admin_item_recyclerview_attend_time_limit"
-                style="@style/Content_Text_Style"
-                android:text="없음" />
-
-            <TextView
-                android:id="@+id/activity_attend_home_admin_item_textview_recyclerview_tardy_time_limit_title"
-                style="@style/Content_Classification_Text_Style"
-                android:text="지각 인정 시간" />
-
-            <TextView
-                android:id="@+id/activity_attend_home_admin_item_textview_recyclerview_tardy_time_limit"
+                android:id="@+id/activity_attend_admin_change_item_textview_phone_number"
                 style="@style/Content_Text_Style"
                 android:text="없음" />
 

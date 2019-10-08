@@ -1,6 +1,5 @@
 package com.example.target_club_in_donga.Attend;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -130,24 +129,21 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     now = System.currentTimeMillis();
                     // 현재시간을 date 변수에 저장한다.
                     Date date = new Date(now);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                     formatDate = simpleDateFormat.format(date);
 
                     certification_number = random_number.nextInt(maxNumber - minNumber + 1) + minNumber;
                     // 인즌번호가 1000~9999 4자리 수중에서 랜덤으로 결정된다.
 
-/*                    database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Time_Limit").setValue(date_Attend);
-                    database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Tardy_Time_Limit").setValue(date_Trady);*/
-                    Attend_Item attendItem = new Attend_Item();
+                    Attend_Admin_Item attendItem = new Attend_Admin_Item();
                     attendItem.clubName = clubName;
-                    attendItem.myAttendState= "미출결";
                     attendItem.startTime = formatDate;
                     attendItem.attendTimeLimit = date_Attend;
                     attendItem.tardyTimeLimit = date_Trady;
 
                     findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
-                    database.getReference().child(clubName).child("Attend_Admin").child(findkey).setValue(attendItem);
-                    database.getReference().child(clubName).child("Attend_Admin").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
+                    database.getReference().child(clubName).child("Attend").child(findkey).setValue(attendItem);
+                    database.getReference().child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
 
                     database.getReference().child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -156,9 +152,14 @@ public class AttendActivity_Admin extends AppCompatActivity {
                                 // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
                                 getName = snapshot.child("name").getValue(String.class);
                                 getPhone = snapshot.child("phone").getValue(String.class);
-                                database.getReference().child(clubName).child("Attend_Admin").child(findkey).child("User_Statue").child(snapshot.getKey()).child("name").setValue(getName);
-                                database.getReference().child(clubName).child("Attend_Admin").child(findkey).child("User_Statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                database.getReference().child(clubName).child("Attend_Admin").child(findkey).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).child("name").setValue(getName);
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
+
+                                Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
+                                attendAdminChangeItem.Name = getName;
+                                attendAdminChangeItem.attendStatue = "미출결";
+                                attendAdminChangeItem.phone = getPhone;
                             }
                         }
 
@@ -169,9 +170,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     });
 
                     Toast.makeText(AttendActivity_Admin.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(AttendActivity_Admin.this, AttendActivity_Home.class);
+/*                    Intent intent = new Intent(AttendActivity_Admin.this, AttendActivity_Home.class);
                     intent.putExtra("findKey", findkey);
-                    startActivity(intent);
+                    startActivity(intent);*/
                     finish();
                 } else if (flag == 0) {
                     Toast.makeText(AttendActivity_Admin.this, "출석시간을 정해주세요", Toast.LENGTH_SHORT).show();

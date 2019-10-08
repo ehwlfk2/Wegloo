@@ -17,12 +17,11 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
-import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
@@ -39,10 +38,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 // Home 프래그먼트
@@ -205,7 +200,7 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MaterialManagementActivity.class);
+                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Home.class);
                 startActivity(intent);
             }
         }); // main_btb2 물품관리
