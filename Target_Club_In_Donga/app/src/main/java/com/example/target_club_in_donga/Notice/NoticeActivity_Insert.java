@@ -192,7 +192,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
 
                                 if(activity_notice_insert_switch.isChecked()){
                                     SendPushMessages send = new SendPushMessages();
-                                    send.multipleSendMessage("공지사항이 추가되었습니다",title.toString());
+                                    send.multipleSendMessage("공지사항이 추가되었습니다",title, "Notice");
                                 }
                                 Toast.makeText(NoticeActivity_Insert.this, "공지 올렷스무디", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -207,7 +207,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     else{
                         if(activity_notice_insert_switch.isChecked()){
                             SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage("공지사항이 수정되었습니다",title.toString());
+                            send.multipleSendMessage("공지사항이 수정되었습니다",title, "Notice");
                         }
 
                         Notice_Item notice_item = new Notice_Item();

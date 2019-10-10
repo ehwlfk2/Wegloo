@@ -35,7 +35,7 @@
         android:autofillHints="no"
         android:background="@color/colorWhite"
         android:hint="@string/SignUp_identification_insert_code"
-        android:inputType="text"
+        android:inputType="number"
 
         android:padding="20dp"
 

@@ -1,15 +1,18 @@
 package com.example.target_club_in_donga.PushMessages;
 
 public class NotificationModel {
-    public String to;
-    public Notification notification = new Notification();
+
+    //public Notification notification = new Notification();
     public Data data = new Data();
-    public static class Notification{
+    /*public static class Notification{
         public String title;
         public String text;
-    }
+        public String clickAction;
+    }*/
+    public String to;
     public static class Data{
         public String title;
         public String text;
+        public String clickAction;
     }
 }

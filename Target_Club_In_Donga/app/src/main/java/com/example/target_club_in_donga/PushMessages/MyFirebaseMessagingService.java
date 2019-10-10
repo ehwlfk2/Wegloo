@@ -9,37 +9,80 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
 import com.example.target_club_in_donga.MainActivity;
+import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.Vote.VoteActivity_Main;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // ...
         // Check if message contains a data payload.
+
         if (remoteMessage.getData().size() > 0) {
             String title = remoteMessage.getData().get("title").toString();
             String text = remoteMessage.getData().get("text").toString();
-            sendNotification(title,text);
+            String clickAction = remoteMessage.getData().get("clickAction").toString();
+            Log.e("click",clickAction);
+            sendNotification(title,text,clickAction);
         }
+
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private void sendNotification(String title, String text) {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void sendNotification(String title, String text, String clickAction) {
+        /*Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
+                PendingIntent.FLAG_ONE_SHOT);*/
+        PendingIntent pendingIntent;
+        if(clubName != null){
+            Intent intent;
+            if(clickAction.equals("Notice")){
+                //Log.e("backCheck",backCheck);
+                intent = new Intent(this, NoticeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
+            else if(clickAction.equals("Vote")){
+                //Log.e("backCheck",backCheck);
+                intent = new Intent(this, VoteActivity_Main.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
+            else{
+                //Log.e("check",check);
+                //Log.e("backCheck",backCheck);
+                intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //intent.putExtra("fcmCheck",clickAction);
+            }
+            pendingIntent = PendingIntent.getActivity(this, 0 , intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        }
+        else{
+            Intent intent;
+            intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("fcmCheck",clickAction);
+            pendingIntent = PendingIntent.getActivity(this, 0 , intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "TCID";
+            String channelId = "wegloo";
+
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, channelId)
@@ -55,7 +98,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             // Since android Oreo notification channel is needed.
 
-            NotificationChannel channel = new NotificationChannel(channelId, "TCID", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(channelId, "wegloo", NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
 
             notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
