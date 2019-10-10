@@ -396,7 +396,7 @@ public class AttendActivity_Fragment extends Fragment {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if (admin > adminNumber) {
+                if (admin <= adminNumber) {
                     activity_attend_button_admin.setVisibility(View.VISIBLE);
                     activity_attend_textview_certification_number_name.setVisibility(View.VISIBLE);
                     activity_attend_textview_certification_number.setVisibility(View.VISIBLE);

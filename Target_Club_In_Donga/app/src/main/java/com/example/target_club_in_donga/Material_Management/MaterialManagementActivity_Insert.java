@@ -69,7 +69,6 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
         activity_material_management_insert_imageview_image = (ImageView) findViewById(R.id.activity_material_management_insert_imageview_image);
         activity_material_management_insert_edittext_item_name = (EditText) findViewById(R.id.activity_material_management_insert_edittext_item_name);
         activity_material_management_insert_button_insert = (Button) findViewById(R.id.activity_material_management_insert_button_insert);
-        activity_material_management_insert_textview_lender = (TextView) findViewById(R.id.activity_material_management_insert_textview_lender);
 
         activity_material_management_insert_imageview_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

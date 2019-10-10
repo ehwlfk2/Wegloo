@@ -56,7 +56,7 @@
 
             <TextView
                 style="@style/Content_Text_Style"
-                android:text="대여기간 \n 설정하기" />
+                android:text="대여기간" />
 
             <Button
                 android:id="@+id/activity_material_management_lend_period_calendar"
