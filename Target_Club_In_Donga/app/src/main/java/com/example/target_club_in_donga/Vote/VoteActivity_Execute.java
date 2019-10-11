@@ -102,7 +102,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
                 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
                 String time = simpleDateFormat.format(date);
 
-                activityvote_execute_textview_date.setText(time);
+                activityvote_execute_textview_date.setText(time+" 까지");
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

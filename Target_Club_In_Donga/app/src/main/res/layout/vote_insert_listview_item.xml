@@ -10,5 +10,4 @@
         android:background="@drawable/border_green"
         android:ems="10"
        />
-    <requestFocus />
 </LinearLayout>
