@@ -8,7 +8,7 @@
         android:layout_weight="1"
         android:id="@+id/vote_result_listview_textview_name"
         android:text="ItemName"
-        android:paddingLeft="15dp"
+        android:paddingLeft="50dp"
         android:paddingTop="15dp"
         android:textSize="20sp"
         />

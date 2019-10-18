@@ -17,6 +17,7 @@ import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_01;
 import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_04;
+import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.facebook.login.LoginManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
     public static String clubName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +65,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser(); //Auth에 있으면 바아로 자동로그인
+
                 if (user != null) {
                     FirebaseDatabase.getInstance().getReference().child("AppUser").child(user.getUid()).child("recentClub").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
                             try{
                                 String recentClub = dataSnapshot.getValue(String.class);
+
                                 if(recentClub == null){
-                                    Toast.makeText(MainActivity.this, "recent결정하자", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "recent결정하자 위", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MainActivity.this, SignUpActivity_04.class);
                                     //intent.putExtra("loginIdentity","google");
                                     startActivity(intent);
@@ -78,15 +82,37 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 else{
                                     clubName = recentClub;
-                                    //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
+
+                                    Bundle extras = getIntent().getExtras();
+                                    String fcmCheck = "None";
+                                    if(extras != null) {
+                                        if (extras.containsKey("fcmCheck")) {
+                                            fcmCheck = extras.getString("fcmCheck");
+                                        }
+                                    }
+
+                                    if(fcmCheck.equals("Vote")){
+                                        Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, VoteActivity_Main.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else if(fcmCheck.equals("Notice")){
+                                        Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else{
+                                        Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
 
                             }catch (NullPointerException e){ //recent가없음
-                                Toast.makeText(MainActivity.this, "recent결정하자", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "recent결정하자 아래", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, SignUpActivity_04.class);
                                 //intent.putExtra("loginIdentity","google");
                                 startActivity(intent);
@@ -98,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                             //Toast.makeText(Vote_Login.this, "에러", Toast.LENGTH_SHORT).show();
                         }
                     });
-                } else { //Auth에 없으면 ㅈㅈ
+                } else { //로그인 되있는게 없음
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();

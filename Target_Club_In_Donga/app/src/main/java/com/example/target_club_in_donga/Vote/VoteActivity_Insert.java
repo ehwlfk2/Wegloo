@@ -120,7 +120,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
         activityvote_insert_listview.setAdapter(adapter);
         adapter.addItem("",0); //기본적으로 일단 두개 항목!
         adapter.addItem("",0);
-        //activityvote_insert_edittext_title.requestFocus();
+        activityvote_insert_edittext_title.requestFocus();
 
         activityvote_insert_button_listinsert.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -188,7 +188,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                     else{
                         if(activityvote_insert_switch.isChecked()){ //push
                             SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage("투표가 추가되었습니다",title);
+                            send.multipleSendMessage("투표가 추가되었습니다",title, "Vote");
                         }
                         //Toast.makeText(Vote_Insert.this, nowTime+" 현재시간", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Vote_Insert.this, dbTime+" 디비시간", Toast.LENGTH_SHORT).show();
