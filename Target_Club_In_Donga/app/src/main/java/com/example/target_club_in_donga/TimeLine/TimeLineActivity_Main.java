@@ -1,6 +1,5 @@
 package com.example.target_club_in_donga.TimeLine;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
+import com.example.target_club_in_donga.Board.Board_Main;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Home;
+import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
@@ -26,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class TimeLineActivity_Main extends AppCompatActivity {
 
@@ -46,7 +50,7 @@ public class TimeLineActivity_Main extends AppCompatActivity {
         adapter = new TimeLineActivity_Main_RecyclerviewAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
         recyclerView.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
-        database.getReference().child("TimeLine").orderByChild("nowTimeStamp").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("TimeLine").orderByChild("nowTimeStamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
@@ -102,17 +106,29 @@ public class TimeLineActivity_Main extends AppCompatActivity {
                     if(data.getType().equals("Notice")){
                         Intent intent  = new Intent(TimeLineActivity_Main.this, NoticeActivity.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                     }
                     else if(data.getType().equals("Vote")){
                         Intent intent = new Intent(TimeLineActivity_Main.this, VoteActivity_Main.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
                     }
                     else if(data.getType().equals("Material_Management")){ //다른것들 추가해줘야해
-                        Intent intent = new Intent(TimeLineActivity_Main.this, MaterialManagementActivity_Admin.class);
+                        Intent intent = new Intent(TimeLineActivity_Main.this, MaterialManagementActivity_Home.class);
                         startActivity(intent);
-                        finish();
+                        //finish();
+                    }
+                    else if(data.getType().equals("Board")){
+                        Intent intent = new Intent(TimeLineActivity_Main.this, Board_Main.class);
+                        startActivity(intent);
+                    }
+                    else if(data.getType().equals("AccountBook")){
+                        Intent intent = new Intent(TimeLineActivity_Main.this, AccountBookActivity_Main.class);
+                        startActivity(intent);
+                    }
+                    else if(data.getType().equals("User")){
+                        Intent intent = new Intent(TimeLineActivity_Main.this, MemberList.class);
+                        startActivity(intent);
                     }
                 }
             });

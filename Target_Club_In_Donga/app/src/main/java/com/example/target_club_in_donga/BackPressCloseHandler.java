@@ -14,19 +14,19 @@ public class BackPressCloseHandler {
     }
 
     public void onBackPressed() {
-        if(System.currentTimeMillis() > backKeyPressedTime + 1000) {
+        if(System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis();
             showGide();
             return;
         }
-        if(System.currentTimeMillis() <= backKeyPressedTime + 1000) {
+        if(System.currentTimeMillis() <= backKeyPressedTime + 2000) {
             activity.finish();
             toast.cancel();
         }
     }
 
     public void showGide() {
-        toast = Toast.makeText(activity, "뒤로버튼을 한번 더 누르시면 종료합니다.", Toast.LENGTH_SHORT);
+        toast = Toast.makeText(activity, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT);
         toast.show();
     }
 }

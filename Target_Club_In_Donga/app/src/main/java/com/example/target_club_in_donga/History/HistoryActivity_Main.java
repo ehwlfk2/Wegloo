@@ -50,10 +50,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class HistoryActivity_Main extends AppCompatActivity {
 
     private ImageView activityhistory_main_imageview_export;
-    private ImageView activityhistory_main_imageview_close;
     private LinearLayout activityhistory_main_linearlayout;
     private FloatingActionButton activityhistory_main_button_intent;
     private FirebaseDatabase firebaseDatabase;
@@ -66,6 +67,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
     private SimpleDateFormat simpleDateFormat3 = new SimpleDateFormat("MM-dd");
     private HistoryActivity_Main_ListViewAdapter adapter = new HistoryActivity_Main_ListViewAdapter();
     private ListView activityhistory_main_listview;
+    private boolean backFlag = true;
 
     //private CheckBox historyCheckbox;
     @Override
@@ -77,8 +79,6 @@ public class HistoryActivity_Main extends AppCompatActivity {
 
         activityhistory_main_imageview_export = (ImageView)findViewById(R.id.activityhistory_main_imageview_export);
         activityhistory_main_linearlayout = (LinearLayout)findViewById(R.id.activityhistory_main_linearlayout);
-
-        activityhistory_main_imageview_close = (ImageView)findViewById(R.id.activityhistory_main_imageview_close);
 
         //historyYearCheckbox = (CheckBox) findViewById(R.id.historyYearCheckbox);
         //historyCheckbox = (CheckBox)findViewById(R.id.historyCheckbox);
@@ -100,7 +100,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        Query query = firebaseDatabase.getReference().child("History").orderByChild("timestamp");
+        Query query = firebaseDatabase.getReference().child(clubName).child("History").orderByChild("timestamp");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,6 +142,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
         activityhistory_main_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int positon, long l) {
+                backFlag = false;
                 activityhistory_main_button_intent.setVisibility(View.GONE);
 
                 adapter.setCheckBoxState(true,true);
@@ -152,15 +153,6 @@ public class HistoryActivity_Main extends AppCompatActivity {
                     public void onClick(View view) {
                         saveExcel();
                         checkBoxClose();
-                        activityhistory_main_button_intent.setVisibility(View.VISIBLE);
-                    }
-                });
-
-                activityhistory_main_imageview_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        checkBoxClose();
-                        activityhistory_main_button_intent.setVisibility(View.VISIBLE);
                     }
                 });
 
@@ -178,7 +170,15 @@ public class HistoryActivity_Main extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onBackPressed() {
+        if(backFlag){
+            super.onBackPressed();
+        }
+        else{
+            checkBoxClose();
+        }
+    }
 
 
     public class HistoryActivity_Main_ListViewAdapter extends BaseAdapter {
@@ -211,7 +211,6 @@ public class HistoryActivity_Main extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 
-            final int pos = position;
             final Context context = parent.getContext();
             final History_Item listViewItem = historyList.get(position);
 
@@ -421,7 +420,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
         Cell cell;
 
         cell = row.createCell(0); // 1번 셀 생성
-        cell.setCellValue("연도"); // 1번 셀 값 입력
+        cell.setCellValue("년"); // 1번 셀 값 입력
 
         cell = row.createCell(1); // 2번 셀 생성
         cell.setCellValue("월-일"); // 2번 셀 값 입력
@@ -462,7 +461,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
         intent.setType("application/excel");
         intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, xlsFile));
-        Intent chooser = Intent.createChooser(intent, "엑셀 내보내기");
+        Intent chooser = Intent.createChooser(intent, "연혁 내보내기");
         this.startActivity(chooser);
 
         //startActivity(Intent.createChooser(shareIntent,"엑셀 내보내기"));
@@ -475,6 +474,8 @@ public class HistoryActivity_Main extends AppCompatActivity {
             historyList.get(i).setSelectedYear(false);
         }
         adapter.notifyDataSetChanged();
+        backFlag = true;
+        activityhistory_main_button_intent.setVisibility(View.VISIBLE);
     }
     private void imageviewDialog(final int positon, String imageUrl){
         AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
@@ -508,7 +509,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     StorageReference storageRef = storage.getReference();
-                    storageRef.child("HistoryImages/"+historyList.get(positon).getImageDeleteName()).getFile(xlsFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    storageRef.child(clubName).child("HistoryImages/"+historyList.get(positon).getImageDeleteName()).getFile(xlsFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             //Toast.makeText(History_Main.this, ""+localFile.toString(), Toast.LENGTH_SHORT).show();
@@ -518,7 +519,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
                             intent.setType("image/*");
                             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                             intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID,xlsFile ));
-                            Intent chooser = Intent.createChooser(intent, "이미지 내보내기");
+                            Intent chooser = Intent.createChooser(intent, "연혁 사진 내보내기");
                             getApplicationContext().startActivity(chooser);
 
                         }

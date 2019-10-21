@@ -3,36 +3,54 @@ package com.example.target_club_in_donga;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
+import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
+import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_01;
+import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_04;
+import com.example.target_club_in_donga.Vote.VoteActivity_Main;
+import com.facebook.login.LoginManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
 
     // 앱에 애널리틱스 추가 (1)  com.google.firebase.analytics.FIrebaseAnalytics
     private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
+    public static String clubName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         // 앱에 대널리틱스 추가 (2) Obtain the FirebaseAnalytics instance
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
+        mAuth = FirebaseAuth.getInstance();
         // 인터넷 사용을 위한 권한을 허용 (2)
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitDiskReads()
                 .permitDiskWrites()
                 .permitNetwork().build());
 
-        Button login_btn = findViewById(R.id.activity_main_change_loginPage_btn);
+        /*Button login_btn = findViewById(R.id.activity_main_change_loginPage_btn);
 
         login_btn.setOnClickListener(new OnClickListener(){
             @Override
@@ -41,8 +59,102 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        });
+        });*/
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                final FirebaseUser user = firebaseAuth.getCurrentUser(); //Auth에 있으면 바아로 자동로그인
+
+                if (user != null) {
+                    FirebaseDatabase.getInstance().getReference().child("AppUser").child(user.getUid()).child("recentClub").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
+                            try{
+                                String recentClub = dataSnapshot.getValue(String.class);
+
+                                if(recentClub == null){
+                                    Toast.makeText(MainActivity.this, "recent결정하자 위", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, SignUpActivity_04.class);
+                                    //intent.putExtra("loginIdentity","google");
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else{
+                                    clubName = recentClub;
+
+                                    Bundle extras = getIntent().getExtras();
+                                    String fcmCheck = "None";
+                                    if(extras != null) {
+                                        if (extras.containsKey("fcmCheck")) {
+                                            fcmCheck = extras.getString("fcmCheck");
+                                        }
+                                    }
+
+                                    if(fcmCheck.equals("Vote")){
+                                        Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, VoteActivity_Main.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else if(fcmCheck.equals("Notice")){
+                                        Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else{
+                                        Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+
+                            }catch (NullPointerException e){ //recent가없음
+                                Toast.makeText(MainActivity.this, "recent결정하자 아래", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, SignUpActivity_04.class);
+                                //intent.putExtra("loginIdentity","google");
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            //Toast.makeText(Vote_Login.this, "에러", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else { //로그인 되있는게 없음
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    // User is signed out
+                    //Toast.makeText(MainActivity.this, "이메일 회원가입 해주세요", Toast.LENGTH_SHORT).show();
+                }
+                // ...
+            }
+        };  // mAuthListener
+
+    }
+    @Override
+    public void onStart() {
+        try {
+            //mAuth.signOut();
+            //LoginManager.getInstance().logOut();
+            Log.v("develop_check", "기존 아이디 로그아웃");
+        } catch (Exception exception) {
+            Log.v("develop_check", "기존 로그인 되어있던게 없습니다. => " + exception);
+        }
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 }
 

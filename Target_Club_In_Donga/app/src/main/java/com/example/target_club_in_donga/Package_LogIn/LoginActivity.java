@@ -43,6 +43,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class LoginActivity extends Activity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 10;
@@ -134,54 +136,38 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
-                    database.getReference().child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference().child("AppUser").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
                             try{
-                                int tf = dataSnapshot.getValue(int.class);
+                                AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
+                                clubName = appLoginData.getRecentClub();
                                 //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                if(tf >= 1){
-                                    Toast.makeText(LoginActivity.this, "관리자 로그인", Toast.LENGTH_SHORT).show();
-                                    //intent.putExtra("adminCheck",true);
-                                }
-                                else{
-                                    Toast.makeText(LoginActivity.this, "로그인", Toast.LENGTH_SHORT).show();
-                                    //intent.putExtra("adminCheck",false);
-                                }
                                 startActivity(intent);
                                 finish();
-                            }catch (NullPointerException e){
-                                /*database.getReference().child("User").child(user.getUid()).child("Admin").setValue(false);
-                                Toast.makeText(Login.this, "처음이시군요?", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, Menu.class);
-                                intent.putExtra("adminCheck",false);
-                                startActivity(intent);
-                                finish();*/
+                            }catch (NullPointerException e){ //DB에 없으면 회원가입 시키자
+
                                 Toast.makeText(LoginActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
                                 intent.putExtra("loginIdentity","google");
                                 startActivity(intent);
                                 finish();
-                            }
 
+                            }
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             //Toast.makeText(Vote_Login.this, "에러", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    // User is signed in
-                    //Intent intent = new Intent(LoginActivity.this, HomeActivity_Fragment.class);
-                    //finish();
+
                 } else {
-                    // User is signed out
-                    //Toast.makeText(LoginActivity.this, "이메일 회원가입 해주세요", Toast.LENGTH_SHORT).show();
+
                 }
                 // ...
             }
         };  // mAuthListener
-
 
     }   // onCreate
 

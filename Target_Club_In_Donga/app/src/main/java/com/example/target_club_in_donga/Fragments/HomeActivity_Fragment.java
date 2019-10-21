@@ -9,18 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.target_club_in_donga.Accountbook.AccountbookActivity_Main;
-import com.example.target_club_in_donga.AttendActivity;
+import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
+import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Admin;
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
@@ -33,10 +34,12 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.database.ValueEventListener;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 // Home 프래그먼트
 
 /**
@@ -58,19 +61,18 @@ public class HomeActivity_Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-    private TextView btn1,btn2,btn3,btn4;
-    private TextView menu_detail_btn;
-    private TextView slidingdrawer_title;
-    private ImageView menu_btn,setting_btn, timeline_btn;
-    private RelativeLayout main_btn_1, main_btn_2,main_btn_3, main_btn_6, main_btn_7,main_btn_8 ,main_btn_12;
+    private TextView btn1, btn2, btn3, btn4;
+    private LinearLayout menu_detail_btn;
+    private TextView slidingdrawer_title, fragment_home_profile_name;
+    private ImageView menu_btn, setting_btn, timeline_btn;
+    private RelativeLayout main_btn_1, main_btn_2, main_btn_3, main_btn_6, main_btn_7, main_btn_8, main_btn_12;
     private SlidingDrawer slidingDrawer;
     int menu_count = 0;
     private AdView mAdView;
+
     public HomeActivity_Fragment() {
         // Required empty public constructor
     }
-
-
 
     /**
      * Use this factory method to create a new instance of
@@ -105,8 +107,7 @@ public class HomeActivity_Fragment extends Fragment {
 
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        passPushTokenToServer();
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         /*MobileAds.initialize(getContext(), "ca-app-pub-3940256099942544~3347511713");
         mAdView = view.findViewById(R.id.adView);
@@ -118,20 +119,22 @@ public class HomeActivity_Fragment extends Fragment {
 
         btn1 = (TextView) view.findViewById(R.id.frgment_home_favorite_1);
         btn2 = (TextView) view.findViewById(R.id.frgment_home_favorite_2);
+        btn3 = (TextView) view.findViewById(R.id.frgment_home_favorite_3);
         btn4 = (TextView) view.findViewById(R.id.frgment_home_favorite_4);
 
-        menu_detail_btn = (TextView) view.findViewById(R.id.menu_detail_btn);
+        menu_detail_btn = view.findViewById(R.id.menu_detail_btn);
 
-        main_btn_1 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_1);
-        main_btn_2 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_2);
-        main_btn_3 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_3);
-        main_btn_6 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_6);
-        main_btn_7 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_7);
-        main_btn_8 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_8);
-        main_btn_12 = (RelativeLayout)view.findViewById(R.id.fragment_home_main_btn_12);
+        main_btn_1 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_1);
+        main_btn_2 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_2);
+        main_btn_3 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_3);
+        main_btn_6 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_6);
+        main_btn_7 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_7);
+        main_btn_8 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_8);
+        main_btn_12 = (RelativeLayout) view.findViewById(R.id.fragment_home_main_btn_12);
 
-        menu_btn = (ImageView)view.findViewById(R.id.frgment_home_menu_btn);
-        timeline_btn = (ImageView)view.findViewById(R.id.fragment_home_timeline_btn);
+        menu_btn = (ImageView) view.findViewById(R.id.frgment_home_menu_btn);
+        timeline_btn = (ImageView) view.findViewById(R.id.fragment_home_timeline_btn);
+        fragment_home_profile_name = view.findViewById(R.id.fragment_home_profile_name);
 
         /*memberlist = view.findViewById(R.id.fragment_home_btn_8);
         memberlist.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +145,8 @@ public class HomeActivity_Fragment extends Fragment {
             }
         });*/
 
-        slidingDrawer = (SlidingDrawer)view.findViewById(R.id.frgment_home_slidingdrawer);
-        slidingdrawer_title = (TextView)view.findViewById(R.id.frgment_home_slidingdrawer_title);
-
+        slidingDrawer = (SlidingDrawer) view.findViewById(R.id.frgment_home_slidingdrawer);
+        slidingdrawer_title = (TextView) view.findViewById(R.id.frgment_home_slidingdrawer_title);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +157,7 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), NoticeActivity.class);
                 startActivity(intent);
             }
-        }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
+        }); // btn1 공지사항
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,15 +165,21 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), Board_Main.class);
                 startActivity(intent);
             }
-        }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
+        }); // btn2 게시판
 
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        }); //btn3 앨범
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 Intent intent = new Intent(getActivity(), ScheduleActivity.class);
                 startActivity(intent);
             }
-        }); // btn4 홈에서 일정인데, 클릭하면 홈에서 일정으로 activity가 바뀜
+        }); // btn4 일정
 
         menu_detail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,25 +192,25 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AttendActivity.class);
+                Intent intent = new Intent(getActivity(), AttendActivity_Home.class);
                 startActivity(intent);
             }
-        }); // main_btn1 메뉴에서 출석버튼인데, 클릭하면 메뉴에서 출석으로 activity가 바뀌
+        }); // main_btn1 출석
 
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Admin.class);
+                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Home.class);
                 startActivity(intent);
             }
-        }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
+        }); // main_btb2 물품관리
         main_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(), AccountbookActivity_Main.class);
+                Intent intent = new Intent(getActivity(), AccountBookActivity_Main.class);
                 startActivity(intent);
             }
-        });
+        }); //가계부
         main_btn_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,16 +249,15 @@ public class HomeActivity_Fragment extends Fragment {
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(final View v) {
+            public void onClick(final View v) {
                 slidingDrawer.animateOpen();
-                menu_count++;
             }
-        }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
+        }); // menu_btn 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
 
         timeline_btn.setOnClickListener(new View.OnClickListener() { //홈에서 오른쪽 상단 종버튼 타임라인으로 만들꺼임
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getActivity(), TimeLineActivity_Main.class);
+                Intent intent = new Intent(getActivity(), TimeLineActivity_Main.class);
                 startActivity(intent);
             }
         });
@@ -259,12 +266,28 @@ public class HomeActivity_Fragment extends Fragment {
             @Override
             public void onDrawerOpened() {
                 slidingdrawer_title.setVisibility(View.VISIBLE);
+                everyBtnEnable(false);
+                menu_count++;
             }
         });
         slidingDrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
             @Override
             public void onDrawerClosed() {
                 slidingdrawer_title.setVisibility(View.INVISIBLE);
+                everyBtnEnable(true);
+                menu_count--;
+            }
+        });
+
+        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                fragment_home_profile_name.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
@@ -274,21 +297,20 @@ public class HomeActivity_Fragment extends Fragment {
         view.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(final View view, final int i, final KeyEvent keyEvent) {
-                if(i == KeyEvent.KEYCODE_BACK && menu_count > 0) {
+                if (i == KeyEvent.KEYCODE_BACK && menu_count > 0) {
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("finishstatus", true);
                     slidingDrawer.animateClose();
-                    menu_count--;
+                    everyBtnEnable(true);
 //                    getActivity().finish();
                     startActivity(intent);
-                    return  true;
+                    return true;
                 } else {
                     return false;
                 }
             }
         });
-
         return view;
     }
 
@@ -332,44 +354,13 @@ public class HomeActivity_Fragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void passPushTokenToServer(){
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Map<String, Object> map = new HashMap<>();
-        map.put("pushToken",token);
-        FirebaseDatabase.getInstance().getReference().child("User").child(uid).updateChildren(map);
+    public void everyBtnEnable(boolean boo) {
+        btn1.setEnabled(boo);
+        btn2.setEnabled(boo);
+        btn3.setEnabled(boo);
+        btn4.setEnabled(boo);
+        mAdView.setEnabled(boo);
+        menu_btn.setEnabled(boo);
+        timeline_btn.setEnabled(boo);
     }
-
-    /*void sendFcm(String toToken){
-        Gson gson = new Gson();
-
-        NotificationModel notificationModel = new NotificationModel();
-        notificationModel.to =  toToken;
-        notificationModel.notification.title = "공지사항";
-        notificationModel.notification.text = "백그라운드 푸시";
-        notificationModel.data.title = "공지사항";
-        notificationModel.data.text = "포그라운드 푸시";
-
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
-
-        Request request = new Request.Builder()
-                .header("Content-Type", "application/json")
-                .addHeader("Authorization", "key=AAAAN9u7iok:APA91bHiCw-fGchT3f4FDePrFXNtUQ0PpEBDZOtKuz6Az0x6gMgv2JEhVNcwKeOdJr1UWkX4JBYsShwkU2ZS00CyFNKqSet5JKJOBWxBxzy9Dh_--nbExEbPYWQCU9dwhfSaQqCeOfb3")
-                .url("https://fcm.googleapis.com/fcm/send")
-                .post(requestBody)
-                .build();
-
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-            }
-        });
-    }*/
 }

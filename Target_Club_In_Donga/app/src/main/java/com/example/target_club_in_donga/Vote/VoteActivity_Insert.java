@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class    VoteActivity_Insert  extends AppCompatActivity {
 
     private VoteActivity_Insert_ListAdapter adapter;
@@ -118,6 +120,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
         activityvote_insert_listview.setAdapter(adapter);
         adapter.addItem("",0); //기본적으로 일단 두개 항목!
         adapter.addItem("",0);
+        activityvote_insert_edittext_title.requestFocus();
 
         activityvote_insert_button_listinsert.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -185,7 +188,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                     else{
                         if(activityvote_insert_switch.isChecked()){ //push
                             SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage("투표가 추가되었습니다",title);
+                            send.multipleSendMessage("투표가 추가되었습니다",title, "Vote");
                         }
                         //Toast.makeText(Vote_Insert.this, nowTime+" 현재시간", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Vote_Insert.this, dbTime+" 디비시간", Toast.LENGTH_SHORT).show();
@@ -201,7 +204,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                         //last_item.uid =
 
                         //Toast.makeText(Vote_Insert.this, last_item.listItems.get(0).getName()+"", Toast.LENGTH_SHORT).show();
-                        firebaseDatabase.getReference().child("Vote").push().setValue(last_item).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        firebaseDatabase.getReference().child(clubName).child("Vote").push().setValue(last_item).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 //Toast.makeText(Vote_Insert.this, "추가 성공", Toast.LENGTH_SHORT).show();
@@ -330,7 +333,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                if(month < 10)
+                if(month < 9)
                     dateStr = year+"-0"+(month+1)+"-";
                 else
                     dateStr = year+"-"+(month+1)+"-";

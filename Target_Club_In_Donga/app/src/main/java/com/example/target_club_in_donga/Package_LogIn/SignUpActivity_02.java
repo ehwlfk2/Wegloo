@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class SignUpActivity_02 extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnCancelListener {
     // 이메일 자동 완성 (1)
     String[] email_address = {"naver.com", "google.com", "gmail.com", "donga.ac.kr", "daum.net", "hanmail.net", "yahoo.com", "nate.com"};
@@ -206,26 +208,13 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
                     emailplus = emailSubject+"@"+emailAddress;
                     Log.v("develop_check","emailCode : " + emailCode);
 
-                    // 이메일 자동 완성 (1)
-                    /*try {
-                        Log.v("develop_check", "이메일 전송 시도");
-                        GMailSender sender = new GMailSender("1334381@donga.ac.kr", "thdeh@0408");
-                        sender.sendMail(getString(R.string.SignUp_email_code_subject_content),
-                                String.format(getResources().getString(R.string.SignUp_email_code_body_content),emailCode),
-                                "1334381@donga.ac.kr",
-                                emailSubject+"@"+emailAddress);
-                        Toast.makeText(getApplicationContext(), "이메일을 성공적으로 보냈습니다.", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("develo_check", "이메일 전송에 에러 발생 ; " + e.toString());
-                    }*/
 
                     Map<String, String> map = new HashMap<>();
                     map.put("email",emailplus);
                     map.put("code",emailCode);
                     //FirebaseDatabase.getInstance().getReference().child("TempUser").push().setValue(map);
 
-                    database.getReference().child("TempUser").push().setValue(map);
+                    database.getReference().child("AppUser").child("TempUser").push().setValue(map);
 
                     dialog = LayoutInflater.from(this);
                     dialogLayout = dialog.inflate(R.layout.activity_signup_02_dialog, null); // LayoutInflater 를 통해 XML 에 정의된 Resource 들을 View 의 형태로 반환 시켜 줌
@@ -259,7 +248,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
 
                         final ArrayList<String> dbKey = new ArrayList<String>();
 
-                        database.getReference().child("TempUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                        database.getReference().child("AppUser").child("TempUser").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 dbKey.clear();
@@ -274,7 +263,7 @@ public class SignUpActivity_02 extends AppCompatActivity implements View.OnClick
 
                                 for(int i=0;i<dbKey.size();i++){
                                     //Log.e("asdf",""+dbKey.get(i));
-                                    database.getReference().child("TempUser").child(dbKey.get(i)).removeValue();
+                                    database.getReference().child("AppUser").child("TempUser").child(dbKey.get(i)).removeValue();
                                 }
                             }
 

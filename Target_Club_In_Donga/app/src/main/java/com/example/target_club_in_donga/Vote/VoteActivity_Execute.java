@@ -31,6 +31,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class VoteActivity_Execute extends AppCompatActivity {
 
     private FirebaseDatabase database;
@@ -82,7 +84,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
 
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class);
@@ -100,7 +102,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
                 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
                 String time = simpleDateFormat.format(date);
 
-                activityvote_execute_textview_date.setText(time);
+                activityvote_execute_textview_date.setText(time+" 까지");
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -115,11 +117,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
                 activityvote_execute_button_result.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //int temp = items.get(position).getCount()+1;
-                        //database.getReference().child("Vote").child(dbKey).child("listItems").child(position+"").child("count").setValue(temp);
-                        //database.getReference().child("Vote").child(dbKey).child("totalCount").setValue(totalCount+1);
-                        //adapter.onStarClicked(database.getReference().child("Vote").child(dbKey).child("listItems").child(position+""));
-                        adapter.onStarClicked(database.getReference().child("Vote").child(dbKey), position);
+                        adapter.onStarClicked(database.getReference().child(clubName).child("Vote").child(dbKey), position);
                         Toast.makeText(VoteActivity_Execute.this, items.get(position).getName()+" 에 투표 완료", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -131,7 +129,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int random = (int)(Math.random()*items.size());
-                adapter.onStarClicked(database.getReference().child("Vote").child(dbKey), random);
+                adapter.onStarClicked(database.getReference().child(clubName).child("Vote").child(dbKey), random);
                 Toast.makeText(VoteActivity_Execute.this, items.get(random).getName()+" 에 투표 완료", Toast.LENGTH_SHORT).show();
                 finish();
             }

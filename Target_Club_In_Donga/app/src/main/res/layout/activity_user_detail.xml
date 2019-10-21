@@ -25,6 +25,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,6 +73,7 @@
             </LinearLayout>
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -118,7 +120,7 @@
 
             </LinearLayout>
         </LinearLayout>
-
+        -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -175,7 +177,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="3"
         android:weightSum="3">
 
@@ -199,26 +201,27 @@
                 android:paddingBottom="10dp"
                 android:text="Phone"
                 android:textSize="25dp" />
-
+            <!--
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:text="School"
                 android:textSize="25dp" />
-
+            -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:text="Email"
                 android:textSize="25dp" />
-
+            <!--
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Student ID"
                 android:textSize="25dp" />
+             -->
 
         </LinearLayout>
 
@@ -246,6 +249,7 @@
                 android:text="phone number"
                 android:textSize="25dp" />
 
+            <!--
             <TextView
                 android:id="@+id/user_detail_school"
                 android:layout_width="match_parent"
@@ -254,7 +258,7 @@
                 android:gravity="center"
                 android:text="학교"
                 android:textSize="25dp" />
-
+            -->
             <TextView
                 android:id="@+id/user_detail_email"
                 android:layout_width="match_parent"
@@ -264,6 +268,7 @@
                 android:text="email"
                 android:textSize="25dp" />
 
+            <!--
             <TextView
                 android:id="@+id/user_detail_studentID"
                 android:layout_width="match_parent"
@@ -271,7 +276,7 @@
                 android:gravity="center"
                 android:text="학번"
                 android:textSize="25dp" />
-
+            -->
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

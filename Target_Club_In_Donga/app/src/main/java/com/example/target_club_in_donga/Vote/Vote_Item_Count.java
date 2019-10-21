@@ -1,12 +1,15 @@
 package com.example.target_club_in_donga.Vote;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vote_Item_Count{
     private String name;
     //private String count;
     //private String price;
     public int count = 0;
     //public int starCount = 0;
-
+    public List<Vote_Result_Child> child = new ArrayList<>();
 
     public int getCount() {
         return count;

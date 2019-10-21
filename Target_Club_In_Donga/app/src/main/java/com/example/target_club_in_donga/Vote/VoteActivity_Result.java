@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +22,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.Vector;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
+import static java.security.AccessController.getContext;
 
 public class VoteActivity_Result extends AppCompatActivity {
 
@@ -33,7 +42,7 @@ public class VoteActivity_Result extends AppCompatActivity {
     private FirebaseDatabase database;
     private ArrayList<Vote_Item_Count> items;
     private VoteActivity_ResultListAdapter adapter;
-    private ListView activityvote_result_listview;
+    private ExpandableListView activityvote_result_listview;
     private TextView activityvote_result_textview_title;
     private TextView activityvote_result_textview_date;
     private TextView activityvote_result_textview_totalcount;
@@ -44,7 +53,7 @@ public class VoteActivity_Result extends AppCompatActivity {
         setContentView(R.layout.activityvote_result);
         Toast.makeText(this, "항목 클릭하면 누군지 볼수있음!!!", Toast.LENGTH_SHORT).show();
 
-        activityvote_result_listview = (ListView)findViewById(R.id.activityvote_result_listview);
+        //activityvote_result_listview = (ListView)findViewById(R.id.activityvote_result_listview);
         activityvote_result_textview_title = (TextView)findViewById(R.id.activityvote_result_textview_title);
         activityvote_result_textview_date = (TextView)findViewById(R.id.activityvote_result_textview_date);
         activityvote_result_textview_totalcount = (TextView)findViewById(R.id.activityvote_result_textview_totalcount);
@@ -55,21 +64,61 @@ public class VoteActivity_Result extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         items = new ArrayList<Vote_Item_Count>();
 
-        database.getReference().child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class);
-                //Toast.makeText(Vote_Excute.this, last_item.title+"", Toast.LENGTH_SHORT).show();
-                activityvote_result_textview_totalcount.setText("투표 수 : "+last_item.totalCount);
-                //items = last_item.listItems;
-                // 호출 예제
-                //Collections.sort(items, sortByTotalCall);
-                // 역순으로 정렬시 호출
+                Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class); //큰거 하나!
+                activityvote_result_listview = (ExpandableListView)findViewById(R.id.activityvote_result_listview);
+                //last_item.listItems 이게 그안에 이름 + 카운터수
+                //starts가 투표한닝겐
 
-                //Collections.reverse(items);
 
-                adapter = new VoteActivity_ResultListAdapter(last_item.listItems);
+                //Vector<ParentData> data = new Vector<>();
+                List<Vote_Item_Count> data = new ArrayList<>();
+
+                for(int i=0;i<last_item.listItems.size();i++){ //일단 부모 추가
+                    final Vote_Item_Count parentData = new Vote_Item_Count();
+                    parentData.setName(last_item.listItems.get(i).getName());
+                    parentData.setCount(last_item.listItems.get(i).getCount());
+
+                    for( String key : last_item.stars.keySet() ){ //그리고 그곳에 투표한 사용자 추가
+
+                        if(last_item.stars.get(key) == i){ //uid가 같으면 이름받아오기
+
+                            database.getReference().child(clubName).child("User").child(key).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String name = dataSnapshot.getValue(String.class);
+                                    parentData.child.add(new Vote_Result_Child(name));
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+                    }
+                    data.add(parentData);
+                }
+
+                /*parentData.child.add(new Child("01011111111", "서울 서대문구"));
+                data.add(parentData);
+
+                ParentData parentData2 = new ParentData("근육몬", "28", "남자");
+                parentData2.child.add(new Child("01022222222", "부산 서구"));
+                data.add(parentData2);*/
+
+                adapter = new VoteActivity_ResultListAdapter(VoteActivity_Result.this,data);
                 activityvote_result_listview.setAdapter(adapter);
+
+
+
+                /*adapter = new VoteActivity_ResultListAdapter(last_item.listItems);
+                activityvote_result_listview.setAdapter(adapter);*/
+
+                activityvote_result_textview_totalcount.setText("투표 수 : "+last_item.totalCount);
 
                 activityvote_result_textview_title.setText(last_item.title);
 
@@ -78,14 +127,8 @@ public class VoteActivity_Result extends AppCompatActivity {
                 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
                 String time = simpleDateFormat.format(date);
 
-                activityvote_result_textview_date.setText(time);
+                activityvote_result_textview_date.setText(time+" 까지");
 
-                activityvote_result_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Toast.makeText(VoteActivity_Result.this, "position : "+position+"\n사실아직 구현안함", Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
 
             @Override
@@ -93,16 +136,17 @@ public class VoteActivity_Result extends AppCompatActivity {
 
             }
         });
+
+       /* activityvote_result_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(VoteActivity_Result.this, "position : "+position+"\n사실아직 구현안함", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
     }
 
-    /*private final static Comparator<Vote_Item_Count> sortByTotalCall= new Comparator<Vote_Item_Count>() { //정렬
-        @Override
-        public int compare(Vote_Item_Count object1, Vote_Item_Count object2) {
-            return Integer.compare(object1.getCount(), object2.getCount());
-        }
-    };*/
-
-    public class VoteActivity_ResultListAdapter extends BaseAdapter {
+    /*public class VoteActivity_ResultListAdapter extends BaseAdapter {
         LayoutInflater inflater = null;
         private ArrayList<Vote_Item_Count> m_oData = null;
         //private int nListCnt = 0;
@@ -142,5 +186,87 @@ public class VoteActivity_Result extends AppCompatActivity {
 
             return convertView;
         }
+    }*/
+    public class VoteActivity_ResultListAdapter extends BaseExpandableListAdapter {
+
+        private static final int PARENT_ROW = R.layout.vote_result_listview_item;
+        private static final int CHILD_ROW = R.layout.vote_result_listview_item_child;
+
+        private Context context;
+        private List<Vote_Item_Count> data;
+        private LayoutInflater inflater = null;
+
+        public VoteActivity_ResultListAdapter(Context context, List<Vote_Item_Count> data){
+            this.data = data;
+            this.context = context;
+            this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = inflater.inflate(PARENT_ROW, parent, false);
+            }
+
+
+            TextView itemName = convertView.findViewById(R.id.vote_result_listview_textview_name);
+            TextView count = convertView.findViewById(R.id.vote_result_listview_textview_count);
+
+            itemName.setText(data.get(groupPosition).getName());
+            count.setText(data.get(groupPosition).getCount()+"");
+            return convertView;
+        }
+
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = inflater.inflate(CHILD_ROW, parent, false);
+            }
+
+            TextView name = convertView.findViewById(R.id.vote_result_listview_textview_child_name);
+            name.setText(data.get(groupPosition).child.get(childPosition).getName());
+
+            return convertView;
+        }
+
+        @Override
+        public int getGroupCount() {
+            return data.size();
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return data.get(groupPosition).child.size();
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return data.get(groupPosition);
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return data.get(groupPosition).child.get(childPosition);
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
     }
+
 }

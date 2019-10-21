@@ -35,9 +35,10 @@
                     android:textSize="20dp" />
 
                 <TextView
+                    android:id="@+id/activity_attend_textview_people_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5 명"
+                    android:text=""
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -55,9 +56,10 @@
                     android:textSize="20dp" />
 
                 <TextView
+                    android:id="@+id/activity_attend_textview_people_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20% (1명)"
+                    android:text=""
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -80,6 +82,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="org.androidtown.graph.MainActivity" >
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/activity_attend_piechart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                </com.github.mikephil.charting.charts.PieChart>
+            </RelativeLayout>
             <!--
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/activity_attend_recylerview"
@@ -116,17 +132,84 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/activity_attend_button_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="출석관리자" />
+                    android:text="출결관리자 (출결수정)" />
+
+                <TextView
+                    android:id="@+id/activity_attend_textview_certification_number_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="인증번호: "
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_button_admin" />
+
+                <TextView
+                    android:id="@+id/activity_attend_textview_certification_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_button_admin"
+                    android:layout_toRightOf="@+id/activity_attend_textview_certification_number_name" />
+
+                <TextView
+                    android:id="@+id/activity_attend_textview_attend_time_limit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출석인정시간: "
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_textview_certification_number"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/activity_attend_textview_attend_time_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_textview_certification_number"
+                    android:layout_toRightOf="@+id/activity_attend_textview_attend_time_limit_name" />
+
+                <TextView
+                    android:id="@+id/activity_attend_textview_tardy_time_limit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지각인정시간: "
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_textview_attend_time_limit" />
+
+                <TextView
+                    android:id="@+id/activity_attend_textview_tardy_time_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_textview_attend_time_limit"
+                    android:layout_toRightOf="@+id/activity_attend_textview_tardy_time_limit_name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="출결상태"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/activity_attend_textview_attend_statue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/border_orange"
+                    android:text="미출결"
+                    android:textSize="25dp"
+                    android:layout_below="@+id/activity_attend_button_admin"/>
 
             </RelativeLayout>
 
-            <Button
+<!--            <Button
                 android:id="@+id/activity_attend_button_select"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
@@ -137,7 +220,7 @@
                 android:elevation="1dp"
                 android:text="+"
                 android:textColor="#ffffff"
-                android:textSize="30dp" />
+                android:textSize="30dp" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,22 +229,20 @@
                 android:weightSum="2">
 
                 <Button
-                    android:id="@+id/activity_attend_attendance"
+                    android:id="@+id/activity_attend_button_attendance"
+                    style="@style/Content_Classification_Text_Style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:text="출석"
-                    android:textSize="30dp" />
+                    android:text="출석" />
 
                 <Button
-                    android:id="@+id/activity_attend_cancel"
+                    android:id="@+id/activity_attend_button_cancel"
+                    style="@style/Content_Classification_Text_Style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:text="취소"
-                    android:textSize="30dp" />
+                    android:text="취소" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
