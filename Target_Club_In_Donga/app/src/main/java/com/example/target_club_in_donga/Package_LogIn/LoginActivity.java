@@ -2,6 +2,7 @@ package com.example.target_club_in_donga.Package_LogIn;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.FirebaseFunctionsException;
+import com.google.firebase.functions.HttpsCallableResult;
+import com.kakao.auth.ErrorCode;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
 import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.R;
@@ -40,13 +49,29 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
+    private SessionCallback callback;      //콜백 선언
+    private FirebaseFunctions mFunctions;
+    JSONObject json = new JSONObject();
+    //유저프로필
+    String token = "";
+    String name = "";
     private static final int RC_SIGN_IN = 10;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -59,8 +84,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mFunctions = FirebaseFunctions.getInstance();
         database = FirebaseDatabase.getInstance();
-
+        //카카오 로그인 콜백받기
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        Session.getCurrentSession().checkAndImplicitOpen();
+        loadShared();
         // findById
         Button activity_login_signup_btn = findViewById(R.id.activity_login_signup_btn);
         Button activity_login_login_btn = findViewById(R.id.activity_login_login_btn);
@@ -192,10 +222,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Session.getCurrentSession().removeCallback(callback);
+    }
 
     // onActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
 
         // 페이스북 콜백 함수
@@ -290,4 +328,134 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             //onStart();
         }
     }   // onClick
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            requestMe();
+            //redirectSignupActivity();  // 세션 연결성공 시 redirectSignupActivity() 호출
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if (exception != null) {
+                Logger.e(exception);
+            }
+            setContentView(R.layout.activity_login); // 세션 연결이 실패했을때
+        }                                            // 로그인화면을 다시 불러옴
+    }
+
+
+    protected void requestMe() { //유저의 정보를 받아오는 함수
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "failed to get user info. msg=" + errorResult;
+                Logger.d(message);
+
+                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+                if (result == ErrorCode.CLIENT_ERROR_CODE) {
+                    finish();
+                } else {
+                    redirectLoginActivity();
+                }
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                redirectLoginActivity();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+            } // 카카오톡 회원이 아닐 시 showSignup(); 호출해야함
+
+            @Override
+            public void onSuccess(final UserProfile userProfile) {  //성공 시 userProfile 형태로 반환
+                Logger.d("UserProfile : " + userProfile);
+                Log.d("Kakao : ", "유저가입성공");
+                // Create a new user with a first and last name
+                // 유저 카카오톡 아이디 디비에 넣음(첫가입인 경우에만 디비에저장)
+                String token = Session.getCurrentSession().getAccessToken();
+                //String refresh = Session.getCurrentSession().getRefreshToken();
+
+                try {
+                    json.put("token", token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                kakaoCustomAuth(json)
+                        .addOnCompleteListener(new OnCompleteListener<JSONObject>() {
+                            @Override
+                            public void onComplete(@NonNull Task<JSONObject> task) {
+                                if( !task.isSuccessful()) {
+                                    Exception e = task.getException();
+                                    if( e instanceof FirebaseFunctionsException){
+                                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+                                        FirebaseFunctionsException.Code code = ffe.getCode();
+                                        Object details = ffe.getDetails();
+                                    }
+
+                                    //[START_EXCLUDE]
+                                    Log.w("kakaoLogin_Exception", "kakaoAccessToken:onFailure", e);
+                                    Toast.makeText(LoginActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                                    return;
+                                    // [END_EXCLUDE]
+                                }
+
+                                // [START_EXCLUDE]
+                                JSONObject result = task.getResult();
+                                Log.w("kakaologin_result", String.valueOf(result));
+                            }
+                        });
+                redirectHomeActivity(); // 로그인 성공시 메인으로
+
+            }
+        });
+    }
+
+    private void redirectHomeActivity() {
+        startActivity(new Intent(this,SignUpActivity_01.class));
+        finish();
+    }
+
+    protected void redirectLoginActivity() {
+        final Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        finish();
+    }
+
+    /*쉐어드에 입력값 저장*/
+    private void saveShared( String id, String name) {
+        SharedPreferences pref = getSharedPreferences("profile", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("token", id);
+        editor.putString("name", name);
+        editor.apply();
+    }
+
+    /*쉐어드값 불러오기*/
+    private void loadShared() {
+        SharedPreferences pref = getSharedPreferences("profile", MODE_PRIVATE);
+        token = pref.getString("token", "");
+        name = pref.getString("name", "");
+    }
+
+    // [START function_kakaoCustomAuth]
+    private  Task<JSONObject> kakaoCustomAuth(JSONObject json){
+        return mFunctions
+                .getHttpsCallable("kakaoCustomAuth")
+                .call(json)
+                .continueWith(new Continuation<HttpsCallableResult, JSONObject>() {
+                    @Override
+                    public JSONObject then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        //String result = (String)task.getResult().getData();
+                        task.getResult().getData();
+                        return (JSONObject) task.getResult().getData();
+                    }
+                });
+    }
+    // [END function_kakaoCustomAuth]
 }
