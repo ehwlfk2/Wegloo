@@ -23,23 +23,17 @@
         app:layout_constraintVertical_bias="0.005"
         app:srcCompat="@drawable/ic_reply" />
 
-
-    <Spinner
-        android:id="@+id/board_detail_spinner"
+    <ImageButton
+        android:id="@+id/board_detail_3dotmenu"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/ic_menu_3dot"
-        android:dropDownWidth="80dp"
-        android:gravity="left"
-        android:spinnerMode="dropdown"
-        android:entries="@array/편집"
-        android:overlapAnchor="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.963"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.022"/>
 
     <ImageView
         android:id="@+id/board_detail_user_imageView"
