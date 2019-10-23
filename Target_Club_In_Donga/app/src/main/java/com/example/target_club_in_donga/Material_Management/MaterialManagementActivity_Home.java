@@ -477,32 +477,34 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                     popup.inflate(R.menu.material_management_home_popup);
 
-                    popup.getMenu().getItem(2).setVisible(false);
-                    popup.getMenu().getItem(3).setVisible(false);
-
                     if (!materialManagementItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(0).setVisible(false);
                     }
 
                     database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(final DataSnapshot dataSnapshot) {
-                                    admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                                    if (materialManagementItems.get(position).lender.equals("없음") && admin <= adminNumber) {
-                                        popup.getMenu().getItem(2).setVisible(true);
-                                    }
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                            uidName = dataSnapshot.child("name").getValue().toString();
+                        }
 
-                                    uidName = dataSnapshot.child("name").getValue().toString();
-                                    if (uidName.equals(materialManagementItems.get(position).lender)) {
-                                        popup.getMenu().getItem(3).setVisible(true);
-                                    }
-                                }
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
 
-                                @Override
-                                public void onCancelled(final DatabaseError databaseError) {
+                        }
+                    });
 
-                                }
-                            });
+                    if (materialManagementItems.get(position).lender.equals("없음") && admin <= adminNumber) {
+                        popup.getMenu().getItem(2).setVisible(true);
+                    } else {
+                        popup.getMenu().getItem(2).setVisible(false);
+                    }
+
+                    if (materialManagementItems.get(position).lender.equals(uidName)) {
+                        popup.getMenu().getItem(3).setVisible(true);
+                    } else {
+                        popup.getMenu().getItem(3).setVisible(false);
+                    }
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();

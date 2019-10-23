@@ -41,7 +41,7 @@
             <Button
                 android:id="@+id/activity_attend_home_admin_button_insert"
                 style="@style/Content_Classification_Text_Style"
-                android:text="출석추가하기"
+                android:text="출석추가"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
 

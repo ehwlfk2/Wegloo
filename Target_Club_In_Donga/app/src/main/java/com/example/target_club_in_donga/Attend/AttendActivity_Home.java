@@ -19,10 +19,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Home;
 import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -113,11 +115,6 @@ public class AttendActivity_Home extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if (admin <= adminNumber) {
-                    activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
-                } else {
-                    activity_attend_home_admin_button_insert.setVisibility(View.GONE);
-                }
             }
 
             @Override
@@ -233,12 +230,37 @@ public class AttendActivity_Home extends AppCompatActivity {
 
                                 case R.id.attend_delete:
 
-                                    Toast.makeText(AttendActivity_Home.this, "출석이 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                                    delete_content(position);
-                                    attenditems.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, attenditems.size());
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(AttendActivity_Home.this);
 
+                                    View view = LayoutInflater.from(AttendActivity_Home.this)
+                                            .inflate(R.layout.activity_attend_admin_delete_item, null, false);
+                                    builder.setView(view);
+
+                                    final Button confirmButton = (Button) view.findViewById(R.id.activity_attend_admin_delete_button_confirm);
+                                    final Button cancelButton = (Button) view.findViewById(R.id.activity_attend_admin_delete_button_cancel);
+
+                                    final AlertDialog dialog = builder.create();
+
+                                    confirmButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            Toast.makeText(AttendActivity_Home.this, "출석이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                            delete_content(position);
+                                            attenditems.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position, attenditems.size());
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    dialog.show();
                                     return true;
 
                                 default:
@@ -249,8 +271,6 @@ public class AttendActivity_Home extends AppCompatActivity {
                     });
 
                     popup.inflate(R.menu.attend_home_popup);
-
-                    popup.getMenu().getItem(1).setVisible(false);
 
                     database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -266,6 +286,12 @@ public class AttendActivity_Home extends AppCompatActivity {
 
                         }
                     });
+
+                    if (admin <= adminNumber) {
+                        popup.getMenu().getItem(1).setVisible(true);
+                    } else {
+                        popup.getMenu().getItem(1).setVisible(false);
+                    }
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();

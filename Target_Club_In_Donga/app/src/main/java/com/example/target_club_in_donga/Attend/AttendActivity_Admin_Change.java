@@ -76,7 +76,8 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
         activity_attend_admin_change_recyclerview_main_list.setAdapter(attendAdminChangeActivity_adminRecyclerViewAdapter);
         attendAdminChangeActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").addListenerForSingleValueEvent(new ValueEventListener() {
+//        database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
