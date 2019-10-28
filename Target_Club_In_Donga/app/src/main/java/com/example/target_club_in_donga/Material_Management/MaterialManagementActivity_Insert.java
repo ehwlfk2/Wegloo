@@ -60,7 +60,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_management_insert);
+        setContentView(R.layout.activity_material_rent_admin_insert);
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -189,7 +189,7 @@ public class MaterialManagementActivity_Insert extends AppCompatActivity {
 
                 MaterialManagement_Item materialManagementItem = new MaterialManagement_Item();
                 materialManagementItem.title = activity_material_management_insert_edittext_item_name.getText().toString();
-                materialManagementItem.lender = activity_material_management_insert_textview_lender.getText().toString();
+                materialManagementItem.lender = "없음";
                 materialManagementItem.timestamp = "없음";
                 materialManagementItem.imageUri = downloadUri.toString();
                 materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();

@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,7 @@ public class MaterialManagementActivity_History extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_management_history);
+        setContentView(R.layout.activity_material_rent_history);
 
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -133,7 +132,7 @@ public class MaterialManagementActivity_History extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.activity_material_management_history_item, viewGroup, false);
+                    .inflate(R.layout.activity_material_rent_history_item, viewGroup, false);
 
             return new CustomViewHolder(view);
         }

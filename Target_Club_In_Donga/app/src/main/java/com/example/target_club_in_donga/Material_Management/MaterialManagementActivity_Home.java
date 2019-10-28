@@ -83,7 +83,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_management);
+        setContentView(R.layout.activity_material_rent_home);
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -253,7 +253,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                                     AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Home.this);
 
                                     View view2 = LayoutInflater.from(MaterialManagementActivity_Home.this)
-                                            .inflate(R.layout.activity_material_management_lend, null, false);
+                                            .inflate(R.layout.activity_material_rent, null, false);
                                     builder2.setView(view2);
 
                                     final Button detailButton = (Button) view2.findViewById(R.id.activity_material_management_lend_button_lend);
@@ -438,11 +438,37 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                                 case R.id.material_delete:
 
-                                    Toast.makeText(MaterialManagementActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                                    delete_content(position);
-                                    materialManagementItems.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, materialManagementItems.size());
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MaterialManagementActivity_Home.this);
+
+                                    View view = LayoutInflater.from(MaterialManagementActivity_Home.this)
+                                            .inflate(R.layout.activity_material_rent_admin_delete_item, null, false);
+                                    builder.setView(view);
+
+                                    final Button confirmButton = (Button) view.findViewById(R.id.activity_material_rent_admin_delete_item_button_confirm);
+                                    final Button cancelButton = (Button) view.findViewById(R.id.activity_material_rent_admin_delete_item_button_cancel);
+
+                                    final AlertDialog dialog = builder.create();
+
+                                    confirmButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            Toast.makeText(MaterialManagementActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                            delete_content(position);
+                                            materialManagementItems.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position, materialManagementItems.size());
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    dialog.show();
                                     return true;
 
                                 case R.id.material_history:
@@ -516,7 +542,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.activity_material_management_item, viewGroup, false);
+                    .inflate(R.layout.activity_material_rent_item, viewGroup, false);
 
             return new CustomViewHolder(view);
         }

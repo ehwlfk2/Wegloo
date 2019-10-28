@@ -236,8 +236,8 @@ public class AttendActivity_Home extends AppCompatActivity {
                                             .inflate(R.layout.activity_attend_admin_delete_item, null, false);
                                     builder.setView(view);
 
-                                    final Button confirmButton = (Button) view.findViewById(R.id.activity_attend_admin_delete_button_confirm);
-                                    final Button cancelButton = (Button) view.findViewById(R.id.activity_attend_admin_delete_button_cancel);
+                                    final Button confirmButton = (Button) view.findViewById(R.id.activity_attend_admin_delete_item_button_confirm);
+                                    final Button cancelButton = (Button) view.findViewById(R.id.activity_attend_admin_delete_item_button_cancel);
 
                                     final AlertDialog dialog = builder.create();
 
