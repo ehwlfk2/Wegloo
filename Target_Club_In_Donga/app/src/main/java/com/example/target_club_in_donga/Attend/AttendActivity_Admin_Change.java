@@ -204,10 +204,13 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
                         public void onCheckedChanged(final RadioGroup group, final int checkedId) {
                             if(checkedId == R.id.activity_attend_admin_change_attend) {
                                 flag = 0;
-                                //출석
-                            } else {
+                                // 출석
+                            } else if(checkedId == R.id.activity_attend_admin_change_tardy)  {
                                 flag = 1;
-                                //지각
+                                // 지각
+                            } else if(checkedId == R.id.activity_attend_admin_change_absent) {
+                                flag = 2;
+                                // 결석
                             }
                         }
                     });
@@ -217,10 +220,13 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
                         public void onClick(final View v) {
                             if(flag == 0) {
                                 database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("출석");
-                                //출석으로 변경
+                                // 출석으로 변경
                             } else if(flag == 1) {
                                 database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("지각");
-                                //지각으로 변경
+                                // 지각으로 변경
+                            } else {
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("결석");
+                                // 결석으로 변경
                             }
                             dialog.dismiss();
                         }

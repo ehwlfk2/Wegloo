@@ -53,11 +53,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"
-                android:background="#4F000000" />
+                style="@style/Line_Style" />
 
             <TextView
                 style="@style/Content_Classification_Text_Style"
@@ -92,10 +88,6 @@
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="#4F000000" />
+        style="@style/Line_Style" />
 
 </LinearLayout>

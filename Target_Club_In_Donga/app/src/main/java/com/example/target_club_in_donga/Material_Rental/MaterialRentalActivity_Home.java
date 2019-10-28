@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -102,10 +104,10 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         activity_material_rental_home_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_material_rental_home_recyclerview_main_list);
         activity_material_rental_home_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
 
-        final MaterialManagementActivity_AdminRecyclerViewAdapter materialManagementActivity_adminRecyclerViewAdapter = new MaterialManagementActivity_AdminRecyclerViewAdapter();
+        final MaterialRentalActivity_AdminRecyclerViewAdapter materialRentalActivity_adminRecyclerViewAdapter = new MaterialRentalActivity_AdminRecyclerViewAdapter();
 
-        activity_material_rental_home_recyclerview_main_list.setAdapter(materialManagementActivity_adminRecyclerViewAdapter);
-        materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+        activity_material_rental_home_recyclerview_main_list.setAdapter(materialRentalActivity_adminRecyclerViewAdapter);
+        materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
         database.getReference().child(clubName).child("Material_Management").addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,7 +120,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                     materialManagementItems.add(materialManagementItem);
                     uidLists.add(uidKey);
                 }
-                materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -210,7 +212,9 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
     // MaterialRentalActivity_Home 어댑터
 
-    class MaterialManagementActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    class MaterialRentalActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /*implements Filterable*/ {
+/*        private List<MaterialRental_Item> exampleList;
+        private List<MaterialRental_Item> exampleListFull;*/
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
@@ -234,7 +238,12 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
         }
 
-        public void PopupMenu(final MaterialManagementActivity_AdminRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
+/*        MaterialRentalActivity_AdminRecyclerViewAdapter(List<MaterialRental_Item> exampleList) {
+            this.exampleList = exampleList;
+            exampleListFull = new ArrayList<>(exampleList);
+        }*/
+
+        public void PopupMenu(final MaterialRentalActivity_AdminRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
             viewholder.activity_material_rental_admin_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -615,6 +624,42 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         public int getItemCount() {
             return materialManagementItems.size();
         }
+
+/*        @Override
+        public Filter getFilter() {
+            return exampleFilter;
+        }
+
+        private Filter exampleFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(final CharSequence constraint) {
+                List<MaterialRental_Item> filteredList = new ArrayList<>();
+
+                if(constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(exampleListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for(MaterialRental_Item item : exampleListFull) {
+                        if(item.getText().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(final CharSequence constraint, final FilterResults results) {
+                exampleList.clear();
+                exampleList.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };*/
 
     }
 
