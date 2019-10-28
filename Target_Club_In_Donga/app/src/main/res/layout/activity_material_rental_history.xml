@@ -34,7 +34,7 @@
         android:background="#4F000000" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/activity_material_management_history_recyclerview_list"
+            android:id="@+id/activity_material_rental_history_recyclerview_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -49,7 +49,7 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/activity_material_management_history_button_insert"
+            android:id="@+id/activity_material_rental_history_button_insert"
             style="@style/Content_Classification_Text_Style"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-2dp"

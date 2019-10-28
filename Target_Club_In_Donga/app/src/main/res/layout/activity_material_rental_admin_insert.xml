@@ -17,7 +17,7 @@
         android:weightSum="2">
 
         <ImageView
-            android:id="@+id/activity_material_management_insert_imageview_image"
+            android:id="@+id/activity_material_rental_admin_insert_imageview_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/activity_material_management_insert_edittext_item_name"
+                android:id="@+id/activity_material_rental_admin_insert_edittext_item_name"
                 style="@style/Content_Text_Style"
                 android:hint="물품명" />
 
@@ -49,7 +49,7 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/activity_material_management_insert_button_insert"
+            android:id="@+id/activity_material_rental_admin_insert_button_insert"
             style="@style/Content_Classification_Text_Style"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-2dp"
