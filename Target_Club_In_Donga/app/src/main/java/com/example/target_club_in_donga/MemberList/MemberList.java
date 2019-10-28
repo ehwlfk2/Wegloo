@@ -182,12 +182,16 @@ public class MemberList extends AppCompatActivity {
                                         , 1, position, "부회장");
                                 return true;
                             case R.id.member_executives:
-                                alert("임원 변경",loginDataArrayList.get(position).getName()+"에게 '임원'을 부여하겠습니까?"
-                                        , 2, position, "임원");
+                                /*alert("임원 변경",loginDataArrayList.get(position).getName()+"에게 '임원'을 부여하겠습니까?"
+                                        , 2, position, "임원");*/
+                                setAdmin(2, position);
+                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '임원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                                 return true;
                             case R.id.member_member:
-                                alert("회원 변경",loginDataArrayList.get(position).getName()+"에게 '회원'을 부여하겠습니까?"
-                                        , 3, position, "회원");
+                                /*alert("회원 변경",loginDataArrayList.get(position).getName()+"에게 '회원'을 부여하겠습니까?"
+                                    , 3, position, "회원");*/
+                                setAdmin(3, position);
+                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '회원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                                 return true;
                             case R.id.member_kickOut:
                                 alert("모임 추방", loginDataArrayList.get(position).getName()+"을 정말로 '추방'하시겠습니까?"
@@ -235,6 +239,9 @@ public class MemberList extends AppCompatActivity {
         popup.getMenu().getItem(3).setVisible(false);
         popup.getMenu().getItem(4).setVisible(false);
     }
+    public void setAdmin(int valueNum, int position){
+        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(valueNum);
+    }
     public void alert(String title, String message, final int type, final int position, final String check){
 
 
@@ -253,22 +260,26 @@ public class MemberList extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         if(edittext.getText().toString().equals(check)){
                             if(type == 0){
-                                FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(0);
                                 FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").setValue(3);
+                                //FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(0);
+                                setAdmin(0, position);
                                 Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '회장'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                             }
                             else if(type == 1){
-                                FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(1);
+                                //FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(1);
+                                setAdmin(1, position);
                                 Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '부회장'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                             }
-                            else if(type == 2){
-                                FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(2);
+                            /*else if(type == 2){
+                                //FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(2);
+                                setAdmin(2, position);
                                 Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '임원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                             }
                             else if(type == 3){
-                                FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(3);
+                                //FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(3);
+                                setAdmin(3, position);
                                 Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '회원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
-                            }
+                            }*/
                             else{
                                 FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(dbey.get(position)).removeValue();
                                 Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 모임에서 '추방' 되었습니다", Toast.LENGTH_SHORT).show();
