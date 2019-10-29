@@ -120,6 +120,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         activity_login_facebook_btn.setOnClickListener(this);
         activity_login_login_btn.setOnClickListener(this);
 
+
+        /*
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -158,7 +160,26 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Log.e("develop_check", "페이스북 로그인 에러 => " + exception);
                 // App code
             }
-        });
+        });*/
+
+        activity_login_facebook_btn.setReadPermissions("email", "public_profile");
+        activity_login_facebook_btn.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+                Log.e("FaceB","성공");
+            }
+            @Override
+            public void onCancel() {
+                // ...
+                Log.e("FaceB","캔슬");
+            }
+            @Override
+            public void onError(FacebookException error) {
+                // ...
+                Log.e("FaceB",error+"");
+            }
+        });// ...
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -200,6 +221,27 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         };  // mAuthListener
 
     }   // onCreate
+
+    private void handleFacebookAccessToken(AccessToken token) {
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
 
     @Override
     public void onStart() {
@@ -319,10 +361,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             Log.v("develop_check", "구글 로그인 시도");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
-        } else if (i == R.id.activity_login_facebook_btn) {
+        } /*else if (i == R.id.activity_login_facebook_btn) {
             Log.v("develop_check", "페이스북 로그인 시도");
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-        } else if (i == R.id.activity_login_login_btn) {
+        } */else if (i == R.id.activity_login_login_btn) {
             Log.v("develop_check", "로그인 시도");
             loginUser();
             //onStart();
