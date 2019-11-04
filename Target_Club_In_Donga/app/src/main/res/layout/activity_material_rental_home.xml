@@ -26,14 +26,14 @@
             android:layout_height="wrap_content"
             android:hint="검색어를 입력하세요." />
 
-        <AutoCompleteTextView
+<!--        <AutoCompleteTextView
             android:id="@+id/material_rental_home_autocompletetextview"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center_vertical"
             android:textColorHint="#555555"
             android:completionHint="검색어를 입력하세요."
-            android:completionThreshold="1" />
+            android:completionThreshold="1" />-->
 
         <TextView
             style="@style/Top_Content_Text_Style"
