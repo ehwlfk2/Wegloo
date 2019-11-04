@@ -174,7 +174,7 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
         StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
         final Uri file = Uri.fromFile(new File(uri));
-        StorageReference riversRef = storageRef.child(clubName).child("Material_Management/" + material_path + '-' + file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child(clubName).child("Material_Rental/" + material_path + '-' + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -187,15 +187,15 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
             public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUri = taskSnapshot.getDownloadUrl();
 
-                MaterialRental_Item materialManagementItem = new MaterialRental_Item();
-                materialManagementItem.title = activity_material_rental_admin_insert_edittext_item_name.getText().toString();
-                materialManagementItem.lender = "없음";
-                materialManagementItem.timestamp = "없음";
-                materialManagementItem.imageUri = downloadUri.toString();
-                materialManagementItem.imageName = material_path + '-' + file.getLastPathSegment();
-                materialManagementItem.state = 0;
+                MaterialRental_Item materialRentalItem = new MaterialRental_Item();
+                materialRentalItem.title = activity_material_rental_admin_insert_edittext_item_name.getText().toString();
+                materialRentalItem.lender = "없음";
+                materialRentalItem.timestamp = "없음";
+                materialRentalItem.imageUri = downloadUri.toString();
+                materialRentalItem.imageName = material_path + '-' + file.getLastPathSegment();
+                materialRentalItem.state = 0;
 
-                database.getReference().child(clubName).child("Material_Management").push().setValue(materialManagementItem);
+                database.getReference().child(clubName).child("Material_Rental").push().setValue(materialRentalItem);
             }
         });
     }
