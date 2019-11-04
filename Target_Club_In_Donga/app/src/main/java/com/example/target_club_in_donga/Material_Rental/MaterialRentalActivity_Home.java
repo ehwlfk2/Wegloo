@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga.Material_Management;
+package com.example.target_club_in_donga.Material_Rental;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -10,13 +10,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -54,23 +59,24 @@ import java.util.List;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
-public class MaterialManagementActivity_Home extends AppCompatActivity {
+public class MaterialRentalActivity_Home extends AppCompatActivity {
+    List<MaterialRental_Item> listItem = new ArrayList<>();
 
     int y = 0, m = 0, d = 0, h = 0, mi = 0;
     Calendar calendar = Calendar.getInstance();
 
     private static final int GALLARY_CODE = 10;
 
-    RecyclerView activity_material_management_admin_recyclerview_main_list;
-    List<MaterialManagement_Item> materialManagementItems = new ArrayList<>();
+    RecyclerView activity_material_rental_home_recyclerview_main_list;
+    List<MaterialRental_Item> materialRentalItems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
 
-    protected ImageView activity_material_management_admin_item_imageview_recyclerview_image;
-    private Button activity_material_management_admin_button_insert;
+    protected ImageView activity_material_rental_admin_item_imageview_recyclerview_image;
+    private Button activity_material_rental_home_button_insert;
     private long now;
     private String formatDate, formatHour, formatMin, startDate;
     private String dateStr, timeStr, date_Now, date_End, date_Return;
@@ -78,11 +84,12 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
     private String findkey, uidName;
 
     private int admin, monthInt, dayOfMonthInt, flag = 0;
+    private static int adminNumber = 2;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_management);
+        setContentView(R.layout.activity_material_rental_home);
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -95,29 +102,28 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 
+        this.activity_material_rental_admin_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_rental_admin_item_imageview_recyclerview_image);
 
-        this.activity_material_management_admin_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_management_admin_item_imageview_recyclerview_image);
+        activity_material_rental_home_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_material_rental_home_recyclerview_main_list);
+        activity_material_rental_home_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
 
-        activity_material_management_admin_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_material_management_admin_recyclerview_main_list);
-        activity_material_management_admin_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
+        final MaterialRentalActivity_AdminRecyclerViewAdapter materialRentalActivity_adminRecyclerViewAdapter = new MaterialRentalActivity_AdminRecyclerViewAdapter();
 
-        final MaterialManagementActivity_AdminRecyclerViewAdapter materialManagementActivity_adminRecyclerViewAdapter = new MaterialManagementActivity_AdminRecyclerViewAdapter();
+        activity_material_rental_home_recyclerview_main_list.setAdapter(materialRentalActivity_adminRecyclerViewAdapter);
+        materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        activity_material_management_admin_recyclerview_main_list.setAdapter(materialManagementActivity_adminRecyclerViewAdapter);
-        materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
-
-        database.getReference().child(clubName).child("Material_Management").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Material_Rental").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                materialManagementItems.clear();
+                materialRentalItems.clear();
                 uidLists.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MaterialManagement_Item materialManagementItem = snapshot.getValue(MaterialManagement_Item.class);
+                    MaterialRental_Item materialRentalItem = snapshot.getValue(MaterialRental_Item.class);
                     String uidKey = snapshot.getKey();
-                    materialManagementItems.add(materialManagementItem);
+                    materialRentalItems.add(materialRentalItem);
                     uidLists.add(uidKey);
                 }
-                materialManagementActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -126,12 +132,13 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
             }
         });
 
-        activity_material_management_admin_button_insert = (Button) findViewById(R.id.activity_material_management_admin_button_insert);
-        activity_material_management_admin_button_insert.setOnClickListener(new View.OnClickListener() {
+        activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
+        activity_material_rental_home_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MaterialManagementActivity_Home.this, MaterialManagementActivity_Insert.class);
+                Intent intent = new Intent(MaterialRentalActivity_Home.this, MaterialRentalActivity_Admin_Insert.class);
                 startActivity(intent);
+                flag = 0;
             }
         });
 
@@ -144,10 +151,10 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if (admin > 0) {
-                    activity_material_management_admin_button_insert.setVisibility(View.VISIBLE);
+                if (admin <= adminNumber) {
+                    activity_material_rental_home_button_insert.setVisibility(View.VISIBLE);
                 } else {
-                    activity_material_management_admin_button_insert.setVisibility(View.GONE);
+                    activity_material_rental_home_button_insert.setVisibility(View.GONE);
                 }
             }
 
@@ -156,6 +163,58 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
             }
         });
+
+        final EditText material_rental_home_edittext_search = (EditText) findViewById(R.id.material_rental_home_edtitext_search);
+        material_rental_home_edittext_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(final Editable s) {
+                String text = material_rental_home_edittext_search.getText().toString();
+                search(text);
+            }
+
+            private void search(final String charText) {
+
+                if (flag == 0) {
+                    listItem.clear();
+                    listItem.addAll(materialRentalItems);
+                    flag = 1;
+                }
+
+                // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
+                materialRentalItems.clear();
+
+                // 문자 입력이 없을때는 모든 데이터를 보여준다.
+                if (charText.length() == 0) {
+                    materialRentalItems.addAll(listItem);
+                }
+                // 문자 입력을 할때..
+                else {
+                    // 리스트의 모든 데이터를 검색한다.
+                    for (int i = 0; i < listItem.size(); i++) {
+                        // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
+                        if (listItem.get(i).title.toLowerCase().contains(charText) || listItem.get(i).lender.toLowerCase().contains(charText)) {
+                            // 검색된 데이터를 리스트에 추가한다.
+                            materialRentalItems.add(listItem.get(i));
+                        }
+                    }
+                }
+                // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+                materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+
+        AutoCompleteTextView material_rental_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.material_rental_home_autocompletetextview);
+        material_rental_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, materialRentalItems));
 
     }
 
@@ -167,7 +226,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
             StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
             Uri file = Uri.fromFile(new File(getPath(data.getData())));
-            StorageReference riversRef = storageRef.child(clubName).child("Material_Management/" + file.getLastPathSegment());
+            StorageReference riversRef = storageRef.child(clubName).child("Material_Rental/" + file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -207,34 +266,41 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 
 
-    // MaterialManagementActivity_Home 어댑터
+    // MaterialRentalActivity_Home 어댑터
 
-    class MaterialManagementActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    class MaterialRentalActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /*implements Filterable*/ {
+/*        private List<MaterialRental_Item> exampleList;
+        private List<MaterialRental_Item> exampleListFull;*/
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
-            ImageView activity_material_management_admin_item_imageview_recyclerview_image;
-            TextView activity_material_management_admin_item_textview_recyclerview_item_name;
-            TextView activity_material_management_admin_item_textview_recyclerview_lender;
-            LinearLayout activity_material_management_admin_item_linearlayout;
-            TextView activity_material_management_admin_item_recyclerview_timestamp;
+            ImageView activity_material_rental_admin_item_imageview_recyclerview_image;
+            TextView activity_material_rental_admin_item_textview_recyclerview_item_name;
+            TextView activity_material_rental_admin_item_textview_recyclerview_lender;
+            LinearLayout activity_material_rental_admin_item_linearlayout;
+            TextView activity_material_rental_admin_item_recyclerview_timestamp;
 
             public CustomViewHolder(View view) {
                 super(view);
 
-                activity_material_management_admin_item_textview_recyclerview_item_name = (TextView) view.findViewById(R.id.activity_material_management_admin_item_textview_recyclerview_item_name);
-                activity_material_management_admin_item_textview_recyclerview_lender = (TextView) view.findViewById(R.id.activity_material_management_admin_item_textview_recyclerview_lender);
-                activity_material_management_admin_item_imageview_recyclerview_image = (ImageView) view.findViewById(R.id.activity_material_management_admin_item_imageview_recyclerview_image);
+                activity_material_rental_admin_item_textview_recyclerview_item_name = (TextView) view.findViewById(R.id.activity_material_rental_admin_item_textview_recyclerview_item_name);
+                activity_material_rental_admin_item_textview_recyclerview_lender = (TextView) view.findViewById(R.id.activity_material_rental_admin_item_textview_recyclerview_lender);
+                activity_material_rental_admin_item_imageview_recyclerview_image = (ImageView) view.findViewById(R.id.activity_material_rental_admin_item_imageview_recyclerview_image);
 
-                activity_material_management_admin_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_material_management_admin_item_linearlayout);
-                activity_material_management_admin_item_recyclerview_timestamp = (TextView) view.findViewById(R.id.activity_material_management_admin_item_recyclerview_timestamp);
+                activity_material_rental_admin_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_material_rental_admin_item_linearlayout);
+                activity_material_rental_admin_item_recyclerview_timestamp = (TextView) view.findViewById(R.id.activity_material_rental_admin_item_recyclerview_timestamp);
 
             }
 
         }
 
-        public void PopupMenu(final MaterialManagementActivity_AdminRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
-            viewholder.activity_material_management_admin_item_linearlayout.setOnClickListener(new View.OnClickListener() {
+/*        MaterialRentalActivity_AdminRecyclerViewAdapter(List<MaterialRental_Item> exampleList) {
+            this.exampleList = exampleList;
+            exampleListFull = new ArrayList<>(exampleList);
+        }*/
+
+        public void PopupMenu(final MaterialRentalActivity_AdminRecyclerViewAdapter.CustomViewHolder viewholder, final int position) {
+            viewholder.activity_material_rental_admin_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
@@ -249,20 +315,22 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                                 case R.id.material_lend:
 
-                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialManagementActivity_Home.this);
+                                    flag = 0;
 
-                                    View view2 = LayoutInflater.from(MaterialManagementActivity_Home.this)
-                                            .inflate(R.layout.activity_material_management_lend, null, false);
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(MaterialRentalActivity_Home.this);
+
+                                    View view2 = LayoutInflater.from(MaterialRentalActivity_Home.this)
+                                            .inflate(R.layout.activity_material_rental, null, false);
                                     builder2.setView(view2);
 
-                                    final Button detailButton = (Button) view2.findViewById(R.id.activity_material_management_lend_button_lend);
-                                    final Button detailButtonPeriodCalendar = (Button) view2.findViewById(R.id.activity_material_management_lend_period_calendar);
-                                    final Button detailButtonPeriodTime = (Button) view2.findViewById(R.id.activity_material_management_lend_period_time);
-                                    final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_management_lend_item_name);
-                                    final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_management_lend_lender);
-                                    final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_management_lend_imageview_image);
+                                    final Button detailButton = (Button) view2.findViewById(R.id.activity_material_rental_button);
+                                    final Button detailButtonPeriodCalendar = (Button) view2.findViewById(R.id.activity_material_rental_period_calendar);
+                                    final Button detailButtonPeriodTime = (Button) view2.findViewById(R.id.activity_material_rental_period_time);
+                                    final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_rental_item_name);
+                                    final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_rental_renter);
+                                    final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_rental_imageview_image);
 
-                                    detailTextID.setText(materialManagementItems.get(position).title);
+                                    detailTextID.setText(materialRentalItems.get(position).title);
 
                                     database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -276,7 +344,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                                         }
                                     });
-                                    Glide.with(view2).load(materialManagementItems.get(position).imageUri).into(detailImageView);
+                                    Glide.with(view2).load(materialRentalItems.get(position).imageUri).into(detailImageView);
 
                                     now = System.currentTimeMillis();
                                     // 현재시간을 date 변수에 저장한다.
@@ -304,7 +372,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                                         @Override
                                         public void onClick(final View v) {
 
-                                            DatePickerDialog datePickerDialog = new DatePickerDialog(MaterialManagementActivity_Home.this, new DatePickerDialog.OnDateSetListener() {
+                                            DatePickerDialog datePickerDialog = new DatePickerDialog(MaterialRentalActivity_Home.this, new DatePickerDialog.OnDateSetListener() {
                                                 @Override
                                                 public void onDateSet(final DatePicker view, final int year, final int month, final int dayOfMonth) {
                                                     y = year;
@@ -337,7 +405,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                                     detailButtonPeriodTime.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(final View v) {
-                                            TimePickerDialog timePickerDialog = new TimePickerDialog(MaterialManagementActivity_Home.this, new TimePickerDialog.OnTimeSetListener() {
+                                            TimePickerDialog timePickerDialog = new TimePickerDialog(MaterialRentalActivity_Home.this, new TimePickerDialog.OnTimeSetListener() {
                                                 @Override
                                                 public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
                                                     h = hourOfDay;
@@ -376,8 +444,8 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                                     uidName = dataSnapshot.getValue(String.class);
-                                                    ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText(uidName);
-                                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
+                                                    ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText(uidName);
+                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
                                                 }
 
                                                 @Override
@@ -385,17 +453,17 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                                                 }
                                             });
-                                            ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText(dateStr + ' ' + timeStr);
-                                            database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                            ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.setText(dateStr + ' ' + timeStr);
+                                            database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                             // 대여를 하였을 떄 리사이클러뷰 리스트를 변경을 함
 
                                             findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
-                                            database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                            database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                             database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                                     uidName = dataSnapshot.getValue(String.class);
-                                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
+                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
                                                 }
 
                                                 @Override
@@ -403,7 +471,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                                                 }
                                             });
-                                            database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("state").setValue(1);
+                                            database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(1);
 
                                             dialog2.dismiss();
 
@@ -416,11 +484,13 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                                 case R.id.material_turn_in:
 
-                                    Toast.makeText(MaterialManagementActivity_Home.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                    ((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.setText("없음");
-                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_textview_recyclerview_lender.getText().toString());
-                                    ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.setText("없음");
-                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString());
+                                    flag = 0;
+
+                                    Toast.makeText(MaterialRentalActivity_Home.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText("없음");
+                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                    ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.setText("없음");
+                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
 
                                     // 반납을 했을시 물품기록사항에서 대여의 끝나는 날짜가 반납일로 바뀐다
                                     now = System.currentTimeMillis();
@@ -430,25 +500,54 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                                     //"yyyy-MM-dd HH:mm"
                                     date_Return = returnSimpleDateFormat.format(returnDate);
 
-                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + date_Return);
-                                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("state").setValue(0);
+                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_date").setValue(startDate + " ~ " + date_Return);
+                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(0);
+                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue("없음");
 
                                     return true;
 
                                 case R.id.material_delete:
 
-                                    Toast.makeText(MaterialManagementActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                                    delete_content(position);
-                                    materialManagementItems.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, materialManagementItems.size());
+                                    flag = 0;
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MaterialRentalActivity_Home.this);
+
+                                    View view = LayoutInflater.from(MaterialRentalActivity_Home.this)
+                                            .inflate(R.layout.activity_material_rental_admin_delete_item, null, false);
+                                    builder.setView(view);
+
+                                    final Button confirmButton = (Button) view.findViewById(R.id.activity_material_rental_admin_delete_item_button_confirm);
+                                    final Button cancelButton = (Button) view.findViewById(R.id.activity_material_rental_admin_delete_item_button_cancel);
+
+                                    final AlertDialog dialog = builder.create();
+
+                                    confirmButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            Toast.makeText(MaterialRentalActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                            delete_content(position);
+                                            materialRentalItems.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position, materialRentalItems.size());
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    dialog.show();
                                     return true;
 
                                 case R.id.material_history:
 
-                                    Intent intent = new Intent(MaterialManagementActivity_Home.this, MaterialManagementActivity_History.class);
-                                    final MaterialManagement_History_Item materialHistoryItem = new MaterialManagement_History_Item();
-                                    materialHistoryItem.history_lend_date = ((CustomViewHolder) viewholder).activity_material_management_admin_item_recyclerview_timestamp.getText().toString();
+                                    Intent intent = new Intent(MaterialRentalActivity_Home.this, MaterialRentalActivity_History.class);
+                                    final MaterialRental_History_Item materialHistoryItem = new MaterialRental_History_Item();
+                                    materialHistoryItem.history_lend_date = ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString();
                                     database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -461,7 +560,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
                                         }
                                     });
-                                    String uidAdminPath = database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).getKey();
+                                    String uidAdminPath = database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).getKey();
                                     intent.putExtra("uidAdminPath", uidAdminPath);
                                     startActivity(intent);
 
@@ -474,34 +573,36 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
                         }
                     });
 
-                    popup.inflate(R.menu.material_management_home_popup);
+                    popup.inflate(R.menu.material_rental_home_popup);
 
-                    popup.getMenu().getItem(2).setVisible(false);
-                    popup.getMenu().getItem(3).setVisible(false);
-
-                    if (!materialManagementItems.get(position).lender.equals("없음")) {
+                    if (!materialRentalItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(0).setVisible(false);
                     }
 
                     database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(final DataSnapshot dataSnapshot) {
-                                    admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                                    if (materialManagementItems.get(position).lender.equals("없음") && admin > 0) {
-                                        popup.getMenu().getItem(2).setVisible(true);
-                                    }
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                            uidName = dataSnapshot.child("name").getValue().toString();
+                        }
 
-                                    uidName = dataSnapshot.child("name").getValue().toString();
-                                    if (uidName.equals(materialManagementItems.get(position).lender)) {
-                                        popup.getMenu().getItem(3).setVisible(true);
-                                    }
-                                }
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
 
-                                @Override
-                                public void onCancelled(final DatabaseError databaseError) {
+                        }
+                    });
 
-                                }
-                            });
+                    if (materialRentalItems.get(position).lender.equals("없음") && admin <= adminNumber) {
+                        popup.getMenu().getItem(2).setVisible(true);
+                    } else {
+                        popup.getMenu().getItem(2).setVisible(false);
+                    }
+
+                    if (materialRentalItems.get(position).lender.equals(uidName)) {
+                        popup.getMenu().getItem(3).setVisible(true);
+                    } else {
+                        popup.getMenu().getItem(3).setVisible(false);
+                    }
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
@@ -513,7 +614,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.activity_material_management_item, viewGroup, false);
+                    .inflate(R.layout.activity_material_rental_admin_item, viewGroup, false);
 
             return new CustomViewHolder(view);
         }
@@ -521,35 +622,35 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
             CustomViewHolder customViewHolder = ((CustomViewHolder) viewholder);
-            customViewHolder.activity_material_management_admin_item_textview_recyclerview_item_name.setGravity(Gravity.LEFT);
-            customViewHolder.activity_material_management_admin_item_textview_recyclerview_lender.setGravity(Gravity.LEFT);
+            customViewHolder.activity_material_rental_admin_item_textview_recyclerview_item_name.setGravity(Gravity.LEFT);
+            customViewHolder.activity_material_rental_admin_item_textview_recyclerview_lender.setGravity(Gravity.LEFT);
 
-            customViewHolder.activity_material_management_admin_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).getId());
-            customViewHolder.activity_material_management_admin_item_textview_recyclerview_item_name.setText(materialManagementItems.get(position).title);
-            customViewHolder.activity_material_management_admin_item_textview_recyclerview_lender.setText(materialManagementItems.get(position).lender);
-            customViewHolder.activity_material_management_admin_item_recyclerview_timestamp.setText(materialManagementItems.get(position).timestamp.toString());
+            customViewHolder.activity_material_rental_admin_item_textview_recyclerview_item_name.setText(materialRentalItems.get(position).getId());
+            customViewHolder.activity_material_rental_admin_item_textview_recyclerview_item_name.setText(materialRentalItems.get(position).title);
+            customViewHolder.activity_material_rental_admin_item_textview_recyclerview_lender.setText(materialRentalItems.get(position).lender);
+            customViewHolder.activity_material_rental_admin_item_recyclerview_timestamp.setText(materialRentalItems.get(position).timestamp.toString());
 
-            Glide.with(viewholder.itemView.getContext()).load(materialManagementItems.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_management_admin_item_imageview_recyclerview_image);
+            Glide.with(viewholder.itemView.getContext()).load(materialRentalItems.get(position).imageUri).into(((CustomViewHolder) viewholder).activity_material_rental_admin_item_imageview_recyclerview_image);
 
             PopupMenu(customViewHolder, position);
 
-            if (materialManagementItems.get(position).lender.equals("없음")) {
-                customViewHolder.activity_material_management_admin_item_linearlayout.setBackgroundResource(R.drawable.border_green);
+            if (materialRentalItems.get(position).lender.equals("없음")) {
+                customViewHolder.activity_material_rental_admin_item_linearlayout.setBackgroundResource(R.drawable.border_green);
             } else {
-                customViewHolder.activity_material_management_admin_item_linearlayout.setBackgroundResource(R.drawable.border_gray);
+                customViewHolder.activity_material_rental_admin_item_linearlayout.setBackgroundResource(R.drawable.border_gray);
                 now = System.currentTimeMillis();
                 // 현재시간을 date 변수에 저장한다.
                 Date date = new Date(now);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 //"yyyy-MM-dd HH:mm"
                 date_Now = simpleDateFormat.format(date);
-                date_End = materialManagementItems.get(position).timestamp.toString();
+                date_End = materialRentalItems.get(position).timestamp.toString();
                 Date d2 = simpleDateFormat.parse(date_Now, new ParsePosition(0));
                 Date d1 = simpleDateFormat.parse(date_End, new ParsePosition(0));
                 long diff = d1.getTime() - d2.getTime();
                 if (diff <= 0) {
-                    customViewHolder.activity_material_management_admin_item_linearlayout.setBackgroundResource(R.drawable.border_orange);
-                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).child("state").setValue(2);
+                    customViewHolder.activity_material_rental_admin_item_linearlayout.setBackgroundResource(R.drawable.border_orange);
+                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(2);
                 }
             }
 
@@ -557,14 +658,14 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
         private void delete_content(final int position) {
 
-            storage.getReference().child(clubName).child("Material_Management").child(materialManagementItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            storage.getReference().child(clubName).child("Material_Rental").child(materialRentalItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
 
-                    database.getReference().child(clubName).child("Material_Management").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(final Void aVoid) {
-                            Toast.makeText(MaterialManagementActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MaterialRentalActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -576,7 +677,7 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull final Exception e) {
-                    Toast.makeText(MaterialManagementActivity_Home.this, "삭제 실패", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MaterialRentalActivity_Home.this, "삭제 실패", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -584,8 +685,44 @@ public class MaterialManagementActivity_Home extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return materialManagementItems.size();
+            return materialRentalItems.size();
         }
+
+/*        @Override
+        public Filter getFilter() {
+            return exampleFilter;
+        }
+
+        private Filter exampleFilter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(final CharSequence constraint) {
+                List<MaterialRental_Item> filteredList = new ArrayList<>();
+
+                if(constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(exampleListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for(MaterialRental_Item item : exampleListFull) {
+                        if(item.getText().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(final CharSequence constraint, final FilterResults results) {
+                exampleList.clear();
+                exampleList.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };*/
 
     }
 

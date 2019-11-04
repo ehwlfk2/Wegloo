@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/activity_material_rental_home_linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="9dp"
@@ -20,29 +20,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/material_rental_home_edtitext_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="검색어를 입력하세요." />
+
+        <AutoCompleteTextView
+            android:id="@+id/material_rental_home_autocompletetextview"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:textColorHint="#555555"
+            android:completionHint="검색어를 입력하세요."
+            android:completionThreshold="1" />
+
         <TextView
             style="@style/Top_Content_Text_Style"
-            android:text="출결관리" />
+            android:text="물품관리" />
 
         <View
             style="@style/Line_Style" />
 
-        // 출석관리
+        // 물품관리
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".Google_Login">
 
             <Button
-                android:id="@+id/activity_attend_home_admin_button_insert"
+                android:id="@+id/activity_material_rental_home_button_insert"
                 style="@style/Content_Classification_Text_Style"
-                android:text="출석추가"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="0dp" />
+                android:text="새상품 추가"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activity_attend_home_admin_recyclerview_main_list"
+                android:id="@+id/activity_material_rental_home_recyclerview_main_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
@@ -50,10 +66,8 @@
                 android:scrollbarSize="10dp"
                 android:scrollbarThumbVertical="@android:color/darker_gray"
                 android:scrollbars="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/activity_attend_home_admin_button_insert"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_editor_absoluteX="0dp" />
+                app:layout_constraintBottom_toTopOf="@+id/activity_material_rental_home_button_insert"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

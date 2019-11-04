@@ -59,6 +59,14 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="Line_Style" parent="@style/Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:background">#4F000000</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

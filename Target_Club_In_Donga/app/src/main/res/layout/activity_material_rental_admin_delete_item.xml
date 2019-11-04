@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="정말 삭제 하시겠습니까?" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/activity_material_rental_admin_delete_item_button_confirm"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/activity_material_rental_admin_delete_item_button_cancel"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:layout_toRightOf="@+id/activity_material_rental_admin_delete_item_button_confirm"/>
+
+    </RelativeLayout>
+</LinearLayout>
