@@ -11,7 +11,8 @@ public class MaterialRental_History_Item {
         this.id = id;
     }
 
-    public String history_lend_date;
+    public String history_lend_start_date;
+    public String history_lend_end_date;
     public String history_lend_name;
 
     public Object getTimestamp(){

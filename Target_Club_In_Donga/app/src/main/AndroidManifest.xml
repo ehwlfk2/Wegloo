@@ -47,10 +47,12 @@
         <activity android:name=".Attend.AttendActivity" />
         <activity android:name=".Attend.AttendActivity_Admin" />
         <activity android:name=".Attend.AttendActivity_Admin_Change" />
+        <activity android:name=".Attend.AttendActivity_Admin_Information" />
         <activity android:name=".Attend.AttendActivity_Home" />
         <activity android:name=".Album.AlbumActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".Material_Rental.MaterialRentalActivity_Home" />
+        <activity android:name=".Material_Rental.MaterialRentalActivity_Home"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Material_Rental.MaterialRentalActivity_History" />
         <activity android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert" />
         <activity android:name=".NoticeActivity" />

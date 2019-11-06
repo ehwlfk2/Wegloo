@@ -20,11 +20,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/material_rental_home_edtitext_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="검색어를 입력하세요." />
+            android:hint="검색어를 입력하세요."
+            android:completionThreshold="1" />
 
 <!--        <AutoCompleteTextView
             android:id="@+id/material_rental_home_autocompletetextview"
@@ -37,7 +38,7 @@
 
         <TextView
             style="@style/Top_Content_Text_Style"
-            android:text="물품관리" />
+            android:text="물품대여" />
 
         <View
             style="@style/Line_Style" />
