@@ -42,28 +42,36 @@
                         android:layout_weight="2"/>
 
                     <TextView
-                        android:id="@+id/activity_attend_admin_change_item_textview_attend_statue"
+                        android:id="@+id/activity_attend_admin_change_item_textview_attend_state"
                         style="@style/Content_Text_Style"
                         android:text="미출결"
                         android:layout_weight="1"/>
 
                 </LinearLayout>
 
-
             </LinearLayout>
 
             <View
                 style="@style/Line_Style" />
 
-            <TextView
-                style="@style/Content_Classification_Text_Style"
-                android:text="전화번호" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/activity_attend_admin_change_item_textview_phone_number"
-                style="@style/Content_Text_Style"
-                android:text="없음" />
+                <TextView
+                    style="@style/Content_Classification_Text_Style"
+                    android:text="전화번호"
+                    android:layout_weight="1" />
 
+                <TextView
+                    android:id="@+id/activity_attend_admin_change_item_textview_phone_number"
+                    style="@style/Content_Text_Style"
+                    android:text="없음"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

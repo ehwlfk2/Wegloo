@@ -152,13 +152,13 @@ public class AttendActivity_Admin extends AppCompatActivity {
                                 // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
                                 getName = snapshot.child("name").getValue(String.class);
                                 getPhone = snapshot.child("phone").getValue(String.class);
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).child("name").setValue(getName);
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
 
                                 Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
                                 attendAdminChangeItem.name = getName;
-                                attendAdminChangeItem.attend_statue = "미출결";
+                                attendAdminChangeItem.attend_state = "미출결";
                                 attendAdminChangeItem.phone = getPhone;
                             }
                         }

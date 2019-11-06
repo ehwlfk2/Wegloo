@@ -145,7 +145,7 @@ public class MaterialRentalActivity_History extends AppCompatActivity {
 
             customViewHolder.activity_material_rental_history_item_name.setText(materialHistoryItems.get(position).getId());
             customViewHolder.activity_material_rental_history_item_name.setText(materialHistoryItems.get(position).history_lend_name);
-            customViewHolder.activity_material_rental_history_item_date.setText(materialHistoryItems.get(position).history_lend_date);
+            customViewHolder.activity_material_rental_history_item_date.setText(materialHistoryItems.get(position).history_lend_start_date + " ~ " + materialHistoryItems.get(position).history_lend_end_date);
 
         }
 

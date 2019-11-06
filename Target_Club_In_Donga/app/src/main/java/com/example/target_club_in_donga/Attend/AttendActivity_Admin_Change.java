@@ -1,11 +1,7 @@
 package com.example.target_club_in_donga.Attend;
 
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,18 +18,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +35,6 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
     List<Attend_Admin_Change_Item> attendAdminItems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
-    private FirebaseAuth auth;
-    private FirebaseStorage storage;
     private FirebaseDatabase database;
 
     private String findkey;
@@ -62,8 +49,6 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
         findkey = intent.getExtras().getString("findKey");
 
-        auth = FirebaseAuth.getInstance();
-        storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
 
         activity_attend_admin_change_home_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_admin_change_home_recyclerview_main_list);
@@ -74,7 +59,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
         activity_attend_admin_change_home_recyclerview_main_list.setAdapter(attendAdminChangeActivity_adminRecyclerViewAdapter);
         attendAdminChangeActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").addValueEventListener(new ValueEventListener() {
+        database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
@@ -96,44 +81,6 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
-
-        Uri file = Uri.fromFile(new File(getPath(data.getData())));
-        StorageReference riversRef = storageRef.child(clubName).child("Attend/" + file.getLastPathSegment());
-        UploadTask uploadTask = riversRef.putFile(file);
-
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull final Exception e) {
-
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri downloadUri = taskSnapshot.getDownloadUrl();
-
-            }
-        });
-    }
-
-    public String getPath(Uri uri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
-
-        Cursor cursor = cursorLoader.loadInBackground();
-        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-        cursor.moveToFirst();
-
-        return cursor.getString(index);
-
-    }
-
-
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
@@ -150,7 +97,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
             LinearLayout activity_attend_admin_change_item_linearlayout;
             TextView activity_attend_admin_change_item_textview_name;
-            TextView activity_attend_admin_change_item_textview_attend_statue;
+            TextView activity_attend_admin_change_item_textview_attend_state;
             TextView activity_attend_admin_change_item_textview_phone_number;
 
             public CustomViewHolder(View view) {
@@ -158,7 +105,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
                 activity_attend_admin_change_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_admin_change_item_linearlayout);
                 activity_attend_admin_change_item_textview_name = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_name);
-                activity_attend_admin_change_item_textview_attend_statue = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_attend_statue);
+                activity_attend_admin_change_item_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_attend_state);
                 activity_attend_admin_change_item_textview_phone_number = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_phone_number);
 
             }
@@ -178,11 +125,11 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
             final AttendActivity_Admin_Change.AttendAdminChangeActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Admin_Change.AttendAdminChangeActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
             customViewHolder.activity_attend_admin_change_item_textview_name.setGravity(Gravity.LEFT);
-            customViewHolder.activity_attend_admin_change_item_textview_attend_statue.setGravity(Gravity.LEFT);
+            customViewHolder.activity_attend_admin_change_item_textview_attend_state.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_admin_change_item_textview_phone_number.setGravity(Gravity.LEFT);
 
             customViewHolder.activity_attend_admin_change_item_textview_name.setText(attendAdminItems.get(position).name);
-            customViewHolder.activity_attend_admin_change_item_textview_attend_statue.setText(attendAdminItems.get(position).attend_statue);
+            customViewHolder.activity_attend_admin_change_item_textview_attend_state.setText(attendAdminItems.get(position).attend_state);
             customViewHolder.activity_attend_admin_change_item_textview_phone_number.setText(attendAdminItems.get(position).phone);
 
             customViewHolder.activity_attend_admin_change_item_linearlayout.setOnClickListener(new View.OnClickListener() {
@@ -219,13 +166,13 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
                         @Override
                         public void onClick(final View v) {
                             if(flag == 0) {
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("출석");
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("출석");
                                 // 출석으로 변경
                             } else if(flag == 1) {
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("지각");
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("지각");
                                 // 지각으로 변경
                             } else {
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_Statue").child(uidLists.get(position)).child("attend_statue").setValue("결석");
+                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("결석");
                                 // 결석으로 변경
                             }
                             dialog.dismiss();

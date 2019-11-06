@@ -48,7 +48,6 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
     private EditText activity_material_rental_admin_insert_edittext_item_name;
     private Button activity_material_rental_admin_insert_button_insert;
     private String imagePath;
-    private TextView activity_material_rental_insert_textview_lender;
 
     private long now;
 
