@@ -141,7 +141,7 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     attendItem.attendTimeLimit = date_Attend;
                     attendItem.tardyTimeLimit = date_Trady;
 
-                    findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
+                    findkey = database.getReference().push().getKey();
                     database.getReference().child(clubName).child("Attend").child(findkey).setValue(attendItem);
                     database.getReference().child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
 
