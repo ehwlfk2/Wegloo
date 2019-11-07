@@ -350,7 +350,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                 }
             });
 
-            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
+            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
@@ -370,7 +370,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                 }
             });
 
-            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).addValueEventListener(new ValueEventListener() {
+            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
                     getTardyTimeLimit = dataSnapshot.child("tardyTimeLimit").getValue(String.class);

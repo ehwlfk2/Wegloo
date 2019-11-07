@@ -54,7 +54,8 @@
         <activity android:name=".Material_Rental.MaterialRentalActivity_Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Material_Rental.MaterialRentalActivity_History" />
-        <activity android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert" />
+        <activity android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".Schedule.ScheduleActivity" />
         <activity android:name=".UserDetailActivity" />

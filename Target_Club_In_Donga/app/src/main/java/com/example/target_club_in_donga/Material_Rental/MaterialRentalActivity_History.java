@@ -71,9 +71,8 @@ public class MaterialRentalActivity_History extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     MaterialRental_History_Item materialHistoryItem = snapshot.getValue(MaterialRental_History_Item.class);
                     String uidKey = snapshot.getKey();
-                    materialHistoryItems.add(materialHistoryItem);
-                    uidLists.add(uidKey);
-                    Log.e("리스트", materialHistoryItem.history_lend_name);
+                    materialHistoryItems.add(0, materialHistoryItem);
+                    uidLists.add(0, uidKey);
                 }
                 boardRecyclerViewAdapter.notifyDataSetChanged();
             }
