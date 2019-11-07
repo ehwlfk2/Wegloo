@@ -143,7 +143,7 @@ public class HistoryActivity_Insert extends AppCompatActivity {
             StorageReference storageRef = firebaseStorage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
             final Uri file = Uri.fromFile(new File(uri));
-            StorageReference riversRef = storageRef.child("HistoryImages/"+file.getLastPathSegment());
+            StorageReference riversRef = storageRef.child(clubName).child("HistoryImages/"+file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
             // Register observers to listen for when the download is done or if it fails

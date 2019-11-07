@@ -7,9 +7,10 @@ public class AppLoginData {
     private String name;
     private String phone;
     private String recentClub;
-    //private String studentNumber;
-    //private String school;
-    public Map<String, Object> signUpClub  = new HashMap<>();
+    private String reailNameProPicUrl;
+    private String reailNameProPicDeleteName;
+
+    //public Map<String, Object> signUpClub  = new HashMap<>();
 
     public String getName() {
         return name;
@@ -25,6 +26,22 @@ public class AppLoginData {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getReailNameProPicUrl() {
+        return reailNameProPicUrl;
+    }
+
+    public void setReailNameProPicUrl(String reailNameProPicUrl) {
+        this.reailNameProPicUrl = reailNameProPicUrl;
+    }
+
+    public String getReailNameProPicDeleteName() {
+        return reailNameProPicDeleteName;
+    }
+
+    public void setReailNameProPicDeleteName(String reailNameProPicDeleteName) {
+        this.reailNameProPicDeleteName = reailNameProPicDeleteName;
     }
 
     public String getRecentClub() {

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,25 +28,18 @@ import java.util.regex.Pattern;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class SignUpActivity_03 extends AppCompatActivity implements View.OnClickListener {
-
     private FirebaseAuth mAuth;
-    private FirebaseDatabase database;
-    private String emailSubject;
     private String emailAddress;
-    private String emailPw;
-    private EditText activity_signup_03_EditText_name, activity_signup_03_EditText_phone;
-
+    private EditText activity_signup_03_EditText_email, activity_signup_03_EditText_pw, activity_signup_03_EditText_pwCheck;
+    private Button activity_signup_03_next_btn;
+    private ImageButton activity_signup_03_cancel_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup_03_information);
+        setContentView(R.layout.activity_signup_03_ver0);
 
-        activity_signup_03_EditText_name = (EditText)findViewById(R.id.activity_signup_03_EditText_name);
-        activity_signup_03_EditText_phone = (EditText)findViewById(R.id.activity_signup_03_EditText_phone);
-        //activity_signup_03_EditText_School = (EditText)findViewById(R.id.activity_signup_03_EditText_School);
-        //activity_signup_03_EditText_student_number = (EditText)findViewById(R.id.activity_signup_03_EditText_student_number);
-
-        InputFilter filter_mail = new InputFilter() {
+        mAuth = FirebaseAuth.getInstance();
+        /*InputFilter filter_mail = new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 Pattern ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$");
@@ -58,20 +52,25 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
             }
         };
 
-        activity_signup_03_EditText_name.setFilters(new InputFilter[]{filter_mail});
-        //activity_signup_03_EditText_School.setFilters(new InputFilter[]{filter_mail});
+        activity_signup_03_EditText_name.setFilters(new InputFilter[]{filter_mail});*/
 
-        EditText activity_signup_03_EditText_email = findViewById(R.id.activity_signup_03_EditText_email);
-        EditText activity_signup_03_EditText_pw = findViewById(R.id.activity_signup_03_EditText_pw);
-        mAuth = FirebaseAuth.getInstance(); // single 톤 패턴으로 작동
-        database = FirebaseDatabase.getInstance();
-        activity_signup_03_EditText_email.setEnabled(false);
+        //(영문(대소문자 구분), 숫자, 특수문자 조합, 9~12자리)
+
+
+
+        activity_signup_03_EditText_email = findViewById(R.id.singup_03_textview_emailcheck);
+        activity_signup_03_EditText_pw = findViewById(R.id.signup_03_edittext_psw);
+        activity_signup_03_EditText_pwCheck = findViewById(R.id.signup_03_edittext_pswcheck);
+
+
         // 데이터 수신
         Intent intent = getIntent();
-
+        emailAddress = intent.getExtras().getString("emailAddress");
+        activity_signup_03_EditText_email.setText(emailAddress);
+        activity_signup_03_EditText_email.setEnabled(false);
+        /*
         try {
             // null 에러처리
-            emailSubject = intent.getExtras().getString("emailSubject");
             emailAddress = intent.getExtras().getString("emailAddress");
             //emailPw = intent.getExtras().getString("emailPw");
             activity_signup_03_EditText_email.setText(String.format(getResources().getString(R.string.email_All), emailSubject, emailAddress));
@@ -84,11 +83,11 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
             activity_signup_03_EditText_pw.setText("* * * * * *");
             activity_signup_03_EditText_pw.setEnabled(false);
             //Log.e("develop_check", "이메일정보를 intent 하던 중 에러 발생했습니다. : " + e);
-        }
+        }*/
 
         // Button
-        final Button activity_signup_03_cancel_btn = findViewById(R.id.activity_signup_03_cancel_btn);
-        Button activity_signup_03_next_btn = findViewById(R.id.activity_signup_03_next_btn);
+        activity_signup_03_cancel_btn = findViewById(R.id.singup_03_button_back);
+        activity_signup_03_next_btn = findViewById(R.id.singup_03_button_next);
 
         activity_signup_03_cancel_btn.setOnClickListener(this); // 취소 버튼 활성화
         activity_signup_03_next_btn.setOnClickListener(this);   // 다음 버튼 활성화
@@ -97,52 +96,73 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        int i = view.getId();
-        if (i == R.id.activity_signup_03_cancel_btn) {
-            Intent intent = new Intent(SignUpActivity_03.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (i == R.id.activity_signup_03_next_btn) {
-            String pw = ((EditText) (findViewById(R.id.activity_signup_03_EditText_pw))).getText().toString();
-            if(pw.length() >= 6 ) {
+        switch (view.getId()){
+            case R.id.singup_03_button_back:
+                finish();
+                break;
+            case R.id.singup_03_button_next:
+                String pw = activity_signup_03_EditText_pw.getText().toString();
+                String pwCheck = activity_signup_03_EditText_pwCheck.getText().toString();
 
-                //String name = ((EditText) (findViewById(R.id.activity_signup_03_EditText_name))).getText().toString(); //이름 정규화 노필요
-                //String phone = ((EditText) (findViewById(R.id.activity_signup_03_EditText_phone))).getText().toString(); //폰이 보통 몇자리죠???
-                //String school = ((EditText) (findViewById(R.id.activity_signup_03_EditText_School))).getText().toString(); //동아대 --> 동아대학교
-                //String studentNumber = ((EditText) (findViewById(R.id.activity_signup_03_EditText_student_number))).getText().toString();
-
-                String name = activity_signup_03_EditText_name.getText().toString();
-                String phone = activity_signup_03_EditText_phone.getText().toString();
-                //String school = activity_signup_03_EditText_School.getText().toString();
-                //String studentNumber = activity_signup_03_EditText_student_number.getText().toString();
-
-                if(!name.isEmpty() && !phone.isEmpty() /*&& !school.isEmpty() && !studentNumber.isEmpty()*/ ) {
-                    //createUser(emailSubject, emailAddress, pw, name, phone, school, schoolNumber);
-                    AppLoginData data = new AppLoginData();
-                    data.setName(name);
-                    data.setPhone(phone);
-                    //LoginData data = new LoginData(name, phone, studentNumber, school, 0, true);
-                    database.getReference().child("AppUser").child(mAuth.getCurrentUser().getUid()).setValue(data);
-                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(this, SignUpActivity_04.class);
-                    startActivity(intent);
-                    finish();
-
-
-                    //Toast.makeText(this, ""+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-                    //Log.e("mAuth으앙",""+mAuth.getCurrentUser().getUid());
-
+                if(!pw.equals(pwCheck)) {
+                    Toast.makeText(SignUpActivity_03.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else if(!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,}$", pw)){ //8자리이상 영문(대소문자 구분) + 숫자 + 특수문자
+                    Toast.makeText(SignUpActivity_03.this, "비밀번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+                else if(!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,}$", pwCheck)){
+                    Toast.makeText(SignUpActivity_03.this, "비밀번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Log.d("develop_check","회원가입란을 모두 채우지 않았습니다..");
-                    Toast.makeText(SignUpActivity_03.this, "빈칸이 있어요.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignUpActivity_03.this, SignUpActivity_04.class);
+                    createUser(emailAddress,pwCheck);
+                    /*intent.putExtra("loginIdentity","email");
+                    intent.putExtra("emailAddress",emailAddress);
+                    intent.putExtra("emailPassword",pwCheck);*/
+                    startActivity(intent);
+                    finish();
+                }
+                break;
+        }
+    }   // onClick
+
+    private void createUser(final String emailAddress, final String pw) {
+        //LoginData data = new LoginData(name, phone, studentNumber, school, 0);
+        mAuth.createUserWithEmailAndPassword(emailAddress,pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("develop_check", "createUserWithEmail : success");
+                    loginUser(emailAddress, pw);
+                    //Toast.makeText(SignUpActivity_03.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SignUpActivity_03.this, ""+mAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("develop_check", "createUserWithEmail : failure => ", task.getException());
+                    //Toast.makeText(this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SignUpActivity_02.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
                 }
             }
-            else{
-                Log.d("develop_check","비밀번호 숫자 제한에 걸렷습니다.");
-                Toast.makeText(SignUpActivity_03.this, "비밀번호 숫자 제한에 걸렷습니다.", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void loginUser(String email, String pw){
+        //String email = activity_login_id_editText.getText().toString();
+        //String pw = activity_login_pw_editText.getText().toString();
+        mAuth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    //Toast.makeText(LoginActivity.this, "이메일 회원가입해주3", Toast.LENGTH_SHORT).show();
+                    Log.w("develop_check", "로그인에 실패했습니다.");
+                } else {
+                    //Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+                    Log.w("develop_check", "로그인에 성공했습니다.");
+                    //success_of_login();
+
+                }
             }
-        }   // 파이어베이스에 회원가입 시도
-    }   // onClick
+        });
+    }
 }
