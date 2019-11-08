@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.Package_LogIn;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -81,11 +82,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
     EditText activity_login_id_editText, activity_login_pw_editText;
-
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_ver0);
+        progressDialog = new ProgressDialog(this);
         mFunctions = FirebaseFunctions.getInstance();
         database = FirebaseDatabase.getInstance();
         //카카오 로그인 콜백받기
@@ -125,6 +127,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
 
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("develop_check", "페이스북 로그인 성공 : " + loginResult);
@@ -168,6 +171,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
                 activity_login_id_editText.setText("");
                 activity_login_pw_editText.setText("");
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -176,6 +180,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     database.getReference().child("AppUser").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
+                            progressDialog.dismiss();
                             try{
                                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
                                 clubName = appLoginData.getPhone();
@@ -318,12 +323,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             startActivity(intent);
             //finish();
         } else if (i == R.id.login_button_google) {
+            progressDialog.setMessage("잠시 기다려 주세요...");
+            progressDialog.show();
             Log.v("develop_check", "구글 로그인 시도");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
+
         } else if (i == R.id.login_button_facebook) {
+            progressDialog.setMessage("잠시 기다려 주세요...");
+            progressDialog.show();
             Log.v("develop_check", "페이스북 로그인 시도");
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+
         } else if (i == R.id.login_button_login) {
             Log.v("develop_check", "로그인 시도");
             loginUser();
