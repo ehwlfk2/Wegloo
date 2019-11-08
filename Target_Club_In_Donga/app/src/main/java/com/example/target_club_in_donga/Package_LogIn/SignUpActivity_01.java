@@ -154,9 +154,11 @@ public class SignUpActivity_01 extends AppCompatActivity {
 
         Button confirmBtn = view2.findViewById(R.id.dialog_agreement_confirmBtn);
         TextView activity_signup_01_TextView_Agreement_term_content = view2.findViewById(R.id.dialog_agreement_contents);
+        TextView activity_signup_01_TextView_text = view2.findViewById(R.id.dialog_agreement_text);
         activity_signup_01_TextView_Agreement_term_content.setMovementMethod(new ScrollingMovementMethod());
 
         if(flag == 1){
+            activity_signup_01_TextView_text.setText(R.string.SignUp_Agreement_term);
             activity_signup_01_TextView_Agreement_term_content.setText(R.string.SignUp_Agreement_term_Contents);
             confirmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -169,6 +171,7 @@ public class SignUpActivity_01 extends AppCompatActivity {
             });
         }
         else if(flag == 2){
+            activity_signup_01_TextView_text.setText(R.string.SignUp_Agreement_privacy);
             activity_signup_01_TextView_Agreement_term_content.setText(R.string.SignUp_Agreement_privacy_Contents);
             confirmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

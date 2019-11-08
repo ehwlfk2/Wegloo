@@ -120,9 +120,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
                 }
                 else{
                     insertDB(realNameProfileIamgePath, name, phoneNumber);
-                    Intent intent = new Intent(SignUpActivity_04.this,Congratulation.class);
-                    startActivity(intent);
-                    finish();
+
                 }
                 break;
             case R.id.signup_04_button_picture:
@@ -200,7 +198,9 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
                     itemDTO.setPhone(phoneNumber);
 
                     firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
-
+                    Intent intent = new Intent(SignUpActivity_04.this,Congratulation.class);
+                    startActivity(intent);
+                    finish();
                 }
             });
         }catch (NullPointerException e){ //프로필 안햇을경우
@@ -210,7 +210,9 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
             itemDTO.setName(name);
             itemDTO.setPhone(phoneNumber);
             firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
-
+            Intent intent = new Intent(SignUpActivity_04.this,Congratulation.class);
+            startActivity(intent);
+            finish();
         }
 
     }

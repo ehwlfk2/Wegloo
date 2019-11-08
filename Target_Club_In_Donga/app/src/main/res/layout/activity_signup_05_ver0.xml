@@ -55,7 +55,7 @@
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.8"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintHeight_percent="0.5"
             app:snowflakesFadingEnabled="true"
             app:snowflakesAlreadyFalling="true"
             app:snowflakesNum="35"
@@ -134,12 +134,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tempLogout"
-        android:text="로그아웃"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
