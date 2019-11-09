@@ -2,11 +2,12 @@ package com.example.target_club_in_donga.club_foundation_join;
 
 public class ClubData {
     private String thisClubName;
-    private String clubIntroduce;
+    private String clubIntroduce; //소개글
     private String clubImageUrl;
     private String clubImageDeleteName;
     private boolean realNameSystem; //true = 실명제 false = 익명제
-    private boolean freeSubscription; //true = 자유가입제 false = 승인제
+    private boolean freeSign; //true = 자유가입제 false = 승인제
+    private Object clubCreateTimestamp; //만들어진 일자
 
     public String getThisClubName() {
         return thisClubName;
@@ -48,11 +49,18 @@ public class ClubData {
         this.realNameSystem = realNameSystem;
     }
 
-    public boolean isFreeSubscription() {
-        return freeSubscription;
+    public boolean isFreeSign() {
+        return freeSign;
     }
 
-    public void setFreeSubscription(boolean freeSubscription) {
-        this.freeSubscription = freeSubscription;
+    public void setFreeSign(boolean freeSign) {
+        this.freeSign = freeSign;
+    }
+    public Object getClubCreateTimestamp() {
+        return clubCreateTimestamp;
+    }
+
+    public void setClubCreateTimestamp(Object clubCreateTimestamp) {
+        this.clubCreateTimestamp = clubCreateTimestamp;
     }
 }

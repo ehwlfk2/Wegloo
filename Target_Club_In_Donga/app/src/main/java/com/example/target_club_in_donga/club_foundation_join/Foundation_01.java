@@ -68,7 +68,9 @@ public class Foundation_01 extends AppCompatActivity {
                     /**
                      * 다음페이지 활성
                      */
-
+                    Intent intent = new Intent(Foundation_01.this,Foundation_02.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(Foundation_01.this, "동의하셔야 합니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -144,7 +146,7 @@ public class Foundation_01 extends AppCompatActivity {
         activity_foundation_01_TextView_Agreement_term_content.setMovementMethod(new ScrollingMovementMethod());
 
         if(flag == 1){
-            activity_foundation_01_TextView_text.setText(R.string.SignUp_Agreement_term);
+            activity_foundation_01_TextView_text.setText("모임 만들기 약관 1");
             activity_foundation_01_TextView_Agreement_term_content.setText(R.string.SignUp_Agreement_term_Contents);
             confirmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -157,7 +159,7 @@ public class Foundation_01 extends AppCompatActivity {
             });
         }
         else if(flag == 2){
-            activity_foundation_01_TextView_text.setText(R.string.SignUp_Agreement_privacy);
+            activity_foundation_01_TextView_text.setText("모임 만들기 약관 2");
             activity_foundation_01_TextView_Agreement_term_content.setText(R.string.SignUp_Agreement_privacy_Contents);
             confirmBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

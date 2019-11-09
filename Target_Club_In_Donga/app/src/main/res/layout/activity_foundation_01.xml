@@ -79,7 +79,7 @@
         app:layout_constraintVertical_bias="0.165364583"
 
         android:gravity="center_horizontal"
-        android:text="모임 창설약관"
+        android:text="모임 만들기 약관"
         android:textColor="@color/color_White"
         android:autoSizeMinTextSize="1sp"
         android:autoSizeMaxTextSize="20dp"
@@ -139,7 +139,7 @@
         <TextView
             android:id="@+id/foundation_01_textview_term"
             android:gravity="center|left"
-            android:text="모임 창설약관 1"
+            android:text="모임 만들기 약관 1"
             android:autoSizeMinTextSize="1sp"
             android:autoSizeMaxTextSize="20dp"
             android:autoSizeTextType="uniform"
@@ -211,7 +211,7 @@
 
         <TextView
             android:id="@+id/foundation_01_textview_privacy"
-            android:text="모임 창설약관 2"
+            android:text="모임 만들기 약관 2"
             android:autoSizeMinTextSize="1sp"
             android:autoSizeMaxTextSize="20dp"
             android:autoSizeTextType="uniform"
@@ -286,7 +286,7 @@
 
         <TextView
             android:id="@+id/foundation_01_texview_total"
-            android:text="모임 창설약관 1,2에 모두 동의합니다."
+            android:text="모임 만들기 약관 1,2에 모두 동의합니다."
             android:gravity="center|left"
             android:layout_width="0dp"
             app:layout_constraintWidth_default="percent"

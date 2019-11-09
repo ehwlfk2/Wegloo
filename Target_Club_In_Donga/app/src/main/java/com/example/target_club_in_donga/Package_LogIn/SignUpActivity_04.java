@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.Package_LogIn;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ShapeDrawable;
@@ -56,6 +57,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
     private FirebaseDatabase firebaseDatabase;
     private FirebaseStorage firebaseStorage;
     private String realNameProfileIamgePath;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
 
         /*권한*/
         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
-
+        progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
@@ -119,8 +121,8 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
                     Toast.makeText(this, "전화번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    insertDB(realNameProfileIamgePath, name, phoneNumber);
 
+                    insertDB(realNameProfileIamgePath, name, phoneNumber);
                 }
                 break;
             case R.id.signup_04_button_picture:
@@ -169,7 +171,8 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
     }
 
     private void insertDB(String uri, final String name, final String phoneNumber){
-
+        progressDialog.setMessage("회원가입 중입니다...");
+        progressDialog.show();
         final String uid = firebaseAuth.getCurrentUser().getUid();
         try{
             StorageReference storageRef = firebaseStorage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
@@ -198,6 +201,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
                     itemDTO.setPhone(phoneNumber);
 
                     firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
+                    progressDialog.dismiss();
                     Intent intent = new Intent(SignUpActivity_04.this,Congratulation.class);
                     startActivity(intent);
                     finish();
@@ -210,6 +214,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
             itemDTO.setName(name);
             itemDTO.setPhone(phoneNumber);
             firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
+            progressDialog.dismiss();
             Intent intent = new Intent(SignUpActivity_04.this,Congratulation.class);
             startActivity(intent);
             finish();
@@ -218,7 +223,6 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
     }
     @Override
     public void onBackPressed() {
-        // 시간초를 초기화 하기위한 버튼
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         finish();

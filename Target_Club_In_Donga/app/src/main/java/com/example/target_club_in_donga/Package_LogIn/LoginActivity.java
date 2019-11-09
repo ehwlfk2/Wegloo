@@ -281,7 +281,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("develop_check", "signInWithCredential : failure =>", task.getException());
-                    //Toast.makeText(LoginActivity.this, "구글 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -295,6 +294,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(LoginActivity.this, "이메일 회원가입해주3", Toast.LENGTH_SHORT).show();
                         Log.w("develop_check", "로그인에 실패했습니다.");
@@ -308,8 +308,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             });
         }
         else{
-            Log.w("develop_check","아이디와 비밀번호를 입력하지 않았습니다.");
-            //Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
 
