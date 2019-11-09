@@ -56,13 +56,6 @@
             android:layout_height="match_parent"
             tools:context=".Google_Login">
 
-            <Button
-                style="@style/Content_Classification_Text_Style"
-                android:text="출석추가하기"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="0dp"
-                android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activity_attend_admin_information_home_recyclerview_main_list"
                 android:layout_width="match_parent"

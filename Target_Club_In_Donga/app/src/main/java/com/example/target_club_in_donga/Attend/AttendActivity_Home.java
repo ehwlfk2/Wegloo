@@ -72,6 +72,23 @@ public class AttendActivity_Home extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
 
+        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                admin = Integer.parseInt(dataSnapshot.getValue().toString());
+                if (admin > adminNumber) {
+                    activity_attend_home_admin_button_insert.setVisibility(View.GONE);
+                    activity_attend_home_button_information.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
+
         activity_attend_home_admin_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_home_recyclerview_main_list);
         activity_attend_home_admin_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
 
@@ -88,7 +105,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Attend_Admin_Item attendItem = snapshot.getValue(Attend_Admin_Item.class);
                     String uidKey = snapshot.getKey();
-                    attenditems.add(0 ,attendItem);
+                    attenditems.add(0, attendItem);
                     uidLists.add(0, uidKey);
                 }
                 attendActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
@@ -115,19 +132,6 @@ public class AttendActivity_Home extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Admin_Information.class);
                 startActivity(intent);
-            }
-        });
-
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                admin = Integer.parseInt(dataSnapshot.getValue().toString());
-
-            }
-
-            @Override
-            public void onCancelled(final DatabaseError databaseError) {
-
             }
         });
     }
@@ -280,24 +284,7 @@ public class AttendActivity_Home extends AppCompatActivity {
 
                     popup.inflate(R.menu.attend_home_popup);
 
-                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                            if (admin <= adminNumber) {
-                                popup.getMenu().getItem(1).setVisible(true);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    if (admin <= adminNumber) {
-                        popup.getMenu().getItem(1).setVisible(true);
-                    } else {
+                    if (admin > adminNumber) {
                         popup.getMenu().getItem(1).setVisible(false);
                     }
 

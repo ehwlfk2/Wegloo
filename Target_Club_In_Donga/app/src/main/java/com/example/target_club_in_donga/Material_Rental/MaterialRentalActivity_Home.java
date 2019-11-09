@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -88,7 +89,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
     private String findkey, uidName, uidAdminPath;
 
-    private int admin, admin2, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0;
+    private int admin, admin2, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0/*, listSize, materialListSize, listSizeFlag = 0*/, removeFlag = 1, removeFlag2 = 1, removeList, removeList2;
     private static int adminNumber = 2;
 
     @Override
@@ -117,8 +118,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         activity_material_rental_home_recyclerview_main_list.setAdapter(materialRentalActivity_adminRecyclerViewAdapter);
         materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-//        material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
-        material_rental_home_edittext_search = (EditText) findViewById(R.id.material_rental_home_edtitext_search);
+        material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
+//        material_rental_home_edittext_search = (EditText) findViewById(R.id.material_rental_home_edtitext_search);
 
         database.getReference().child(clubName).child("Material_Rental").addValueEventListener(new ValueEventListener() {
             @Override
@@ -134,17 +135,13 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                 materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-/*                // 자동완성에 들어갈 물품명을 list에 저장
+/*                materialListSize = materialRentalItems.size();
+
+                // 자동완성에 들어갈 물품명을 list에 저장
                 list.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    Log.e("값", snapshot.child("title").getValue(String.class));
                     list.add(snapshot.child("title").getValue(String.class) + "");
-//                    Log.e("아", list.get(0));
                 }
-
-                Log.e("사이즈", list.size() + "");
-                Log.e("값", list.get(list.size() - 1));
-*//*                adapter.notifyDataSetChanged();
                 material_rental_home_edittext_search.setAdapter(adapter);*/
 
             }
@@ -157,7 +154,6 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
 /*        adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, list);
         material_rental_home_edittext_search.setAdapter(adapter);*/
-//        adapter.notifyDataSetChanged();
 
         activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
         activity_material_rental_home_button_insert.setOnClickListener(new View.OnClickListener() {
@@ -173,14 +169,13 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
 
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                admin = Integer.parseInt(dataSnapshot.getValue().toString());
+                admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                uidName = dataSnapshot.child("name").getValue().toString();
 
-                if (admin <= adminNumber) {
-                    activity_material_rental_home_button_insert.setVisibility(View.VISIBLE);
-                } else {
+                if (admin > adminNumber) {
                     activity_material_rental_home_button_insert.setVisibility(View.GONE);
                 }
             }
@@ -243,10 +238,10 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             }
         });
 
-/*        AutoCompleteTextView material_rental_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.material_rental_home_autocompletetextview);
-        material_rental_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, materialRentalItems));*/
+        AutoCompleteTextView material_rental_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
+        material_rental_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, materialRentalItems));
 
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+/*        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin2 = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
@@ -257,7 +252,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 
@@ -380,7 +375,9 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                     detailTextID.setText(materialRentalItems.get(position).title);
 
-                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    detailTextName.setText(uidName);
+
+/*                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             uidName = dataSnapshot.getValue(String.class);
@@ -391,7 +388,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                         public void onCancelled(final DatabaseError databaseError) {
 
                                         }
-                                    });
+                                    });*/
+
                                     Glide.with(view2).load(materialRentalItems.get(position).imageUri).into(detailImageView);
 
                                     now = System.currentTimeMillis();
@@ -491,7 +489,15 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                             if (dateFlag == 0) {
                                                 Toast.makeText(v.getContext(), "대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                                database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                                ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText(uidName);
+                                                if (flag2 == 1) {
+                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                                } else if (flag2 == 0) {
+                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                                }
+
+/*                                                database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                                         uidName = dataSnapshot.getValue(String.class);
@@ -507,7 +513,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                     public void onCancelled(final DatabaseError databaseError) {
 
                                                     }
-                                                });
+                                                });*/
 
                                                 ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.setText(dateStr + ' ' + timeStr);
                                                 if (flag2 == 1) {
@@ -525,10 +531,16 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                     database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_start_date").setValue(startDate);
                                                     database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_end_date").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                                 }
-                                                database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                                if (flag2 == 1) {
+                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
+                                                } else if (flag2 == 0) {
+                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
+                                                }
+
+/*                                                database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                        Log.e("아아", flag2 + "");
                                                         uidName = dataSnapshot.getValue(String.class);
                                                         if (flag2 == 1) {
                                                             database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
@@ -541,7 +553,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                     public void onCancelled(final DatabaseError databaseError) {
 
                                                     }
-                                                });
+                                                });*/
 
                                                 if (flag2 == 1) {
                                                     database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(1);
@@ -666,16 +678,23 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                 materialRentalItems.remove(position);
                                                 notifyItemRemoved(position);
                                                 notifyItemRangeChanged(position, materialRentalItems.size());
+                                                flag = 0;
+                                                removeFlag = 0;
+                                                removeList = position;
                                                 Toast.makeText(MaterialRentalActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
                                             } else if (flag2 == 0) {
                                                 delete_content(listNumber);
                                                 listItem.remove(listNumber);
                                                 notifyItemRemoved(listNumber);
                                                 notifyItemRangeChanged(listNumber, listItem.size());
+                                                flag = 0;
+                                                removeFlag2 = 0;
+                                                removeList2 = listNumber;
                                                 Toast.makeText(MaterialRentalActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
+                                            } else {
+                                                Toast.makeText(MaterialRentalActivity_Home.this, "상품 삭제 실패", Toast.LENGTH_SHORT).show();
                                             }
+                                            dialog.dismiss();
                                         }
                                     });
 
@@ -694,7 +713,10 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     Intent intent = new Intent(MaterialRentalActivity_Home.this, MaterialRentalActivity_History.class);
                                     final MaterialRental_History_Item materialHistoryItem = new MaterialRental_History_Item();
 //                                    materialHistoryItem.history_lend_start_date = ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString();
-                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                    materialHistoryItem.history_lend_name = uidName;
+
+/*                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             uidName = dataSnapshot.getValue(String.class);
@@ -705,7 +727,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                         public void onCancelled(final DatabaseError databaseError) {
 
                                         }
-                                    });
+                                    });*/
 
                                     if (flag2 == 1) {
                                         uidAdminPath = database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).getKey();
@@ -726,24 +748,11 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                     popup.inflate(R.menu.material_rental_home_popup);
 
-                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            admin2 = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                            uidName = dataSnapshot.child("name").getValue().toString();
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });
-
                     if (!materialRentalItems.get(position).lender.equals("없음")) {
                         popup.getMenu().getItem(0).setVisible(false);
                     }
 
-                    if (admin > adminNumber || !materialRentalItems.get(position).lender.equals("없음") && admin2 <= adminNumber) {
+                    if (admin > adminNumber || !materialRentalItems.get(position).lender.equals("없음") && admin <= adminNumber) {
                         popup.getMenu().getItem(2).setVisible(false);
                     }
 
@@ -800,6 +809,21 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                     database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(2);
                 }
             }
+
+/*            if (listSizeFlag == 0) {
+                listSize = materialRentalItems.size();
+                listSizeFlag = 1;
+            }
+
+            Log.e("값2", listSize + "");
+
+            Log.e("값",  materialListSize + "");
+
+            if (materialListSize != listSize) {
+                list.add(materialRentalItems.get(materialListSize).title);
+                listSize = materialListSize;
+                material_rental_home_edittext_search.setAdapter(adapter);
+            }*/
 
         }
 
