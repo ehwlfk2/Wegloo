@@ -7,9 +7,11 @@ public class AppLoginData {
     private String name;
     private String phone;
     private String recentClub;
-    //private String studentNumber;
-    //private String school;
-    public Map<String, Object> signUpClub  = new HashMap<>();
+    private String reailNameProPicUrl;
+    private String reailNameProPicDeleteName;
+    private Object joinedTimestamp;
+
+    //public Map<String, Object> signUpClub  = new HashMap<>();
 
     public String getName() {
         return name;
@@ -27,12 +29,36 @@ public class AppLoginData {
         this.phone = phone;
     }
 
+    public String getReailNameProPicUrl() {
+        return reailNameProPicUrl;
+    }
+
+    public void setReailNameProPicUrl(String reailNameProPicUrl) {
+        this.reailNameProPicUrl = reailNameProPicUrl;
+    }
+
+    public String getReailNameProPicDeleteName() {
+        return reailNameProPicDeleteName;
+    }
+
+    public void setReailNameProPicDeleteName(String reailNameProPicDeleteName) {
+        this.reailNameProPicDeleteName = reailNameProPicDeleteName;
+    }
+
     public String getRecentClub() {
         return recentClub;
     }
 
     public void setRecentClub(String recentClub) {
         this.recentClub = recentClub;
+    }
+
+    public Object getJoinedTimestamp() {
+        return joinedTimestamp;
+    }
+
+    public void setJoinedTimestamp(Object joinedTimestamp) {
+        this.joinedTimestamp = joinedTimestamp;
     }
 
 }

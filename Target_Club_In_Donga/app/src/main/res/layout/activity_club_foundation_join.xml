@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/joinorcreate_00_artborad"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/artboard_main_ver0">
+
+
+    <ImageButton
+        android:id="@+id/joinorcreate_00_button_back"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.051803128"
+        app:layout_constraintHorizontal_bias="0.113298068"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.051296875"
+        app:layout_constraintVertical_bias="0.051875
+"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_icon_ionic_ios_arrow_back_ver0" />
+
+
+    <ImageView
+        android:id="@+id/joinorcreate_00_artborad_sub"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.774609016"
+        app:layout_constraintHorizontal_bias="0.503219871"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.728645833"
+        app:layout_constraintVertical_bias="0.51796875"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/artboard_sub_su_allradius_ver0"/>
+
+
+    <ImageView
+        android:id="@+id/joinorcreate_00_imageview_logo"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.426715731"
+        app:layout_constraintHorizontal_bias="0.500386385"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.066666667"
+        app:layout_constraintVertical_bias="0.051875"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wegloo_logo_ver0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/joinorcreate_00_layout_create"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.2421875"
+        app:layout_constraintStart_toStartOf="parent"
+
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.734"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.77013799">
+
+        <ImageView
+            android:id="@+id/joinorcreate_00_imageview_create"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_icon_clubcreate_ver0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.551396552"
+            app:layout_constraintHorizontal_bias="0.15322196"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.357995227" />
+
+        <ImageView
+            android:id="@+id/joinorcreate_00_imageview_create_arrow"
+            android:layout_width="0dp"
+
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.32083333"
+            app:layout_constraintHorizontal_bias="0.99697481"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.265393795"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_24px_orange" />
+
+        <TextView
+            android:id="@+id/joinorcreate_00_textview_create"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoSizeMaxTextSize="20dp"
+            android:autoSizeMinTextSize="1sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="모임\n만들기"
+            android:textColor="@color/color_MainColor"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.49491379"
+            app:layout_constraintHorizontal_bias="0.65697481"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.255393795" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/joinorcreate_00_layout_join"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.2421875"
+        app:layout_constraintStart_toStartOf="parent"
+
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.287"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.77013799">
+
+        <ImageView
+            android:id="@+id/joinorcreate_00_imageview_join"
+
+            android:layout_width="0dp"
+
+            android:layout_height="0dp"
+            android:background="@drawable/ic_icon_clubjoin_ver0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.551396552"
+            app:layout_constraintHorizontal_bias="0.18322196"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.539491379"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.307995227"
+
+            />
+
+        <ImageView
+            android:id="@+id/joinorcreate_00_imageview_join_arrow"
+            android:layout_width="0dp"
+
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.32083333"
+            app:layout_constraintHorizontal_bias="0.99697481"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.265393795"
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_24px_orange" />
+
+        <TextView
+            android:id="@+id/joinorcreate_00_textview_join"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoSizeMaxTextSize="20dp"
+            android:autoSizeMinTextSize="1sp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="모임\n가입"
+            android:textColor="@color/color_MainColor"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.49491379"
+            app:layout_constraintHorizontal_bias="0.65697481"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.255393795" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/joinorcreate_00_guidline_0"
+        android:src="@color/color_Orange"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.661113155"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.002"
+        app:layout_constraintVertical_bias="0.5"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

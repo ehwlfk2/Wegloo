@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="15dp"
+        android:text="모임 이름은 추후 변경하실 수 없습니다.\n이대로 만드시겠습니까?" />
+    <TextView
+        android:id="@+id/dialog_foundation_02_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:text="TCID" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_margin="20dp"
+            android:id="@+id/dialog_foundation_02_button_picture"
+            android:src="@drawable/ic_launcher_foreground"
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="#FF000000"
+            android:layout_width="130dp"
+            android:background="@drawable/picture_que_ver0"
+            android:layout_height="130dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center|left">
+            <TextView
+                android:id="@+id/dialog_foundation_02_realName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:text="별명 모임"
+                android:drawableLeft="@drawable/ic_dot_circle"
+                android:drawablePadding="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <TextView
+                android:id="@+id/dialog_foundation_02_freeSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:text="자유 가입"
+                android:drawableLeft="@drawable/ic_dot_circle"
+                android:drawablePadding="5dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/dialog_foundation_02_confirmBtn"
+        android:text="확인"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logoin_button_ver0"
+        android:elevation="5dp"
+        android:textColor="@color/color_White"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeTextType="uniform"
+        />
+
+
+</LinearLayout>

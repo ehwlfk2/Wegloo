@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:padding="15dp"
     >
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TCID"
-        android:id="@+id/btn_tcid"
+        android:text="뒤로"
+        android:id="@+id/activity_signup_04_cancel_btn"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:id="@+id/activity_signup_04_realNameProfile"
+        android:layout_gravity="center"
         />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="이름"
+        android:id="@+id/activity_signup_04_name"
+        android:inputType="textPersonName"
+        android:theme="@style/EditTheme"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="번호"
+        android:id="@+id/activity_signup_04_phoneNumber"
+        android:theme="@style/EditTheme"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="실명제 모임에서 쓰이는 프로필 입니다."/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ka"
-        android:id="@+id/btn_ka"
-        />
+        android:text="완료"
+        android:id="@+id/activity_signup_04_next_btn"/>
 </LinearLayout>
