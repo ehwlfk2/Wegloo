@@ -129,7 +129,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
 //        material_rental_home_edittext_search = (EditText) findViewById(R.id.material_rental_home_edtitext_search);
 
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
@@ -146,7 +146,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             }
         });
 
-        database.getReference().child(clubName).child("Material_Rental").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 materialRentalItems.clear();
@@ -264,7 +264,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
             Uri file = Uri.fromFile(new File(getPath(data.getData())));
-            StorageReference riversRef = storageRef.child(clubName).child("Material_Rental/" + file.getLastPathSegment());
+            StorageReference riversRef = storageRef.child("EveryClub").child(clubName).child("Material_Rental/" + file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -477,38 +477,38 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                                 ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText(uidName);
                                                 if (flag2 == 1) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
                                                 } else if (flag2 == 0) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
                                                 }
 
                                                 ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.setText(dateStr + ' ' + timeStr);
                                                 if (flag2 == 1) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                                 } else if (flag2 == 0) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                                 }
                                                 // 대여를 하였을 떄 리사이클러뷰 리스트를 변경을 함
 
                                                 findkey = database.getReference().push().getKey(); // 대여를 했을 떄 기록을 남기기 위해 데이터베이스에 저장함
                                                 if (flag2 == 1) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_start_date").setValue(startDate);
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_end_date").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_start_date").setValue(startDate);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_end_date").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                                 } else if (flag2 == 0) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_start_date").setValue(startDate);
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_end_date").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_start_date").setValue(startDate);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_end_date").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                                 }
 
                                                 if (flag2 == 1) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
                                                 } else if (flag2 == 0) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(findkey).child("history_lend_name").setValue(uidName);
                                                 }
 
                                                 if (flag2 == 1) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(1);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(1);
                                                 } else if (flag2 == 0) {
-                                                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("state").setValue(1);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("state").setValue(1);
                                                 }
 
                                                 dialog2.dismiss();
@@ -534,15 +534,15 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     Toast.makeText(MaterialRentalActivity_Home.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                     ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText("없음");
                                     if (flag2 == 1 || flag3 == 1) {
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
                                     } else if (flag2 == 0) {
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
                                     }
                                     ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.setText("없음");
                                     if (flag2 == 1 || flag3 == 1) {
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                     } else if (flag2 == 0) {
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
                                     }
 
                                     // 반납을 했을시 물품기록사항에서 대여의 끝나는 날짜가 반납일로 바뀐다
@@ -554,7 +554,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     date_Return = returnSimpleDateFormat.format(returnDate);
 
                                     if (flag2 == 1 || flag3 == 1) {
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                                 lastNumber = 0;
@@ -564,7 +564,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                 int i = 0;
                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                     if (i == lastNumber - 1) {
-                                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
+                                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
                                                     }
                                                     i++;
                                                 }
@@ -575,10 +575,10 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                             }
                                         });
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(0);
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue("없음");
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(0);
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue("없음");
                                     } else if (flag2 == 0) {
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                                 lastNumber = 0;
@@ -588,7 +588,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                 int i = 0;
                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                     if (i == lastNumber - 1) {
-                                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
+                                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
                                                     }
                                                     i++;
                                                 }
@@ -599,8 +599,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                             }
                                         });
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("state").setValue(0);
-                                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue("없음");
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("state").setValue(0);
+                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue("없음");
                                     }
 
                                     flag = 0;
@@ -667,9 +667,9 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     materialHistoryItem.history_lend_name = uidName;
 
                                     if (flag2 == 1) {
-                                        uidAdminPath = database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).getKey();
+                                        uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).getKey();
                                     } else if (flag2 == 0) {
-                                        uidAdminPath = database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).getKey();
+                                        uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).getKey();
                                     }
                                     intent.putExtra("uidAdminPath", uidAdminPath);
                                     startActivity(intent);
@@ -743,7 +743,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                 long diff = d1.getTime() - d2.getTime();
                 if (diff <= 0) {
                     customViewHolder.activity_material_rental_admin_item_linearlayout.setBackgroundResource(R.drawable.border_orange);
-                    database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(2);
+                    database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(2);
                 }
             }
 
@@ -768,11 +768,11 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             Log.e("입력", position + "");
 
             if (flag2 == 1) {
-                storage.getReference().child(clubName).child("Material_Rental").child(materialRentalItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                storage.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(materialRentalItems.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(final Void aVoid) {
 
-                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(final Void aVoid) {
                                 Toast.makeText(MaterialRentalActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
@@ -794,11 +794,11 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                 });
 
             } else if (flag2 == 0) {
-                storage.getReference().child(clubName).child("Material_Rental").child(listItem.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                storage.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(listItem.get(position).imageName).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(final Void aVoid) {
 
-                        database.getReference().child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(final Void aVoid) {
                                 Toast.makeText(MaterialRentalActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();

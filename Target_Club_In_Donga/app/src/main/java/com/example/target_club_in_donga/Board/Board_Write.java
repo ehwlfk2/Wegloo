@@ -125,7 +125,7 @@ public class Board_Write extends AppCompatActivity {
                     }
                 } else if (uris.size() == 0) { // 새 글 쓰기시 사진이없다 & 수정시 사진을 새로 업로드 안할시
                     if(edt_key==1){ // 수정
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(clubName).child("Board");
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
                         //FirebaseUser currentuser = auth.getCurrentUser();
                         boardModel.title = title.getText().toString();
                         boardModel.contents = contents.getText().toString();
@@ -192,7 +192,7 @@ public class Board_Write extends AppCompatActivity {
         task.execute();
         for (int i = 0; i < uris.size(); i++) {
             final Uri individualImage = uris.get(i);
-            final StorageReference ImageName = storageRef.child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
+            final StorageReference ImageName = storageRef.child("EveryClub").child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
             UploadTask uploadTask = ImageName.putFile(individualImage);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -212,7 +212,7 @@ public class Board_Write extends AppCompatActivity {
         }
     }
     private void StoreDatabase(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(clubName).child("Board");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
         //FirebaseUser currentuser = auth.getCurrentUser();
         boardModel.title = title.getText().toString();
         boardModel.contents = contents.getText().toString();

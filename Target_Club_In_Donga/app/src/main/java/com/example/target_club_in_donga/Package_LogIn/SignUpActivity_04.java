@@ -237,6 +237,6 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
         String token = FirebaseInstanceId.getInstance().getToken();
         Map<String, Object> map = new HashMap<>();
         map.put("pushToken", token);
-        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(uid).updateChildren(map);
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(uid).updateChildren(map);
     }*/
 }   // SignUpActivity_04

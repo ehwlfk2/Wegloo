@@ -142,21 +142,21 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     attendItem.tardyTimeLimit = date_Trady;
 
                     findkey = database.getReference().push().getKey();
-                    database.getReference().child(clubName).child("Attend").child(findkey).setValue(attendItem);
-                    database.getReference().child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
+                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).setValue(attendItem);
+                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
 
                     // 회원 가입한 날짜와 현재 날짜를 비교해서 출석을 시작 하고 난 후에 회원가입을 하면 그 전에 했던 출석에 포함되지 않아야 한다.
 
-                    database.getReference().child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
                                 getName = snapshot.child("name").getValue(String.class);
                                 getPhone = snapshot.child("phone").getValue(String.class);
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
 
                                 Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
                                 attendAdminChangeItem.name = getName;

@@ -133,7 +133,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });*/
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -159,7 +159,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
@@ -200,7 +200,7 @@ public class AttendActivity_Fragment extends Fragment {
 
                 final AlertDialog dialog = builder.create();
 
-                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
+                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() != null) {
@@ -217,7 +217,7 @@ public class AttendActivity_Fragment extends Fragment {
                     }
                 });
 
-                database.getReference().child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
@@ -232,7 +232,7 @@ public class AttendActivity_Fragment extends Fragment {
                     }
                 });
 
-                database.getReference().child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
+                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
@@ -270,14 +270,14 @@ public class AttendActivity_Fragment extends Fragment {
 
                         if (EditCertificationNumber.getBytes().length > 0) {
                             getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
-                            database.getReference().child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     getCertificationNumber = dataSnapshot.getValue().toString();
 
                                     if (Integer.parseInt(getCertificationNumber) == getEditCertificationNumber) {
 
-                                        database.getReference().child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                                 getAttend_Time_Limit = dataSnapshot.getValue().toString();
@@ -295,10 +295,10 @@ public class AttendActivity_Fragment extends Fragment {
 
                                                 if (diff > 0) {
                                                     Toast.makeText(getActivity(), "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                                    database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
                                                     dialog.dismiss();
                                                 } else {
-                                                    database.getReference().child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                                             getTardy_Time_Limit = dataSnapshot.getValue().toString();
@@ -317,16 +317,16 @@ public class AttendActivity_Fragment extends Fragment {
                                                             if (diff > 0) {
                                                                 Toast.makeText(getActivity(), "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
                                                                 activity_attend_detail_textview_attend_state.setText("지각");
-                                                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
+                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
                                                                 dialog.dismiss();
                                                             } else {
-                                                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
                                                                     @Override
                                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                                             getState = snapshot.child("attend_state").getValue(String.class);
                                                                             if (getState.equals("미출결")) {
-                                                                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).setValue("결석");
+                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).setValue("결석");
                                                                             }
                                                                         }
                                                                     }
@@ -391,7 +391,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
@@ -430,7 +430,7 @@ public class AttendActivity_Fragment extends Fragment {
 
         final ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -495,7 +495,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -509,7 +509,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
@@ -523,7 +523,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
