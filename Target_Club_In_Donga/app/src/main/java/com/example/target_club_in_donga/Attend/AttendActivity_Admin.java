@@ -145,6 +145,8 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     database.getReference().child(clubName).child("Attend").child(findkey).setValue(attendItem);
                     database.getReference().child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
 
+                    // 회원 가입한 날짜와 현재 날짜를 비교해서 출석을 시작 하고 난 후에 회원가입을 하면 그 전에 했던 출석에 포함되지 않아야 한다.
+
                     database.getReference().child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {

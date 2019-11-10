@@ -6,16 +6,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <SlidingDrawer
-        android:id="@+id/user_detail_slidingdrawer"
+        android:id="@+id/activity_user_detail_slidingdrawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:content="@+id/user_detail_content"
+        android:content="@+id/activity_user_detail_content"
         android:elevation="2dp"
-        android:handle="@+id/user_detail_handle"
+        android:handle="@+id/activity_user_detail_handle"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/user_detail_handle"
+            android:id="@+id/activity_user_detail_handle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ff6d61"
@@ -23,7 +23,7 @@
 
             <TextView
                 style="@style/Top_Content_Text_Style"
-                android:id="@+id/user_detail_slidingdrawer_title"
+                android:id="@+id/activity_user_detail_slidingdrawer_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="출결정보"
@@ -33,7 +33,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/user_detail_content"
+            android:id="@+id/activity_user_detail_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -45,7 +45,7 @@
                 tools:context=".Google_Login">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/user_detail_recyclerview_main_list"
+                    android:id="@+id/activity_user_detail_recyclerview_main_list"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:orientation="vertical"
@@ -84,7 +84,7 @@
             android:weightSum="2">
 
             <ImageView
-                android:id="@+id/user_detail_profile"
+                android:id="@+id/activity_user_detail_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitStart"
@@ -92,7 +92,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/user_detail_name"
+                android:id="@+id/activity_user_detail_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -167,7 +167,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/user_detail_email"
+                    android:id="@+id/activity_user_detail_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -176,7 +176,7 @@
                     android:textSize="25dp" />
 
                 <TextView
-                    android:id="@+id/user_detail_phonenumber"
+                    android:id="@+id/activity_user_detail_phonenumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -202,7 +202,7 @@
                     android:textSize="25dp" />-->
 
                 <TextView
-                    android:id="@+id/user_detail_circles"
+                    android:id="@+id/activity_user_detail_circles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -211,7 +211,7 @@
                     android:textSize="25dp" />
 
                 <TextView
-                    android:id="@+id/user_detail_position"
+                    android:id="@+id/activity_user_detail_position"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

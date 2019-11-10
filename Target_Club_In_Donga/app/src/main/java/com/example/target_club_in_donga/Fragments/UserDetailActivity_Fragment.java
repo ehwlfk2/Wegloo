@@ -44,7 +44,7 @@ public class UserDetailActivity_Fragment extends Fragment {
         // Required empty public constructor
     }
 
-    private RecyclerView activity_attend_admin_information_home_recyclerview_main_list;
+    private RecyclerView activity_user_detail_recyclerview_main_list;
     List<Attend_Information_Item> attendAdminItems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
@@ -65,19 +65,19 @@ public class UserDetailActivity_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_user_detail, container, false);
-        name = view.findViewById(R.id.user_detail_name);
-        phone = view.findViewById(R.id.user_detail_phonenumber);
+        name = view.findViewById(R.id.activity_user_detail_name);
+        phone = view.findViewById(R.id.activity_user_detail_phonenumber);
         //school = view.findViewById(R.id.user_detail_school);
-        email = view.findViewById(R.id.user_detail_email);
-        profile = view.findViewById(R.id.user_detail_profile);
+        email = view.findViewById(R.id.activity_user_detail_email);
+        profile = view.findViewById(R.id.activity_user_detail_profile);
         //studentID = view.findViewById(R.id.user_detail_studentID);
         //changeButton = view.findViewById(R.id.user_detail_change);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
-        slidingDrawer = (SlidingDrawer) view.findViewById(R.id.user_detail_slidingdrawer);
-        slidingdrawer_title = (TextView) view.findViewById(R.id.user_detail_slidingdrawer_title);
+        slidingDrawer = (SlidingDrawer) view.findViewById(R.id.activity_user_detail_slidingdrawer);
+        slidingdrawer_title = (TextView) view.findViewById(R.id.activity_user_detail_slidingdrawer_title);
 
         slidingDrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
             @Override
@@ -120,12 +120,12 @@ public class UserDetailActivity_Fragment extends Fragment {
             }
         });*/
 
-        activity_attend_admin_information_home_recyclerview_main_list = (RecyclerView) view.findViewById(R.id.activity_attend_admin_information_home_recyclerview_main_list);
-        activity_attend_admin_information_home_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        activity_user_detail_recyclerview_main_list = (RecyclerView) view.findViewById(R.id.activity_user_detail_recyclerview_main_list);
+        activity_user_detail_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(getContext()));
 
         final UserDetailActivity_Fragment.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new UserDetailActivity_Fragment.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
 
-        activity_attend_admin_information_home_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
+        activity_user_detail_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
         attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
         database.getReference().child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
@@ -139,33 +139,50 @@ public class UserDetailActivity_Fragment extends Fragment {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        if (/*dataSnapshot.child("name").getValue().toString().equals(snapshot.child("name").getValue(String.class)) && */dataSnapshot.child("phone").getValue().toString().equals(snapshot.child("phone").getValue(String.class))) {
-                                            startTime = snapshot2.child("startTime").getValue().toString();
-                                            listStartTime.add(startTime);
-                                            Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
-                                            String uidKey = snapshot.getKey();
-                                            attendAdminItems.add(0, attendAdminInformationItem);
-                                            uidLists.add(0, uidKey);
-                                            listSize++;
-                                        }
+                                if (snapshot.getKey().equals(auth.getCurrentUser().getUid())) {
+                                    startTime = snapshot2.child("startTime").getValue().toString();
+                                    listStartTime.add(startTime);
+                                    Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
+                                    String uidKey = snapshot.getKey();
+                                    attendAdminItems.add(0, attendAdminInformationItem);
+                                    uidLists.add(0, uidKey);
+                                    listSize++;
 
-                                        for (int i = 0; i < listSize; i++) {
-                                            attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
-                                        }
-
-                                        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-                                        attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
-
+                                    for (int i = 0; i < listSize; i++) {
+                                        attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
                                     }
 
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
+                                    // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+                                    attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-                                    }
-                                });
+/*                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            if (*//*dataSnapshot.child("name").getValue().toString().equals(snapshot.child("name").getValue(String.class)) && *//*dataSnapshot.child("phone").getValue().toString().equals(snapshot.child("phone").getValue(String.class))) {
+                                                startTime = snapshot2.child("startTime").getValue().toString();
+                                                listStartTime.add(startTime);
+                                                Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
+                                                String uidKey = snapshot.getKey();
+                                                attendAdminItems.add(0, attendAdminInformationItem);
+                                                uidLists.add(0, uidKey);
+                                                listSize++;
+                                            }
+
+                                            for (int i = 0; i < listSize; i++) {
+                                                attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
+                                            }
+
+                                            // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+                                            attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                        }
+                                    });*/
+                                }
                             }
                         }
 
@@ -220,16 +237,16 @@ public class UserDetailActivity_Fragment extends Fragment {
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
-            LinearLayout activity_attend_admin_information_item_linearlayout;
-            TextView activity_attend_admin_information_item_textview_attend_state;
-            TextView activity_attend_admin_information_item_textview_date;
+            LinearLayout activity_attend_information_item_linearlayout;
+            TextView activity_attend_information_item_textview_date;
+            TextView activity_attend_information_item_textview_attend_state;
 
             public CustomViewHolder(View view) {
                 super(view);
 
-                activity_attend_admin_information_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_admin_information_item_linearlayout);
-                activity_attend_admin_information_item_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_admin_information_item_textview_attend_state);
-                activity_attend_admin_information_item_textview_date = (TextView) view.findViewById(R.id.activity_attend_admin_information_item_textview_date);
+                activity_attend_information_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_information_item_linearlayout);
+                activity_attend_information_item_textview_date = (TextView) view.findViewById(R.id.activity_attend_information_item_textview_date);
+                activity_attend_information_item_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_information_item_textview_attend_state);
 
             }
 
@@ -247,10 +264,10 @@ public class UserDetailActivity_Fragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
             final UserDetailActivity_Fragment.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((UserDetailActivity_Fragment.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
-            customViewHolder.activity_attend_admin_information_item_textview_attend_state.setGravity(Gravity.LEFT);
+            customViewHolder.activity_attend_information_item_textview_date.setGravity(Gravity.LEFT);
 
-            customViewHolder.activity_attend_admin_information_item_textview_attend_state.setText(attendAdminItems.get(position).attend_state);
-            customViewHolder.activity_attend_admin_information_item_textview_date.setText(attendAdminItems.get(position).attendTimeLimit);
+            customViewHolder.activity_attend_information_item_textview_attend_state.setText(attendAdminItems.get(position).attend_state);
+            customViewHolder.activity_attend_information_item_textview_date.setText(attendAdminItems.get(position).attendTimeLimit);
 
         }
 

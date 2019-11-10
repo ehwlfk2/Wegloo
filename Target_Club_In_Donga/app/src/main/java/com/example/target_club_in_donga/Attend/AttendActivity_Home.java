@@ -1,5 +1,6 @@
 package com.example.target_club_in_donga.Attend;
 
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
@@ -63,6 +64,8 @@ public class AttendActivity_Home extends AppCompatActivity {
     private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
     private static int adminNumber = 2;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +75,19 @@ public class AttendActivity_Home extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+        progressDialog = new ProgressDialog(this);
+
+        progressDialog.setMessage("출석을 불러오는 중입니다...");
+        progressDialog.show();
+
+        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                admin = Integer.parseInt(dataSnapshot.getValue().toString());
+                admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
                 if (admin > adminNumber) {
                     activity_attend_home_admin_button_insert.setVisibility(View.GONE);
                     activity_attend_home_button_information.setVisibility(View.GONE);
                 }
-
             }
 
             @Override
@@ -109,6 +116,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                     uidLists.add(0, uidKey);
                 }
                 attendActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override
@@ -134,6 +142,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
