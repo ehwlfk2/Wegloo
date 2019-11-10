@@ -168,6 +168,7 @@
     <TextView
         android:text="실명 모임에서 사용되는 프로필 입니다."
         android:textColor="@color/color_Gray"
+        android:textSize="12sp"
         android:autoSizeMinTextSize="1sp"
         android:autoSizeMaxTextSize="20sp"
         android:autoSizeTextType="uniform"

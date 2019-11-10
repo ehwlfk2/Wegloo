@@ -9,6 +9,7 @@ public class AppLoginData {
     private String recentClub;
     private String reailNameProPicUrl;
     private String reailNameProPicDeleteName;
+    private Object joinedTimestamp;
 
     //public Map<String, Object> signUpClub  = new HashMap<>();
 
@@ -50,6 +51,14 @@ public class AppLoginData {
 
     public void setRecentClub(String recentClub) {
         this.recentClub = recentClub;
+    }
+
+    public Object getJoinedTimestamp() {
+        return joinedTimestamp;
+    }
+
+    public void setJoinedTimestamp(Object joinedTimestamp) {
+        this.joinedTimestamp = joinedTimestamp;
     }
 
 }

@@ -115,7 +115,7 @@
     <EditText
         android:id="@+id/foundation_02_edittext_name"
         android:ems="10"
-        android:hint="모임 이름"
+        android:hint="모임 이름 (2자 이상)"
         android:textColorHint="@color/color_Orange"
         android:inputType="textPersonName"
         android:theme="@style/EditTheme"

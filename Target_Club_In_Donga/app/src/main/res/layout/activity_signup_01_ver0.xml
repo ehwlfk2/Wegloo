@@ -154,8 +154,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/signup_01_imageview_terms_0"
@@ -296,8 +295,9 @@
             android:layout_height="0dp"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintVertical_bias="0.5"
+            android:textSize="13sp"
             android:autoSizeMinTextSize="1sp"
-            android:autoSizeMaxTextSize="20dp"
+            android:autoSizeMaxTextSize="20sp"
             android:autoSizeTextType="uniform"
 
             app:layout_constraintBottom_toBottomOf="parent"

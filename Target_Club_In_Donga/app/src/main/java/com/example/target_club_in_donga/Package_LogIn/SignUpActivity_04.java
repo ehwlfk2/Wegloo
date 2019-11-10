@@ -114,7 +114,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
             case R.id.signup_04_button_next:
                 String name = activity_signup_04_name.getText().toString();
                 String phoneNumber = activity_signup_04_phoneNumber.getText().toString();
-                if(!Pattern.matches("^[가-힣]{2,4}|[a-zA-Z]{2,10}$", name)){ //이름거르기
+                if(!Pattern.matches("^[가-힣]{2,4}|[a-zA-Z]{2,20}$", name)){ //이름거르기
                     Toast.makeText(this, "이름 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else if(!Pattern.matches("(010|011|016|017|018|019)(.+)(.{4})", phoneNumber)) { //번호거르기
@@ -199,6 +199,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
                     itemDTO.setReailNameProPicDeleteName(file.getLastPathSegment());
                     itemDTO.setName(name);
                     itemDTO.setPhone(phoneNumber);
+                    itemDTO.setJoinedTimestamp(System.currentTimeMillis());
 
                     firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
                     progressDialog.dismiss();
@@ -213,6 +214,8 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
             itemDTO.setReailNameProPicDeleteName("None");
             itemDTO.setName(name);
             itemDTO.setPhone(phoneNumber);
+            itemDTO.setJoinedTimestamp(System.currentTimeMillis());
+
             firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
             progressDialog.dismiss();
             Intent intent = new Intent(SignUpActivity_04.this,Congratulation.class);

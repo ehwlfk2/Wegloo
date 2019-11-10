@@ -36,6 +36,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.regex.Pattern;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class Foundation_02 extends AppCompatActivity implements View.OnClickListener {
 
@@ -87,11 +90,12 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                  * 모임이름은 변경불가능하다구!!!
                  *
                  */
-                if(foundation_02_edittext_name.getText().toString().length() > 0){
-                    foundationClubDialog();
+
+                if(!Pattern.matches("^\\S{2,}$", foundation_02_edittext_name.getText().toString())){ //이름거르기
+                    Toast.makeText(this, "모임 이름이 2자 이상이어야 합니다.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(this, "모임 이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    foundationClubDialog();
                 }
                 break;
             case R.id.foundation_02_button_picture:
@@ -210,6 +214,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                     clubData.setClubImageDeleteName(file.getLastPathSegment());
 
                     firebaseDatabase.getReference().child("EveryClub").child(clubData.getThisClubName()).setValue(clubData);
+                    clubName = clubData.getThisClubName();
                     progressDialog.dismiss();
                     Toast.makeText(Foundation_02.this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Foundation_02.this,ClubFoundationJoin.class);
@@ -218,11 +223,8 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                     /**
                      * 회장으로 등록시켜줘야함
                      * 그리고 token도 넣어줘야하공 (가입유저로 데이터 넣어줘야지)
-                     * 모임이름 필터처리해줘야함
-                     * 그리고 한글로 괜찮은지 path가??
                      * function 정리한번하고
                      * 내일 DB 싹갈아업자
-                     * 동운이폰으로 텍스트 넘어가는거 테스트
                      */
                 }
             });
@@ -237,6 +239,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
             clubData.setClubImageDeleteName("None");
 
             firebaseDatabase.getReference().child("EveryClub").child(clubData.getThisClubName()).setValue(clubData);
+            clubName = clubData.getThisClubName();
             progressDialog.dismiss();
             Toast.makeText(this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(Foundation_02.this,ClubFoundationJoin.class);
