@@ -63,7 +63,7 @@ public class MaterialRentalActivity_History extends AppCompatActivity {
          Intent intent = getIntent();
         uidHistoryPath = intent.getExtras().getString("uidAdminPath");
 
-        database.getReference().child(clubName).child("Material_Rental").child(uidHistoryPath).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidHistoryPath).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 materialHistoryItems.clear();

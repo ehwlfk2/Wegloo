@@ -173,7 +173,7 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
         StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
         final Uri file = Uri.fromFile(new File(uri));
-        StorageReference riversRef = storageRef.child(clubName).child("Material_Rental/" + material_path + '-' + file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("EveryClub").child(clubName).child("Material_Rental/" + material_path + '-' + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -194,7 +194,7 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
                 materialRentalItem.imageName = material_path + '-' + file.getLastPathSegment();
                 materialRentalItem.state = 0;
 
-                database.getReference().child(clubName).child("Material_Rental").push().setValue(materialRentalItem);
+                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").push().setValue(materialRentalItem);
             }
         });
     }

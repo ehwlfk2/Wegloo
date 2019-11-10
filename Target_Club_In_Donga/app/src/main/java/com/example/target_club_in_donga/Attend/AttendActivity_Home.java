@@ -80,7 +80,7 @@ public class AttendActivity_Home extends AppCompatActivity {
         progressDialog.setMessage("출석을 불러오는 중입니다...");
         progressDialog.show();
 
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
@@ -104,7 +104,7 @@ public class AttendActivity_Home extends AppCompatActivity {
         activity_attend_home_admin_recyclerview_main_list.setAdapter(attendActivity_adminRecyclerViewAdapter);
         attendActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attenditems.clear();
@@ -152,7 +152,7 @@ public class AttendActivity_Home extends AppCompatActivity {
         StorageReference storageRef = storage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
         Uri file = Uri.fromFile(new File(getPath(data.getData())));
-        StorageReference riversRef = storageRef.child(clubName).child("Attend/" + file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("EveryClub").child(clubName).child("Attend/" + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -238,7 +238,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                                 case R.id.attend_detail:
 
                                     Intent intent = new Intent(AttendActivity_Home.this, AttendActivity.class);
-                                    uidAdminPath = database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).getKey();
+                                    uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
 
 /*                                    Bundle bundle = new Bundle();
                                     bundle.putString("uidAdminPath", uidAdminPath);
@@ -329,7 +329,7 @@ public class AttendActivity_Home extends AppCompatActivity {
 
             PopupMenu(customViewHolder, position);
 
-            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() == null) {
@@ -346,7 +346,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                 }
             });
 
-            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
@@ -366,7 +366,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                 }
             });
 
-            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
                     getTardyTimeLimit = dataSnapshot.child("tardyTimeLimit").getValue(String.class);
@@ -381,17 +381,17 @@ public class AttendActivity_Home extends AppCompatActivity {
                         Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
                         long diff = d1.getTime() - d2.getTime();
                         if (diff < 0) {
-                            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").addValueEventListener(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                         if (snapshot.child("attend_state").getValue().equals("미출결")) {
-                                            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
                                         }
                                     }
-                                    database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").removeValue();
-                                    database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("attendTimeLimit").removeValue();
-                                    database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).child("tardyTimeLimit").removeValue();
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").removeValue();
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("attendTimeLimit").removeValue();
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("tardyTimeLimit").removeValue();
                                 }
 
                                 @Override
@@ -416,7 +416,7 @@ public class AttendActivity_Home extends AppCompatActivity {
 
         private void delete_content(final int position) {
 
-            database.getReference().child(clubName).child("Attend").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
                     Toast.makeText(AttendActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();

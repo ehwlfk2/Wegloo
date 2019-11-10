@@ -24,7 +24,7 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class SendPushMessages {
     public void multipleSendMessage(final String title, final String text, final String clickAction){
-        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){

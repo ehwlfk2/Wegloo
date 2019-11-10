@@ -81,14 +81,14 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
                 attend_admin_information_home_button_search.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        database.getReference().child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+                        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                 attendAdminItems.clear();
                                 uidLists.clear();
                                 listSize = 0;
                                 for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
-                                    database.getReference().child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {

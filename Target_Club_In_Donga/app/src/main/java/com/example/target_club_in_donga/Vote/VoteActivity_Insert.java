@@ -204,7 +204,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                         //last_item.uid =
 
                         //Toast.makeText(Vote_Insert.this, last_item.listItems.get(0).getName()+"", Toast.LENGTH_SHORT).show();
-                        firebaseDatabase.getReference().child(clubName).child("Vote").push().setValue(last_item).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Vote").push().setValue(last_item).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 //Toast.makeText(Vote_Insert.this, "추가 성공", Toast.LENGTH_SHORT).show();
