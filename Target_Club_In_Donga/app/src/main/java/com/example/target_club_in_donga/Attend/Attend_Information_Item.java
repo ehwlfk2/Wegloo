@@ -1,6 +1,6 @@
 package com.example.target_club_in_donga.Attend;
 
-public class Attend_Admin_Change_Item {
+public class Attend_Information_Item {
     private String id;
 
     public String getId() {
@@ -10,10 +10,9 @@ public class Attend_Admin_Change_Item {
         this.id = id;
     }
 
-    public String name;
     public String attend_state;
-    public String phone;
+    public  String attendTimeLimit;
 
-    public Attend_Admin_Change_Item() {
+    public Attend_Information_Item() {
     }
 }

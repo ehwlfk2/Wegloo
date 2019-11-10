@@ -1,6 +1,6 @@
-package com.example.target_club_in_donga.Material_Management;
+package com.example.target_club_in_donga.Material_Rental;
 
-public class MaterialManagement_History_Item {
+public class MaterialRental_History_Item {
     private String id;
     public Object timestamp;
 
@@ -11,7 +11,8 @@ public class MaterialManagement_History_Item {
         this.id = id;
     }
 
-    public String history_lend_date;
+    public String history_lend_start_date;
+    public String history_lend_end_date;
     public String history_lend_name;
 
     public Object getTimestamp(){

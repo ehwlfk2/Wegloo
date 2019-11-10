@@ -1,7 +1,7 @@
-package com.example.target_club_in_donga.Material_Management;
+package com.example.target_club_in_donga.Material_Rental;
 
-public class MaterialManagement_Item {
-    private String id;
+public class MaterialRental_Item {
+    private String id, text;
     public Object timestamp;
 
     public String getId() {
@@ -17,7 +17,7 @@ public class MaterialManagement_Item {
     public String lender;
     public int state;
 
-    public MaterialManagement_Item(){
+    public MaterialRental_Item(){
 
     }
 
@@ -27,5 +27,6 @@ public class MaterialManagement_Item {
     public void setTimestamp(Object timestamp){
         this.timestamp = timestamp;
     }
+    public String getText() {return text; }
 
 }

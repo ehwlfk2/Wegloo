@@ -101,7 +101,7 @@ public class VoteActivity_Main extends AppCompatActivity {
                 dbKey.clear();
                 int greenIndex = 0, orangeIndex = 0;
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    //MaterialManagement_Item imageDTO = snapshot.getValue(MaterialManagement_Item.class);
+                    //MaterialRental_Item imageDTO = snapshot.getValue(MaterialRental_Item.class);
                     Vote_Item vote_last_item = snapshot.getValue(Vote_Item.class);
                     //String title =
                     long nowTime = System.currentTimeMillis();
