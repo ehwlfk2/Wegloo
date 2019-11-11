@@ -139,10 +139,10 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                 }
                 else{
                     String userUId = firebaseAuth.getCurrentUser().getUid();
-                    try{
-                        firebaseDatabase.getReference().child("AppUser").child(userUId).child("signUpClub").child(clubUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
+                    firebaseDatabase.getReference().child("AppUser").child(userUId).child("signUpClub").child(clubUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            try{
                                 boolean check = dataSnapshot.getValue(boolean.class);
                                 if(check){
                                     Toast.makeText(Join_01.this, "이미 가입된 모임입니다.", Toast.LENGTH_SHORT).show();
@@ -151,14 +151,16 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                                     Toast.makeText(Join_01.this, "가입 요청중인 모임입니다.", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
+                            catch (NullPointerException e){
+                                joinClubDialog();
                             }
-                        });
-                    }catch (NullPointerException e){
-                        joinClubDialog();
-                    }
+
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
                 break;
         }
