@@ -69,6 +69,19 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/dialog_foundation_02_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="14dp"
+            android:text="아아아아아아아아악\n ㅇㅇㅇㅇ\n\n\n\n\n\두둥" />
+    </ScrollView>
+
+
     <Button
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
