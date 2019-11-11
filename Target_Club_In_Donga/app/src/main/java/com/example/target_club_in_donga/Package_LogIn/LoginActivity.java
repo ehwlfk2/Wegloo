@@ -214,13 +214,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         };  // mAuthListener
 
-<<<<<<< HEAD
-    }
-=======
-    }   // onCreate
-
-
->>>>>>> Develop_Android
     @Override
     public void onStart() {
         try {
