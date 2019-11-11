@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/singup_03_artborad"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/artboard_main_ver0">
+
+
+    <ImageButton
+        android:id="@+id/singup_03_button_back"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.051803128"
+        app:layout_constraintHorizontal_bias="0.113298068"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.051296875"
+        app:layout_constraintVertical_bias="0.086153646
+"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_icon_ionic_ios_arrow_back_ver0" />
+
+    <ImageView
+        android:id="@+id/singup_03_artborad_white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="1"
+        app:layout_constraintHorizontal_bias="0.5"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1"
+        app:srcCompat="@drawable/artboard_sub_su_ver0" />
+
+    <ImageView
+        android:id="@+id/singup_03_imageview_logo"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.420423183"
+        app:layout_constraintHorizontal_bias="0.679852806"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.066666667"
+        app:layout_constraintVertical_bias="0.09375"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wegloo_logo_ver0" />
+
+    <TextView
+        android:id="@+id/singup_03_textview_terms"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.427782889"
+        app:layout_constraintHorizontal_bias="0.77598896"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.040104167"
+        app:layout_constraintVertical_bias="0.165364583"
+
+        android:gravity="center_horizontal"
+        android:text="친구가 되어줄래요?"
+        android:textColor="@color/color_White"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeTextType="uniform"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/singup_03_button_next"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.776448942"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.0640625"
+        app:layout_constraintVertical_bias="0.86953125"
+
+        android:background="@drawable/logoin_button_ver0"
+        android:elevation="5dp"
+        android:text="다음"
+        android:textColor="@color/color_White"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeTextType="uniform"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <EditText
+        android:id="@+id/singup_03_textview_emailcheck"
+        android:ems="10"
+        android:theme="@style/EditTheme"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeMaxTextSize="20dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.441666667"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/signup_03_edittext_psw"
+        app:layout_constraintStart_toStartOf="@+id/signup_03_edittext_psw"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/signup_03_edittext_psw"
+        android:ems="10"
+        android:hint="비밀번호"
+        android:textColorHint="@color/color_Orange"
+        android:theme="@style/EditTheme"
+        android:inputType="textPassword"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.661113155"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="wrap_content"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.0375"
+        app:layout_constraintVertical_bias="0.549958333"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/signup_03_textview_restrictions"
+        android:text="8자 이상 영문+숫자+특수문자 조합"
+        android:textColor="@color/color_Gray"
+        android:textSize="12sp"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeTextType="uniform"
+        android:paddingStart="5dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.027"
+        app:layout_constraintVertical_bias="0.584635417"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/signup_03_edittext_psw"
+        app:layout_constraintStart_toStartOf="@+id/signup_03_edittext_psw"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/signup_03_edittext_pswcheck"
+        android:hint="비밀번호 확인"
+        android:textColorHint="@color/color_Orange"
+        android:theme="@style/EditTheme"
+        android:inputType="textPassword"
+
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.686822917"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/signup_03_edittext_psw"
+        app:layout_constraintStart_toStartOf="@+id/signup_03_edittext_psw"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

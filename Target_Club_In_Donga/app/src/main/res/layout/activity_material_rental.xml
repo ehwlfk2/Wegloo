@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        style="@style/Top_Content_Text_Style"
+        android:text="물품대여하기"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <ImageView
+            android:id="@+id/activity_material_rental_imageview_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:saveEnabled="false"
+            android:scaleType="fitStart"
+            android:src="@mipmap/ic_launcher"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                style="@style/Content_Classification_Text_Style"
+                android:text="물품명" />
+
+            <TextView
+                android:id="@+id/activity_material_rental_item_name"
+                style="@style/Content_Text_Style"
+                android:text="" />
+
+            <View
+                style="@style/Line_Style" />
+
+            <TextView
+                style="@style/Content_Classification_Text_Style"
+                android:text="대여자" />
+
+            <TextView
+                android:id="@+id/activity_material_rental_renter"
+                style="@style/Content_Text_Style"
+                android:text="" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Content_Text_Style"
+            android:text="물품대여 마감날짜" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/activity_material_rental_period_calendar"
+                style="@style/Content_Classification_Text_Style"
+                android:text="달력"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/activity_material_rental_period_time"
+                style="@style/Content_Classification_Text_Style"
+                android:text="시간"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/activity_material_rental_button"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-2dp"
+            android:text="대여하기" />
+
+    </RelativeLayout>
+</LinearLayout>

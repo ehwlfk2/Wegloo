@@ -84,7 +84,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
 
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class);
@@ -117,7 +117,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
                 activityvote_execute_button_result.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        adapter.onStarClicked(database.getReference().child(clubName).child("Vote").child(dbKey), position);
+                        adapter.onStarClicked(database.getReference().child("EveryClub").child(clubName).child("Vote").child(dbKey), position);
                         Toast.makeText(VoteActivity_Execute.this, items.get(position).getName()+" 에 투표 완료", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -129,7 +129,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int random = (int)(Math.random()*items.size());
-                adapter.onStarClicked(database.getReference().child(clubName).child("Vote").child(dbKey), random);
+                adapter.onStarClicked(database.getReference().child("EveryClub").child(clubName).child("Vote").child(dbKey), random);
                 Toast.makeText(VoteActivity_Execute.this, items.get(random).getName()+" 에 투표 완료", Toast.LENGTH_SHORT).show();
                 finish();
             }

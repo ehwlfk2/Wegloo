@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.target_club_in_donga">
 
     <application
@@ -9,21 +10,31 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Accountbook.AccountBookActivity_Main"></activity>
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
+        <activity android:name=".club_foundation_join.Foundation_02"></activity>
+        <activity android:name=".club_foundation_join.Join_01" />
+        <activity android:name=".club_foundation_join.Foundation_01" />
+        <activity android:name=".club_foundation_join.ClubFoundationJoin" />
+        <activity android:name=".Package_LogIn.Congratulation" />
+        <activity android:name=".Accountbook.AccountBookActivity_Main" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SplashActivity" />
         <activity android:name=".Package_LogIn.LoginActivity">
             <intent-filter>
-                <data android:scheme="@string/kakao_scheme" android:host="@string/kakaolink_host" />
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="@string/kakao_app_key"/>
         <activity android:name=".Package_LogIn.SignUpActivity_01" />
         <activity android:name=".Package_LogIn.SignUpActivity_02" />
         <activity android:name=".Package_LogIn.SignUpActivity_03" />
@@ -31,7 +42,9 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/Translucent"
+            tools:replace="android:theme" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -47,12 +60,15 @@
         <activity android:name=".Attend.AttendActivity" />
         <activity android:name=".Attend.AttendActivity_Admin" />
         <activity android:name=".Attend.AttendActivity_Admin_Change" />
+        <activity android:name=".Attend.AttendActivity_Admin_Information" />
         <activity android:name=".Attend.AttendActivity_Home" />
         <activity android:name=".Album.AlbumActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".Material_Management.MaterialManagementActivity_Home" />
-        <activity android:name=".Material_Management.MaterialManagementActivity_History" />
-        <activity android:name=".Material_Management.MaterialManagementActivity_Insert" />
+        <activity android:name=".Material_Rental.MaterialRentalActivity_Home"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Material_Rental.MaterialRentalActivity_History" />
+        <activity android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".Schedule.ScheduleActivity" />
         <activity android:name=".UserDetailActivity" />
@@ -71,9 +87,11 @@
         <activity android:name=".TimeLine.TimeLineActivity_Main" />
 
         <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+        <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
@@ -96,9 +114,9 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

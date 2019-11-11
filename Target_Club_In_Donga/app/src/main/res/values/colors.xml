@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="default_color">#ff6d61</color>
 
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
+
     <color name='colorGreenBright'>#3EAF0E</color>
     <color name='colorWhite'>#ffffff</color>
     <color name='colorBlueBright'>#3b5998</color>
@@ -35,4 +33,22 @@
     <color name="fbutton_color_silver">#bdc3c7</color>
     <color name="fbutton_color_concrete">#95a5a6</color>
     <color name="fbutton_color_asbestos">#7f8c8d</color>
+
+
+    <!-- 위글루 -->
+    <color name="default_color">#F5A281</color> <!-- 툴바색 -->
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="color_MainColor2">#fff5a281</color>
+    <color name="color_White">#ffffffff</color>
+    <color name="color_WhiteGray">#ff9e9e9e</color>
+    <color name="color_Red">#FF0000</color>
+    <color name="color_Gray">#ff656565</color>
+    <color name="color_Orange">#fffe8a50</color>
+    <color name="color_DarkGray">#656565</color>
+    <color name="color_MainColor">#F5A281</color>
+    <color name="color_Snow">#ffc4deee</color>
+    <color name="color_WhiteYellow">#fff3cd86</color>
+    <color name="color_WhiteYellow2">#ffffd88e</color>
 </resources>

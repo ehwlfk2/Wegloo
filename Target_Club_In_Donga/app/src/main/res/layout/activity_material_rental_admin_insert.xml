@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/material_edit_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        style="@style/Top_Content_Text_Style"
+        android:text="물품등록하기" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <ImageView
+            android:id="@+id/activity_material_rental_admin_insert_imageview_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:saveEnabled="false"
+            android:scaleType="fitStart"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/activity_material_rental_admin_insert_edittext_item_name"
+                style="@style/Content_Text_Style"
+                android:hint="물품명" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        </ScrollView>
+
+        <Button
+            android:id="@+id/activity_material_rental_admin_insert_button_insert"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-2dp"
+            android:text="등록하기" />
+    </RelativeLayout>
+</LinearLayout>

@@ -35,7 +35,7 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_people_count"
+                    android:id="@+id/activity_attend_detail_textview_people_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -56,7 +56,7 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_people_percent"
+                    android:id="@+id/activity_attend_detail_textview_people_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -67,9 +67,7 @@
     </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#000000" />
+        style="@style/Line_Style" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,9 +110,7 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#000000" />
+            style="@style/Line_Style" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -123,7 +119,7 @@
             android:orientation="vertical">
 
             <Gallery
-                android:id="@+id/activity_attend_gallery"
+                android:id="@+id/activity_attend_detail_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true">
@@ -136,59 +132,59 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/activity_attend_button_admin"
+                    android:id="@+id/activity_attend_detail_button_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="출결관리자 (출결수정)" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_certification_number_name"
+                    android:id="@+id/activity_attend_detail_textview_certification_number_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="인증번호: "
+                    android:text="인증번호 "
                     android:textSize="20dp"
-                    android:layout_below="@+id/activity_attend_button_admin" />
+                    android:layout_below="@+id/activity_attend_detail_button_admin" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_certification_number"
+                    android:id="@+id/activity_attend_detail_textview_certification_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:layout_below="@+id/activity_attend_button_admin"
-                    android:layout_toRightOf="@+id/activity_attend_textview_certification_number_name" />
+                    android:layout_below="@+id/activity_attend_detail_button_admin"
+                    android:layout_toRightOf="@+id/activity_attend_detail_textview_certification_number_name" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_attend_time_limit_name"
+                    android:id="@+id/activity_attend_detail_textview_attend_time_limit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="출석인정시간: "
+                    android:text="출석인정시간 "
                     android:textSize="20dp"
-                    android:layout_below="@+id/activity_attend_textview_certification_number"
+                    android:layout_below="@+id/activity_attend_detail_textview_certification_number"
                     android:layout_alignParentLeft="true" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_attend_time_limit"
+                    android:id="@+id/activity_attend_detail_textview_attend_time_limit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:layout_below="@+id/activity_attend_textview_certification_number"
-                    android:layout_toRightOf="@+id/activity_attend_textview_attend_time_limit_name" />
+                    android:layout_below="@+id/activity_attend_detail_textview_certification_number"
+                    android:layout_toRightOf="@+id/activity_attend_detail_textview_attend_time_limit_name" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_tardy_time_limit_name"
+                    android:id="@+id/activity_attend_detail_textview_tardy_time_limit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="지각인정시간: "
+                    android:text="지각인정시간 "
                     android:textSize="20dp"
-                    android:layout_below="@+id/activity_attend_textview_attend_time_limit" />
+                    android:layout_below="@+id/activity_attend_detail_textview_attend_time_limit" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_tardy_time_limit"
+                    android:id="@+id/activity_attend_detail_textview_tardy_time_limit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:layout_below="@+id/activity_attend_textview_attend_time_limit"
-                    android:layout_toRightOf="@+id/activity_attend_textview_tardy_time_limit_name"/>
+                    android:layout_below="@+id/activity_attend_detail_textview_attend_time_limit"
+                    android:layout_toRightOf="@+id/activity_attend_detail_textview_tardy_time_limit_name"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,14 +194,14 @@
                     android:textSize="30dp" />
 
                 <TextView
-                    android:id="@+id/activity_attend_textview_attend_statue"
+                    android:id="@+id/activity_attend_detail_textview_attend_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/border_orange"
                     android:text="미출결"
                     android:textSize="25dp"
-                    android:layout_below="@+id/activity_attend_button_admin"/>
+                    android:layout_below="@+id/activity_attend_detail_button_admin"/>
 
             </RelativeLayout>
 
@@ -229,7 +225,7 @@
                 android:weightSum="2">
 
                 <Button
-                    android:id="@+id/activity_attend_button_attendance"
+                    android:id="@+id/activity_attend_detail_button_attendance"
                     style="@style/Content_Classification_Text_Style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -237,7 +233,7 @@
                     android:text="출석" />
 
                 <Button
-                    android:id="@+id/activity_attend_button_cancel"
+                    android:id="@+id/activity_attend_detail_button_cancel"
                     style="@style/Content_Classification_Text_Style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
