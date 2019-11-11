@@ -25,7 +25,10 @@ import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
@@ -41,7 +44,7 @@ public class Board_Detail extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
-    BoardModel boardModel;
+    BoardModel boardModel = new BoardModel();
     String getkey;
     String updateKey;
 
@@ -68,27 +71,36 @@ public class Board_Detail extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
 
+        Intent intent = getIntent();
+        getkey = intent.getStringExtra("key");
         detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        CheckTypesTask task = new CheckTypesTask();
-        task.execute();
+        database.getReference().child(clubName).child("Board").child(getkey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boardModel = null;
+                boardModel = dataSnapshot.getValue(BoardModel.class);
+                name.setText(boardModel.username);
+                title.setText(boardModel.title);
+                contents.setText(boardModel.contents);
+                long unixTime = (long) boardModel.timestamp;
+                Date date = new Date(unixTime);
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
+                String time = simpleDateFormat.format(date);
+                timestamp.setText(time);
+                detail_recyAdapter.notifyDataSetChanged();
+            }
 
-        Intent intent = getIntent();
-        boardModel = (BoardModel)intent.getSerializableExtra("MODEL");
-        getkey = intent.getStringExtra("key");
-        //name.setText(boardModel.username);
-        title.setText(boardModel.title);
-        contents.setText(boardModel.contents);
-        long unixTime = (long) boardModel.timestamp;
-        Date date = new Date(unixTime);
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
-        String time = simpleDateFormat.format(date);
-        timestamp.setText(time);
-        edt_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+         edt_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showOption(view);
@@ -127,8 +139,7 @@ public class Board_Detail extends AppCompatActivity {
                         else if( boardModel.idx > 0 ){ // 사진이 있으면
                             delete_content();
                         }
-                        Intent intent = new Intent(getApplicationContext(), Board_Main.class);
-                        startActivity(intent);
+                        finish();
                         break;
                 }
                 return false;

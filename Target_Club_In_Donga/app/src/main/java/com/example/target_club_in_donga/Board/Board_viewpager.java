@@ -39,7 +39,7 @@ public class Board_viewpager extends AppCompatActivity {
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
                 View view = getLayoutInflater().inflate(R.layout.item_board_viewpager, null);
-                final ImageView imageView = (ImageView) view.findViewById(R.id.item_viewpager_imgview);
+                final ImageView imageView = view.findViewById(R.id.item_viewpager_imgview);
                 Glide.with(view).load(imglist.get(position)).into(imageView);
                 container.addView(view);
                 return view;
@@ -57,5 +57,6 @@ public class Board_viewpager extends AppCompatActivity {
             }
         };
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(idx);
     }
 }
