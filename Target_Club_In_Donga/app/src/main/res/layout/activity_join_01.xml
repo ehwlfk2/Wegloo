@@ -2,8 +2,122 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/joinclube_00_artboard_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".club_foundation_join.Join_01">
+    android:background="@drawable/artboard_main_ver0"
+    tools:ignore="MissingDefaultResource">
+
+
+    <ImageButton
+        android:id="@+id/joinclube_00_imagebutton_back"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.051803128"
+        app:layout_constraintHorizontal_bias="0.113298068"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.051296875"
+        app:layout_constraintVertical_bias="0.051875
+"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_icon_ionic_ios_arrow_back_ver0"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/joinclube_00_artboard_sub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="1"
+        app:layout_constraintHorizontal_bias="0.5"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1"
+        app:srcCompat="@drawable/artboard_sub_su_ver0"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/joinclube_00_imageview_logo"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.426715731"
+        app:layout_constraintHorizontal_bias="0.500386385"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.066666667"
+        app:layout_constraintVertical_bias="0.051875"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wegloo_logo_ver0"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/joinclube_00_textview_pickclub"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.580404784"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.0546875"
+        app:layout_constraintVertical_bias="0.287"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="모임을 선택 해주세요!"
+        android:gravity="center"
+        android:autoSizeMinTextSize="2sp"
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeTextType="uniform"
+        />
+
+    <com.example.target_club_in_donga.club_foundation_join.CustomAutoCompleteTextView
+        android:dropDownAnchor="@id/joinclube_autoCompleteSearch"
+        android:dropDownHeight="200dp"
+        android:text=""
+        android:dropDownHorizontalOffset="0dp"
+
+        android:id="@+id/joinclube_autoCompleteSearch"
+        android:singleLine = "true"
+        android:maxLines = "1"
+        android:hint = "모임 검색 (2자 이상)"
+        android:completionThreshold="2"
+        android:textColorHint="@color/color_Orange"
+        android:theme="@style/EditTheme"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.630174793"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.0625"
+        app:layout_constraintVertical_bias="0"
+
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/joinclube_00_textview_pickclub"
+
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
