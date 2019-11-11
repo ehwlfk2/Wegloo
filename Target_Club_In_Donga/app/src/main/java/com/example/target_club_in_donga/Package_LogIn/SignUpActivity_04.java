@@ -57,7 +57,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
     private FirebaseDatabase firebaseDatabase;
     private FirebaseStorage firebaseStorage;
     private String realNameProfileIamgePath;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
