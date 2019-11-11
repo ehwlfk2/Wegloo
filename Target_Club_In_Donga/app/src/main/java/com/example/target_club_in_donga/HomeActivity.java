@@ -22,6 +22,17 @@ public class HomeActivity extends AppCompatActivity implements HomeActivity_Frag
     private ViewPager viewPager;
     private BackPressCloseHandler backPressCloseHandler;
 
+    public interface onKeyBackPressedListener {
+        void onBackKey();
+    }
+
+    private onKeyBackPressedListener monKeyBackPressedListener;
+
+    public void setOnKeyBackPressedListener(onKeyBackPressedListener listener) {
+        monKeyBackPressedListener = listener;
+    }
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +48,17 @@ public class HomeActivity extends AppCompatActivity implements HomeActivity_Frag
     @Override
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
+        if (viewPager.getCurrentItem() == 1) {
+            backPressCloseHandler.onBackPressed();
+        } else {
+            if (monKeyBackPressedListener != null) {
+                monKeyBackPressedListener.onBackKey();
+            } else {
+                viewPager.setCurrentItem(1);
+//                super.onBackPressed();
+            }
+        }
     }
-    // 메인에서 뒤로가기를 두번 2초안에 눌러야 앱을 종료할 수 있다.
 
     @Override
     public void onFragmentInteraction(final Uri uri) {

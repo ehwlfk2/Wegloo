@@ -20,6 +20,7 @@ public class AttendActivity extends AppCompatActivity implements HomeActivity_Fr
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         AttendActivity_Adapter fragmentAdapter = new AttendActivity_Adapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
+        viewPager.setCurrentItem(1);
     }
 
     // 메뉴에서 출석을 눌렀을 때, viewPager에서 ViewPagerAdapter_Attend로 출석화면이 나오고

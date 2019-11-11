@@ -350,7 +350,7 @@ public class HomeActivity_Fragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // TODO: Update argument type and nameonFragmentInteraction
         void onFragmentInteraction(Uri uri);
     }
 

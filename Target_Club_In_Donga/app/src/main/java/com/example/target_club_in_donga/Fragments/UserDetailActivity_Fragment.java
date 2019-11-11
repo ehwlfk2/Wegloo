@@ -1,5 +1,6 @@
 package com.example.target_club_in_donga.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +40,7 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserDetailActivity_Fragment extends Fragment {
+public class UserDetailActivity_Fragment extends Fragment implements HomeActivity.onKeyBackPressedListener {
 
     public UserDetailActivity_Fragment() {
         // Required empty public constructor
@@ -276,6 +278,19 @@ public class UserDetailActivity_Fragment extends Fragment {
             return attendAdminItems.size();
         }
 
+    }
+
+    @Override
+    public void onBackKey() {
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        homeActivity.setOnKeyBackPressedListener(null);
+        homeActivity.onBackPressed();
+    }
+
+    @Override
+    public void onAttach(@NonNull final Context context) {
+        super.onAttach(context);
+        ((HomeActivity)context).setOnKeyBackPressedListener(this);
     }
 
 }

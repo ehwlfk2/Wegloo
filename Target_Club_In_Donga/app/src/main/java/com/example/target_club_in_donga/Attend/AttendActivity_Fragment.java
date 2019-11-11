@@ -2,6 +2,7 @@ package com.example.target_club_in_donga.Attend;
 
 //import android.content.Context;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,9 +20,11 @@ import android.widget.ImageView;*/
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -48,7 +51,7 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AttendActivity_Fragment extends Fragment {
+public class AttendActivity_Fragment extends Fragment implements HomeActivity.onKeyBackPressedListener {
 
     /*    private Gallery gallery;
         private Button select_btn;
@@ -538,6 +541,19 @@ public class AttendActivity_Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onBackKey() {
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        homeActivity.setOnKeyBackPressedListener(null);
+        homeActivity.onBackPressed();
+    }
+
+    @Override
+    public void onAttach(@NonNull final Context context) {
+        super.onAttach(context);
+        ((HomeActivity)context).setOnKeyBackPressedListener(this);
     }
 
 }

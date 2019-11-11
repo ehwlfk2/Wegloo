@@ -17,8 +17,8 @@ public class NoticeActivity_Adapter extends FragmentPagerAdapter {
     public NoticeActivity_Adapter(FragmentManager fm) {
         super(fm);
         fragmentData = new ArrayList<>();
-        fragmentData.add(new NoticeActivity_Fragment());
         fragmentData.add(new HomeActivity_Fragment());
+        fragmentData.add(new NoticeActivity_Fragment());
     }
 
     // ArrayList에 Material_Notice와 Fragment_Home를 추가시킨다.

@@ -19,6 +19,7 @@ public class NoticeActivity extends AppCompatActivity implements HomeActivity_Fr
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         NoticeActivity_Adapter fragmentAdapter = new NoticeActivity_Adapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
+        viewPager.setCurrentItem(1);
     }
 
     // 홈에서 공지사항을 눌었을 떄, viewPager에서 ViewPagerAdapter_Notice로 공지사항화면이 나오고
