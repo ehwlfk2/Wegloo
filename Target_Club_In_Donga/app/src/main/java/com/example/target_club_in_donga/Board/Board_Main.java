@@ -114,7 +114,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         @Override
         protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중입니다");
+            asyncDialog.setMessage("로딩중이입니다");
 
             // show dialog
             asyncDialog.show();
