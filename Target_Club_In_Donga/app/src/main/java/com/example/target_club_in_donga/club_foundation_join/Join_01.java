@@ -1,5 +1,6 @@
 package com.example.target_club_in_donga.club_foundation_join;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,11 +14,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.R;
 
 import java.io.ByteArrayInputStream;
@@ -198,5 +201,49 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         };
+    }
+    private void foundationClubDialog(){
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+
+        final View view2 = LayoutInflater.from(this).inflate(R.layout.dialog_foundation_02_createclub, null, false);
+        builder2.setView(view2);
+        final AlertDialog dialog2 = builder2.create();
+        TextView dialog_foundation_02_text = view2.findViewById(R.id.dialog_foundation_02_text);
+        ImageView dialog_foundation_02_button_picture = view2.findViewById(R.id.dialog_foundation_02_button_picture);
+        TextView dialog_foundation_02_realName = view2.findViewById(R.id.dialog_foundation_02_realName);
+        TextView dialog_foundation_02_freeSign = view2.findViewById(R.id.dialog_foundation_02_freeSign);
+        TextView dialog_foundation_02_content = view2.findViewById(R.id.dialog_foundation_02_content);
+        Button dialog_foundation_02_confirmBtn = view2.findViewById(R.id.dialog_foundation_02_confirmBtn);
+
+        /*dialog_foundation_02_content.setText(foundation_02_edittext_content.getText().toString());
+        dialog_foundation_02_text.setText(foundation_02_edittext_name.getText().toString());
+        Glide.with(view2).load(imagePath).into(dialog_foundation_02_button_picture);
+        final boolean freeSign, realName;
+        if(foundation_02_radioGroup_01.getCheckedRadioButtonId() == R.id.foundation_02_radio_realName_Btn){
+            dialog_foundation_02_realName.setText("실명 모임");
+            realName = true;
+        }
+        else{
+            dialog_foundation_02_realName.setText("별명 모임");
+            realName = false;
+        }
+        if(foundation_02_radioGroup_02.getCheckedRadioButtonId() == R.id.foundation_02_radio_freeSign_Btn){
+            dialog_foundation_02_freeSign.setText("자유 가입");
+            freeSign = true;
+        }
+        else{
+            dialog_foundation_02_freeSign.setText("승인 가입");
+            freeSign = false;
+        }
+
+        dialog_foundation_02_confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog2.dismiss();
+                insertDB(imagePath,realName,freeSign);
+            }
+        });*/
+
+        dialog2.show();
     }
 }

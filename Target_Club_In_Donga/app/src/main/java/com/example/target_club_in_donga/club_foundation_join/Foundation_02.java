@@ -136,7 +136,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
         return cursor.getString(index);
 
     }
-    private void foundationClubDialog(){ //1은 1 2는 2
+    private void foundationClubDialog(){
         AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
 
         final View view2 = LayoutInflater.from(this).inflate(R.layout.dialog_foundation_02_createclub, null, false);
@@ -146,7 +146,10 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
         ImageView dialog_foundation_02_button_picture = view2.findViewById(R.id.dialog_foundation_02_button_picture);
         TextView dialog_foundation_02_realName = view2.findViewById(R.id.dialog_foundation_02_realName);
         TextView dialog_foundation_02_freeSign = view2.findViewById(R.id.dialog_foundation_02_freeSign);
+        TextView dialog_foundation_02_content = view2.findViewById(R.id.dialog_foundation_02_content);
         Button dialog_foundation_02_confirmBtn = view2.findViewById(R.id.dialog_foundation_02_confirmBtn);
+
+        dialog_foundation_02_content.setText(foundation_02_edittext_content.getText().toString());
         dialog_foundation_02_text.setText(foundation_02_edittext_name.getText().toString());
         Glide.with(view2).load(imagePath).into(dialog_foundation_02_button_picture);
         final boolean freeSign, realName;
