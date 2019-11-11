@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/dialog_agreement_text"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.1"
+        android:padding="10dp"
+        android:textSize="18dp"
+        android:text="@string/SignUp_Agreement_term"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_agreement_contents_scroll"/>
+
+    <ScrollView
+        android:id="@+id/dialog_agreement_contents_scroll"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_agreement_confirmBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_agreement_text">
+
+        <TextView
+            android:id="@+id/dialog_agreement_contents"
+            android:text="@string/SignUp_Agreement_term_Contents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+    <Button
+
+        android:id="@+id/dialog_agreement_confirmBtn"
+        android:text="확인"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_bias="0.8"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.55"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

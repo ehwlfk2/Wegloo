@@ -207,7 +207,7 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         //ArrayList<String> dbKey = new ArrayList<String>();
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child(clubName).child("Notice").child(noticeDbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("EveryClub").child(clubName).child("Notice").child(noticeDbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 //Toast.makeText(, "", Toast.LENGTH_SHORT).show();

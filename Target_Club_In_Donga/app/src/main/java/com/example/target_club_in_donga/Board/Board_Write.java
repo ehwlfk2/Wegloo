@@ -121,8 +121,18 @@ public class Board_Write extends AppCompatActivity {
                     if( IMAGEs.size() != 0 ){ // 사진 있음 이슈 : 사진 추가없이 삭제만 할시, uris가 0이라 제목 본문이 바뀌어도 업데이트 되지않고 넘어가는 이슈.
                         boardEditInfo();
                     }
+<<<<<<< HEAD
                     else if( IMAGEs.size() == 0 ){ // 사진 없음
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
+=======
+                    else{ // 수정이 아니다
+                        writeGalleryInfo();
+                    }
+                } else if (uris.size() == 0) { // 새 글 쓰기시 사진이없다 & 수정시 사진을 새로 업로드 안할시
+                    if(edt_key==1){ // 수정
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
+                        //FirebaseUser currentuser = auth.getCurrentUser();
+>>>>>>> Develop_Android
                         boardModel.title = title.getText().toString();
                         boardModel.contents = contents.getText().toString();
                         boardModel.timestamp = ServerValue.TIMESTAMP;
@@ -188,6 +198,7 @@ public class Board_Write extends AppCompatActivity {
         final String times = simpleDateFormat.format(date);
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
+<<<<<<< HEAD
         if( uris.size() == 0){ // 사진은 있는데 추가없이 삭제, 텍스트만 변경
             //
         }
@@ -226,6 +237,10 @@ public class Board_Write extends AppCompatActivity {
         CreatNuploadThumbnail(times, storageRef);
         for (int i = 0; i < IMAGEs.size(); i++) {
             final Uri individualImage = Uri.parse(IMAGEs.get(i));
+=======
+        for (int i = 0; i < uris.size(); i++) {
+            final Uri individualImage = uris.get(i);
+>>>>>>> Develop_Android
             final StorageReference ImageName = storageRef.child("EveryClub").child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
             UploadTask uploadTask = ImageName.putFile(individualImage);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -269,9 +284,14 @@ public class Board_Write extends AppCompatActivity {
         });
     }
     private void StoreDatabase(){
+<<<<<<< HEAD
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
+=======
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
+        //FirebaseUser currentuser = auth.getCurrentUser();
+>>>>>>> Develop_Android
         boardModel.title = title.getText().toString();
         boardModel.contents = contents.getText().toString();
         boardModel.timestamp = ServerValue.TIMESTAMP;

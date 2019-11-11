@@ -21,7 +21,7 @@ import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity_Home;
+import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
@@ -200,7 +200,7 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MaterialManagementActivity_Home.class);
+                Intent intent = new Intent(getActivity(), MaterialRentalActivity_Home.class);
                 startActivity(intent);
             }
         }); // main_btb2 물품관리
@@ -279,7 +279,7 @@ public class HomeActivity_Fragment extends Fragment {
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fragment_home_profile_name.setText(dataSnapshot.getValue(String.class));

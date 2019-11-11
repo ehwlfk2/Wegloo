@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.Package_LogIn;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -84,11 +87,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
     EditText activity_login_id_editText, activity_login_pw_editText;
-
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_ver0);
+        progressDialog = new ProgressDialog(this);
         mFunctions = FirebaseFunctions.getInstance();
         database = FirebaseDatabase.getInstance();
         //카카오 로그인 콜백받기
@@ -97,13 +101,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         Session.getCurrentSession().checkAndImplicitOpen();
         loadShared();
         // findById
-        Button activity_login_signup_btn = findViewById(R.id.activity_login_signup_btn);
-        Button activity_login_login_btn = findViewById(R.id.activity_login_login_btn);
-        SignInButton activity_login_google_btn = findViewById(R.id.activity_login_google_btn);
-        LoginButton activity_login_facebook_btn = findViewById(R.id.activity_login_facebook_btn);
+        TextView activity_login_signup_btn = findViewById(R.id.login_button_signup);
+        Button activity_login_login_btn = findViewById(R.id.login_button_login);
+        ImageView activity_login_google_btn = findViewById(R.id.login_button_google);
+        ImageView activity_login_facebook_btn = findViewById(R.id.login_button_facebook);
         // find email, pw
-        activity_login_id_editText = findViewById(R.id.activity_login_id_editText);
-        activity_login_pw_editText = findViewById(R.id.activity_login_pw_editText);
+        activity_login_id_editText = findViewById(R.id.login_edittext_id);
+        activity_login_pw_editText = findViewById(R.id.login_edittext_psw);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -125,7 +129,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         activity_login_facebook_btn.setOnClickListener(this);
         activity_login_login_btn.setOnClickListener(this);
 
+
+
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("develop_check", "페이스북 로그인 성공 : " + loginResult);
@@ -165,6 +172,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         });
 
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -174,21 +182,23 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     database.getReference().child("AppUser").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
+                            progressDialog.dismiss();
+                            activity_login_id_editText.setText("");
+                            activity_login_pw_editText.setText("");
                             try{
                                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                                clubName = appLoginData.getRecentClub();
-                                //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                clubName = appLoginData.getPhone();
+                                /**
+                                 * 임시로 getPhone해둔거임임임
+                                 */
+                                Intent intent = new Intent(LoginActivity.this, Congratulation.class);
                                 startActivity(intent);
-                                finish();
-                            }catch (NullPointerException e){ //DB에 없으면 회원가입 시키자
-
-                                Toast.makeText(LoginActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
-                                intent.putExtra("loginIdentity","google");
+                                //finish();
+                            }catch (NullPointerException e){ //auth에는 있는데 db엔 없는경우지 이게 아마?
+                                Intent intent = new Intent(LoginActivity.this, SignUpActivity_04.class);
+                                intent.putExtra("loginIdentity","notEmail");
                                 startActivity(intent);
-                                finish();
-
+                                //finish();
                             }
                         }
                         @Override
@@ -204,7 +214,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         };  // mAuthListener
 
+<<<<<<< HEAD
     }
+=======
+    }   // onCreate
+
+
+>>>>>>> Develop_Android
     @Override
     public void onStart() {
         try {
@@ -274,7 +290,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("develop_check", "signInWithCredential : failure =>", task.getException());
-                    //Toast.makeText(LoginActivity.this, "구글 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -288,7 +303,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요\n아니면 가입이 안되있을지Do?", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(LoginActivity.this, "이메일 회원가입해주3", Toast.LENGTH_SHORT).show();
                         Log.w("develop_check", "로그인에 실패했습니다.");
                     } else {
@@ -301,37 +317,41 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             });
         }
         else{
-            Log.w("develop_check","아이디와 비밀번호를 입력하지 않았습니다.");
-            //Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void success_of_login() {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity_03.class);
-        startActivity(intent);
     }
 
     @Override
     public void onClick(View view) {
         int i = view.getId();
-        if (i == R.id.activity_login_signup_btn) {
+        if (i == R.id.login_button_signup) {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
             intent.putExtra("loginIdentity","email");
             startActivity(intent);
-            finish();
-        } else if (i == R.id.activity_login_google_btn) {
+            //finish();
+        } else if (i == R.id.login_button_google) {
+            progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.show();
             Log.v("develop_check", "구글 로그인 시도");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
-        } else if (i == R.id.activity_login_facebook_btn) {
+
+        } else if (i == R.id.login_button_facebook) {
+            progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.show();
             Log.v("develop_check", "페이스북 로그인 시도");
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-        } else if (i == R.id.activity_login_login_btn) {
+
+        } else if (i == R.id.login_button_login) {
+            progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.show();
             Log.v("develop_check", "로그인 시도");
             loginUser();
             //onStart();
         }
     }   // onClick
+
 
     private class SessionCallback implements ISessionCallback {
 

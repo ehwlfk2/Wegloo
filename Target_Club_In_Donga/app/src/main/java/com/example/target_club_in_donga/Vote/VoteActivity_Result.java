@@ -64,7 +64,7 @@ public class VoteActivity_Result extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         items = new ArrayList<Vote_Item_Count>();
 
-        database.getReference().child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class); //큰거 하나!
@@ -85,7 +85,7 @@ public class VoteActivity_Result extends AppCompatActivity {
 
                         if(last_item.stars.get(key) == i){ //uid가 같으면 이름받아오기
 
-                            database.getReference().child(clubName).child("User").child(key).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).child("User").child(key).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String name = dataSnapshot.getValue(String.class);

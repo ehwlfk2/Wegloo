@@ -11,7 +11,7 @@ public class Attend_Admin_Change_Item {
     }
 
     public String name;
-    public String attend_statue;
+    public String attend_state;
     public String phone;
 
     public Attend_Admin_Change_Item() {

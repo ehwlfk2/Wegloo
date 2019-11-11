@@ -22,14 +22,9 @@
 
         <TextView
             style="@style/Top_Content_Text_Style"
-            android:text="출결관리" />
+            android:text="출석체크" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="2dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:background="#4F000000" />
+        <View style="@style/Line_Style" />
 
         // 출석관리
 
@@ -39,14 +34,27 @@
             tools:context=".Google_Login">
 
             <Button
-                android:id="@+id/activity_attend_home_admin_button_insert"
+                android:id="@+id/activity_attend_home_button_insert"
                 style="@style/Content_Classification_Text_Style"
-                android:text="출석추가하기"
+                android:layout_width="wrap_content"
+                android:text="출석추가"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/activity_attend_home_button_information"
+                app:layout_constraintLeft_toLeftOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
 
+            <Button
+                android:id="@+id/activity_attend_home_button_information"
+                style="@style/Content_Classification_Text_Style"
+                android:layout_width="wrap_content"
+                android:text="출결관리자 (출결정보)"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/activity_attend_home_button_insert"
+                tools:layout_editor_absoluteX="0dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activity_attend_home_admin_recyclerview_main_list"
+                android:id="@+id/activity_attend_home_recyclerview_main_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
@@ -54,12 +62,14 @@
                 android:scrollbarSize="10dp"
                 android:scrollbarThumbVertical="@android:color/darker_gray"
                 android:scrollbars="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/activity_attend_home_admin_button_insert"
+                app:layout_constraintBottom_toTopOf="@+id/activity_attend_home_button_insert"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 tools:layout_editor_absoluteX="0dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
