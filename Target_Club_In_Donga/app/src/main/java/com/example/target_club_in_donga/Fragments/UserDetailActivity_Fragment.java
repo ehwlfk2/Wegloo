@@ -96,7 +96,7 @@ public class UserDetailActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 LoginData loginData = dataSnapshot.getValue(LoginData.class);
@@ -128,14 +128,14 @@ public class UserDetailActivity_Fragment extends Fragment {
         activity_user_detail_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
         attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
                 uidLists.clear();
                 listSize = 0;
                 for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
-                    database.getReference().child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -155,7 +155,7 @@ public class UserDetailActivity_Fragment extends Fragment {
                                     // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
                                     attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-/*                                    database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+/*                                    database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             if (*//*dataSnapshot.child("name").getValue().toString().equals(snapshot.child("name").getValue(String.class)) && *//*dataSnapshot.child("phone").getValue().toString().equals(snapshot.child("phone").getValue(String.class))) {

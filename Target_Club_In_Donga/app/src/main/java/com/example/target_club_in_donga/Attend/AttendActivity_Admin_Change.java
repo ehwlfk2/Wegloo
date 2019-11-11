@@ -59,7 +59,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
         activity_attend_admin_change_home_recyclerview_main_list.setAdapter(attendAdminChangeActivity_adminRecyclerViewAdapter);
         attendAdminChangeActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
@@ -166,13 +166,13 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
                         @Override
                         public void onClick(final View v) {
                             if(flag == 0) {
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("출석");
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("출석");
                                 // 출석으로 변경
                             } else if(flag == 1) {
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("지각");
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("지각");
                                 // 지각으로 변경
                             } else {
-                                database.getReference().child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("결석");
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("결석");
                                 // 결석으로 변경
                             }
                             dialog.dismiss();
