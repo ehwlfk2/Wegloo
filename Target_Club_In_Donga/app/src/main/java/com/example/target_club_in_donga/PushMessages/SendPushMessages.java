@@ -23,8 +23,8 @@ import okhttp3.Response;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class SendPushMessages {
-    public void multipleSendMessage(final String title, final String text){
-        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void multipleSendMessage(final String title, final String text, final String clickAction){
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -32,7 +32,7 @@ public class SendPushMessages {
                     if(data.isPushAlarmOnOff() && !(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))){ //자기한텐 안보내기 추가
                         try{
                             SendPushMessages send = new SendPushMessages();
-                            send.sendFcm(data.getPushToken(), title,text);
+                            send.sendFcm(data.getPushToken(), title,text, clickAction);
                         }catch (NullPointerException e){
 
                         }
@@ -47,15 +47,17 @@ public class SendPushMessages {
         });
     }
 
-    public void sendFcm(String toToken, String title, String text){
+    public void sendFcm(String toToken, String title, String text, String clickAction){
         Gson gson = new Gson();
 
         NotificationModel notificationModel = new NotificationModel();
         notificationModel.to =  toToken;
-        notificationModel.notification.title = title; //백그라운드
-        notificationModel.notification.text = text;
+        //notificationModel.notification.title = title; //백그라운드
+        //notificationModel.notification.text = text;
+        //notificationModel.notification.clickAction = clickAction;
         notificationModel.data.title = title; //포그라운드
         notificationModel.data.text = text;
+        notificationModel.data.clickAction = clickAction;
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));
 

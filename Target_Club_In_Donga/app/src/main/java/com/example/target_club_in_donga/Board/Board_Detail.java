@@ -12,14 +12,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,17 +35,15 @@ import java.util.TimeZone;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class Board_Detail extends AppCompatActivity {
-    ImageButton detail_back;
+    ImageButton detail_back, edt_menu;
     TextView name, timestamp, title, contents;
-    EditText edt_title, edt_contents;
-    Button edt_upload;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
-    Spinner spinner;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
     BoardModel boardModel;
     String getkey;
+    String updateKey;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd HH:mm");
     RecyclerViewDecoration recyclerViewDecoration = new RecyclerViewDecoration(30);
@@ -57,15 +53,12 @@ public class Board_Detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_detail);
         detail_back = findViewById(R.id.board_detail_back_btn);
-        spinner = findViewById(R.id.board_detail_spinner);
+        edt_menu = findViewById(R.id.board_detail_3dotmenu);
         name = findViewById(R.id.board_detail_name);
         timestamp = findViewById(R.id.board_detail_timestamp);
         title = findViewById(R.id.board_detail_title);
         contents = findViewById(R.id.board_detail_contents);
         recyclerView = findViewById(R.id.board_detail_recy);
-        edt_title = findViewById(R.id.board_edit_title);
-        edt_contents = findViewById(R.id.board_detail_contents_edit);
-        edt_upload = findViewById(R.id.board_detail_edit_upload);
 
         linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         final Detail_recyAdapter detail_recyAdapter = new Detail_recyAdapter(img_clicklistner);
@@ -74,58 +67,6 @@ public class Board_Detail extends AppCompatActivity {
         recyclerView.addItemDecoration(recyclerViewDecoration);
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView)view).setText(null);
-                if (i == 0){ //수정
-                    title.setVisibility(View.INVISIBLE);
-                    edt_title.setVisibility(View.VISIBLE);
-                    edt_title.setText(title.getText().toString());
-
-                    contents.setVisibility(View.INVISIBLE);
-                    edt_contents.setVisibility(View.VISIBLE);
-                    edt_contents.setText(contents.getText().toString());
-
-                    spinner.setVisibility(View.INVISIBLE);
-                    edt_upload.setVisibility(View.VISIBLE);
-                    edt_upload.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // write에 있는 피쉬번, 이미지 업로드 가져오고 기존에 있던 이미지들은 다 삭제하고 다시업로드?
-                            // 이미지를 리사이클러뷰에 올렸을때 클릭 리스너를 달아서 삭제가 가능하게할까
-                            // 그리고 마지막에 이미지버튼으로 추가버튼 달아줄까
-                        }
-                    });
-                }
-                else if (i == 1){ // 삭제
-                    if( boardModel.idx == 0 ){ // 사진이 없으면
-                        database.getReference().child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getApplicationContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "db 삭제 오류", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    else if( boardModel.idx > 0 ){ // 사진이 있으면
-                        delete_content();
-                    }
-                    Intent intent = new Intent(getApplicationContext(), Board_Main.class);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,8 +80,7 @@ public class Board_Detail extends AppCompatActivity {
         Intent intent = getIntent();
         boardModel = (BoardModel)intent.getSerializableExtra("MODEL");
         getkey = intent.getStringExtra("key");
-        name.setText(boardModel.username);
-        //timestamp.setText(boardModel.timestamp);
+        //name.setText(boardModel.username);
         title.setText(boardModel.title);
         contents.setText(boardModel.contents);
         long unixTime = (long) boardModel.timestamp;
@@ -148,7 +88,56 @@ public class Board_Detail extends AppCompatActivity {
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
         String time = simpleDateFormat.format(date);
         timestamp.setText(time);
+        edt_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showOption(view);
+            }
+        });
+
     }
+    void showOption(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.inflate(R.menu.detail_edit_menu);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.editwrite:
+                        Intent intent1 = new Intent(getApplicationContext(), Board_Write.class);
+                        intent1.putExtra("edt_model", boardModel);
+                        intent1.putExtra("edt_key", 1);
+                        intent1.putExtra("updatekey", getkey);
+                        startActivity(intent1);
+                        break;
+                    case R.id.deletedetail:
+                        if( boardModel.idx == 0 ){ // 사진이 없으면
+                            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getApplicationContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "db 삭제 오류", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else if( boardModel.idx > 0 ){ // 사진이 있으면
+                            delete_content();
+                        }
+                        Intent intent = new Intent(getApplicationContext(), Board_Main.class);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
+
     public View.OnClickListener img_clicklistner = new View.OnClickListener() { // 이미지 클릭이벤트
         @Override
         public void onClick(View v) {
@@ -195,7 +184,7 @@ public class Board_Detail extends AppCompatActivity {
 
     public void delete_content(){ // 이미지 여러개 삭제후 데이터베이스 하나를 날려야된다
         for(int i = 0; i < boardModel.imgName.size() ; i++){
-            storage.getReference().child(clubName).child("Board").child(boardModel.imgName.get(i)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            storage.getReference().child("EveryClub").child(clubName).child("Board").child(boardModel.imgName.get(i)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                 }
@@ -206,7 +195,7 @@ public class Board_Detail extends AppCompatActivity {
                 }
             });
         }
-        database.getReference().child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getApplicationContext(), "삭제 완료", Toast.LENGTH_SHORT).show();

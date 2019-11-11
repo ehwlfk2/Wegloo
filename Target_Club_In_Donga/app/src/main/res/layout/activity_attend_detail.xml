@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="동아리 전체 출석"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출석 인원"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_people_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출석 현황"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_people_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        style="@style/Line_Style" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="6"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="org.androidtown.graph.MainActivity" >
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/activity_attend_piechart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                </com.github.mikephil.charting.charts.PieChart>
+            </RelativeLayout>
+            <!--
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/activity_attend_recylerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true">
+
+                    </android.support.v7.widget.RecyclerView>-->
+            <ImageView
+                android:id="@+id/test"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <View
+            style="@style/Line_Style" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <Gallery
+                android:id="@+id/activity_attend_detail_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+            </Gallery>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/activity_attend_detail_button_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출결관리자 (출결수정)" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_certification_number_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="인증번호 "
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_detail_button_admin" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_certification_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_detail_button_admin"
+                    android:layout_toRightOf="@+id/activity_attend_detail_textview_certification_number_name" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_attend_time_limit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출석인정시간 "
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_detail_textview_certification_number"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_attend_time_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_detail_textview_certification_number"
+                    android:layout_toRightOf="@+id/activity_attend_detail_textview_attend_time_limit_name" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_tardy_time_limit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지각인정시간 "
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_detail_textview_attend_time_limit" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_tardy_time_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_below="@+id/activity_attend_detail_textview_attend_time_limit"
+                    android:layout_toRightOf="@+id/activity_attend_detail_textview_tardy_time_limit_name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="출결상태"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/activity_attend_detail_textview_attend_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/border_orange"
+                    android:text="미출결"
+                    android:textSize="25dp"
+                    android:layout_below="@+id/activity_attend_detail_button_admin"/>
+
+            </RelativeLayout>
+
+<!--            <Button
+                android:id="@+id/activity_attend_button_select"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/activity_attend_btn_style"
+                android:elevation="1dp"
+                android:text="+"
+                android:textColor="#ffffff"
+                android:textSize="30dp" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/activity_attend_detail_button_attendance"
+                    style="@style/Content_Classification_Text_Style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="출석" />
+
+                <Button
+                    android:id="@+id/activity_attend_detail_button_cancel"
+                    style="@style/Content_Classification_Text_Style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="취소" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

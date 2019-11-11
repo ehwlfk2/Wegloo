@@ -17,11 +17,11 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
-import com.example.target_club_in_donga.Attend.AttendActivity;
+import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
+import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.TimeLine.TimeLineActivity_Main;
 import com.example.target_club_in_donga.UserDetailActivity;
@@ -38,10 +38,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 // Home 프래그먼트
@@ -112,7 +108,6 @@ public class HomeActivity_Fragment extends Fragment {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_home, container, false);
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-        passPushTokenToServer();
 
         /*MobileAds.initialize(getContext(), "ca-app-pub-3940256099942544~3347511713");
         mAdView = view.findViewById(R.id.adView);
@@ -162,7 +157,7 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), NoticeActivity.class);
                 startActivity(intent);
             }
-        }); // btn1 홈에서 공지사항인데, 클릭하면 홈에서 공지사항으로 activity가 바뀜
+        }); // btn1 공지사항
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +179,7 @@ public class HomeActivity_Fragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ScheduleActivity.class);
                 startActivity(intent);
             }
-        }); // btn4 홈에서 일정인데, 클릭하면 홈에서 일정으로 activity가 바뀜
+        }); // btn4 일정
 
         menu_detail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,18 +192,18 @@ public class HomeActivity_Fragment extends Fragment {
         main_btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AttendActivity.class);
+                Intent intent = new Intent(getActivity(), AttendActivity_Home.class);
                 startActivity(intent);
             }
-        }); // main_btn1 메뉴에서 출석버튼인데, 클릭하면 메뉴에서 출석으로 activity가 바뀌
+        }); // main_btn1 출석
 
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MaterialManagementActivity.class);
+                Intent intent = new Intent(getActivity(), MaterialRentalActivity_Home.class);
                 startActivity(intent);
             }
-        }); // main_btb2 메뉴에서 물품관리버튼인데, 클릭하면 메뉴에서 물품관리로 activity가 바뀜
+        }); // main_btb2 물품관리
         main_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -257,7 +252,7 @@ public class HomeActivity_Fragment extends Fragment {
             public void onClick(final View v) {
                 slidingDrawer.animateOpen();
             }
-        }); // menu_btn 홈에서 메뉴버튼인데, 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
+        }); // menu_btn 메뉴버튼을 누르면 슬라이딩드로우로 아래에서 위로 메뉴가 나타남
 
         timeline_btn.setOnClickListener(new View.OnClickListener() { //홈에서 오른쪽 상단 종버튼 타임라인으로 만들꺼임
             @Override
@@ -284,7 +279,7 @@ public class HomeActivity_Fragment extends Fragment {
             }
         });
 
-        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fragment_home_profile_name.setText(dataSnapshot.getValue(String.class));
@@ -357,14 +352,6 @@ public class HomeActivity_Fragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public void passPushTokenToServer() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Map<String, Object> map = new HashMap<>();
-        map.put("pushToken", token);
-        FirebaseDatabase.getInstance().getReference().child(clubName).child("User").child(uid).updateChildren(map);
     }
 
     public void everyBtnEnable(boolean boo) {

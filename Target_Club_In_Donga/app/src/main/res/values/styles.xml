@@ -18,6 +18,7 @@
         <item name="android:textColor">#ffffff</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:fontFamily">@font/lottedreammedium</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="Top_Content_Text_Style" parent="@style/Widget.AppCompat.TextView.SpinnerItem">
@@ -30,6 +31,7 @@
         <item name="android:saveEnabled">false</item>
         <item name="android:singleLine">true</item>
         <item name="android:paddingLeft">20dp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="Content_Text_Style" parent="@style/Widget.AppCompat.TextView.SpinnerItem">
@@ -41,6 +43,7 @@
         <item name="android:saveEnabled">false</item>
         <item name="android:singleLine">true</item>
         <item name="android:paddingLeft">20dp</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="Content_Classification_Text_Style" parent="@style/Widget.AppCompat.TextView.SpinnerItem">
@@ -53,6 +56,15 @@
         <item name="android:singleLine">true</item>
         <item name="android:background">#ff6d61</item>
         <item name="android:paddingLeft">20dp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Line_Style" parent="@style/Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:background">#4F000000</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -64,6 +76,19 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="EditTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/color_Orange</item>
+        <item name="colorControlNormal">@color/color_Orange</item>
+    </style>
+    <!-- 아래 스타일을 추가해 준다 -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
 
+    <style name="Translucent" parent="Translucent.Base"/>
+
+    <style name="Translucent.Base" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:progressBarStyle">@android:style/Theme.NoDisplay</item>
+    </style>
 
 </resources>

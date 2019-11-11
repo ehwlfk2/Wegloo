@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.target_club_in_donga.Attend.AttendActivity_Home.uidAdminPath;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 
@@ -52,17 +53,17 @@ public class AttendActivity_Fragment extends Fragment {
     /*    private Gallery gallery;
         private Button select_btn;
         private Integer current_image_resource;*/
-    private TextView activity_attend_textview_attend_statue;
+    private TextView activity_attend_detail_textview_attend_state;
 
 //    private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc, R.drawable.dd, R.drawable.ee};
 
     private FirebaseDatabase database;
     private FirebaseAuth auth;
 
-    private Button activity_attend_button_attendance, activity_attend_button_cancel, activity_attend_button_admin;
-    private TextView activity_attend_textview_people_count, activity_attend_textview_people_percent;
-    private TextView activity_attend_textview_certification_number, activity_attend_textview_attend_time_limit, activity_attend_textview_tardy_time_limit;
-    private TextView activity_attend_textview_certification_number_name;
+    private Button activity_attend_detail_button_attendance, activity_attend_detail_button_cancel, activity_attend_detail_button_admin;
+    private TextView activity_attend_detail_textview_people_count, activity_attend_detail_textview_people_percent;
+    private TextView activity_attend_detail_textview_certification_number, activity_attend_detail_textview_attend_time_limit, activity_attend_detail_textview_tardy_time_limit;
+    private TextView activity_attend_detail_textview_certification_number_name;
 
     private int peopleCount = 0, peopleAttendCount = 0;
 
@@ -72,11 +73,13 @@ public class AttendActivity_Fragment extends Fragment {
 
     private long now;
     private String nowDate, formatDate, nowtardyTimeLimit;
-    private String getAttendStatue, setAttendStatue, getTardyTimeLimit, getAttendStatue2;
+    private String getAttendState, setAttendState, getTardyTimeLimit, getAttendState2;
 
     private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0;
+    private static int adminNumber = 2;
 
     PieChart activity_attend_piechart;
+    private String findkey, getState;
 
     public AttendActivity_Fragment() {
         // Required empty public constructor
@@ -86,21 +89,24 @@ public class AttendActivity_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_attend, container, false);
+        View view = inflater.inflate(R.layout.activity_attend_detail, container, false);
+
+        findkey = uidAdminPath;
+//        findkey = getArguments().getString("uidAdminPath");
 //        Gallery_Adapter galleryAdapter = new Gallery_Adapter(getContext(), R.layout.activity_attend_sub_layout, img);
 //        gallery = (Gallery) view.findViewById(R.id.activity_attend_gallery);
 //        select_btn = (Button) view.findViewById(R.id.activity_attend_button_select);
 
-        activity_attend_button_admin = (Button) view.findViewById(R.id.activity_attend_button_admin);
-        activity_attend_button_attendance = (Button) view.findViewById(R.id.activity_attend_button_attendance);
-        activity_attend_button_cancel = (Button) view.findViewById(R.id.activity_attend_button_cancel);
-        activity_attend_textview_attend_statue = (TextView) view.findViewById(R.id.activity_attend_textview_attend_statue);
-        activity_attend_textview_people_count = (TextView) view.findViewById(R.id.activity_attend_textview_people_count);
-        activity_attend_textview_people_percent = (TextView) view.findViewById(R.id.activity_attend_textview_people_percent);
-        activity_attend_textview_certification_number = (TextView) view.findViewById(R.id.activity_attend_textview_certification_number);
-        activity_attend_textview_attend_time_limit = (TextView) view.findViewById(R.id.activity_attend_textview_attend_time_limit);
-        activity_attend_textview_tardy_time_limit = (TextView) view.findViewById(R.id.activity_attend_textview_tardy_time_limit);
-        activity_attend_textview_certification_number_name = (TextView) view.findViewById(R.id.activity_attend_textview_certification_number_name);
+        activity_attend_detail_button_admin = (Button) view.findViewById(R.id.activity_attend_detail_button_admin);
+        activity_attend_detail_button_attendance = (Button) view.findViewById(R.id.activity_attend_detail_button_attendance);
+        activity_attend_detail_button_cancel = (Button) view.findViewById(R.id.activity_attend_detail_button_cancel);
+        activity_attend_detail_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_state);
+        activity_attend_detail_textview_people_count = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_count);
+        activity_attend_detail_textview_people_percent = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_percent);
+        activity_attend_detail_textview_certification_number = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number);
+        activity_attend_detail_textview_attend_time_limit = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_time_limit);
+        activity_attend_detail_textview_tardy_time_limit = (TextView) view.findViewById(R.id.activity_attend_detail_textview_tardy_time_limit);
+        activity_attend_detail_textview_certification_number_name = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number_name);
 
         activity_attend_piechart = (PieChart) view.findViewById(R.id.activity_attend_piechart);
 
@@ -127,73 +133,21 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });*/
 
-        now = System.currentTimeMillis();
-        // 현재시간을 date 변수에 저장한다.
-        Date date = new Date(now);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        formatDate = simpleDateFormat.format(date);
-
-        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Tardy_Time_Limit").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    now = System.currentTimeMillis();
-                    // 현재시간을 date 변수에 저장한다.
-                    Date date = new Date(now);
-                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    nowtardyTimeLimit = simpleDateFormat.format(date);
-
-                    getTardyTimeLimit = dataSnapshot.getValue().toString();
-                    Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                    Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                    long diff = d1.getTime() - d2.getTime();
-                    if (diff < 0) {
-                        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(final DataSnapshot dataSnapshot) {
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    snapshot.child("attend_statue").getValue(String.class);
-                                    if (snapshot.child("attend_statue").getValue(String.class).equals("미출결")) {
-                                        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("결석");
-                                    }
-                                }
-                                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").removeValue();
-                                activity_attend_textview_certification_number.setText("");
-                                activity_attend_textview_attend_time_limit.setText("");
-                                activity_attend_textview_tardy_time_limit.setText("");
-
-                            }
-
-                            @Override
-                            public void onCancelled(final DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(final DatabaseError databaseError) {
-
-            }
-        });
-
-        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    peopleCount = 0; peopleAttendCount = 0;
+                    peopleCount = 0;
+                    peopleAttendCount = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (snapshot.child("attend_statue").getValue() != null) {
+                        if (snapshot.child("attend_state").getValue() != null) {
                             peopleCount++;
-                            getAttendStatue = snapshot.child("attend_statue").getValue(String.class);
-                            if (getAttendStatue.equals("출석") || getAttendStatue.equals("지각")) {
+                            getAttendState = snapshot.child("attend_state").getValue(String.class);
+                            if (getAttendState.equals("출석") || getAttendState.equals("지각")) {
                                 peopleAttendCount++;
                             }
-                            activity_attend_textview_people_count.setText(peopleAttendCount + "명");
-                            activity_attend_textview_people_percent.setText((peopleAttendCount * 100 / peopleCount) + "%");
+                            activity_attend_detail_textview_people_count.setText(peopleAttendCount + "명");
+                            activity_attend_detail_textview_people_percent.setText((peopleAttendCount * 100 / peopleCount) + "%");
                         }
                     }
                 }
@@ -205,20 +159,20 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
-                    setAttendStatue = dataSnapshot.getValue().toString();
-                    activity_attend_textview_attend_statue.setText(setAttendStatue);
-                    if (setAttendStatue.equals("출석")) {
-                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_green);
-                    } else if (setAttendStatue.equals("지각")) {
-                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_orange);
-                    } else if (setAttendStatue.equals("결석")) {
-                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_gray);
+                    setAttendState = dataSnapshot.getValue().toString();
+                    activity_attend_detail_textview_attend_state.setText(setAttendState);
+                    if (setAttendState.equals("출석")) {
+                        activity_attend_detail_textview_attend_state.setBackgroundResource(R.drawable.border_green);
+                    } else if (setAttendState.equals("지각")) {
+                        activity_attend_detail_textview_attend_state.setBackgroundResource(R.drawable.border_orange);
+                    } else if (setAttendState.equals("결석")) {
+                        activity_attend_detail_textview_attend_state.setBackgroundResource(R.drawable.border_gray);
                     } else {
-                        activity_attend_textview_attend_statue.setBackgroundResource(R.drawable.border_orange);
+                        activity_attend_detail_textview_attend_state.setBackgroundResource(R.drawable.border_orange);
                     }
                 }
                 return;
@@ -230,7 +184,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        activity_attend_button_attendance.setOnClickListener(new View.OnClickListener() {
+        activity_attend_detail_button_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
@@ -246,11 +200,11 @@ public class AttendActivity_Fragment extends Fragment {
 
                 final AlertDialog dialog = builder.create();
 
-                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child("ClubName").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").addListenerForSingleValueEvent(new ValueEventListener() {
+                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.getValue() != null) {
-                            if(dataSnapshot.getValue().toString().equals("출석") || dataSnapshot.getValue().toString().equals("지각")) {
+                        if (dataSnapshot.getValue() != null) {
+                            if (dataSnapshot.getValue().toString().equals("출석") || dataSnapshot.getValue().toString().equals("지각")) {
                                 dialog.dismiss();
                                 Toast.makeText(getActivity(), "이미 출석을 했습니다", Toast.LENGTH_SHORT).show();
                             }
@@ -263,7 +217,7 @@ public class AttendActivity_Fragment extends Fragment {
                     }
                 });
 
-                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
@@ -278,7 +232,7 @@ public class AttendActivity_Fragment extends Fragment {
                     }
                 });
 
-                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Tardy_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
+                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
@@ -316,14 +270,14 @@ public class AttendActivity_Fragment extends Fragment {
 
                         if (EditCertificationNumber.getBytes().length > 0) {
                             getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
-                            database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     getCertificationNumber = dataSnapshot.getValue().toString();
 
                                     if (Integer.parseInt(getCertificationNumber) == getEditCertificationNumber) {
 
-                                        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                                 getAttend_Time_Limit = dataSnapshot.getValue().toString();
@@ -341,10 +295,10 @@ public class AttendActivity_Fragment extends Fragment {
 
                                                 if (diff > 0) {
                                                     Toast.makeText(getActivity(), "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                                    database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("출석");
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
                                                     dialog.dismiss();
                                                 } else {
-                                                    database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Tardy_Time_Limit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                                             getTardy_Time_Limit = dataSnapshot.getValue().toString();
@@ -362,9 +316,26 @@ public class AttendActivity_Fragment extends Fragment {
 
                                                             if (diff > 0) {
                                                                 Toast.makeText(getActivity(), "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
-                                                                activity_attend_textview_attend_statue.setText("지각");
-                                                                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(auth.getCurrentUser().getUid()).child("attend_statue").setValue("지각").toString();
+                                                                activity_attend_detail_textview_attend_state.setText("지각");
+                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
                                                                 dialog.dismiss();
+                                                            } else {
+                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                                            getState = snapshot.child("attend_state").getValue(String.class);
+                                                                            if (getState.equals("미출결")) {
+                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).setValue("결석");
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                                                    }
+                                                                });
                                                             }
                                                         }
 
@@ -413,26 +384,22 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        activity_attend_button_cancel.setOnClickListener(new View.OnClickListener() {
+        activity_attend_detail_button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 getActivity().finish();
             }
         });
 
-        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
 
-                if (admin > 0) {
-                    activity_attend_button_admin.setVisibility(View.VISIBLE);
-                    activity_attend_textview_certification_number_name.setVisibility(View.VISIBLE);
-                    activity_attend_textview_certification_number.setVisibility(View.VISIBLE);
-                } else {
-                    activity_attend_button_admin.setVisibility(View.INVISIBLE);
-                    activity_attend_textview_certification_number_name.setVisibility(View.INVISIBLE);
-                    activity_attend_textview_certification_number.setVisibility(View.INVISIBLE);
+                if (admin > adminNumber) {
+                    activity_attend_detail_button_admin.setVisibility(View.INVISIBLE);
+                    activity_attend_detail_textview_certification_number_name.setVisibility(View.INVISIBLE);
+                    activity_attend_detail_textview_certification_number.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -442,10 +409,11 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        activity_attend_button_admin.setOnClickListener(new View.OnClickListener() {
+        activity_attend_detail_button_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Intent intent = new Intent(getActivity(), AttendActivity_Admin.class);
+                Intent intent = new Intent(getActivity(), AttendActivity_Admin_Change.class);
+                intent.putExtra("findKey", findkey);
                 startActivity(intent);
             }
         });
@@ -462,7 +430,7 @@ public class AttendActivity_Fragment extends Fragment {
 
         final ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
-        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -471,15 +439,15 @@ public class AttendActivity_Fragment extends Fragment {
                     unsentCount = 0;
                     absentCount = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (snapshot.child("attend_statue").getValue() != null) {
+                        if (snapshot.child("attend_state").getValue() != null) {
 
                             pieEntries.clear();
-                            getAttendStatue2 = snapshot.child("attend_statue").getValue(String.class);
-                            if (getAttendStatue2.equals("출석")) {
+                            getAttendState2 = snapshot.child("attend_state").getValue(String.class);
+                            if (getAttendState2.equals("출석")) {
                                 attendCount++;
-                            } else if (getAttendStatue2.equals("지각")) {
+                            } else if (getAttendState2.equals("지각")) {
                                 tardyCount++;
-                            } else if (getAttendStatue2.equals("미출결")) {
+                            } else if (getAttendState2.equals("미출결")) {
                                 unsentCount++;
                             } else {
                                 absentCount++;
@@ -527,11 +495,11 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    activity_attend_textview_certification_number.setText(dataSnapshot.child("Attend_Certification_Number").getValue().toString());
+                    activity_attend_detail_textview_certification_number.setText(dataSnapshot.getValue().toString());
                 }
             }
 
@@ -541,11 +509,11 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Time_Limit").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
-                    activity_attend_textview_attend_time_limit.setText(dataSnapshot.getValue().toString());
+                    activity_attend_detail_textview_attend_time_limit.setText(dataSnapshot.getValue().toString());
                 }
             }
 
@@ -555,11 +523,11 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });
 
-        database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Tardy_Time_Limit").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
-                    activity_attend_textview_tardy_time_limit.setText(dataSnapshot.getValue().toString());
+                    activity_attend_detail_textview_tardy_time_limit.setText(dataSnapshot.getValue().toString());
                 }
             }
 
@@ -573,43 +541,3 @@ public class AttendActivity_Fragment extends Fragment {
     }
 
 }
-
-/*class Gallery_Adapter extends BaseAdapter {
-    Context context;
-    int layout;
-    int img[];
-    LayoutInflater layoutInflater;
-
-    public Gallery_Adapter(Context context, int layout, int[] img) {
-        this.context = context;
-        this.layout = layout;
-        this.img = img;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public int getCount() {
-        return img.length;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(layout, null);
-        }
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.activity_attend_sub_layout_imageview);
-        imageView.setImageResource(img[position]);
-        return convertView;
-    }
-}*/

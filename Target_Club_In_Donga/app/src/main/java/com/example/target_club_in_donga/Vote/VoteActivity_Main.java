@@ -94,32 +94,36 @@ public class VoteActivity_Main extends AppCompatActivity {
         activityvote_main_recyclerview.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
         //database = FirebaseDatabase.getInstance();
-        database.getReference().child(clubName).child("Vote").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Vote").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
                 dbKey.clear();
+                int greenIndex = 0, orangeIndex = 0;
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    //MaterialManagement_Item imageDTO = snapshot.getValue(MaterialManagement_Item.class);
+                    //MaterialRental_Item imageDTO = snapshot.getValue(MaterialRental_Item.class);
                     Vote_Item vote_last_item = snapshot.getValue(Vote_Item.class);
                     //String title =
-
                     long nowTime = System.currentTimeMillis();
                     if(Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0){ //시간 끝났을때
-                        database.getReference().child(clubName).child("Vote").child(snapshot.getKey()).child("deadline").setValue(true);
+                        database.getReference().child("EveryClub").child(clubName).child("Vote").child(snapshot.getKey()).child("deadline").setValue(true);
                     }
 
-                    if(/*Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0 ||*/ vote_last_item.deadline){
+                    if(/*Long.compare(nowTime,(long)vote_last_item.timestamp) >= 0 ||*/ vote_last_item.deadline){ //마감
                         list.add(new Vote_Item_Main(vote_last_item.title,vote_last_item.timestamp,"gray",vote_last_item.totalCount));
+                        dbKey.add(snapshot.getKey());
                     }
-                    else if(vote_last_item.stars.containsKey(auth.getCurrentUser().getUid())){
-                        list.add(new Vote_Item_Main(vote_last_item.title,vote_last_item.timestamp,"orange",vote_last_item.totalCount));
+                    else if(vote_last_item.stars.containsKey(auth.getCurrentUser().getUid())){ //투표한거 오렌지
+                        list.add(orangeIndex,new Vote_Item_Main(vote_last_item.title,vote_last_item.timestamp,"orange",vote_last_item.totalCount));
+                        dbKey.add(orangeIndex,snapshot.getKey());
+                        orangeIndex++;
                     }
-                    else{
-                        list.add(new Vote_Item_Main(vote_last_item.title,vote_last_item.timestamp,"green",vote_last_item.totalCount));
+                    else{ //투표안한거 그린
+                        list.add(greenIndex,new Vote_Item_Main(vote_last_item.title,vote_last_item.timestamp,"green",vote_last_item.totalCount));
+                        dbKey.add(greenIndex,snapshot.getKey());
+                        greenIndex++;
+                        orangeIndex++;
                     }
-
-                    dbKey.add(snapshot.getKey());
                     //Toast.makeText(MainActivity.this, dbKey.get(0)+"", Toast.LENGTH_SHORT).show();
                 }
                 adapter.notifyDataSetChanged();
@@ -171,7 +175,7 @@ public class VoteActivity_Main extends AppCompatActivity {
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             //simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
             String time = simpleDateFormat.format(date);
-            holder.voteDate.setText(time);
+            holder.voteDate.setText(time+" 까지");
 
             String color = data.getColor();
             if(color.equals("green")){
@@ -193,7 +197,7 @@ public class VoteActivity_Main extends AppCompatActivity {
             //ArrayList<String> dbKey = new ArrayList<String>();
 
             database = FirebaseDatabase.getInstance();
-            database.getReference().child(clubName).child("Vote").child(dbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            database.getReference().child("EveryClub").child(clubName).child("Vote").child(dbKey.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     //Toast.makeText(MainActivity.this, "삭제성공", Toast.LENGTH_SHORT).show();
@@ -260,7 +264,7 @@ public class VoteActivity_Main extends AppCompatActivity {
                                     //holder.voteLayout.setBackgroundResource(R.drawable.border_gray);
                                     //Map<String, Object> map = new HashMap<>();
                                     //map.put("deadline",true);
-                                    FirebaseDatabase.getInstance().getReference().child(clubName).child("Vote").child(dbKey.get(position)).child("deadline").setValue(true);
+                                    FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Vote").child(dbKey.get(position)).child("deadline").setValue(true);
                                     return true;
                                 case R.id.vote_delete:
                                     delete_item(position);

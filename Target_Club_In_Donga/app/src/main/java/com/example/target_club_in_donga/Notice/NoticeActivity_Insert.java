@@ -89,7 +89,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
         type = intent.getExtras().getString("type");
         if(type.equals("update")){
             dbKey = intent.getExtras().getString("updateKey");
-            database.getReference().child(clubName).child("Notice").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("Notice").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Notice_Item update_item = dataSnapshot.getValue(Notice_Item.class);
@@ -171,7 +171,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                 }
                 else{
                     if(type.equals("insert")){ //추가
-                        database.getReference().child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String uidName = dataSnapshot.getValue(String.class);
@@ -188,11 +188,11 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                                 //notice_item.stars.put("title",title);
 
                                 notice_item.setTimestamp(-1*System.currentTimeMillis());
-                                database.getReference().child(clubName).child("Notice").push().setValue(notice_item);
+                                database.getReference().child("EveryClub").child(clubName).child("Notice").push().setValue(notice_item);
 
                                 if(activity_notice_insert_switch.isChecked()){
                                     SendPushMessages send = new SendPushMessages();
-                                    send.multipleSendMessage("공지사항이 추가되었습니다",title.toString());
+                                    send.multipleSendMessage("공지사항이 추가되었습니다",title, "Notice");
                                 }
                                 Toast.makeText(NoticeActivity_Insert.this, "공지 올렷스무디", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -207,7 +207,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     else{
                         if(activity_notice_insert_switch.isChecked()){
                             SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage("공지사항이 수정되었습니다",title.toString());
+                            send.multipleSendMessage("공지사항이 수정되었습니다",title, "Notice");
                         }
 
                         Notice_Item notice_item = new Notice_Item();
@@ -217,7 +217,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         notice_item.setTitle(title.toString());
                         notice_item.notice_item_colors = color_item;
                         notice_item.setTimestamp(-1*System.currentTimeMillis());
-                        database.getReference().child(clubName).child("Notice").child(dbKey).setValue(notice_item);
+                        database.getReference().child("EveryClub").child(clubName).child("Notice").child(dbKey).setValue(notice_item);
                         Toast.makeText(NoticeActivity_Insert.this, "수정완료", Toast.LENGTH_SHORT).show();
                         finish();
                     }

@@ -1,16 +1,28 @@
 package com.example.target_club_in_donga.Package_LogIn;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.FirebaseFunctionsException;
+import com.google.firebase.functions.HttpsCallableResult;
+import com.kakao.auth.ErrorCode;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
 import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
 import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.R;
@@ -40,13 +52,29 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.kakao.util.helper.log.Logger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
+    private SessionCallback callback;      //콜백 선언
+    private FirebaseFunctions mFunctions;
+    JSONObject json = new JSONObject();
+    //유저프로필
+    String token = "";
+    String name = "";
     private static final int RC_SIGN_IN = 10;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -54,21 +82,27 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener mAuthListener; // 로그인했을때 프로세스 실행할거
     EditText activity_login_id_editText, activity_login_pw_editText;
-
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_ver0);
+        progressDialog = new ProgressDialog(this);
+        mFunctions = FirebaseFunctions.getInstance();
         database = FirebaseDatabase.getInstance();
-
+        //카카오 로그인 콜백받기
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        Session.getCurrentSession().checkAndImplicitOpen();
+        loadShared();
         // findById
-        Button activity_login_signup_btn = findViewById(R.id.activity_login_signup_btn);
-        Button activity_login_login_btn = findViewById(R.id.activity_login_login_btn);
-        SignInButton activity_login_google_btn = findViewById(R.id.activity_login_google_btn);
-        LoginButton activity_login_facebook_btn = findViewById(R.id.activity_login_facebook_btn);
+        TextView activity_login_signup_btn = findViewById(R.id.login_button_signup);
+        Button activity_login_login_btn = findViewById(R.id.login_button_login);
+        ImageView activity_login_google_btn = findViewById(R.id.login_button_google);
+        ImageView activity_login_facebook_btn = findViewById(R.id.login_button_facebook);
         // find email, pw
-        activity_login_id_editText = findViewById(R.id.activity_login_id_editText);
-        activity_login_pw_editText = findViewById(R.id.activity_login_pw_editText);
+        activity_login_id_editText = findViewById(R.id.login_edittext_id);
+        activity_login_pw_editText = findViewById(R.id.login_edittext_psw);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -90,7 +124,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         activity_login_facebook_btn.setOnClickListener(this);
         activity_login_login_btn.setOnClickListener(this);
 
+
+
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("develop_check", "페이스북 로그인 성공 : " + loginResult);
@@ -130,57 +167,50 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         });
 
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
 
-                    database.getReference().child(clubName).child("User").child(user.getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference().child("AppUser").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(DataSnapshot dataSnapshot) { //DB에 있는아이딘지 없는지 체크
+                            progressDialog.dismiss();
+                            activity_login_id_editText.setText("");
+                            activity_login_pw_editText.setText("");
                             try{
-                                int tf = dataSnapshot.getValue(int.class);
-                                //Toast.makeText(LoginActivity.this, ""+tf, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                if(tf >= 1){
-                                    Toast.makeText(LoginActivity.this, "관리자 로그인", Toast.LENGTH_SHORT).show();
-                                    //intent.putExtra("adminCheck",true);
-                                }
-                                else{
-                                    Toast.makeText(LoginActivity.this, "로그인", Toast.LENGTH_SHORT).show();
-                                    //intent.putExtra("adminCheck",false);
-                                }
+                                AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
+                                clubName = appLoginData.getPhone();
+                                /**
+                                 * 임시로 getPhone해둔거임임임
+                                 */
+                                Intent intent = new Intent(LoginActivity.this, Congratulation.class);
                                 startActivity(intent);
-                                finish();
-                            }catch (NullPointerException e){
-
-                                Toast.makeText(LoginActivity.this, "구글 페북 처음이시군요?", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
-                                intent.putExtra("loginIdentity","google");
+                                //finish();
+                            }catch (NullPointerException e){ //auth에는 있는데 db엔 없는경우지 이게 아마?
+                                Intent intent = new Intent(LoginActivity.this, SignUpActivity_04.class);
+                                intent.putExtra("loginIdentity","notEmail");
                                 startActivity(intent);
-                                finish();
+                                //finish();
                             }
-
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             //Toast.makeText(Vote_Login.this, "에러", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    // User is signed in
-                    //Intent intent = new Intent(LoginActivity.this, HomeActivity_Fragment.class);
-                    //finish();
+
                 } else {
-                    // User is signed out
-                    //Toast.makeText(LoginActivity.this, "이메일 회원가입 해주세요", Toast.LENGTH_SHORT).show();
+
                 }
                 // ...
             }
         };  // mAuthListener
 
-
     }   // onCreate
+
 
     @Override
     public void onStart() {
@@ -203,10 +233,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Session.getCurrentSession().removeCallback(callback);
+    }
 
     // onActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
 
         // 페이스북 콜백 함수
@@ -243,7 +281,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("develop_check", "signInWithCredential : failure =>", task.getException());
-                    //Toast.makeText(LoginActivity.this, "구글 로그인에 문제 발생 010.7152.6215 으로 연락주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -257,7 +294,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요\n아니면 가입이 안되있을지Do?", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(LoginActivity.this, "이메일 회원가입해주3", Toast.LENGTH_SHORT).show();
                         Log.w("develop_check", "로그인에 실패했습니다.");
                     } else {
@@ -270,35 +308,169 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             });
         }
         else{
-            Log.w("develop_check","아이디와 비밀번호를 입력하지 않았습니다.");
-            //Toast.makeText(LoginActivity.this,"아이디와 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void success_of_login() {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity_03.class);
-        startActivity(intent);
     }
 
     @Override
     public void onClick(View view) {
         int i = view.getId();
-        if (i == R.id.activity_login_signup_btn) {
+        if (i == R.id.login_button_signup) {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity_01.class);
             intent.putExtra("loginIdentity","email");
             startActivity(intent);
-            finish();
-        } else if (i == R.id.activity_login_google_btn) {
+            //finish();
+        } else if (i == R.id.login_button_google) {
+            progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.show();
             Log.v("develop_check", "구글 로그인 시도");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
-        } else if (i == R.id.activity_login_facebook_btn) {
+
+        } else if (i == R.id.login_button_facebook) {
+            progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.show();
             Log.v("develop_check", "페이스북 로그인 시도");
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-        } else if (i == R.id.activity_login_login_btn) {
+
+        } else if (i == R.id.login_button_login) {
+            progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.show();
             Log.v("develop_check", "로그인 시도");
             loginUser();
             //onStart();
         }
     }   // onClick
+
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            requestMe();
+            //redirectSignupActivity();  // 세션 연결성공 시 redirectSignupActivity() 호출
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if (exception != null) {
+                Logger.e(exception);
+            }
+            setContentView(R.layout.activity_login); // 세션 연결이 실패했을때
+        }                                            // 로그인화면을 다시 불러옴
+    }
+
+
+    protected void requestMe() { //유저의 정보를 받아오는 함수
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "failed to get user info. msg=" + errorResult;
+                Logger.d(message);
+
+                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+                if (result == ErrorCode.CLIENT_ERROR_CODE) {
+                    finish();
+                } else {
+                    redirectLoginActivity();
+                }
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                redirectLoginActivity();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+            } // 카카오톡 회원이 아닐 시 showSignup(); 호출해야함
+
+            @Override
+            public void onSuccess(final UserProfile userProfile) {  //성공 시 userProfile 형태로 반환
+                Logger.d("UserProfile : " + userProfile);
+                Log.d("Kakao : ", "유저가입성공");
+                // Create a new user with a first and last name
+                // 유저 카카오톡 아이디 디비에 넣음(첫가입인 경우에만 디비에저장)
+                String token = Session.getCurrentSession().getAccessToken();
+                //String refresh = Session.getCurrentSession().getRefreshToken();
+
+                try {
+                    json.put("token", token);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                kakaoCustomAuth(json)
+                        .addOnCompleteListener(new OnCompleteListener<JSONObject>() {
+                            @Override
+                            public void onComplete(@NonNull Task<JSONObject> task) {
+                                if( !task.isSuccessful()) {
+                                    Exception e = task.getException();
+                                    if( e instanceof FirebaseFunctionsException){
+                                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+                                        FirebaseFunctionsException.Code code = ffe.getCode();
+                                        Object details = ffe.getDetails();
+                                    }
+
+                                    //[START_EXCLUDE]
+                                    Log.w("kakaoLogin_Exception", "kakaoAccessToken:onFailure", e);
+                                    Toast.makeText(LoginActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
+                                    return;
+                                    // [END_EXCLUDE]
+                                }
+
+                                // [START_EXCLUDE]
+                                JSONObject result = task.getResult();
+                                Log.w("kakaologin_result", String.valueOf(result));
+                            }
+                        });
+                redirectHomeActivity(); // 로그인 성공시 메인으로
+
+            }
+        });
+    }
+
+    private void redirectHomeActivity() {
+        startActivity(new Intent(this,SignUpActivity_01.class));
+        finish();
+    }
+
+    protected void redirectLoginActivity() {
+        final Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+        finish();
+    }
+
+    /*쉐어드에 입력값 저장*/
+    private void saveShared( String id, String name) {
+        SharedPreferences pref = getSharedPreferences("profile", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("token", id);
+        editor.putString("name", name);
+        editor.apply();
+    }
+
+    /*쉐어드값 불러오기*/
+    private void loadShared() {
+        SharedPreferences pref = getSharedPreferences("profile", MODE_PRIVATE);
+        token = pref.getString("token", "");
+        name = pref.getString("name", "");
+    }
+
+    // [START function_kakaoCustomAuth]
+    private  Task<JSONObject> kakaoCustomAuth(JSONObject json){
+        return mFunctions
+                .getHttpsCallable("kakaoCustomAuth")
+                .call(json)
+                .continueWith(new Continuation<HttpsCallableResult, JSONObject>() {
+                    @Override
+                    public JSONObject then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        //String result = (String)task.getResult().getData();
+                        task.getResult().getData();
+                        return (JSONObject) task.getResult().getData();
+                    }
+                });
+    }
+    // [END function_kakaoCustomAuth]
 }

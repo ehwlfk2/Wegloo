@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,8 +32,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
     private long now;
     private String date_Attend, date_Trady;
 
-    private FirebaseDatabase database;
     private FirebaseAuth auth;
+    private FirebaseDatabase database;
+    private FirebaseStorage storage;
 
     private Date attenddate;
 
@@ -42,6 +44,7 @@ public class AttendActivity_Admin extends AppCompatActivity {
     private String getName, getPhone;
 
     private int minNumber = 1000, maxNumber = 9999;
+    private String findkey;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -50,8 +53,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
 
         final Random random_number = new Random();
 
-        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
 
         activity_attend_admin_radiogroup_attend = (RadioGroup) findViewById(R.id.activity_attend_admin_radiogroup_attend);
         activity_attend_admin_radiogroup_tardy = (RadioGroup) findViewById(R.id.activity_attend_admin_radiogroup_tardy);
@@ -64,7 +68,7 @@ public class AttendActivity_Admin extends AppCompatActivity {
         // 출석시간을 결정
         activity_attend_admin_radiogroup_attend.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+            public void onCheckedChanged(final RadioGroup radioGroup, final int checkedId) {
                 now = System.currentTimeMillis();
                 // 현재시간을 date 변수에 저장한다.
                 Date date = new Date(now);
@@ -74,11 +78,11 @@ public class AttendActivity_Admin extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
 
-                if (i == R.id.activity_attend_admin_radiobutton_attend_5_min) {
+                if (checkedId == R.id.activity_attend_admin_radiobutton_attend_5_min) {
                     calendar.add(Calendar.MINUTE, 5);
                     date_Attend = simpleDateFormat.format(calendar.getTime());
                     attenddate = calendar.getTime();
-                } else if (i == R.id.activity_attend_admin_radiobutton_attend_10_min) {
+                } else if (checkedId == R.id.activity_attend_admin_radiobutton_attend_10_min) {
                     calendar.add(Calendar.MINUTE, 10);
                     date_Attend = simpleDateFormat.format(calendar.getTime());
                     attenddate = calendar.getTime();
@@ -95,17 +99,17 @@ public class AttendActivity_Admin extends AppCompatActivity {
         // 지각시간을 결정
         activity_attend_admin_radiogroup_tardy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+            public void onCheckedChanged(final RadioGroup radioGroup, final int checkedId) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 //"yyyy-MM-dd HH:mm"
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(attenddate);
 
-                if (i == R.id.activity_attend_admin_radiobutton_tardy_10_min) {
+                if (checkedId == R.id.activity_attend_admin_radiobutton_tardy_10_min) {
                     calendar.add(Calendar.MINUTE, 10);
                     date_Trady = simpleDateFormat.format(calendar.getTime());
-                } else if (i == R.id.activity_attend_admin_radiobutton_tardy_20_min) {
+                } else if (checkedId == R.id.activity_attend_admin_radiobutton_tardy_20_min) {
                     calendar.add(Calendar.MINUTE, 20);
                     date_Trady = simpleDateFormat.format(calendar.getTime());
                 } else {
@@ -130,20 +134,34 @@ public class AttendActivity_Admin extends AppCompatActivity {
 
                     certification_number = random_number.nextInt(maxNumber - minNumber + 1) + minNumber;
                     // 인즌번호가 1000~9999 4자리 수중에서 랜덤으로 결정된다.
-                    database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Certification_Number").setValue(certification_number);
-                    database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Attend_Time_Limit").setValue(date_Attend);
-                    database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("Admin").child("Tardy_Time_Limit").setValue(date_Trady);
 
-                    database.getReference().child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                    Attend_Admin_Item attendItem = new Attend_Admin_Item();
+                    attendItem.clubName = clubName;
+                    attendItem.startTime = formatDate;
+                    attendItem.attendTimeLimit = date_Attend;
+                    attendItem.tardyTimeLimit = date_Trady;
+
+                    findkey = database.getReference().push().getKey();
+                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).setValue(attendItem);
+                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
+
+                    // 회원 가입한 날짜와 현재 날짜를 비교해서 출석을 시작 하고 난 후에 회원가입을 하면 그 전에 했던 출석에 포함되지 않아야 한다.
+
+                    database.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
                                 getName = snapshot.child("name").getValue(String.class);
                                 getPhone = snapshot.child("phone").getValue(String.class);
-                                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("name").setValue(getName);
-                                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                database.getReference().child(clubName).child("Attend_Admin").child("ClubName").child(formatDate).child("User_Statue").child(snapshot.getKey()).child("attend_statue").setValue("미출결");
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
+
+                                Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
+                                attendAdminChangeItem.name = getName;
+                                attendAdminChangeItem.attend_state = "미출결";
+                                attendAdminChangeItem.phone = getPhone;
                             }
                         }
 
@@ -154,6 +172,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     });
 
                     Toast.makeText(AttendActivity_Admin.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
+/*                    Intent intent = new Intent(AttendActivity_Admin.this, AttendActivity_Home.class);
+                    intent.putExtra("findKey", findkey);
+                    startActivity(intent);*/
                     finish();
                 } else if (flag == 0) {
                     Toast.makeText(AttendActivity_Admin.this, "출석시간을 정해주세요", Toast.LENGTH_SHORT).show();
@@ -164,4 +185,5 @@ public class AttendActivity_Admin extends AppCompatActivity {
         });
 
     }
+
 }

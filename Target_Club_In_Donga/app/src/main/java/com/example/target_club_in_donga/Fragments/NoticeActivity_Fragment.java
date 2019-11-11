@@ -100,7 +100,7 @@ public class NoticeActivity_Fragment extends Fragment {
         activity_notice_main_recyclerview.setAdapter(adapter);
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child(clubName).child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 data.clear();

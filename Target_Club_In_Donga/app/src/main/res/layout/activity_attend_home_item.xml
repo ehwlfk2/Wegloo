@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/activity_attend_home_item_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/activity_attend_home_item_textview_recyclerview_club_name"
+                    style="@style/Content_Text_Style"
+                    android:text="동아리이름"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        style="@style/Content_Classification_Text_Style"
+                        android:text="출결"
+                        android:layout_weight="2"/>
+
+                    <TextView
+                        android:id="@+id/activity_attend_home_item_textview_recyclerview_attend_state"
+                        style="@style/Content_Text_Style"
+                        android:text="미출결"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                style="@style/Line_Style" />
+
+            <TextView
+                style="@style/Content_Classification_Text_Style"
+                android:text="출석일" />
+
+            <TextView
+                android:id="@+id/activity_attend_home_item_textview_recyclerview_start_time"
+                style="@style/Content_Text_Style"
+                android:text="없음" />
+
+            <TextView
+                android:id="@+id/activity_attend_home_item_recyclerview_attend_time_limit_tilte"
+                style="@style/Content_Classification_Text_Style"
+                android:text="출석 인정 시간" />
+
+            <TextView
+                android:id="@+id/activity_attend_home_item_recyclerview_attend_time_limit"
+                style="@style/Content_Text_Style"
+                android:text="없음" />
+
+            <TextView
+                android:id="@+id/activity_attend_home_item_textview_recyclerview_tardy_time_limit_title"
+                style="@style/Content_Classification_Text_Style"
+                android:text="지각 인정 시간" />
+
+            <TextView
+                android:id="@+id/activity_attend_home_item_textview_recyclerview_tardy_time_limit"
+                style="@style/Content_Text_Style"
+                android:text="없음" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        style="@style/Line_Style" />
+
+</LinearLayout>

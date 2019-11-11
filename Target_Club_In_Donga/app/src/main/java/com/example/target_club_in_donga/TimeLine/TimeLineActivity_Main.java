@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
 import com.example.target_club_in_donga.Board.Board_Main;
-import com.example.target_club_in_donga.Material_Management.MaterialManagementActivity;
+import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.NoticeActivity;
 import com.example.target_club_in_donga.R;
@@ -50,7 +50,7 @@ public class TimeLineActivity_Main extends AppCompatActivity {
         adapter = new TimeLineActivity_Main_RecyclerviewAdapter(this, list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
         recyclerView.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
-        database.getReference().child(clubName).child("TimeLine").orderByChild("nowTimeStamp").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("TimeLine").orderByChild("nowTimeStamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
@@ -114,7 +114,7 @@ public class TimeLineActivity_Main extends AppCompatActivity {
                         //finish();
                     }
                     else if(data.getType().equals("Material_Management")){ //다른것들 추가해줘야해
-                        Intent intent = new Intent(TimeLineActivity_Main.this, MaterialManagementActivity.class);
+                        Intent intent = new Intent(TimeLineActivity_Main.this, MaterialRentalActivity_Home.class);
                         startActivity(intent);
                         //finish();
                     }
