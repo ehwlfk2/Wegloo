@@ -89,6 +89,7 @@
         android:autoSizeTextType="uniform"
         />
 
+
     <com.example.target_club_in_donga.club_foundation_join.CustomAutoCompleteTextView
         android:dropDownAnchor="@id/joinclube_autoCompleteSearch"
         android:dropDownHeight="200dp"
@@ -104,11 +105,9 @@
         android:theme="@style/EditTheme"
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.630174793"
+        app:layout_constraintWidth_percent="0.661113155"
         app:layout_constraintHorizontal_bias="0.5"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.0625"
+        android:layout_height="wrap_content"
         app:layout_constraintVertical_bias="0"
 
         android:layout_marginTop="10dp"
