@@ -10,8 +10,8 @@
 
     <FrameLayout
         android:id="@+id/home_frame_album"
-        android:background="@drawable/logoin_button00_ver0"
-        android:elevation="5dp"
+        android:background="@drawable/home_btn_ver0"
+        android:elevation="2dp"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -25,9 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        tools:ignore="Autofill,ContentDescription,LabelFor,TextFields">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,8 +49,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintStart_toStartOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
@@ -60,8 +57,8 @@
 
     <FrameLayout
         android:id="@+id/home_frame_calender"
-        android:background="@drawable/logoin_button00_ver0"
-        android:elevation="5dp"
+        android:background="@drawable/home_btn_ver0"
+        android:elevation="2dp"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -75,8 +72,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Autofill,ContentDescription,LabelFor,TextFields">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,18 +96,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-
-
-                tools:ignore="ContentDescription" />
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/home_frame_vote"
-        android:background="@drawable/logoin_button00_ver0"
-        android:elevation="5dp"
+        android:background="@drawable/home_btn_ver0"
+        android:elevation="2dp"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -125,41 +118,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Autofill,ContentDescription,LabelFor,TextFields">
+        app:layout_constraintTop_toTopOf="parent">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/home_layout_vote"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_layout_vote"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-                <ImageButton
-                    android:id="@+id/home_button_vote"
-                    android:background="@drawable/ic_vote_ver0"
+            <ImageButton
+                android:id="@+id/home_button_vote"
+                android:background="@drawable/ic_vote_ver0"
 
-                    android:layout_width="0dp"
-                    app:layout_constraintWidth_default="percent"
-                    app:layout_constraintWidth_percent="0.429594272"
-                    app:layout_constraintVertical_bias="0.5"
-                    android:layout_height="0dp"
-                    app:layout_constraintHeight_default="percent"
-                    app:layout_constraintHeight_percent="0.483870968"
-                    app:layout_constraintHorizontal_bias="0.5"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.429594272"
+                app:layout_constraintVertical_bias="0.5"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.483870968"
+                app:layout_constraintHorizontal_bias="0.5"
 
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="ContentDescription" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/home_frame_attendance"
-        android:background="@drawable/logoin_button00_ver0"
-        android:elevation="5dp"
+        android:background="@drawable/home_btn_ver0"
+        android:elevation="2dp"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -173,8 +164,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Autofill,ContentDescription,LabelFor,TextFields">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_layout_attendance"
@@ -197,8 +187,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.429594272"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintWidth_percent="0.429594272" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
@@ -219,8 +208,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.065723958"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.081720331"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintWidth_percent="0.081720331" />
 
     <ImageView
         android:id="@+id/home_view_picture_2"
@@ -238,8 +226,7 @@
         app:layout_constraintVertical_bias="0.904427083"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.133394664"
-        app:srcCompat="@drawable/new_notice_vector_ver0"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/new_notice_vector_ver0" />
 
     <TextView
         android:id="@+id/home_textview_main"
@@ -249,7 +236,7 @@
         android:autoSizeMinTextSize="1sp"
 
         android:autoSizeTextType="uniform"
-        android:text="메인페이지입니다"
+        android:text="TCID"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
@@ -260,8 +247,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.171875"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.384544618"
-        tools:ignore="HardcodedText,UnusedAttribute" />
+        app:layout_constraintWidth_percent="0.384544618" />
 
     <TextView
         android:id="@+id/home_textview_notice_0"
@@ -285,8 +271,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.773"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.34774609"
-        tools:ignore="HardcodedText,UnusedAttribute" />
+        app:layout_constraintWidth_percent="0.34774609" />
 
     <ImageButton
         android:id="@+id/home_button_quick"
@@ -304,8 +289,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.704"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.065344986"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintWidth_percent="0.065344986" />
+
 
     <ImageView
         android:id="@+id/home_view_picture_1"
@@ -323,8 +308,7 @@
         app:layout_constraintVertical_bias="0.787"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.133394664"
-        app:srcCompat="@drawable/new_notice_vector_ver0"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/new_notice_vector_ver0" />
 
     <TextView
         android:id="@+id/home_textview_new"
@@ -345,8 +329,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.7"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.404783809"
-        tools:ignore="HardcodedText,UnusedAttribute" />
+        app:layout_constraintWidth_percent="0.404783809" />
 
     <TextView
         android:id="@+id/home_textview_notice_1"
@@ -368,7 +351,7 @@
         app:layout_constraintVertical_bias="0.89"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.34774609"
-        tools:ignore="HardcodedText,UnusedAttribute" />
+        />
 
     <View
         android:id="@+id/home_view_logo"
