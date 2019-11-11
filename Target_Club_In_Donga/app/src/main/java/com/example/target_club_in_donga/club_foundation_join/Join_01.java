@@ -36,7 +36,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_01);
         joinclube_autoCompleteSearch = findViewById(R.id.joinclube_autoCompleteSearch);
-        foundation_02_button_back = findViewById(R.id.foundation_02_button_back);
+        foundation_02_button_back = findViewById(R.id.joinclube_00_imagebutton_back);
         foundation_02_button_back.setOnClickListener(this);
         /*Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground);
         ByteArrayOutputStream  byteArray = new ByteArrayOutputStream();
