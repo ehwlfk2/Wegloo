@@ -35,21 +35,43 @@
 
             <ImageButton
                 android:id="@+id/home_button_album"
-                android:background="@drawable/ic_icon_album_ver0"
-
                 android:layout_width="0dp"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.429594272"
-                app:layout_constraintVertical_bias="0.5"
+
                 android:layout_height="0dp"
+                android:background="@drawable/ic_icon_album_ver0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.483870968"
                 app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.429594272" />
+
+            <TextView
+                android:id="@+id/home_textview_board"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.385464581"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.19375"
+                app:layout_constraintVertical_bias="0.908854167"
+                android:text="게시판"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="1sp"
+                android:gravity="center"
+
+                android:autoSizeTextType="uniform"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
@@ -97,6 +119,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/home_textview_calendar"
+
+
+                android:layout_width="0dp"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.385464581"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.19375"
+                app:layout_constraintVertical_bias="0.908854167"
+                android:text="캘린더"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="1sp"
+                android:gravity="center"
+
+                android:autoSizeTextType="uniform"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+        />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
@@ -144,6 +191,29 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
+            <TextView
+                android:id="@+id/home_textview_vote"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.385464581"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.19375"
+                app:layout_constraintVertical_bias="0.908854167"
+                android:text="투표"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="1sp"
+                android:gravity="center"
+
+                android:autoSizeTextType="uniform"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
@@ -188,6 +258,29 @@
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent="0.429594272" />
+
+            <TextView
+                android:id="@+id/home_textview_attendance"
+
+                android:layout_width="0dp"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.385464581"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.19375"
+                app:layout_constraintVertical_bias="0.908854167"
+                android:text="출석체크"
+                android:autoSizeMaxTextSize="20dp"
+                android:autoSizeMinTextSize="1sp"
+                android:gravity="center"
+
+                android:autoSizeTextType="uniform"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
