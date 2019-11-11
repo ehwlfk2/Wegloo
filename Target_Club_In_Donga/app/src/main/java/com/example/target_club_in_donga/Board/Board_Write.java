@@ -122,7 +122,7 @@ public class Board_Write extends AppCompatActivity {
                         boardEditInfo();
                     }
                     else if( IMAGEs.size() == 0 ){ // 사진 없음
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(clubName).child("Board");
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
                         boardModel.title = title.getText().toString();
                         boardModel.contents = contents.getText().toString();
                         boardModel.timestamp = ServerValue.TIMESTAMP;
@@ -194,7 +194,7 @@ public class Board_Write extends AppCompatActivity {
         else {
             for (int i = 0; i < uris.size(); i++) { // 사진 추가
                 final Uri individualImage = uris.get(i);
-                final StorageReference ImageName = storageRef.child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
+                final StorageReference ImageName = storageRef.child("EveryClub").child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
                 UploadTask uploadTask = ImageName.putFile(individualImage);
                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -205,7 +205,7 @@ public class Board_Write extends AppCompatActivity {
                         boardModel.imgName.add(individualImage.getLastPathSegment() + '-' + times);
                         boardModel.idx += 1;
                         if (boardModel.idx == IMAGEs.size()) {
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(clubName).child("Board");
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
                             boardModel.title = title.getText().toString();
                             boardModel.contents = contents.getText().toString();
                             boardModel.timestamp = ServerValue.TIMESTAMP;
@@ -226,7 +226,7 @@ public class Board_Write extends AppCompatActivity {
         CreatNuploadThumbnail(times, storageRef);
         for (int i = 0; i < IMAGEs.size(); i++) {
             final Uri individualImage = Uri.parse(IMAGEs.get(i));
-            final StorageReference ImageName = storageRef.child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
+            final StorageReference ImageName = storageRef.child("EveryClub").child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
             UploadTask uploadTask = ImageName.putFile(individualImage);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -256,7 +256,7 @@ public class Board_Write extends AppCompatActivity {
         inimage.compress(Bitmap.CompressFormat.JPEG,100, baos);
         String thumbpath = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), inimage, "thumb", null); // -> content://
         final Uri thumburi = Uri.parse(thumbpath);
-        final StorageReference ThumbName = storageRef.child(clubName).child("Board/" + thumburi.getLastPathSegment() + '-' + times);
+        final StorageReference ThumbName = storageRef.child("EveryClub").child(clubName).child("Board/" + thumburi.getLastPathSegment() + '-' + times);
         UploadTask upt = ThumbName.putFile(thumburi);
         upt.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -271,7 +271,7 @@ public class Board_Write extends AppCompatActivity {
     private void StoreDatabase(){
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(clubName).child("Board");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
         boardModel.title = title.getText().toString();
         boardModel.contents = contents.getText().toString();
         boardModel.timestamp = ServerValue.TIMESTAMP;
@@ -317,7 +317,7 @@ public class Board_Write extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.pick_delete:
                         if(edt_key==1){ // 수정 페이지에서 이미지 삭제. RTDB 내용은 업로드시 업데이트, 선택된 이미지 storage 삭제는 여기서
-                            storage.getReference().child(clubName).child("Board").child(boardModel.imgName.get(position)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            storage.getReference().child("EveryClub").child(clubName).child("Board").child(boardModel.imgName.get(position)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                 }

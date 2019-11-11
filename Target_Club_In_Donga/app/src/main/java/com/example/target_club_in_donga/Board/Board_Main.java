@@ -59,7 +59,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         final BoardRecy_Adapter boardRecy_adapter = new BoardRecy_Adapter(board_clicklistner);
         recyclerView.setAdapter(boardRecy_adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),1));
-        database.getReference().child(clubName).child("Board").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Board").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boardModels.clear();
