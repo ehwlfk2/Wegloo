@@ -215,6 +215,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
 
                     firebaseDatabase.getReference().child("EveryClub").child(clubData.getThisClubName()).setValue(clubData);
                     clubName = clubData.getThisClubName();
+                    firebaseDatabase.getReference().child("EveryClubName").push().setValue(clubData.getThisClubName());
                     progressDialog.dismiss();
                     Toast.makeText(Foundation_02.this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Foundation_02.this,ClubFoundationJoin.class);
