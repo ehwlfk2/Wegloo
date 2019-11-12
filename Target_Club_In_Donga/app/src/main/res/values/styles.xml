@@ -91,4 +91,13 @@
         <item name="android:progressBarStyle">@android:style/Theme.NoDisplay</item>
     </style>
 
+    <style name="Custombutton" >
+        <item name="android:background">@drawable/icon_base_vector_ver0</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:radius">20dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
 </resources>

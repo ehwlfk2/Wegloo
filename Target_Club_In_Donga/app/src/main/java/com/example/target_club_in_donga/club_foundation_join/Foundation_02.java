@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -237,14 +238,20 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
         }
 
     }
-    private void insertMyClub(ClubData clubData,final boolean realName){
+    private void insertMyClub(final ClubData clubData,final boolean realName){
         firebaseDatabase.getReference().child("EveryClub").push().setValue(clubData, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 final String clubUid = databaseReference.getKey();
                 final String myUid = firebaseAuth.getCurrentUser().getUid();
                 firebaseDatabase.getReference().child("AppUser").child(myUid).child("recentClub").setValue(clubUid);
-                firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").child(clubUid).setValue(true);
+                //firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").child(clubUid).setValue(true);
+                MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                myClubSeletedItem.setApprovalCompleted(false);
+                myClubSeletedItem.setSignUpclubUid(clubUid);
+                myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
+                myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").push().setValue(myClubSeletedItem);
                 /**
                  * 회장은 어차피 승인이든 자유든 어차피 바로가입이지롱
                  * 실명 모임일경우!
