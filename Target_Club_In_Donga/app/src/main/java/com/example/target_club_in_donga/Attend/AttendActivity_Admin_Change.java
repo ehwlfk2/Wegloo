@@ -27,7 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class AttendActivity_Admin_Change extends AppCompatActivity {
 
@@ -39,6 +39,9 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
     private String findkey;
     private int flag;
+
+    private String clubName = "TCID";
+    // 임시로 바꾼 부분
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {

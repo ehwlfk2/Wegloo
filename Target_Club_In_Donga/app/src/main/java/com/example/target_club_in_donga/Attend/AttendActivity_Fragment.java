@@ -45,7 +45,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.target_club_in_donga.Attend.AttendActivity_Home.uidAdminPath;
-import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.Attend.AttendActivity_Admin_Information.uidAdminPath2;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 
 /**
@@ -81,8 +82,11 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
     private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0;
     private static int adminNumber = 2;
 
-    PieChart activity_attend_piechart;
+    private PieChart activity_attend_piechart;
     private String findkey, getState;
+
+    private String clubName = "TCID";
+    // 임시로 바꾼 부분
 
     public AttendActivity_Fragment() {
         // Required empty public constructor
@@ -95,6 +99,9 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
         View view = inflater.inflate(R.layout.activity_attend_detail, container, false);
 
         findkey = uidAdminPath;
+        if (findkey == null) {
+            findkey = uidAdminPath2;
+        }
 //        findkey = getArguments().getString("uidAdminPath");
 //        Gallery_Adapter galleryAdapter = new Gallery_Adapter(getContext(), R.layout.activity_attend_sub_layout, img);
 //        gallery = (Gallery) view.findViewById(R.id.activity_attend_gallery);
@@ -103,40 +110,20 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
         activity_attend_detail_button_admin = (Button) view.findViewById(R.id.activity_attend_detail_button_admin);
         activity_attend_detail_button_attendance = (Button) view.findViewById(R.id.activity_attend_detail_button_attendance);
         activity_attend_detail_button_cancel = (Button) view.findViewById(R.id.activity_attend_detail_button_cancel);
-        activity_attend_detail_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_state);
+/*        activity_attend_detail_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_state);
         activity_attend_detail_textview_people_count = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_count);
         activity_attend_detail_textview_people_percent = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_percent);
         activity_attend_detail_textview_certification_number = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number);
         activity_attend_detail_textview_attend_time_limit = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_time_limit);
         activity_attend_detail_textview_tardy_time_limit = (TextView) view.findViewById(R.id.activity_attend_detail_textview_tardy_time_limit);
-        activity_attend_detail_textview_certification_number_name = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number_name);
+        activity_attend_detail_textview_certification_number_name = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number_name);*/
 
         activity_attend_piechart = (PieChart) view.findViewById(R.id.activity_attend_piechart);
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-/*        gallery.setAdapter(galleryAdapter);
-        final ImageView imageView = (ImageView) view.findViewById(R.id.test);
-        gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                current_image_resource = img[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        select_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView.setImageResource(current_image_resource);
-            }
-        });*/
-
-        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+/*        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -160,9 +147,9 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
+/*        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
@@ -185,7 +172,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         activity_attend_detail_button_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -394,7 +381,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             }
         });
 
-        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+/*        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 admin = Integer.parseInt(dataSnapshot.getValue().toString());
@@ -410,7 +397,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         activity_attend_detail_button_admin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -421,7 +408,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             }
         });
 
-        activity_attend_piechart.setUsePercentValues(true);
+        activity_attend_piechart.setUsePercentValues(false);
         activity_attend_piechart.getDescription().setEnabled(true);
         activity_attend_piechart.setExtraOffsets(5, 10, 5, 5);
 
@@ -459,7 +446,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
                     }
 
                     if (attendCount > 0) {
-                        pieEntries.add(new PieEntry(attendCount, "출석"));
+                        pieEntries.add(new PieEntry(attendCount , "출석"));
                     }
                     if (tardyCount > 0) {
                         pieEntries.add(new PieEntry(tardyCount, "지각"));
@@ -478,7 +465,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
 
                     activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
-                    PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries, "인원 수");
                     pieDataSet.setSliceSpace(3f);
                     pieDataSet.setSelectionShift(4f);
                     pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
@@ -498,7 +485,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             }
         });
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
+/*        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -510,9 +497,9 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addValueEventListener(new ValueEventListener() {
+/*        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
@@ -524,9 +511,9 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addValueEventListener(new ValueEventListener() {
+/*        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("tardyTimeLimit").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(String.class) != null) {
@@ -538,7 +525,7 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         return view;
     }
@@ -550,10 +537,10 @@ public class AttendActivity_Fragment extends Fragment implements HomeActivity.on
         homeActivity.onBackPressed();
     }
 
-    @Override
+/*    @Override
     public void onAttach(@NonNull final Context context) {
         super.onAttach(context);
         ((HomeActivity)context).setOnKeyBackPressedListener(this);
-    }
+    }*/
 
 }

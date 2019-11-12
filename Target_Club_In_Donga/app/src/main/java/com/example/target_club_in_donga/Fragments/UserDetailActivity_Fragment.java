@@ -1,8 +1,8 @@
 package com.example.target_club_in_donga.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 // 게시판 프래그먼트
 
@@ -61,6 +60,9 @@ public class UserDetailActivity_Fragment extends Fragment implements HomeActivit
     private TextView slidingdrawer_title;
     private int menu_count = 0, listSize = 0;
     private String startTime;
+
+    private String clubName = "TCID";
+    // 임시로 바꾼 부분
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -287,10 +289,10 @@ public class UserDetailActivity_Fragment extends Fragment implements HomeActivit
         homeActivity.onBackPressed();
     }
 
-    @Override
+/*    @Override
     public void onAttach(@NonNull final Context context) {
         super.onAttach(context);
         ((HomeActivity)context).setOnKeyBackPressedListener(this);
-    }
+    }*/
 
 }

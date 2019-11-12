@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,10 +42,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class AttendActivity_Home extends AppCompatActivity {
 
@@ -66,10 +69,21 @@ public class AttendActivity_Home extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private Date attenddate;
+    private String date_Attend, date_Trady;
+    private int flag = 0, flag2 = 0;
+    private int certification_number;
+    private int minNumber = 1000, maxNumber = 9999;
+    private String findkey, getName, getPhone;
+
+    private String clubName = "TCID";
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attend_home);
+
+        final Random random_number = new Random();
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -110,10 +124,12 @@ public class AttendActivity_Home extends AppCompatActivity {
                 attenditems.clear();
                 uidLists.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Attend_Admin_Item attendItem = snapshot.getValue(Attend_Admin_Item.class);
-                    String uidKey = snapshot.getKey();
-                    attenditems.add(0, attendItem);
-                    uidLists.add(0, uidKey);
+                    if (snapshot.child("Attend_Certification_Number").getValue() != null) {
+                        Attend_Admin_Item attendItem = snapshot.getValue(Attend_Admin_Item.class);
+                        String uidKey = snapshot.getKey();
+                        attenditems.add(0, attendItem);
+                        uidLists.add(0, uidKey);
+                    }
                 }
                 attendActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();
@@ -129,8 +145,144 @@ public class AttendActivity_Home extends AppCompatActivity {
         activity_attend_home_admin_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Admin.class);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AttendActivity_Home.this);
+
+                View view = LayoutInflater.from(AttendActivity_Home.this)
+                        .inflate(R.layout.activity_attend_admin, null, false);
+                builder.setView(view);
+
+                final RadioGroup activity_attend_admin_radiogroup_attend = (RadioGroup) view.findViewById(R.id.activity_attend_admin_radiogroup_attend);
+                final RadioGroup activity_attend_admin_radiogroup_tardy = (RadioGroup) view.findViewById(R.id.activity_attend_admin_radiogroup_tardy);
+                final Button activity_attend_admin_button_attendance_start = (Button) view.findViewById(R.id.activity_attend_admin_button_attendance_start);
+
+                final AlertDialog dialog = builder.create();
+
+                now = System.currentTimeMillis();
+                // 현재시간을 date 변수에 저장한다.
+                attenddate = new Date(now);
+
+                // 출석시간을 결정
+                activity_attend_admin_radiogroup_attend.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(final RadioGroup radioGroup, final int checkedId) {
+                        now = System.currentTimeMillis();
+                        // 현재시간을 date 변수에 저장한다.
+                        Date date = new Date(now);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        //"yyyy-MM-dd HH:mm"
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(date);
+
+                        if (checkedId == R.id.activity_attend_admin_radiobutton_attend_5_min) {
+                            calendar.add(Calendar.MINUTE, 5);
+                            date_Attend = simpleDateFormat.format(calendar.getTime());
+                            attenddate = calendar.getTime();
+                        } else if (checkedId == R.id.activity_attend_admin_radiobutton_attend_10_min) {
+                            calendar.add(Calendar.MINUTE, 10);
+                            date_Attend = simpleDateFormat.format(calendar.getTime());
+                            attenddate = calendar.getTime();
+                        } else {
+                            calendar.add(Calendar.MINUTE, 15);
+                            date_Attend = simpleDateFormat.format(calendar.getTime());
+                            attenddate = calendar.getTime();
+                        }
+
+                        flag++;
+                    }
+                });
+
+                // 지각시간을 결정
+                activity_attend_admin_radiogroup_tardy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(final RadioGroup radioGroup, final int checkedId) {
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        //"yyyy-MM-dd HH:mm"
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(attenddate);
+
+                        if (checkedId == R.id.activity_attend_admin_radiobutton_tardy_10_min) {
+                            calendar.add(Calendar.MINUTE, 10);
+                            date_Trady = simpleDateFormat.format(calendar.getTime());
+                        } else if (checkedId == R.id.activity_attend_admin_radiobutton_tardy_20_min) {
+                            calendar.add(Calendar.MINUTE, 20);
+                            date_Trady = simpleDateFormat.format(calendar.getTime());
+                        } else {
+                            calendar.add(Calendar.MINUTE, 30);
+                            date_Trady = simpleDateFormat.format(calendar.getTime());
+                        }
+
+                        flag2++;
+                    }
+                });
+
+                activity_attend_admin_button_attendance_start.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+
+                        if (flag > 0 && flag2 > 0) {
+                            now = System.currentTimeMillis();
+                            // 현재시간을 date 변수에 저장한다.
+                            Date date = new Date(now);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                            formatDate = simpleDateFormat.format(date);
+
+                            certification_number = random_number.nextInt(maxNumber - minNumber + 1) + minNumber;
+                            // 인즌번호가 1000~9999 4자리 수중에서 랜덤으로 결정된다.
+
+                            Attend_Admin_Item attendItem = new Attend_Admin_Item();
+                            attendItem.startTime = formatDate;
+                            attendItem.attendTimeLimit = date_Attend;
+                            attendItem.tardyTimeLimit = date_Trady;
+
+                            findkey = database.getReference().push().getKey();
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).setValue(attendItem);
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").setValue(certification_number);
+
+                            // 회원 가입한 날짜와 현재 날짜를 비교해서 출석을 시작 하고 난 후에 회원가입을 하면 그 전에 했던 출석에 포함되지 않아야 한다.
+
+                            database.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
+                                        getName = snapshot.child("name").getValue(String.class);
+                                        getPhone = snapshot.child("phone").getValue(String.class);
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
+
+                                        Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
+                                        attendAdminChangeItem.name = getName;
+                                        attendAdminChangeItem.attend_state = "미출결";
+                                        attendAdminChangeItem.phone = getPhone;
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(final DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            Toast.makeText(AttendActivity_Home.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
+/*                            Intent intent = new Intent(AttendActivity_Admin.this, AttendActivity_Home.class);
+                            intent.putExtra("findKey", findkey);
+                            startActivity(intent);*/
+                            dialog.dismiss();
+                        } else if (flag == 0) {
+                            Toast.makeText(AttendActivity_Home.this, "출석시간을 정해주세요", Toast.LENGTH_SHORT).show();
+                        } else if (flag2 == 0) {
+                            Toast.makeText(AttendActivity_Home.this, "지각시간을 정해주세요", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                dialog.show();
+
+/*                Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Admin.class);
+                startActivity(intent);*/
             }
         });
 
@@ -197,7 +349,6 @@ public class AttendActivity_Home extends AppCompatActivity {
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
             LinearLayout activity_attend_home_item_linearlayout;
-            TextView activity_attend_home_item_textview_recyclerview_club_name;
             TextView activity_attend_home_item_textview_recyclerview_start_time;
             TextView activity_attend_home_item_recyclerview_attend_time_limit_tilte;
             TextView activity_attend_home_item_recyclerview_attend_time_limit;
@@ -209,7 +360,6 @@ public class AttendActivity_Home extends AppCompatActivity {
                 super(view);
 
                 activity_attend_home_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_home_item_linearlayout);
-                activity_attend_home_item_textview_recyclerview_club_name = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_club_name);
                 activity_attend_home_item_textview_recyclerview_attend_state = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_attend_state);
                 activity_attend_home_item_textview_recyclerview_start_time = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_start_time);
                 activity_attend_home_item_recyclerview_attend_time_limit_tilte = (TextView) view.findViewById(R.id.activity_attend_home_item_recyclerview_attend_time_limit_tilte);
@@ -315,14 +465,12 @@ public class AttendActivity_Home extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
             final AttendActivity_Home.AttendActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Home.AttendActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
-            customViewHolder.activity_attend_home_item_textview_recyclerview_club_name.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_home_item_textview_recyclerview_attend_state.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_home_item_textview_recyclerview_start_time.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_home_item_recyclerview_attend_time_limit.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setGravity(Gravity.LEFT);
 
             customViewHolder.activity_attend_home_item_textview_recyclerview_attend_state.setText("미출결");
-            customViewHolder.activity_attend_home_item_textview_recyclerview_club_name.setText(attenditems.get(position).clubName);
             customViewHolder.activity_attend_home_item_textview_recyclerview_start_time.setText(attenditems.get(position).startTime);
             customViewHolder.activity_attend_home_item_recyclerview_attend_time_limit.setText(attenditems.get(position).attendTimeLimit);
             customViewHolder.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setText(attenditems.get(position).tardyTimeLimit);

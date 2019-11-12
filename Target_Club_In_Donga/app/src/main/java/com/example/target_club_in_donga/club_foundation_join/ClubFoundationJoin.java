@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.UserDetailActivity;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -25,6 +28,8 @@ public class ClubFoundationJoin extends AppCompatActivity {
         backBtn = findViewById(R.id.joinorcreate_00_button_back);
         clubFoundation_nextBtn = findViewById(R.id.joinorcreate_00_layout_create);
         clubJoin_nextBtn = findViewById(R.id.joinorcreate_00_layout_join);
+        Button fragment_home_btn_1 = (Button) findViewById(R.id.fragment_home_btn_1);
+        Button fragment_home_btn_2 = (Button) findViewById(R.id.fragment_home_btn_2);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +51,23 @@ public class ClubFoundationJoin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        fragment_home_btn_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent = new Intent(ClubFoundationJoin.this , AttendActivity_Home.class);
+                startActivity(intent);
+            }
+        });
+
+        fragment_home_btn_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent = new Intent(ClubFoundationJoin.this, UserDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
     @Override
     public void onBackPressed() {

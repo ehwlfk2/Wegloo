@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+<!--    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -67,7 +67,7 @@
     </LinearLayout>
 
     <View
-        style="@style/Line_Style" />
+        style="@style/Line_Style" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="출결관리자 (출결수정)" />
 
-                <TextView
+               <!-- <TextView
                     android:id="@+id/activity_attend_detail_textview_certification_number_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
                     android:background="@drawable/border_orange"
                     android:text="미출결"
                     android:textSize="25dp"
-                    android:layout_below="@+id/activity_attend_detail_button_admin"/>
+                    android:layout_below="@+id/activity_attend_detail_button_admin"/>-->
 
             </RelativeLayout>
 
@@ -227,16 +227,16 @@
                 <Button
                     android:id="@+id/activity_attend_detail_button_attendance"
                     style="@style/Content_Classification_Text_Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="출석" />
 
                 <Button
                     android:id="@+id/activity_attend_detail_button_cancel"
                     style="@style/Content_Classification_Text_Style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="취소" />
             </LinearLayout>

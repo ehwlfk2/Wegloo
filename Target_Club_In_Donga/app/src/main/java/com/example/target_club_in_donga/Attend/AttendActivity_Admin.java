@@ -1,3 +1,4 @@
+/*
 package com.example.target_club_in_donga.Attend;
 
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class AttendActivity_Admin extends AppCompatActivity {
 
@@ -45,6 +46,9 @@ public class AttendActivity_Admin extends AppCompatActivity {
 
     private int minNumber = 1000, maxNumber = 9999;
     private String findkey;
+
+    private String clubName = "TCID";
+    // 임시로 바꾼 부분
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -172,9 +176,11 @@ public class AttendActivity_Admin extends AppCompatActivity {
                     });
 
                     Toast.makeText(AttendActivity_Admin.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
+*/
 /*                    Intent intent = new Intent(AttendActivity_Admin.this, AttendActivity_Home.class);
                     intent.putExtra("findKey", findkey);
-                    startActivity(intent);*/
+                    startActivity(intent);*//*
+
                     finish();
                 } else if (flag == 0) {
                     Toast.makeText(AttendActivity_Admin.this, "출석시간을 정해주세요", Toast.LENGTH_SHORT).show();
@@ -186,4 +192,4 @@ public class AttendActivity_Admin extends AppCompatActivity {
 
     }
 
-}
+}*/
