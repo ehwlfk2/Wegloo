@@ -2,7 +2,6 @@ package com.example.target_club_in_donga.Fragments;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.Notice.ExpandableListAdapter;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Insert;
 import com.example.target_club_in_donga.Notice.Notice_Item;
@@ -57,7 +55,7 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NoticeActivity_Fragment extends Fragment implements HomeActivity.onKeyBackPressedListener {
+public class NoticeActivity_Fragment extends Fragment {
 
 
     public NoticeActivity_Fragment() {
@@ -190,17 +188,5 @@ public class NoticeActivity_Fragment extends Fragment implements HomeActivity.on
         return simpleDateFormat.format(date);
     }
 
-    @Override
-    public void onBackKey() {
-        HomeActivity homeActivity = (HomeActivity) getActivity();
-        homeActivity.setOnKeyBackPressedListener(null);
-        homeActivity.onBackPressed();
-    }
-
-    @Override
-    public void onAttach(@NonNull final Context context) {
-        super.onAttach(context);
-        ((HomeActivity)context).setOnKeyBackPressedListener(this);
-    }
 
 }

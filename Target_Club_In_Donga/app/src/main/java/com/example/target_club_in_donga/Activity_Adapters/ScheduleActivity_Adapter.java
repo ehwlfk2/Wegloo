@@ -14,8 +14,8 @@ public class ScheduleActivity_Adapter extends FragmentPagerAdapter {
     public ScheduleActivity_Adapter(final FragmentManager fm) {
         super(fm);
         fragmentData = new ArrayList<>();
-        fragmentData.add(new HomeActivity_Fragment());
         fragmentData.add(new ScheduleActivity_Fragment());
+        fragmentData.add(new HomeActivity_Fragment());
     }
 
     // ArrayList에 Material_Schedule와 Fragment_Home를 추가시킨다.

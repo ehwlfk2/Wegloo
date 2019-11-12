@@ -2,7 +2,6 @@ package com.example.target_club_in_donga.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -32,14 +31,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 // 게시판 프래그먼트
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UserDetailActivity_Fragment extends Fragment implements HomeActivity.onKeyBackPressedListener {
+public class UserDetailActivity_Fragment extends Fragment {
 
     public UserDetailActivity_Fragment() {
         // Required empty public constructor
@@ -60,9 +59,6 @@ public class UserDetailActivity_Fragment extends Fragment implements HomeActivit
     private TextView slidingdrawer_title;
     private int menu_count = 0, listSize = 0;
     private String startTime;
-
-    private String clubName = "TCID";
-    // 임시로 바꾼 부분
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -281,18 +277,5 @@ public class UserDetailActivity_Fragment extends Fragment implements HomeActivit
         }
 
     }
-
-    @Override
-    public void onBackKey() {
-        HomeActivity homeActivity = (HomeActivity) getActivity();
-        homeActivity.setOnKeyBackPressedListener(null);
-        homeActivity.onBackPressed();
-    }
-
-/*    @Override
-    public void onAttach(@NonNull final Context context) {
-        super.onAttach(context);
-        ((HomeActivity)context).setOnKeyBackPressedListener(this);
-    }*/
 
 }

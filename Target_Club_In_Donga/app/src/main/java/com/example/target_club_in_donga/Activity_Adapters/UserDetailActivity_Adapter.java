@@ -14,8 +14,8 @@ public class UserDetailActivity_Adapter extends FragmentPagerAdapter {
     public UserDetailActivity_Adapter(FragmentManager fm) {
         super(fm);
         fragmentData = new ArrayList<>();
-        fragmentData.add(new HomeActivity_Fragment());
         fragmentData.add(new UserDetailActivity_Fragment());
+        fragmentData.add(new HomeActivity_Fragment());
     }
 
     // ArrayList에 Fragment_Attend와 Fragment_Home를 추가시킨다.

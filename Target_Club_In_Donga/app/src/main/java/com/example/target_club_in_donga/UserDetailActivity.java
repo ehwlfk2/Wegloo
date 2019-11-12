@@ -20,7 +20,6 @@ public class UserDetailActivity extends AppCompatActivity implements HomeActivit
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         UserDetailActivity_Adapter fragmentAdapter = new UserDetailActivity_Adapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setCurrentItem(1);
     }
 
     // 메뉴에서 출석을 눌렀을 때, viewPager에서 ViewPagerAdapter_Attend로 출석화면이 나오고

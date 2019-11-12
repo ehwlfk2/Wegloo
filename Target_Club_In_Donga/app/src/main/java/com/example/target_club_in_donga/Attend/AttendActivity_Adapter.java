@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.target_club_in_donga.Attend.AttendActivity_Fragment;
 import com.example.target_club_in_donga.Fragments.*;
 
 import java.util.ArrayList;
@@ -15,8 +14,8 @@ public class AttendActivity_Adapter extends FragmentPagerAdapter {
     public AttendActivity_Adapter(FragmentManager fm) {
         super(fm);
         fragmentData = new ArrayList<>();
-        fragmentData.add(new HomeActivity_Fragment());
         fragmentData.add(new AttendActivity_Fragment());
+        fragmentData.add(new HomeActivity_Fragment());
     }
 
     // ArrayList에 Fragment_Attend와 Fragment_Home를 추가시킨다.
