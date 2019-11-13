@@ -325,6 +325,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                          */
                         if(clubData.isRealNameSystem()){
                             progressDialog.setMessage("가입 중입니다...");
+                            progressDialog.setCancelable(false);
                             progressDialog.show();
                             firebaseDatabase.getReference().child("AppUser").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override

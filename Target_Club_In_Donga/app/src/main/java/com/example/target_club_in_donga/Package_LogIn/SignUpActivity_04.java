@@ -172,6 +172,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
 
     private void insertDB(String uri, final String name, final String phoneNumber){
         progressDialog.setMessage("회원가입 중입니다...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         final String uid = firebaseAuth.getCurrentUser().getUid();
         try{
