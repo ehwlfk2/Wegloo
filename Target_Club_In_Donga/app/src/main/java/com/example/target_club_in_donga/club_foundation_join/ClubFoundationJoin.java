@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -46,6 +47,24 @@ public class ClubFoundationJoin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button tempViewPagerBtn = findViewById(R.id.tempViewPagerBtn);
+        tempViewPagerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(ClubFoundationJoin.this, HomeActivityView.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        Button tempIntentBtn = findViewById(R.id.tempIntentBtn);
+        tempIntentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
     @Override
     public void onBackPressed() {

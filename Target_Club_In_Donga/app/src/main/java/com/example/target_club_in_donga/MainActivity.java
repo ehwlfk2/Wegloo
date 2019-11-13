@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                  finish();
                                  }
                                  */
-                                Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, Congratulation.class);
                                 startActivity(intent);
                                 finish();
