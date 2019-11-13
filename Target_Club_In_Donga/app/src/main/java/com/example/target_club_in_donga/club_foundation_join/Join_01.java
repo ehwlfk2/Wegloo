@@ -32,6 +32,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -138,10 +139,31 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(this, "모임 선택 해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else{
+
                     String userUId = firebaseAuth.getCurrentUser().getUid();
-                    firebaseDatabase.getReference().child("AppUser").child(userUId).child("signUpClub").child(clubUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    firebaseDatabase.getReference().child("AppUser").child(userUId).child("signUpClub").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            boolean alreadyJoin = false;
+                            boolean checkJoin = false;
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                MyClubSeletedItem myClubSeletedItem = snapshot.getValue(MyClubSeletedItem.class);
+                                if(myClubSeletedItem.getSignUpclubUid().equals(clubUid)){
+                                    alreadyJoin = true;
+                                    checkJoin = myClubSeletedItem.isApprovalCompleted();
+                                    break;
+                                }
+                            }
+                            if(alreadyJoin && checkJoin){
+                                Toast.makeText(Join_01.this, "이미 가입된 모임입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(alreadyJoin){
+                                Toast.makeText(Join_01.this, "가입 요청중인 모임입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                joinClubDialog();
+                            }
+                            /*
                             try{
                                 boolean check = dataSnapshot.getValue(boolean.class);
                                 if(check){
@@ -153,7 +175,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                             }
                             catch (NullPointerException e){
                                 joinClubDialog();
-                            }
+                            }*/
 
                         }
                         @Override
@@ -327,7 +349,13 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                                         firebaseDatabase.getReference().child("AppUser").child(userUid).child("recentClub").setValue(clubUid);
 
                                         //가입된 클럽중에 가입완료된거니까 true
-                                        firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(true);
+                                        //firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(true);
+                                        MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                                        myClubSeletedItem.setApprovalCompleted(true);
+                                        myClubSeletedItem.setSignUpclubUid(clubUid);
+                                        myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
+                                        myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                                        firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
                                         clubName = clubUid;
                                         /**
                                          * 그클럽 홈으로 intent
@@ -340,7 +368,13 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                                         firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("WantToJoinUser").child(userUid).setValue(joinData);
 
                                         //가입된 클럽중에 가입완료아직 안된거니까 false
-                                        firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(false);
+                                        //firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(false);
+                                        MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                                        myClubSeletedItem.setApprovalCompleted(false);
+                                        myClubSeletedItem.setSignUpclubUid(clubUid);
+                                        myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
+                                        myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                                        firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
                                         /**
                                          * 승인중 페이지로 intent
                                          */
