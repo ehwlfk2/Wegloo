@@ -5,10 +5,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <SlidingDrawer
+        <SlidingDrawer
+            android:id="@+id/activity_user_detail_slidingdrawer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:content="@+id/activity_user_detail_content"
+            android:elevation="2dp"
+            android:handle="@+id/activity_user_detail_handle"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/activity_user_detail_handle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/default_color"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/Top_Content_Text_Style"
+                    android:id="@+id/activity_user_detail_slidingdrawer_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출결정보"
+                    android:textColor="#FFFFFF"
+                    android:paddingTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_user_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#FFFFFF">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".Google_Login">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/activity_user_detail_recyclerview_main_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        android:scrollbarFadeDuration="0"
+                        android:scrollbarSize="10dp"
+                        android:scrollbarThumbVertical="@android:color/darker_gray"
+                        android:scrollbars="vertical" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </SlidingDrawer>
+
+<!--    <SlidingDrawer
         android:id="@+id/activity_user_detail_slidingdrawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:content="@+id/activity_user_detail_content"
         android:elevation="2dp"
         android:handle="@+id/activity_user_detail_handle"
@@ -57,7 +111,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-    </SlidingDrawer>
+    </SlidingDrawer>-->
 
 
 

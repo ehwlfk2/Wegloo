@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Information;
+import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.UserDetailActivity;
 import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,6 +65,31 @@ public class ClubFoundationJoin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        Button fragment_home_btn_1 = (Button) findViewById(R.id.fragment_home_btn_1);
+        Button fragment_home_btn_2 = (Button) findViewById(R.id.fragment_home_btn_2);
+        Button fragment_home_btn_3 = (Button) findViewById(R.id.fragment_home_btn_3);
+        fragment_home_btn_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent  = new Intent(ClubFoundationJoin.this, AttendActivity_Home.class);
+                startActivity(intent);
+            }
+        });
+        fragment_home_btn_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent  = new Intent(ClubFoundationJoin.this, UserDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+        fragment_home_btn_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent  = new Intent(ClubFoundationJoin.this, AttendActivity_Admin_Information.class);
+                startActivity(intent);
             }
         });
 

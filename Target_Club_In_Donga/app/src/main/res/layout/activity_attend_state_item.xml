@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="3dp">
+
+    <LinearLayout
+        android:id="@+id/activity_attend_attend_state_item_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/activity_attend_attend_state_item_textview_name"
+            style="@style/Content_Text_Style"
+            android:text="이름" />
+
+    </LinearLayout>
+
+    <View style="@style/Line_Style" />
+
+</LinearLayout>

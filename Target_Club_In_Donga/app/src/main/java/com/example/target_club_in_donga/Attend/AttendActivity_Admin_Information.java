@@ -383,6 +383,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
 
                                     Intent intent = new Intent(AttendActivity_Admin_Information.this, AttendActivity_Activity.class);
                                     uidAdminPath2 = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
+                                    intent.putExtra("uidAdminPath2", uidAdminPath2);
                                     intent.putExtra("checkPage", 0);
 
 /*                                    Bundle bundle = new Bundle();
@@ -438,9 +439,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
 
                     popup.inflate(R.menu.attend_home_popup);
 
-                    if (admin > adminNumber) {
-                        popup.getMenu().getItem(1).setVisible(false);
-                    }
+                    popup.getMenu().getItem(0).setVisible(false);
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();

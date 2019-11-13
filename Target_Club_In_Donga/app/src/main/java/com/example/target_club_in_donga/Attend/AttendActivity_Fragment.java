@@ -97,8 +97,8 @@ public class AttendActivity_Fragment extends Fragment {
 //        select_btn = (Button) view.findViewById(R.id.activity_attend_button_select);
 
         activity_attend_detail_button_admin = (Button) view.findViewById(R.id.activity_attend_detail_button_admin);
-        activity_attend_detail_button_attendance = (Button) view.findViewById(R.id.activity_attend_detail_button_attendance);
-        activity_attend_detail_button_cancel = (Button) view.findViewById(R.id.activity_attend_detail_button_cancel);
+/*        activity_attend_detail_button_attendance = (Button) view.findViewById(R.id.activity_attend_detail_button_attendance);
+        activity_attend_detail_button_cancel = (Button) view.findViewById(R.id.activity_attend_detail_button_cancel);*/
 /*        activity_attend_detail_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_state);
         activity_attend_detail_textview_people_count = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_count);
         activity_attend_detail_textview_people_percent = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_percent);*/
@@ -163,7 +163,7 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });*/
 
-        activity_attend_detail_button_attendance.setOnClickListener(new View.OnClickListener() {
+/*        activity_attend_detail_button_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
@@ -361,14 +361,14 @@ public class AttendActivity_Fragment extends Fragment {
 
                 dialog.show();
             }
-        });
+        });*/
 
-        activity_attend_detail_button_cancel.setOnClickListener(new View.OnClickListener() {
+/*        activity_attend_detail_button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 getActivity().finish();
             }
-        });
+        });*/
 
         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

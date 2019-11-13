@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/attend_state_information_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/attend_state_information_attend"
+            android:title="출석" />
+        <item
+            android:id="@+id/attend_state_information_tardy"
+            android:title="지각" />
+        <item
+            android:id="@+id/attend_state_information_absent"
+            android:title="결석" />
+    </group>
+
+</menu>

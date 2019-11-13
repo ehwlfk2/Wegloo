@@ -50,8 +50,8 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
         userPhone = intent.getExtras().getString("userPhone");
 
         activity_attend_detail_button_admin = (Button) findViewById(R.id.activity_attend_detail_button_admin);
-        activity_attend_detail_button_attendance = (Button) findViewById(R.id.activity_attend_detail_button_attendance);
-        activity_attend_detail_button_cancel = (Button) findViewById(R.id.activity_attend_detail_button_cancel);
+/*        activity_attend_detail_button_attendance = (Button) findViewById(R.id.activity_attend_detail_button_attendance);
+        activity_attend_detail_button_cancel = (Button) findViewById(R.id.activity_attend_detail_button_cancel);*/
         activity_attend_detail_textview_certification_number_name = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number_name);
         activity_attend_detail_textview_certification_number = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number);
 
@@ -61,7 +61,7 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
         auth = FirebaseAuth.getInstance();
 
         activity_attend_detail_button_admin.setVisibility(View.GONE);
-        activity_attend_detail_button_attendance.setVisibility(View.GONE);
+//        activity_attend_detail_button_attendance.setVisibility(View.GONE);
         activity_attend_detail_textview_certification_number_name.setVisibility(View.GONE);
         activity_attend_detail_textview_certification_number.setVisibility(View.GONE);
 
@@ -161,12 +161,12 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
             }
         });
 
-        activity_attend_detail_button_cancel.setOnClickListener(new View.OnClickListener() {
+/*        activity_attend_detail_button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 finish();
             }
-        });
+        });*/
 
     }
 }
