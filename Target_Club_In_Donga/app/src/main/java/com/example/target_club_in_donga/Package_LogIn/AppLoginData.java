@@ -9,9 +9,9 @@ public class AppLoginData {
     private String recentClub;
     private String reailNameProPicUrl;
     private String reailNameProPicDeleteName;
-    private Object joinedTimestamp;
+    private Object joinedTimestamp; //가입날짜
 
-    //public Map<String, Object> signUpClub  = new HashMap<>();
+    public Map<String, Object> signUpClub  = new HashMap<>();
 
     public String getName() {
         return name;

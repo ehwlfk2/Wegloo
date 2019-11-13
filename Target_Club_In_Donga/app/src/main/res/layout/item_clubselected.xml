@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_clubSelected_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/logoin_button00_ver0"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:elevation="5dp"
+    style="@style/Custombutton">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/item_clubSelected_profile"
+        app:civ_border_width="0.5dp"
+        app:civ_border_color="#FF000000"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/picture_que_ver0" />
+
+    <TextView
+        android:layout_gravity="center"
+        android:id="@+id/item_clubSelected_title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="모임이름이다아아"
+        android:textSize="15sp"
+        android:layout_marginRight="20dp"
+        />
+
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/item_clubSelected_next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        />
+
+    <!--
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/item_clubSelected_dot"
+        android:background="@drawable/ic_more_horiz_24px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        />
+     -->
+</LinearLayout>
+

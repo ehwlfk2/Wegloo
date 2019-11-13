@@ -43,7 +43,7 @@ public class TimeLineActivity_Main extends AppCompatActivity {
         setContentView(R.layout.activity_timeline_main);
 
         database = FirebaseDatabase.getInstance();
-        recyclerView = (RecyclerView)findViewById(R.id.activity_timeline_main_recyclerview);
+        recyclerView = findViewById(R.id.activity_timeline_main_recyclerview);
         recyclerView.setHasFixedSize(true);//각 아이템이 보여지는 것을 일정하게
         recyclerView.setLayoutManager(new LinearLayoutManager(this));//앞서 선언한 리싸이클러뷰를 레이아웃메니저에 붙힌다
 
