@@ -3,9 +3,9 @@ package com.example.target_club_in_donga.Attend;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +28,8 @@ import java.util.ArrayList;
 
 public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity {
     private Button activity_attend_detail_button_admin, activity_attend_detail_button_attendance, activity_attend_detail_button_cancel;
+    private TextView activity_attend_detail_textview_certification_number_name, activity_attend_detail_textview_certification_number;
+
     private PieChart activity_attend_piechart;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
@@ -50,6 +52,8 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
         activity_attend_detail_button_admin = (Button) findViewById(R.id.activity_attend_detail_button_admin);
         activity_attend_detail_button_attendance = (Button) findViewById(R.id.activity_attend_detail_button_attendance);
         activity_attend_detail_button_cancel = (Button) findViewById(R.id.activity_attend_detail_button_cancel);
+        activity_attend_detail_textview_certification_number_name = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number_name);
+        activity_attend_detail_textview_certification_number = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number);
 
         activity_attend_piechart = (PieChart) findViewById(R.id.activity_attend_piechart);
 
@@ -58,6 +62,8 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
 
         activity_attend_detail_button_admin.setVisibility(View.GONE);
         activity_attend_detail_button_attendance.setVisibility(View.GONE);
+        activity_attend_detail_textview_certification_number_name.setVisibility(View.GONE);
+        activity_attend_detail_textview_certification_number.setVisibility(View.GONE);
 
         database.getReference().child("EveryClub").child(clubName).child("User").addValueEventListener(new ValueEventListener() {
             @Override

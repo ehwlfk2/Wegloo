@@ -387,8 +387,9 @@ public class AttendActivity_Home extends AppCompatActivity {
 
                                 case R.id.attend_detail:
 
-                                    Intent intent = new Intent(AttendActivity_Home.this, AttendActivity.class);
+                                    Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Activity.class);
                                     uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
+                                    intent.putExtra("checkPage", 1);
 
 /*                                    Bundle bundle = new Bundle();
                                     bundle.putString("uidAdminPath", uidAdminPath);

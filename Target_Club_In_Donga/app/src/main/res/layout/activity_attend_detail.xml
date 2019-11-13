@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="출결관리자 (출결수정)" />
 
-               <!-- <TextView
+                <TextView
                     android:id="@+id/activity_attend_detail_textview_certification_number_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                     android:layout_below="@+id/activity_attend_detail_button_admin"
                     android:layout_toRightOf="@+id/activity_attend_detail_textview_certification_number_name" />
 
-                <TextView
+<!--                <TextView
                     android:id="@+id/activity_attend_detail_textview_attend_time_limit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -31,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 // 게시판 프래그먼트
 
@@ -52,13 +52,16 @@ public class UserDetailActivity_Fragment extends Fragment {
 
     private FirebaseDatabase database;
     private FirebaseAuth auth;
-    private TextView name, phone, school, email, studentID;
+    private TextView name, phone, school, email, studentID, circles;
     private ImageView profile;
     private Button changeButton;
     private SlidingDrawer slidingDrawer;
     private TextView slidingdrawer_title;
     private int menu_count = 0, listSize = 0;
     private String startTime;
+
+    private String clubName = "TCID";
+    // 임시로 넣어준 값
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,8 +73,10 @@ public class UserDetailActivity_Fragment extends Fragment {
         //school = view.findViewById(R.id.user_detail_school);
         email = view.findViewById(R.id.activity_user_detail_email);
         profile = view.findViewById(R.id.activity_user_detail_profile);
+        circles = view.findViewById(R.id.activity_user_detail_circles);
         //studentID = view.findViewById(R.id.user_detail_studentID);
         //changeButton = view.findViewById(R.id.user_detail_change);
+
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();

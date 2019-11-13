@@ -59,6 +59,7 @@
         </activity>
         <activity android:name=".Attend.AttendActivity" />
         <!--<activity android:name=".Attend.AttendActivity_Admin" />-->
+        <activity android:name=".Attend.AttendActivity_Activity" />
         <activity android:name=".Attend.AttendActivity_Admin_Change" />
         <activity android:name=".Attend.AttendActivity_Admin_Information" />
         <activity android:name=".Attend.AttendActivity_Admin_Privacy_Information" />

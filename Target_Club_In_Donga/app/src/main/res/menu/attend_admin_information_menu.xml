@@ -9,7 +9,7 @@
             android:title="회원" />
         <item
             android:id="@+id/attend_admin_information_date"
-            android:title="날짜" />
+            android:title="일자" />
     </group>
 
 </menu>

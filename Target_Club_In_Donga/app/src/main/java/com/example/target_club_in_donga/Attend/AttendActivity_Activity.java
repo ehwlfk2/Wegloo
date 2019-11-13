@@ -5,14 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.target_club_in_donga.R;
 import com.github.mikephil.charting.animation.Easing;
@@ -33,19 +33,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.example.target_club_in_donga.Attend.AttendActivity_Home.uidAdminPath;
 import static com.example.target_club_in_donga.Attend.AttendActivity_Admin_Information.uidAdminPath2;
-//import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.Attend.AttendActivity_Home.uidAdminPath;
 
+public class AttendActivity_Activity extends AppCompatActivity {
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class AttendActivity_Fragment extends Fragment {
-
-    /*    private Gallery gallery;
-        private Button select_btn;
-        private Integer current_image_resource;*/
     private TextView activity_attend_detail_textview_attend_state;
 
 //    private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc, R.drawable.dd, R.drawable.ee};
@@ -68,7 +60,7 @@ public class AttendActivity_Fragment extends Fragment {
     private String nowDate, formatDate, nowtardyTimeLimit;
     private String getAttendState, setAttendState, getTardyTimeLimit, getAttendState2;
 
-    private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0;
+    private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage;
     private static int adminNumber = 2;
 
     private PieChart activity_attend_piechart;
@@ -77,15 +69,10 @@ public class AttendActivity_Fragment extends Fragment {
     private String clubName = "TCID";
     // 임시로 바꾼 부분
 
-    public AttendActivity_Fragment() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_attend_detail, container, false);
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_attend_detail);
 
         findkey = uidAdminPath;
         if (findkey == null) {
@@ -96,21 +83,34 @@ public class AttendActivity_Fragment extends Fragment {
 //        gallery = (Gallery) view.findViewById(R.id.activity_attend_gallery);
 //        select_btn = (Button) view.findViewById(R.id.activity_attend_button_select);
 
-        activity_attend_detail_button_admin = (Button) view.findViewById(R.id.activity_attend_detail_button_admin);
-        activity_attend_detail_button_attendance = (Button) view.findViewById(R.id.activity_attend_detail_button_attendance);
-        activity_attend_detail_button_cancel = (Button) view.findViewById(R.id.activity_attend_detail_button_cancel);
-/*        activity_attend_detail_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_state);
-        activity_attend_detail_textview_people_count = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_count);
-        activity_attend_detail_textview_people_percent = (TextView) view.findViewById(R.id.activity_attend_detail_textview_people_percent);*/
-        activity_attend_detail_textview_certification_number = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number);
-/*        activity_attend_detail_textview_attend_time_limit = (TextView) view.findViewById(R.id.activity_attend_detail_textview_attend_time_limit);
-        activity_attend_detail_textview_tardy_time_limit = (TextView) view.findViewById(R.id.activity_attend_detail_textview_tardy_time_limit);*/
-        activity_attend_detail_textview_certification_number_name = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number_name);
+        activity_attend_detail_button_admin = (Button) findViewById(R.id.activity_attend_detail_button_admin);
+        activity_attend_detail_button_attendance = (Button) findViewById(R.id.activity_attend_detail_button_attendance);
+        activity_attend_detail_button_cancel = (Button) findViewById(R.id.activity_attend_detail_button_cancel);
+/*        activity_attend_detail_textview_attend_state = (TextView) findViewById(R.id.activity_attend_detail_textview_attend_state);
+        activity_attend_detail_textview_people_count = (TextView) findViewById(R.id.activity_attend_detail_textview_people_count);
+        activity_attend_detail_textview_people_percent = (TextView) findViewById(R.id.activity_attend_detail_textview_people_percent);*/
+        activity_attend_detail_textview_certification_number = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number);
+/*        activity_attend_detail_textview_attend_time_limit = (TextView) findViewById(R.id.activity_attend_detail_textview_attend_time_limit);
+        activity_attend_detail_textview_tardy_time_limit = (TextView) findViewById(R.id.activity_attend_detail_textview_tardy_time_limit);*/
+        activity_attend_detail_textview_certification_number_name = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number_name);
 
-        activity_attend_piechart = (PieChart) view.findViewById(R.id.activity_attend_piechart);
+        activity_attend_piechart = (PieChart) findViewById(R.id.activity_attend_piechart);
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+
+        Intent intent = getIntent();
+        checkPage = intent.getExtras().getInt("checkPage");
+
+        if (checkPage == 0) {
+            activity_attend_detail_textview_certification_number_name.setVisibility(View.GONE);
+            activity_attend_detail_textview_certification_number.setVisibility(View.GONE);
+            activity_attend_detail_button_attendance.setVisibility(View.GONE);
+        }
+
+        if (checkPage == 1) {
+            activity_attend_detail_button_admin.setVisibility(View.GONE);
+        }
 
 /*        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
@@ -167,9 +167,9 @@ public class AttendActivity_Fragment extends Fragment {
             @Override
             public void onClick(final View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder builder = new AlertDialog.Builder(AttendActivity_Activity.this);
 
-                View view = LayoutInflater.from(getActivity())
+                View view = LayoutInflater.from(AttendActivity_Activity.this)
                         .inflate(R.layout.activity_attend_check, null, false);
                 builder.setView(view);
 
@@ -185,7 +185,7 @@ public class AttendActivity_Fragment extends Fragment {
                         if (dataSnapshot.getValue() != null) {
                             if (dataSnapshot.getValue().toString().equals("출석") || dataSnapshot.getValue().toString().equals("지각")) {
                                 dialog.dismiss();
-                                Toast.makeText(getActivity(), "이미 출석을 했습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AttendActivity_Activity.this, "이미 출석을 했습니다", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -200,7 +200,7 @@ public class AttendActivity_Fragment extends Fragment {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
-                            Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AttendActivity_Activity.this, "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
                     }
@@ -215,7 +215,7 @@ public class AttendActivity_Fragment extends Fragment {
                     @Override
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         if (dataSnapshot.getValue() == null) {
-                            Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AttendActivity_Activity.this, "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         } else {
                             now = System.currentTimeMillis();
@@ -229,7 +229,7 @@ public class AttendActivity_Fragment extends Fragment {
                             Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
                             long diff = d1.getTime() - d2.getTime();
                             if (diff < 0) {
-                                Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AttendActivity_Activity.this, "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         }
@@ -273,7 +273,7 @@ public class AttendActivity_Fragment extends Fragment {
                                                 // 출석 끝나는 시간과 현재 시간을 비교해서 출석인지 지각인지 확인하기 위해서
 
                                                 if (diff > 0) {
-                                                    Toast.makeText(getActivity(), "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(AttendActivity_Activity.this, "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
                                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
                                                     dialog.dismiss();
                                                 } else {
@@ -294,7 +294,7 @@ public class AttendActivity_Fragment extends Fragment {
                                                             // 지각 끝나는 시간과 현재 시간을 비교해서 지각인지 결석인지 확인하기 위해서
 
                                                             if (diff > 0) {
-                                                                Toast.makeText(getActivity(), "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(AttendActivity_Activity.this, "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
                                                                 activity_attend_detail_textview_attend_state.setText("지각");
                                                                 database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
                                                                 dialog.dismiss();
@@ -334,7 +334,7 @@ public class AttendActivity_Fragment extends Fragment {
                                         });
 
                                     } else {
-                                        Toast.makeText(getActivity(), "인증번호를 다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AttendActivity_Activity.this, "인증번호를 다시 입력해주세요", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
@@ -346,7 +346,7 @@ public class AttendActivity_Fragment extends Fragment {
                             });
 
                         } else {
-                            Toast.makeText(getActivity(), "인증번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AttendActivity_Activity.this, "인증번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -366,7 +366,7 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_detail_button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                getActivity().finish();
+                finish();
             }
         });
 
@@ -391,7 +391,7 @@ public class AttendActivity_Fragment extends Fragment {
         activity_attend_detail_button_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                Intent intent = new Intent(getActivity(), AttendActivity_Admin_Change.class);
+                Intent intent = new Intent(AttendActivity_Activity.this, AttendActivity_Admin_Change.class);
                 intent.putExtra("findKey", findkey);
                 startActivity(intent);
             }
@@ -516,7 +516,5 @@ public class AttendActivity_Fragment extends Fragment {
             }
         });*/
 
-        return view;
     }
-
 }

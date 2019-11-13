@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.R;
-import com.example.target_club_in_donga.UserDetailActivity;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -20,6 +20,7 @@ public class ClubFoundationJoin extends AppCompatActivity {
 
     private ConstraintLayout clubFoundation_nextBtn, clubJoin_nextBtn;
     private ImageButton backBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,35 +41,36 @@ public class ClubFoundationJoin extends AppCompatActivity {
         clubFoundation_nextBtn.setOnClickListener(new View.OnClickListener() { //클럽 창설
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(ClubFoundationJoin.this,Foundation_01.class);
+                Intent intent = new Intent(ClubFoundationJoin.this, Foundation_01.class);
                 startActivity(intent);
             }
         });
         clubJoin_nextBtn.setOnClickListener(new View.OnClickListener() { //클럽 가입
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(ClubFoundationJoin.this,Join_01.class);
+                Intent intent = new Intent(ClubFoundationJoin.this, Join_01.class);
                 startActivity(intent);
             }
         });
 
-        fragment_home_btn_1.setOnClickListener(new View.OnClickListener() {
+        Button tempViewPagerBtn = findViewById(R.id.tempViewPagerBtn);
+        tempViewPagerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                Intent intent = new Intent(ClubFoundationJoin.this , AttendActivity_Home.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(ClubFoundationJoin.this, HomeActivityView.class);
                 startActivity(intent);
+                finish();
             }
         });
-
-        fragment_home_btn_2.setOnClickListener(new View.OnClickListener() {
+        Button tempIntentBtn = findViewById(R.id.tempIntentBtn);
+        tempIntentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                Intent intent = new Intent(ClubFoundationJoin.this, UserDetailActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
             }
         });
 
     }
+
     @Override
     public void onBackPressed() {
         FirebaseAuth.getInstance().signOut();

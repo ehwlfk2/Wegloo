@@ -47,7 +47,6 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
     List<Attend_Admin_Information_Item> userList = new ArrayList<>();
     List<Attend_Admin_Item> attenditems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
-    List<String> uidLists2 = new ArrayList<>();
 
     private ArrayList<String> listStartTime = new ArrayList<>();
 
@@ -139,6 +138,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
                             case R.id.attend_admin_information_user:
 
                                 flag = 0;
+                                activity_attend_admin_information_home_category.setText("회원 별");
 
                                 database.getReference().child("EveryClub").child(clubName).child("User").addValueEventListener(new ValueEventListener() {
                                     @Override
@@ -166,7 +166,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
                             case R.id.attend_admin_information_date:
 
                                 flag = 1;
-
+                                activity_attend_admin_information_home_category.setText("일자 별");
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -224,6 +224,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
             }
 
             private void search(final String charText) {
+                activity_attend_admin_information_home_category.setText("카테고리");
                 flag = 2;
 
                 if (charText.length() == 0) {
@@ -380,8 +381,9 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
 
                                 case R.id.attend_detail:
 
-                                    Intent intent = new Intent(AttendActivity_Admin_Information.this, AttendActivity.class);
+                                    Intent intent = new Intent(AttendActivity_Admin_Information.this, AttendActivity_Activity.class);
                                     uidAdminPath2 = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
+                                    intent.putExtra("checkPage", 0);
 
 /*                                    Bundle bundle = new Bundle();
                                     bundle.putString("uidAdminPath", uidAdminPath);
