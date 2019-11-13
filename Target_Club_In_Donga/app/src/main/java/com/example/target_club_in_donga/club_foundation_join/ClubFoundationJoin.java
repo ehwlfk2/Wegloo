@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.facebook.login.LoginManager;
@@ -20,7 +18,6 @@ public class ClubFoundationJoin extends AppCompatActivity {
 
     private ConstraintLayout clubFoundation_nextBtn, clubJoin_nextBtn;
     private ImageButton backBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +26,6 @@ public class ClubFoundationJoin extends AppCompatActivity {
         backBtn = findViewById(R.id.joinorcreate_00_button_back);
         clubFoundation_nextBtn = findViewById(R.id.joinorcreate_00_layout_create);
         clubJoin_nextBtn = findViewById(R.id.joinorcreate_00_layout_join);
-        Button fragment_home_btn_1 = (Button) findViewById(R.id.fragment_home_btn_1);
-        Button fragment_home_btn_2 = (Button) findViewById(R.id.fragment_home_btn_2);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,14 +36,14 @@ public class ClubFoundationJoin extends AppCompatActivity {
         clubFoundation_nextBtn.setOnClickListener(new View.OnClickListener() { //클럽 창설
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ClubFoundationJoin.this, Foundation_01.class);
+                Intent intent  = new Intent(ClubFoundationJoin.this,Foundation_01.class);
                 startActivity(intent);
             }
         });
         clubJoin_nextBtn.setOnClickListener(new View.OnClickListener() { //클럽 가입
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ClubFoundationJoin.this, Join_01.class);
+                Intent intent  = new Intent(ClubFoundationJoin.this,Join_01.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +52,7 @@ public class ClubFoundationJoin extends AppCompatActivity {
         tempViewPagerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ClubFoundationJoin.this, HomeActivityView.class);
+                Intent intent  = new Intent(ClubFoundationJoin.this, HomeActivityView.class);
                 startActivity(intent);
                 finish();
             }
@@ -66,11 +61,11 @@ public class ClubFoundationJoin extends AppCompatActivity {
         tempIntentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
             }
         });
 
     }
-
     @Override
     public void onBackPressed() {
         FirebaseAuth.getInstance().signOut();
