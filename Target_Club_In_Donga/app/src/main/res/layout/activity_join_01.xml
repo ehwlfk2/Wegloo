@@ -93,8 +93,6 @@
     <com.example.target_club_in_donga.club_foundation_join.CustomAutoCompleteTextView
         android:dropDownAnchor="@id/joinclube_autoCompleteSearch"
         android:dropDownHeight="200dp"
-        android:text=""
-        android:dropDownHorizontalOffset="0dp"
 
         android:id="@+id/joinclube_autoCompleteSearch"
         android:hint = "모임 검색 (2자 이상)"

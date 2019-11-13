@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
@@ -84,23 +85,20 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                     final AutoCompleteItem entry = new AutoCompleteItem();
                     entry.title = autoCompleteDBItem.clubTitle;
                     entry.clubUid = snapshot.getKey();
-
+                    entry.imageUrl = autoCompleteDBItem.clubProfile;
                     if(!autoCompleteDBItem.clubProfile.equals("None")){
-                        Glide.with(Join_01.this)
-                                .asBitmap()
-                                .load(autoCompleteDBItem.clubProfile)
-                                .into(new CustomTarget<Bitmap>() {
+                        Glide.with(getApplicationContext()).asBitmap().load(autoCompleteDBItem.clubProfile)
+                                .into(new SimpleTarget<Bitmap>() {
                                     @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                         entry.image = resource;
-                                    }
-
-                                    @Override
-                                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                                        //할일
 
                                     }
                                 });
                     }
+
+                    //entry.imageUrl = autoCompleteDBItem.clubProfile;
                     list.add(entry);
                     //Toast.makeText(Join_01.this, ""+entry.image, Toast.LENGTH_SHORT).show();
                 }
@@ -163,20 +161,6 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                             else{
                                 joinClubDialog();
                             }
-                            /*
-                            try{
-                                boolean check = dataSnapshot.getValue(boolean.class);
-                                if(check){
-                                    Toast.makeText(Join_01.this, "이미 가입된 모임입니다.", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    Toast.makeText(Join_01.this, "가입 요청중인 모임입니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            catch (NullPointerException e){
-                                joinClubDialog();
-                            }*/
-
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -189,10 +173,9 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
     }
 
     public class SearchItemArrayAdapter extends ArrayAdapter<AutoCompleteItem> {
-        private static final String tag = "SearchItemArrayAdapter";
-        private List<AutoCompleteItem> AutoCompleteItemList;
         private List<AutoCompleteItem> tempItems;
         private List<AutoCompleteItem> suggestions;
+        private Context context;
         /**
          *
          * @param context
@@ -201,29 +184,45 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
          */
         public SearchItemArrayAdapter(Context context, int textViewResourceId, List<AutoCompleteItem> objects) {
             super(context, textViewResourceId, objects);
-            AutoCompleteItemList = objects;
             suggestions = new ArrayList<>(objects);
             tempItems = new ArrayList<>(objects);
+            this.context = context;
         }
-
+        public class ViewHolder {
+            TextView txtCustomer;
+            ImageView ivCustomerImage;
+            ImageView ivCustomerImageVis;
+        }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = LayoutInflater.from(context).inflate(R.layout.search_listitem_icon, parent, false);
+                holder.ivCustomerImage = convertView.findViewById(R.id.category_icon);
+                holder.txtCustomer = convertView.findViewById(R.id.search_auto_item);
+                convertView.setTag(holder);
+            }
+            else{
+                holder = (ViewHolder) convertView.getTag();
+            }
 
             AutoCompleteItem autoCompleteItem = getItem(position);
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_listitem_icon, parent, false);
+            holder.txtCustomer.setText(autoCompleteItem.title);
+
+
+            if(!autoCompleteItem.imageUrl.equals("None")){
+                //Glide.with(context).load(autoCompleteItem.imageUrl).into(holder.ivCustomerImage);
+                holder.ivCustomerImage.setImageBitmap(autoCompleteItem.image);
             }
-            TextView txtCustomer =  convertView.findViewById(R.id.search_auto_item);
-            ImageView ivCustomerImage =  convertView.findViewById(R.id.category_icon);
-            if (txtCustomer != null)
-                txtCustomer.setText(autoCompleteItem.title);
-            if (ivCustomerImage != null)
-                ivCustomerImage.setImageBitmap(autoCompleteItem.image);
-            // Now assign alternate color for rows
+            else{
+                //holder.ivCustomerImage.setVisibility(View.GONE);
+                //holder.ivCustomerImageVis.setVisibility(View.VISIBLE);
+                holder.ivCustomerImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+            }
 
             return convertView;
-
-            //return row;
         }
 
         @Override

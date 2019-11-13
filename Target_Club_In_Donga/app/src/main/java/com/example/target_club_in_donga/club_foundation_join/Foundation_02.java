@@ -189,7 +189,6 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
     private void insertDB(String uri,final boolean realName,final boolean freeSign){
         progressDialog.setMessage("모임을 만드는 중입니다...");
         progressDialog.show();
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         try{
             StorageReference storageRef = firebaseStorage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
@@ -247,7 +246,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                 firebaseDatabase.getReference().child("AppUser").child(myUid).child("recentClub").setValue(clubUid);
                 //firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").child(clubUid).setValue(true);
                 MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
-                myClubSeletedItem.setApprovalCompleted(false);
+                myClubSeletedItem.setApprovalCompleted(true);
                 myClubSeletedItem.setSignUpclubUid(clubUid);
                 myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
                 myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());

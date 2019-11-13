@@ -48,29 +48,5 @@ public class ClubFoundationJoin extends AppCompatActivity {
             }
         });
 
-        Button tempViewPagerBtn = findViewById(R.id.tempViewPagerBtn);
-        tempViewPagerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent  = new Intent(ClubFoundationJoin.this, HomeActivityView.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        Button tempIntentBtn = findViewById(R.id.tempIntentBtn);
-        tempIntentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-    }
-    @Override
-    public void onBackPressed() {
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
-        finish();
-        super.onBackPressed();
     }
 }
