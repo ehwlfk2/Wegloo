@@ -188,6 +188,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
     }
     private void insertDB(String uri,final boolean realName,final boolean freeSign){
         progressDialog.setMessage("모임을 만드는 중입니다...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         try{
             StorageReference storageRef = firebaseStorage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");

@@ -335,6 +335,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             //finish();
         } else if (i == R.id.login_button_google) {
             progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             Log.v("develop_check", "구글 로그인 시도");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -342,12 +343,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         } else if (i == R.id.login_button_facebook) {
             progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             Log.v("develop_check", "페이스북 로그인 시도");
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
         } else if (i == R.id.login_button_login) {
             progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             Log.v("develop_check", "로그인 시도");
             loginUser();
