@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -33,6 +34,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -305,7 +307,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                     dialog_joinClub_realName.setText("실명 모임");
                 }
                 else{
-                    dialog_joinClub_realName.setText("별명 모임");
+                    dialog_joinClub_realName.setText("닉네임 모임");
                 }
 
                 if(clubData.isFreeSign()){
@@ -324,7 +326,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                          * 그모임이 실명제이면!
                          */
                         if(clubData.isRealNameSystem()){
-                            progressDialog.setMessage("가입 중입니다...");
+                            progressDialog.setMessage("가입중입니다...");
                             progressDialog.setCancelable(false);
                             progressDialog.show();
                             firebaseDatabase.getReference().child("AppUser").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -357,11 +359,14 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                                         myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
                                         firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
                                         clubName = clubUid;
+                                        progressDialog.dismiss();
+                                        Intent intent = new Intent(Join_01.this, HomeActivityView.class);
+                                        intent.putExtra("isRecent",true);
+                                        startActivity(intent);
                                         /**
                                          * 그클럽 홈으로 intent
                                          */
                                         finish();
-                                        progressDialog.dismiss();
                                     }
                                     else{
                                         //가입 신청 바로하고
@@ -378,8 +383,12 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                                         /**
                                          * 승인중 페이지로 intent
                                          */
-                                        finish();
                                         progressDialog.dismiss();
+                                        Intent intent = new Intent(Join_01.this, HomeActivityView.class);
+                                        intent.putExtra("isRecent",false);
+                                        startActivity(intent);
+                                        finish();
+
                                     }
                                 }
 
@@ -390,6 +399,15 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                             });
                         }
                         else{
+                            Intent intent = new Intent(Join_01.this, Join_02_nicName.class);
+                            intent.putExtra("isFoundation",false);
+                            intent.putExtra("clubUid",clubUid);
+                            intent.putExtra("resume",joinclube_edittext_content.getText().toString());
+                            intent.putExtra("isFreeSign",clubData.isFreeSign());
+                            intent.putExtra("thisClubName",clubData.getThisClubName());
+                            intent.putExtra("clubProfileUrl",clubData.getClubImageUrl());
+                            startActivity(intent);
+                            finish();
                             /**
                              * 그 모임이 별명제이면
                              * 별명 프로필 만드는곳으로 가서
