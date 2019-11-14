@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -79,7 +80,7 @@ public class AttendActivity_Home extends AppCompatActivity {
 
     private int getEditCertificationNumber;
     private String getCertificationNumber, EditCertificationNumber;
-    private String getAttend_Time_Limit, getTardy_Time_Limit;
+    private String getAttend_Time_Limit, getTardy_Time_Limit, getStart_Time;
     private String nowDate;
     private String getState;
 
@@ -484,10 +485,11 @@ public class AttendActivity_Home extends AppCompatActivity {
                                                                         database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
                                                                         dialog.dismiss();
                                                                     } else {
-                                                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
                                                                             @Override
                                                                             public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                                                getTardy_Time_Limit = dataSnapshot.getValue().toString();
+                                                                                getTardy_Time_Limit = dataSnapshot.child("tardyTimeLimit").getValue().toString();
+                                                                                getStart_Time = dataSnapshot.child("startTime").getValue().toString();
 
                                                                                 now = System.currentTimeMillis();
                                                                                 // 현재시간을 date 변수에 저장한다.
@@ -497,12 +499,14 @@ public class AttendActivity_Home extends AppCompatActivity {
                                                                                 nowDate = simpleDateFormat.format(date);
                                                                                 Date d2 = simpleDateFormat.parse(nowDate, new ParsePosition(0));
                                                                                 Date d1 = simpleDateFormat.parse(getTardy_Time_Limit, new ParsePosition(0));
+                                                                                Date d0 = simpleDateFormat.parse(getStart_Time, new ParsePosition(0));
                                                                                 long diff = d1.getTime() - d2.getTime();
                                                                                 // 지각 끝나는 시간과 현재 시간을 비교해서 지각인지 결석인지 확인하기 위해서
 
                                                                                 if (diff > 0) {
                                                                                     Toast.makeText(AttendActivity_Home.this, "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
                                                                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
+                                                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("late_time").setValue("+" + (d2.getTime() - d0.getTime()) / 60000 + "분").toString();
                                                                                     dialog.dismiss();
                                                                                 } else {
                                                                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").addValueEventListener(new ValueEventListener() {

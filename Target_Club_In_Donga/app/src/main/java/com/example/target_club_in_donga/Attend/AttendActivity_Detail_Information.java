@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,7 +51,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
     private TextView activity_attend_detail_textview_certification_number_name;
     private TextView activity_attend_detail_textview_attend;
 
-    private int peopleCount = 0, peopleAttendCount = 0, flag;
+    private int peopleCount = 0, peopleAttendCount = 0, flag = 0;
 
     private int getEditCertificationNumber;
     private String getCertificationNumber, EditCertificationNumber;
@@ -112,18 +113,21 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
 //        attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendItems.clear();
                 uidLists.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Attend_Admin_Change_Item attendAdminChangeItem = snapshot.getValue(Attend_Admin_Change_Item.class);
-                    String uidKey = snapshot.getKey();
-                    attendItems.add(attendAdminChangeItem);
-                    uidLists.add(uidKey);
+                    if (snapshot.child("attend_state").getValue().equals("출석")) {
+                        Attend_Admin_Change_Item attendAdminChangeItem = snapshot.getValue(Attend_Admin_Change_Item.class);
+                        String uidKey = snapshot.getKey();
+                        attendItems.add(attendAdminChangeItem);
+                        uidLists.add(uidKey);
+                    }
+                    attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                 }
-                attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -131,6 +135,36 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
             }
         });
+
+/*        activity_attend_detail_textview_attend.setText("전체현황");
+          // 전체출결을 볼 떄 썼음
+
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                attendItems.clear();
+                uidLists.clear();
+                if (dataSnapshot.child("late_time").getValue(String.class) != null) {
+                    flag = 1;
+                }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Attend_Admin_Change_Item attendAdminChangeItem = snapshot.getValue(Attend_Admin_Change_Item.class);
+                    String uidKey = snapshot.getKey();
+                    if (flag == 1) {
+                        attendAdminChangeItem.late_time = snapshot.child("late_time").getValue().toString();
+                    }
+                    attendItems.add(attendAdminChangeItem);
+                    uidLists.add(uidKey);
+                }
+                flag = 0;
+                attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });*/
 
         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -240,9 +274,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
             }
         });
 
-        if (checkPage == 0) {
-
-        } else if (checkPage == 1) {
+        if (checkPage == 0 || checkPage == 1) {
             activity_attend_detail_button_attend_state.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -256,6 +288,8 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                             switch (item.getItemId()) {
 
                                 case R.id.attend_state_information_attend:
+
+                                    activity_attend_detail_textview_attend.setText("출석현황");
 
                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -272,6 +306,11 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                                                 attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                             }
 
+                                            if (attendItems.size() == 0) {
+                                                Toast.makeText(AttendActivity_Detail_Information.this, "출석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                            }
+
+
                                         }
 
                                         @Override
@@ -279,11 +318,14 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                         }
                                     });
+
                                     popup.dismiss();
 
                                     return true;
 
                                 case R.id.attend_state_information_tardy:
+
+                                    activity_attend_detail_textview_attend.setText("지각현황");
 
                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -300,6 +342,10 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                                                 attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                             }
 
+                                            if (attendItems.size() == 0) {
+                                                Toast.makeText(AttendActivity_Detail_Information.this, "지각현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                            }
+
                                         }
 
                                         @Override
@@ -307,11 +353,14 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                         }
                                     });
+
                                     popup.dismiss();
 
                                     return true;
 
                                 case R.id.attend_state_information_absent:
+
+                                    activity_attend_detail_textview_attend.setText("결석현황");
 
                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -328,6 +377,10 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                                                 attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                             }
 
+                                            if (attendItems.size() == 0) {
+                                                Toast.makeText(AttendActivity_Detail_Information.this, "결석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                            }
+
                                         }
 
                                         @Override
@@ -335,6 +388,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                         }
                                     });
+
                                     popup.dismiss();
 
                                     return true;
@@ -362,16 +416,16 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
             LinearLayout activity_attend_admin_change_item_linearlayout;
             TextView activity_attend_admin_change_item_textview_name;
-            TextView activity_attend_admin_change_item_textview_attend_state;
             TextView activity_attend_admin_change_item_textview_phone_number;
+            TextView activity_attend_admin_change_item_textview_tardy_time;
 
             public CustomViewHolder(View view) {
                 super(view);
 
                 activity_attend_admin_change_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_admin_change_item_linearlayout);
                 activity_attend_admin_change_item_textview_name = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_name);
-                activity_attend_admin_change_item_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_attend_state);
                 activity_attend_admin_change_item_textview_phone_number = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_phone_number);
+                activity_attend_admin_change_item_textview_tardy_time = (TextView) view.findViewById(R.id.activity_attend_admin_change_item_textview_tardy_time);
 
             }
 
@@ -390,12 +444,12 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
             final AttendActivity_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
             customViewHolder.activity_attend_admin_change_item_textview_name.setGravity(Gravity.LEFT);
-            customViewHolder.activity_attend_admin_change_item_textview_attend_state.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_admin_change_item_textview_phone_number.setGravity(Gravity.LEFT);
+            customViewHolder.activity_attend_admin_change_item_textview_tardy_time.setGravity(Gravity.LEFT);
 
             customViewHolder.activity_attend_admin_change_item_textview_name.setText(attendItems.get(position).name);
-            customViewHolder.activity_attend_admin_change_item_textview_attend_state.setText(attendItems.get(position).attend_state);
             customViewHolder.activity_attend_admin_change_item_textview_phone_number.setText(attendItems.get(position).phone);
+            customViewHolder.activity_attend_admin_change_item_textview_tardy_time.setText(attendItems.get(position).late_time);
 
             customViewHolder.activity_attend_admin_change_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override

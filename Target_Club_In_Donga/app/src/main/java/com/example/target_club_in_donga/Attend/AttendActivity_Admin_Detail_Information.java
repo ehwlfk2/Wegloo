@@ -37,7 +37,7 @@ import java.util.List;
 
 public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
     private Button activity_attend_detail_button_admin, activity_attend_detail_button_attendance, activity_attend_detail_button_cancel, activity_attend_detail_button_attend_state;
-    private TextView activity_attend_detail_textview_certification_number_name, activity_attend_detail_textview_certification_number;
+    private TextView activity_attend_detail_textview_certification_number_name, activity_attend_detail_textview_certification_number, activity_attend_detail_textview_attend;
 
     private PieChart activity_attend_piechart;
     private FirebaseDatabase database;
@@ -72,6 +72,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
         activity_attend_detail_textview_certification_number_name = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number_name);
         activity_attend_detail_textview_certification_number = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number);
         activity_attend_detail_button_attend_state = (Button) findViewById(R.id.activity_attend_detail_button_attend_state);
+        activity_attend_detail_textview_attend = (TextView) findViewById(R.id.activity_attend_detail_textview_attend);
 
         activity_attend_piechart = (PieChart) findViewById(R.id.activity_attend_piechart);
 

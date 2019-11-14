@@ -13,6 +13,7 @@ public class Attend_Admin_Change_Item {
     public String name;
     public String attend_state;
     public String phone;
+    public String late_time;
 
     public Attend_Admin_Change_Item() {
     }
