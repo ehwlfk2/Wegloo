@@ -18,8 +18,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.target_club_in_donga.Board.Board_Main;
+import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
 import com.facebook.login.LoginManager;
@@ -40,6 +43,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private FirebaseDatabase firebaseDatabase;
     private DrawerLayout drawerLayout;
     private View drawer_menu_view;
+    private LinearLayout user_infomation, go_board;
     /**
      * 홈 화면
      */
@@ -73,11 +77,27 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         drawer_menu_view = view.findViewById(R.id.menu_drawer_ver);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         menu_opener = view.findViewById(R.id.home_button_menu);
+        user_infomation = view.findViewById(R.id.profile_myinfomation);
+        go_board = view.findViewById(R.id.go_Board);
 
         menu_opener.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(drawer_menu_view);
+            }
+        });
+        user_infomation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MyInformation.class);
+                startActivity(intent);
+            }
+        });
+        go_board.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Board_Main.class);
+                startActivity(intent);
             }
         });
         drawerLayout.setDrawerListener(listner);
