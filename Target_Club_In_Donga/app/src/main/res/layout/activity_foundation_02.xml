@@ -195,7 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/foundation_02_radio_nicName_Btn"
-            android:text="닉네임 모임"
+            android:text="별명 모임"
             android:textSize="12sp"/>
     </RadioGroup>
 
@@ -205,7 +205,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintVertical_bias="0.03"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/foundation_02_radioGroup_01"
@@ -227,5 +226,24 @@
             android:text="승인 가입"
             android:textSize="12sp"/>
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/foundation_02_textview_error"
+        android:text="이미 존재하는 모임 이름 입니다."
+        android:textColor="@color/color_Red"
+        android:paddingLeft="5dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.563661454"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.033"
+        app:layout_constraintVertical_bias="0"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/foundation_02_edittext_name"
+        app:layout_constraintTop_toBottomOf="@+id/foundation_02_edittext_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

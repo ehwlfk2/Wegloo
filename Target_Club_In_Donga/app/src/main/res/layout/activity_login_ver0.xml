@@ -268,15 +268,6 @@
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.111315547"
         tools:ignore="ContentDescription" />
-    <com.kakao.usermgmt.LoginButton
-        android:id="@+id/oringin_kakao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

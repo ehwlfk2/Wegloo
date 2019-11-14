@@ -13,7 +13,6 @@ import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_04;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 
-import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -57,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
                             String recentClub = dataSnapshot.getValue(String.class);
 
                             if(recentClub == null){//recentClub이 없을경우
-                                Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
-                                intent.putExtra("isRecent",false);
+                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -92,9 +90,8 @@ public class MainActivity extends AppCompatActivity {
                                  finish();
                                  }
                                  */
-                                //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
-                                intent.putExtra("isRecent",true);
+                                Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, Congratulation.class);
                                 startActivity(intent);
                                 finish();
                             }

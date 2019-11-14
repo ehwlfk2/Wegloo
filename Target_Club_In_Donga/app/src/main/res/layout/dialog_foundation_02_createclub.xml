@@ -10,13 +10,11 @@
     >
 
     <TextView
-        android:id="@+id/dialog_foundation_02_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textSize="15dp"
-        android:text="모임 이름은 추후 변경하실 수 없습니다.\n이대로 만드시겠습니까?"
-        />
+        android:text="모임 이름은 추후 변경하실 수 없습니다.\n이대로 만드시겠습니까?" />
     <TextView
         android:id="@+id/dialog_foundation_02_text"
         android:layout_width="match_parent"
@@ -24,7 +22,7 @@
         android:padding="10dp"
         android:gravity="center"
         android:textSize="30dp"
-        android:text="" />
+        android:text="TCID" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="15dp"
-                android:text=""
+                android:text="별명 모임"
                 android:drawableLeft="@drawable/ic_dot_circle"
                 android:drawablePadding="5dp"
                 android:layout_marginBottom="5dp"
@@ -63,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="15dp"
-                android:text=""
+                android:text="자유 가입"
                 android:drawableLeft="@drawable/ic_dot_circle"
                 android:drawablePadding="5dp"
                 />
@@ -80,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="14dp"
-            android:text="" />
+            android:text="아아아아아아아아악\n ㅇㅇㅇㅇ\n\n\n\n\n\두둥" />
     </ScrollView>
 
 

@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +65,8 @@ import com.kakao.util.helper.log.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,8 +77,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private SessionCallback callback;      //콜백 선언
     private FirebaseFunctions mFunctions;
-    private com.kakao.usermgmt.LoginButton btn_kakao;
-    JSONObject json = new JSONObject();
     //유저프로필
     String token = "";
     String name = "";
@@ -101,8 +105,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         Button activity_login_login_btn = findViewById(R.id.login_button_login);
         ImageView activity_login_google_btn = findViewById(R.id.login_button_google);
         ImageView activity_login_facebook_btn = findViewById(R.id.login_button_facebook);
-        ImageView activity_login_kakao_btn = findViewById(R.id.login_button_kakao);
-        btn_kakao = findViewById(R.id.oringin_kakao);
         // find email, pw
         activity_login_id_editText = findViewById(R.id.login_edittext_id);
         activity_login_pw_editText = findViewById(R.id.login_edittext_psw);
@@ -121,12 +123,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         // 파이어베이스
         mAuth = FirebaseAuth.getInstance(); // single 톤 패턴으로 작동
-
+        //getAppKeyHash();
         activity_login_signup_btn.setOnClickListener(this);
         activity_login_google_btn.setOnClickListener(this);
         activity_login_facebook_btn.setOnClickListener(this);
         activity_login_login_btn.setOnClickListener(this);
-        activity_login_kakao_btn.setOnClickListener(this);
+
 
 
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -212,9 +214,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         };  // mAuthListener
 
-    }   // onCreate
-
-
     @Override
     public void onStart() {
         try {
@@ -245,7 +244,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     // onActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) { //카카오톡
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -343,11 +342,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             Log.v("develop_check", "로그인 시도");
             loginUser();
             //onStart();
-        } else if (i == R.id.login_button_kakao){
-            progressDialog.setMessage("로그인 중입니다...");
-            progressDialog.show();
-            Log.v("develop_check", "카카오톡 로그인 시도");
-            btn_kakao.performClick();
         }
     }   // onClick
 
