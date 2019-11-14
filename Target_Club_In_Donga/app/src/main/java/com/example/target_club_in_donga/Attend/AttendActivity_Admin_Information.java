@@ -3,13 +3,14 @@ package com.example.target_club_in_donga.Attend;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -19,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.target_club_in_donga.Fragments.UserDetailActivity_Fragment;
 import com.example.target_club_in_donga.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -37,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity {
+public class AttendActivity_Admin_Information extends AppCompatActivity {
     private Button activity_attend_detail_button_admin, activity_attend_detail_button_attendance, activity_attend_detail_button_cancel, activity_attend_detail_button_attend_state;
     private TextView activity_attend_detail_textview_certification_number_name, activity_attend_detail_textview_certification_number;
 
@@ -71,9 +71,6 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
         userName = intent.getExtras().getString("userName");
         userPhone = intent.getExtras().getString("userPhone");
 
-        activity_attend_detail_button_admin = (Button) findViewById(R.id.activity_attend_detail_button_admin);
-/*        activity_attend_detail_button_attendance = (Button) findViewById(R.id.activity_attend_detail_button_attendance);
-        activity_attend_detail_button_cancel = (Button) findViewById(R.id.activity_attend_detail_button_cancel);*/
         activity_attend_detail_textview_certification_number_name = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number_name);
         activity_attend_detail_textview_certification_number = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number);
         activity_attend_detail_button_attend_state = (Button) findViewById(R.id.activity_attend_detail_button_attend_state);
@@ -83,17 +80,15 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-//        activity_attend_detail_button_attendance.setVisibility(View.GONE);
         activity_attend_detail_textview_certification_number_name.setVisibility(View.GONE);
         activity_attend_detail_textview_certification_number.setVisibility(View.GONE);
         activity_attend_detail_button_attend_state.setVisibility(View.GONE);
-        activity_attend_detail_button_admin.setVisibility(View.GONE);
 
 
         activity_attend_detail_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_detail_recyclerview_main_list);
-        activity_attend_detail_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(AttendActivity_Admin_Privacy_Information.this));
+        activity_attend_detail_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(AttendActivity_Admin_Information.this));
 
-        final AttendActivity_Admin_Privacy_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new AttendActivity_Admin_Privacy_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
+        final AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
 
         activity_attend_detail_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
         attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
@@ -227,22 +222,6 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
             }
         });
 
-        activity_attend_detail_button_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Intent intent = new Intent(AttendActivity_Admin_Privacy_Information.this, AttendActivity_Admin_Change.class);
-                intent.putExtra("userId", userId);
-                startActivity(intent);
-            }
-        });
-
-/*        activity_attend_detail_button_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                finish();
-            }
-        });*/
-
     }
 
     class AttendAdminInformationActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -270,12 +249,12 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.activity_attend_information_item, viewGroup, false);
 
-            return new AttendActivity_Admin_Privacy_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder(view);
+            return new AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
-            final AttendActivity_Admin_Privacy_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Admin_Privacy_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
+            final AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
             customViewHolder.activity_attend_information_item_textview_date.setGravity(Gravity.LEFT);
 
             customViewHolder.activity_attend_information_item_textview_attend_state.setText(attendAdminItems.get(position).attend_state);
@@ -284,51 +263,48 @@ public class AttendActivity_Admin_Privacy_Information extends AppCompatActivity 
             customViewHolder.activity_attend_information_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AttendActivity_Admin_Privacy_Information.this);
 
-                    View view = LayoutInflater.from(AttendActivity_Admin_Privacy_Information.this)
-                            .inflate(R.layout.activity_attend_admin_change, null, false);
-                    builder.setView(view);
+                    final PopupMenu popup = new PopupMenu(AttendActivity_Admin_Information.this, v);
 
-                    final RadioGroup activity_attend_admin_change_radiogroup = (RadioGroup) view.findViewById(R.id.activity_attend_admin_change_radiogroup);
-                    final Button activity_attend_admin_change_button_attendance_change = (Button) view.findViewById(R.id.activity_attend_admin_change_button_attendance_change);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
-                    final AlertDialog dialog = builder.create();
-
-                    activity_attend_admin_change_radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
-                        public void onCheckedChanged(final RadioGroup group, final int checkedId) {
-                            if (checkedId == R.id.activity_attend_admin_change_attend) {
-                                flag = 0;
-                                // 출석
-                            } else if (checkedId == R.id.activity_attend_admin_change_tardy) {
-                                flag = 1;
-                                // 지각
-                            } else if (checkedId == R.id.activity_attend_admin_change_absent) {
-                                flag = 2;
-                                // 결석
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                            switch (item.getItemId()) {
+
+                                case R.id.attend_state_information_attend:
+
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("출석");
+                                    popup.dismiss();
+
+                                    return true;
+
+                                case R.id.attend_state_information_tardy:
+
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("지각");
+                                    popup.dismiss();
+
+                                    return true;
+
+                                case R.id.attend_state_information_absent:
+
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("결석");
+                                    popup.dismiss();
+
+                                    return true;
+
+                                default:
+                                    return false;
                             }
+                            //return false;
                         }
                     });
 
-                    activity_attend_admin_change_button_attendance_change.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(final View v) {
-                            if (flag == 0) {
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("출석");
-                                // 출석으로 변경
-                            } else if (flag == 1) {
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("지각");
-                                // 지각으로 변경
-                            } else {
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("결석");
-                                // 결석으로 변경
-                            }
-                            dialog.dismiss();
-                        }
-                    });
+                    popup.inflate(R.menu.attend_state_information_popup);
 
-                    dialog.show();
+                    popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
+                    popup.show();
                 }
 
             });

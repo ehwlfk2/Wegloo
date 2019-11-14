@@ -194,7 +194,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     }
                 });
 
-                popup.inflate(R.menu.attend_admin_information_menu);
+                popup.inflate(R.menu.attend_admin_information_popup);
 
                 popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                 popup.show();
@@ -320,24 +320,26 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
         private class CustomViewHolder2 extends RecyclerView.ViewHolder {
 
             LinearLayout activity_attend_home_item_linearlayout;
+            LinearLayout activity_attend_home_linearlayout_attend;
             TextView activity_attend_home_item_textview_recyclerview_start_time;
             TextView activity_attend_home_item_recyclerview_attend_time_limit_tilte;
             TextView activity_attend_home_item_recyclerview_attend_time_limit;
             TextView activity_attend_home_item_textview_recyclerview_tardy_time_limit_title;
             TextView activity_attend_home_item_textview_recyclerview_tardy_time_limit;
-            TextView activity_attend_home_item_textview_recyclerview_attend_state;
 
             public CustomViewHolder2(View view) {
                 super(view);
 
+                activity_attend_home_linearlayout_attend = (LinearLayout) view.findViewById(R.id.activity_attend_home_linearlayout_attend);
                 activity_attend_home_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_home_item_linearlayout);
-                activity_attend_home_item_textview_recyclerview_attend_state = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_attend_state);
                 activity_attend_home_item_textview_recyclerview_start_time = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_start_time);
                 activity_attend_home_item_recyclerview_attend_time_limit_tilte = (TextView) view.findViewById(R.id.activity_attend_home_item_recyclerview_attend_time_limit_tilte);
                 activity_attend_home_item_recyclerview_attend_time_limit = (TextView) view.findViewById(R.id.activity_attend_home_item_recyclerview_attend_time_limit);
                 activity_attend_home_item_textview_recyclerview_tardy_time_limit = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_tardy_time_limit);
                 activity_attend_home_item_textview_recyclerview_tardy_time_limit_title = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_tardy_time_limit_title);
 
+
+                activity_attend_home_linearlayout_attend.setVisibility(View.GONE);
             }
 
         }
@@ -488,7 +490,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     customViewHolder.activity_attend_admin_information_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Admin_Privacy_Information.class);
+                            Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Admin_Information.class);
                             intent.putExtra("userName", userList.get(position).name);
                             intent.putExtra("userPhone", userList.get(position).phone);
                             startActivity(intent);
@@ -499,12 +501,10 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                 case 1:
                     final AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2 customViewHolder2 = ((AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2) viewholder);
-                    customViewHolder2.activity_attend_home_item_textview_recyclerview_attend_state.setGravity(Gravity.LEFT);
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_start_time.setGravity(Gravity.LEFT);
                     customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit.setGravity(Gravity.LEFT);
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setGravity(Gravity.LEFT);
 
-                    customViewHolder2.activity_attend_home_item_textview_recyclerview_attend_state.setText("미출결");
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_start_time.setText(attenditems.get(position).startTime);
                     customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit.setText(attenditems.get(position).attendTimeLimit);
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setText(attenditems.get(position).tardyTimeLimit);
@@ -519,26 +519,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                 customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setVisibility(View.GONE);
                                 customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit_tilte.setVisibility(View.GONE);
                                 customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit_title.setVisibility(View.GONE);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue() != null) {
-                                if (dataSnapshot.getValue().equals("출석")) {
-                                    customViewHolder2.activity_attend_home_item_textview_recyclerview_attend_state.setText("출석");
-                                } else if (dataSnapshot.getValue().equals("지각")) {
-                                    customViewHolder2.activity_attend_home_item_textview_recyclerview_attend_state.setText("지각");
-                                } else if (dataSnapshot.getValue().equals("결석")) {
-                                    customViewHolder2.activity_attend_home_item_textview_recyclerview_attend_state.setText("결석");
-                                }
                             }
                         }
 
