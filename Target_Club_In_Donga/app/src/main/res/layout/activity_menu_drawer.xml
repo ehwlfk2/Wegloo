@@ -42,8 +42,10 @@
 
     <!--START 내정보 -->
     <LinearLayout
+        android:id="@+id/profile_myinfomation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/profile_thumbnail"
@@ -81,7 +83,6 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
         <ImageView
-            android:id="@+id/profile_Edit_myInfo"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/arrow_btn"
@@ -103,20 +104,21 @@
 
         <!--START 동아리정보 -->
         <LinearLayout
+            android:id="@+id/go_Group_Info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:background="?attr/selectableItemBackground">
+
             <ImageView
-                android:id="@+id/Group_Info_img"
-                android:layout_width="50dp"
-                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:src="@drawable/groupinfoimg"/>
+                android:layout_gravity="center"
+                android:src="@drawable/groupinfoimg" />
             <TextView
-                android:id="@+id/Group_Info_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="동아리정보"
@@ -126,20 +128,20 @@
         <!--END 동아리정보 -->
         <!--START 회원목록 -->
         <LinearLayout
+            android:id="@+id/go_Member_List"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:orientation="vertical"
-            android:paddingLeft="28dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp">
             <ImageView
-                android:id="@+id/Member_List_img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/memberlistpic"/>
             <TextView
-                android:id="@+id/Member_List_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -149,20 +151,20 @@
         <!--END 회원목록 -->
         <!--START 공지사항 -->
         <LinearLayout
+            android:id="@+id/go_Notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp">
             <ImageView
-                android:id="@+id/Notice_img"
                 android:layout_gravity="center"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/noticepic"/>
             <TextView
-                android:id="@+id/Notice_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -172,22 +174,22 @@
         <!--END 공지사항 -->
         <!--START 설정 -->
         <LinearLayout
+            android:id="@+id/go_Settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
-            android:paddingLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="15dp"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/Settings_img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/settingspic"/>
             <TextView
-                android:id="@+id/Settings_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="설정"
@@ -220,11 +222,13 @@
 
         <!-- START 일정보기 -->
         <LinearLayout
+            android:id="@+id/go_Calendar"
             android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_Calendar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -235,7 +239,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_Calendar_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
@@ -245,11 +248,13 @@
         <!-- END 일정보기 -->
         <!-- START 물품 대여 -->
         <LinearLayout
+            android:id="@+id/go_Material_Rental"
             android:paddingTop="19dp"
+            android:background="?attr/selectableItemBackground"
+            android:paddingBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_Material_Rental_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -260,7 +265,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_Material_Rental_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
@@ -270,11 +274,13 @@
         <!-- END 물품 대여 -->
         <!-- START 자유 게시판 -->
         <LinearLayout
+            android:id="@+id/go_Board"
             android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_Board_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -285,7 +291,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_Board_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
@@ -295,11 +300,13 @@
         <!-- END 자유 게시판 -->
         <!-- START 투표 -->
         <LinearLayout
+            android:id="@+id/go_Vote"
             android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_Vote_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -310,7 +317,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_Vote_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
@@ -320,11 +326,13 @@
         <!-- END 투표 -->
         <!-- START 앨범 -->
         <LinearLayout
+            android:id="@+id/go_Gallery"
             android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_Gallery_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -335,7 +343,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_Gallery_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
@@ -345,11 +352,13 @@
         <!-- END 앨범 -->
         <!-- START 출석 -->
         <LinearLayout
+            android:id="@+id/go_Attend"
             android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_Attend_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -360,7 +369,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_Attend_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
@@ -372,7 +380,7 @@
     <!-- END 동아리 활동 -->
     <!-- START 기타 (연혁, 동아리 탈퇴)-->
     <LinearLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#DDE9E7E7">
@@ -392,11 +400,13 @@
         android:orientation="vertical">
         <!-- START 연혁 -->
         <LinearLayout
+            android:id="@+id/go_History"
             android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_History_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -407,7 +417,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_History_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
@@ -417,11 +426,13 @@
         <!-- END 연혁 -->
         <!-- START 동아리 탈퇴 -->
         <LinearLayout
+            android:id="@+id/go_Withdraw"
             android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/btn_Withdraw_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
@@ -432,7 +443,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <ImageView
-                android:id="@+id/btn_Withdraw_arrow"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/arrow_btn"
