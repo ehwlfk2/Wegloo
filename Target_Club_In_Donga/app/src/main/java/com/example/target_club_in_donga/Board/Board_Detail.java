@@ -35,12 +35,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class Board_Detail extends AppCompatActivity {
     ImageButton detail_back, edt_menu;
     TextView name, timestamp, title, contents;
     RecyclerView recyclerView;
+    private static String clubName = "TCID";
     LinearLayoutManager linearLayoutManager;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
@@ -100,7 +101,7 @@ public class Board_Detail extends AppCompatActivity {
 
             }
         });
-         edt_menu.setOnClickListener(new View.OnClickListener() {
+        edt_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showOption(view);
@@ -254,7 +255,7 @@ public class Board_Detail extends AppCompatActivity {
                 // do nothing
             }
             else if ( boardModel.idx > 0 ){
-                Glide.with(holder.itemView.getContext()).load(boardModel.imglist.get(position)).into(((CustomViewholder)holder).imageView);
+                Glide.with(holder.itemView.getContext()).load(boardModel.imglist.get(position)).override(100,100).placeholder(R.drawable.default_loadimg).into(((CustomViewholder)holder).imageView);
             }
         }
 

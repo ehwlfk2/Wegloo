@@ -51,12 +51,13 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class Board_Write extends AppCompatActivity {
     ImageButton board_img_upload_btn,x_btn;
     Button upload_btn;
     EditText title, contents;
+    private static String clubName = "TCID";
     private RecyclerView recyclerView;
     private Recy_Adapter adapter;
     private ArrayList<Uri> uris = new ArrayList<>(); // 이미지 uri 리스트
@@ -117,26 +118,31 @@ public class Board_Write extends AppCompatActivity {
         upload_btn.setOnClickListener(new View.OnClickListener() { //완료
             @Override
             public void onClick(View v) {
-                if( edt_key == 1 ){ // 수정
-                    if( IMAGEs.size() != 0 ){ // 사진 있음 이슈 : 사진 추가없이 삭제만 할시, uris가 0이라 제목 본문이 바뀌어도 업데이트 되지않고 넘어가는 이슈.
-                        boardEditInfo();
-                    }
-                    else if( IMAGEs.size() == 0 ){ // 사진 없음
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
-                        boardModel.title = title.getText().toString();
-                        boardModel.contents = contents.getText().toString();
-                        boardModel.timestamp = ServerValue.TIMESTAMP;
-                        databaseReference.child(updatekey).setValue(boardModel);
-                        finish();
-                    }
+                if(title.getText().toString() == null){
+                    Toast.makeText(Board_Write.this, "제목을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
-                else { // 글쓰기
-                    if (IMAGEs.size() != 0) { // 사진있음
-                        writeGalleryInfo();
-                    } else if (IMAGEs.size() == 0) { // 사진없음
-                        StoreDatabase();
-                        finish();
+                else if(contents.getText().toString() == null){
+                    Toast.makeText(Board_Write.this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    if (edt_key == 1) { // 수정
+                        if (IMAGEs.size() != 0) { // 사진 있음 이슈 : 사진 추가없이 삭제만 할시, uris가 0이라 제목 본문이 바뀌어도 업데이트 되지않고 넘어가는 이슈.
+                            boardEditInfo();
+                        } else if (IMAGEs.size() == 0) { // 사진 없음
+                            Edit_StoreDatabase();
+                            finish();
+                        }
+
+                    } else { // 글쓰기
+                        if (IMAGEs.size() != 0) { // 사진있음
+                            writeGalleryInfo();
+                        } else if (IMAGEs.size() == 0) { // 사진없음
+                            StoreDatabase();
+                            finish();
+                        }
                     }
+
                 }
             }
         });
@@ -188,8 +194,8 @@ public class Board_Write extends AppCompatActivity {
         final String times = simpleDateFormat.format(date);
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
-        if( uris.size() == 0){ // 사진은 있는데 추가없이 삭제, 텍스트만 변경
-            //
+        if( uris == null ){ // 사진은 있는데 추가사진 없이 사진을 삭제하거나, 텍스트만 변경 -> 스토리지업로드는 따로 무필요
+            Edit_StoreDatabase();
         }
         else {
             for (int i = 0; i < uris.size(); i++) { // 사진 추가
@@ -205,11 +211,7 @@ public class Board_Write extends AppCompatActivity {
                         boardModel.imgName.add(individualImage.getLastPathSegment() + '-' + times);
                         boardModel.idx += 1;
                         if (boardModel.idx == IMAGEs.size()) {
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
-                            boardModel.title = title.getText().toString();
-                            boardModel.contents = contents.getText().toString();
-                            boardModel.timestamp = ServerValue.TIMESTAMP;
-                            databaseReference.child(updatekey).setValue(boardModel);
+                            Edit_StoreDatabase();
                             finish();
                         }
                     }
@@ -223,6 +225,8 @@ public class Board_Write extends AppCompatActivity {
         Date date = new Date(unix);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
         final String times = simpleDateFormat.format(date);
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
         CreatNuploadThumbnail(times, storageRef);
         for (int i = 0; i < IMAGEs.size(); i++) {
             final Uri individualImage = Uri.parse(IMAGEs.get(i));
@@ -248,13 +252,14 @@ public class Board_Write extends AppCompatActivity {
     private void CreatNuploadThumbnail(final String times, StorageReference storageRef){
         Cursor c = getContentResolver().query(uris.get(0),null,null,null,null);
         c.moveToNext();
-        String path = c.getString(c.getColumnIndex(MediaStore.MediaColumns.DATA));
+        String path = c.getString(c.getColumnIndex(MediaStore.MediaColumns.DATA)); // 절대경로 생성
         Bitmap source = BitmapFactory.decodeFile(path);
         c.close();
-        Bitmap inimage = ThumbnailUtils.extractThumbnail(source, 149, 86);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap inimage = ThumbnailUtils.extractThumbnail(source, 149, 86); // 비트맵 생성
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(); // 비트맵 스트링
         inimage.compress(Bitmap.CompressFormat.JPEG,100, baos);
-        String thumbpath = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), inimage, "thumb", null); // -> content://
+        String thumbpath = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), inimage, "", null); // -> content://
+
         final Uri thumburi = Uri.parse(thumbpath);
         final StorageReference ThumbName = storageRef.child("EveryClub").child(clubName).child("Board/" + thumburi.getLastPathSegment() + '-' + times);
         UploadTask upt = ThumbName.putFile(thumburi);
@@ -268,14 +273,22 @@ public class Board_Write extends AppCompatActivity {
             }
         });
     }
-    private void StoreDatabase(){
+    private void Edit_StoreDatabase(){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
-        //FirebaseUser currentuser = auth.getCurrentUser();
+        boardModel.title = title.getText().toString();
+        boardModel.contents = contents.getText().toString();
+        boardModel.timestamp = ServerValue.TIMESTAMP;
+        databaseReference.child(updatekey).setValue(boardModel);
+    }
+
+    private void StoreDatabase(){
+        CheckTypesTask task = new CheckTypesTask();
+        task.execute();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
         boardModel.title = title.getText().toString();
         boardModel.contents = contents.getText().toString();
         boardModel.timestamp = ServerValue.TIMESTAMP;
         databaseReference.push().setValue(boardModel);
-        Toast.makeText(this, "업로드 완료", Toast.LENGTH_SHORT).show();
     }
 
 

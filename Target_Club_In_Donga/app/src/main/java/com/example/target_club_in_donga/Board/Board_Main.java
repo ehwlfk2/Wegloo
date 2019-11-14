@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존재하는 게시글 목록창
 
@@ -42,6 +42,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
     private ArrayList<String> uidlist = new ArrayList<>();
     ImageButton backbtn;
     Button write;
+    private static String clubName = "TCID";
     private FirebaseDatabase database;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");
     @Override
@@ -64,6 +65,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boardModels.clear();
+                uidlist.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     BoardModel boardModel = snapshot.getValue(BoardModel.class);
                     String uidkey = snapshot.getKey();
@@ -115,7 +117,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         @Override
         protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중이입니다");
+            asyncDialog.setMessage("로드 중입니다..");
 
             // show dialog
             asyncDialog.show();
@@ -164,9 +166,10 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
             ((CustomViewHolder)holder).date.setText(time);
             if( boardModels.get(position).Thumbnail == null ){ // 사진이 없으면
                 ((CustomViewHolder)holder).imageView.setVisibility(View.GONE);
+                Glide.with(holder.itemView.getContext()).clear(((CustomViewHolder) holder).imageView);
             }
             else if ( boardModels.get(position).Thumbnail != null ) { // 사진이 있으면
-                Glide.with(holder.itemView.getContext()).load(boardModels.get(position).Thumbnail).into(((CustomViewHolder)holder).imageView);
+                Glide.with(holder.itemView.getContext()).load(boardModels.get(position).Thumbnail).override(100,100).into(((CustomViewHolder)holder).imageView);
             }
         }
 
