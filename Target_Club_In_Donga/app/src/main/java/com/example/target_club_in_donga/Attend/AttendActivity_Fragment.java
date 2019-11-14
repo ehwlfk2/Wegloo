@@ -27,8 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.target_club_in_donga.Attend.AttendActivity_Home.uidAdminPath;
-import static com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home.uidAdminPath2;
+import static com.example.target_club_in_donga.Attend.AttendActivity_Home.uidPath;
+import static com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home.uidAdminPath;
 //import static com.example.target_club_in_donga.MainActivity.clubName;
 
 
@@ -81,9 +81,9 @@ public class AttendActivity_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_attend_detail, container, false);
 
-        findkey = uidAdminPath;
+        findkey = uidPath;
         if (findkey == null) {
-            findkey = uidAdminPath2;
+            findkey = uidAdminPath;
         }
 
         activity_attend_detail_textview_certification_number = (TextView) view.findViewById(R.id.activity_attend_detail_textview_certification_number);

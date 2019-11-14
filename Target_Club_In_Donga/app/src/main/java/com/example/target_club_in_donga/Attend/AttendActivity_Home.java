@@ -56,13 +56,13 @@ public class AttendActivity_Home extends AppCompatActivity {
     List<Attend_Admin_Item> attenditems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
-    Button activity_attend_home_admin_button_insert, activity_attend_home_button_information;
+    Button activity_attend_home_admin_button_insert;
 
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
     private int admin;
-    public static String uidAdminPath;
+    public static String uidPath;
 
     private long now;
     private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
@@ -107,7 +107,6 @@ public class AttendActivity_Home extends AppCompatActivity {
                 admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
                 if (admin > adminNumber) {
                     activity_attend_home_admin_button_insert.setVisibility(View.GONE);
-//                    activity_attend_home_button_information.setVisibility(View.GONE);
                 }
             }
 
@@ -289,20 +288,8 @@ public class AttendActivity_Home extends AppCompatActivity {
 
                 dialog.show();
                 progressDialog.dismiss();
-/*                Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Admin.class);
-                startActivity(intent);*/
             }
         });
-
-/*        activity_attend_home_button_information = (Button) findViewById(R.id.activity_attend_home_button_information);
-        activity_attend_home_button_information.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Admin_Home.class);
-                startActivity(intent);
-            }
-        });*/
-
     }
 
     @Override
@@ -341,14 +328,6 @@ public class AttendActivity_Home extends AppCompatActivity {
         return cursor.getString(index);
 
     }
-
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-
 
     // AttendActivity 어댑터
 
@@ -592,13 +571,13 @@ public class AttendActivity_Home extends AppCompatActivity {
 
                                 case R.id.attend_detail:
 
-                                    Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Activity.class);
-                                    uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
-                                    intent.putExtra("uidAdminPath", uidAdminPath);
+                                    Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Detail_Information.class);
+                                    uidPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
+                                    intent.putExtra("uidPath", uidPath);
                                     intent.putExtra("checkPage", 1);
 
 /*                                    Bundle bundle = new Bundle();
-                                    bundle.putString("uidAdminPath", uidAdminPath);
+                                    bundle.putString("uidPath", uidPath);
                                     Fragment fragment = new AttendActivity_Fragment();
                                     fragment.setArguments(bundle);*/
 
@@ -682,23 +661,6 @@ public class AttendActivity_Home extends AppCompatActivity {
             customViewHolder.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setText(attenditems.get(position).tardyTimeLimit);
 
             PopupMenu(customViewHolder, position);
-
-/*            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(final DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.getValue() == null) {
-                        customViewHolder.activity_attend_home_item_recyclerview_attend_time_limit.setVisibility(View.GONE);
-                        customViewHolder.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setVisibility(View.GONE);
-                        customViewHolder.activity_attend_home_item_recyclerview_attend_time_limit_tilte.setVisibility(View.GONE);
-                        customViewHolder.activity_attend_home_item_textview_recyclerview_tardy_time_limit_title.setVisibility(View.GONE);
-                    }
-                }
-
-                @Override
-                public void onCancelled(final DatabaseError databaseError) {
-
-                }
-            });*/
 
             database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

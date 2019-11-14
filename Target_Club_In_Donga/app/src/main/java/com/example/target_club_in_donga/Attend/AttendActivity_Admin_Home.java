@@ -55,7 +55,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     private String startTime;
     private int listSize = 0, flag = 0, admin;
 
-    public static String uidAdminPath2;
+    public static String uidAdminPath;
     private static int adminNumber = 2;
 
     private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
@@ -380,9 +380,9 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                                 case R.id.attend_detail:
 
-                                    Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Activity.class);
-                                    uidAdminPath2 = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
-                                    intent.putExtra("uidAdminPath2", uidAdminPath2);
+                                    Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Detail_Information.class);
+                                    uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
+                                    intent.putExtra("uidAdminPath", uidAdminPath);
                                     intent.putExtra("checkPage", 0);
 
 /*                                    Bundle bundle = new Bundle();
@@ -490,7 +490,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     customViewHolder.activity_attend_admin_information_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Admin_Information.class);
+                            Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Admin_Detail_Information.class);
                             intent.putExtra("userName", userList.get(position).name);
                             intent.putExtra("userPhone", userList.get(position).phone);
                             startActivity(intent);
@@ -527,52 +527,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                         }
                     });
-
-/*                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            getTardyTimeLimit = dataSnapshot.child("tardyTimeLimit").getValue(String.class);
-                            if (getTardyTimeLimit != null) {
-                                now = System.currentTimeMillis();
-                                // 현재시간을 date 변수에 저장한다.
-                                Date date = new Date(now);
-                                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                nowtardyTimeLimit = simpleDateFormat.format(date);
-
-                                Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                                Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                                long diff = d1.getTime() - d2.getTime();
-                                if (diff < 0) {
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                if (snapshot.child("attend_state").getValue().equals("미출결")) {
-                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
-                                                }
-                                            }
-                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").removeValue();
-                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("attendTimeLimit").removeValue();
-                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("tardyTimeLimit").removeValue();
-                                        }
-
-                                        @Override
-                                        public void onCancelled(final DatabaseError databaseError) {
-
-                                        }
-                                    });
-
-                                }
-
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });*/
 
                     break;
 

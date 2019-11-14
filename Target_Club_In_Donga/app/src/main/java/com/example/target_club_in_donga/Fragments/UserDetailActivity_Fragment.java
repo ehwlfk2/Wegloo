@@ -161,34 +161,6 @@ public class UserDetailActivity_Fragment extends Fragment {
 
                                     // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
                                     attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
-
-/*                                    database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                                            if (*//*dataSnapshot.child("name").getValue().toString().equals(snapshot.child("name").getValue(String.class)) && *//*dataSnapshot.child("phone").getValue().toString().equals(snapshot.child("phone").getValue(String.class))) {
-                                                startTime = snapshot2.child("startTime").getValue().toString();
-                                                listStartTime.add(startTime);
-                                                Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
-                                                String uidKey = snapshot.getKey();
-                                                attendAdminItems.add(0, attendAdminInformationItem);
-                                                uidLists.add(0, uidKey);
-                                                listSize++;
-                                            }
-
-                                            for (int i = 0; i < listSize; i++) {
-                                                attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
-                                            }
-
-                                            // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-                                            attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(final DatabaseError databaseError) {
-
-                                        }
-                                    });*/
                                 }
                             }
                         }

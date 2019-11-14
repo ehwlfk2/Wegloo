@@ -60,10 +60,9 @@
         </activity>
         <activity android:name=".Attend.AttendActivity" />
         <!--<activity android:name=".Attend.AttendActivity_Admin" />-->
-        <activity android:name=".Attend.AttendActivity_Activity" />
-        <activity android:name=".Attend.AttendActivity_Admin_Change" />
+        <activity android:name=".Attend.AttendActivity_Detail_Information" />
         <activity android:name=".Attend.AttendActivity_Admin_Home" />
-        <activity android:name=".Attend.AttendActivity_Admin_Information" />
+        <activity android:name=".Attend.AttendActivity_Admin_Detail_Information" />
         <activity android:name=".Attend.AttendActivity_Home" />
         <activity android:name=".Album.AlbumActivity" />
         <activity android:name=".HomeActivity" />
