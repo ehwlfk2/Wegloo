@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
@@ -31,7 +36,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
 
     private FrameLayout voteIntentBtn, attendIntentBtn, scheduleIntentBtn, boardIntentBtn;
     private TextView home_textview_main;
+    private ImageButton menu_opener;
     private FirebaseDatabase firebaseDatabase;
+    private DrawerLayout drawerLayout;
+    private View drawer_menu_view;
     /**
      * 홈 화면
      */
@@ -61,7 +69,24 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         scheduleIntentBtn = view.findViewById(R.id.home_frame_calender);
         boardIntentBtn = view.findViewById(R.id.home_frame_board);
         home_textview_main = view.findViewById(R.id.home_textview_main);
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        drawer_menu_view = view.findViewById(R.id.menu_drawer_ver);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        menu_opener = view.findViewById(R.id.home_button_menu);
 
+        menu_opener.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(drawer_menu_view);
+            }
+        });
+        drawerLayout.setDrawerListener(listner);
+        drawer_menu_view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
         firebaseDatabase.getReference().child("EveryClub").child(clubName).child("thisClubName").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,7 +103,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         attendIntentBtn.setOnClickListener(this);
         scheduleIntentBtn.setOnClickListener(this);
         boardIntentBtn.setOnClickListener(this);
-
 
         return view;
     }
@@ -108,5 +132,26 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+    DrawerLayout.DrawerListener listner = new DrawerLayout.DrawerListener() {
+        @Override
+        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+// 열릴 때
+        }
+
+        @Override
+        public void onDrawerOpened(@NonNull View drawerView) {
+// 오픈이 완료됐을때
+        }
+
+        @Override
+        public void onDrawerClosed(@NonNull View drawerView) {
+// 닫혔을때
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+// 상태 체인지됐을때
+        }
+    };
 
 }
