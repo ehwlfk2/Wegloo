@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -299,7 +298,7 @@ public class AttendActivity_Home extends AppCompatActivity {
         activity_attend_home_button_information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Admin_Information.class);
+                Intent intent = new Intent(AttendActivity_Home.this, AttendActivity_Admin_Home.class);
                 startActivity(intent);
             }
         });*/
@@ -612,7 +611,7 @@ public class AttendActivity_Home extends AppCompatActivity {
                                     AlertDialog.Builder builder2 = new AlertDialog.Builder(AttendActivity_Home.this);
 
                                     View view2 = LayoutInflater.from(AttendActivity_Home.this)
-                                            .inflate(R.layout.activity_attend_admin_delete_item, null, false);
+                                            .inflate(R.layout.activity_attend_admin_delete, null, false);
                                     builder2.setView(view2);
 
                                     final Button confirmButton = (Button) view2.findViewById(R.id.activity_attend_admin_delete_item_button_confirm);

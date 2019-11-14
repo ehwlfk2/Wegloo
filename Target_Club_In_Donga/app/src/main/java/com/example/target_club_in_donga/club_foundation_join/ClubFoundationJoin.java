@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Information;
+import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Attend.AttendActivity_Home;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.UserDetailActivity;
@@ -88,7 +88,7 @@ public class ClubFoundationJoin extends AppCompatActivity {
         fragment_home_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent  = new Intent(ClubFoundationJoin.this, AttendActivity_Admin_Information.class);
+                Intent intent  = new Intent(ClubFoundationJoin.this, AttendActivity_Admin_Home.class);
                 startActivity(intent);
             }
         });

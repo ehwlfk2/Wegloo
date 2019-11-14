@@ -7,11 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.target_club_in_donga.R;
@@ -28,13 +25,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static com.example.target_club_in_donga.Attend.AttendActivity_Home.uidAdminPath;
-import static com.example.target_club_in_donga.Attend.AttendActivity_Admin_Information.uidAdminPath2;
+import static com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home.uidAdminPath2;
 //import static com.example.target_club_in_donga.MainActivity.clubName;
 
 
@@ -91,6 +85,7 @@ public class AttendActivity_Fragment extends Fragment {
         if (findkey == null) {
             findkey = uidAdminPath2;
         }
+
 //        findkey = getArguments().getString("uidAdminPath");
 //        Gallery_Adapter galleryAdapter = new Gallery_Adapter(getContext(), R.layout.activity_attend_sub_layout, img);
 //        gallery = (Gallery) view.findViewById(R.id.activity_attend_gallery);

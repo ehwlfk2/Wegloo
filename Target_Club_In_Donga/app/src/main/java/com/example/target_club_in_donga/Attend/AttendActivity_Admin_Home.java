@@ -33,15 +33,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 //import static com.example.target_club_in_donga.MainActivity.clubName;
 
-public class AttendActivity_Admin_Information extends AppCompatActivity {
+public class AttendActivity_Admin_Home extends AppCompatActivity {
     private RecyclerView activity_attend_admin_information_home_recyclerview_main_list;
     List<Attend_Admin_Information_Search_Item> searchList = new ArrayList<>();
     List<Attend_Admin_Information_Item> userList = new ArrayList<>();
@@ -83,7 +80,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
 
         final Button attend_admin_information_home_button_search = (Button) findViewById(R.id.attend_admin_information_home_button_search);
 
-        final AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
+        final AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
 
         activity_attend_admin_information_home_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
         attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
@@ -126,7 +123,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
         activity_attend_admin_information_home_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                final PopupMenu popup = new PopupMenu(AttendActivity_Admin_Information.this, v);
+                final PopupMenu popup = new PopupMenu(AttendActivity_Admin_Home.this, v);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
@@ -366,7 +363,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
 
         }
 
-        public void PopupMenu(final AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2 viewholder, final int position) {
+        public void PopupMenu(final AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2 viewholder, final int position) {
             viewholder.activity_attend_home_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -381,7 +378,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
 
                                 case R.id.attend_detail:
 
-                                    Intent intent = new Intent(AttendActivity_Admin_Information.this, AttendActivity_Activity.class);
+                                    Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Activity.class);
                                     uidAdminPath2 = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
                                     intent.putExtra("uidAdminPath2", uidAdminPath2);
                                     intent.putExtra("checkPage", 0);
@@ -397,10 +394,10 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
 
                                 case R.id.attend_delete:
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(AttendActivity_Admin_Information.this);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(AttendActivity_Admin_Home.this);
 
-                                    View view = LayoutInflater.from(AttendActivity_Admin_Information.this)
-                                            .inflate(R.layout.activity_attend_admin_delete_item, null, false);
+                                    View view = LayoutInflater.from(AttendActivity_Admin_Home.this)
+                                            .inflate(R.layout.activity_attend_admin_delete, null, false);
                                     builder.setView(view);
 
                                     final Button confirmButton = (Button) view.findViewById(R.id.activity_attend_admin_delete_item_button_confirm);
@@ -411,7 +408,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
                                     confirmButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(final View v) {
-                                            Toast.makeText(AttendActivity_Admin_Information.this, "출석이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AttendActivity_Admin_Home.this, "출석이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                             delete_content(position);
                                             attenditems.remove(position);
                                             notifyItemRemoved(position);
@@ -464,15 +461,15 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
             if (flag == 2) {
                 View view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.activity_attend_admin_information_search_item, viewGroup, false);
-                return new AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder3(view);
+                return new AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder3(view);
             } else if (flag == 1) {
                 View view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.activity_attend_home_item, viewGroup, false);
-                return new AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2(view);
+                return new AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2(view);
             } else {
                 View view = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.activity_attend_admin_information_item, viewGroup, false);
-                return new AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder(view);
+                return new AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder(view);
             }
 
         }
@@ -481,7 +478,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
             switch (viewholder.getItemViewType()) {
                 case 0:
-                    final AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
+                    final AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
                     customViewHolder.activity_attend_admin_information_item_textview_name.setGravity(Gravity.LEFT);
                     customViewHolder.activity_attend_admin_information_item_textview_phone_number.setGravity(Gravity.LEFT);
 
@@ -491,7 +488,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
                     customViewHolder.activity_attend_admin_information_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            Intent intent = new Intent(AttendActivity_Admin_Information.this, AttendActivity_Admin_Privacy_Information.class);
+                            Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Admin_Privacy_Information.class);
                             intent.putExtra("userName", userList.get(position).name);
                             intent.putExtra("userPhone", userList.get(position).phone);
                             startActivity(intent);
@@ -501,7 +498,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
                     break;
 
                 case 1:
-                    final AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2 customViewHolder2 = ((AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2) viewholder);
+                    final AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2 customViewHolder2 = ((AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder2) viewholder);
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_attend_state.setGravity(Gravity.LEFT);
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_start_time.setGravity(Gravity.LEFT);
                     customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit.setGravity(Gravity.LEFT);
@@ -600,7 +597,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
                     break;
 
                 case 2:
-                    final AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder3 customViewHolder3 = ((AttendActivity_Admin_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder3) viewholder);
+                    final AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder3 customViewHolder3 = ((AttendActivity_Admin_Home.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder3) viewholder);
                     customViewHolder3.activity_attend_admin_information_search_item_textview_name.setGravity(Gravity.LEFT);
                     customViewHolder3.activity_attend_admin_information_search_item_textview_attend_state.setGravity(Gravity.LEFT);
                     customViewHolder3.activity_attend_admin_information_search_item_textview_phone_number.setGravity(Gravity.LEFT);
@@ -620,7 +617,7 @@ public class AttendActivity_Admin_Information extends AppCompatActivity {
             database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
-                    Toast.makeText(AttendActivity_Admin_Information.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AttendActivity_Admin_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

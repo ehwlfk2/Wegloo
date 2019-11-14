@@ -572,7 +572,7 @@ public class AttendActivity_Activity extends AppCompatActivity {
                     }
 
                     if (attendCount > 0) {
-                        pieEntries.add(new PieEntry(attendCount , "출석"));
+                        pieEntries.add(new PieEntry(attendCount, "출석"));
                     }
                     if (tardyCount > 0) {
                         pieEntries.add(new PieEntry(tardyCount, "지각"));
@@ -611,19 +611,21 @@ public class AttendActivity_Activity extends AppCompatActivity {
             }
         });
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    activity_attend_detail_textview_certification_number.setText(dataSnapshot.getValue().toString());
+        if (checkPage == 1) {
+            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(final DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        activity_attend_detail_textview_certification_number.setText(dataSnapshot.getValue().toString());
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(final DatabaseError databaseError) {
+                @Override
+                public void onCancelled(final DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
 
 /*        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("attendTimeLimit").addValueEventListener(new ValueEventListener() {
             @Override

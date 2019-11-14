@@ -2,6 +2,7 @@ package com.example.target_club_in_donga.Attend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,14 +33,21 @@ import java.util.List;
 
 public class AttendActivity_Admin_Change extends AppCompatActivity {
 
-    private  RecyclerView activity_attend_admin_change_home_recyclerview_main_list;
+    private RecyclerView activity_attend_admin_change_home_recyclerview_main_list;
     List<Attend_Admin_Change_Item> attendAdminItems = new ArrayList<>();
+    List<Attend_Information_Item> attendItems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
+
+    private ArrayList<String> listStartTime = new ArrayList<>();
 
     private FirebaseDatabase database;
 
-    private String findkey;
+    private String findkey, userId;
     private int flag;
+    private int listSize = 0;
+    private String startTime;
+
+    private FirebaseAuth auth;
 
     private String clubName = "TCID";
     // 임시로 바꾼 부분
@@ -52,6 +61,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
         findkey = intent.getExtras().getString("findKey");
 
+        auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
         activity_attend_admin_change_home_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_admin_change_home_recyclerview_main_list);
@@ -61,7 +71,6 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
         activity_attend_admin_change_home_recyclerview_main_list.setAdapter(attendAdminChangeActivity_adminRecyclerViewAdapter);
         attendAdminChangeActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
-
         database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -81,7 +90,6 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
             }
         });
-
     }
 
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
@@ -120,8 +128,8 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.activity_attend_admin_change_item, viewGroup, false);
-
             return new AttendActivity_Admin_Change.AttendAdminChangeActivity_AdminRecyclerViewAdapter.CustomViewHolder(view);
+
         }
 
         @Override
@@ -152,13 +160,13 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
                     activity_attend_admin_change_radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(final RadioGroup group, final int checkedId) {
-                            if(checkedId == R.id.activity_attend_admin_change_attend) {
+                            if (checkedId == R.id.activity_attend_admin_change_attend) {
                                 flag = 0;
                                 // 출석
-                            } else if(checkedId == R.id.activity_attend_admin_change_tardy)  {
+                            } else if (checkedId == R.id.activity_attend_admin_change_tardy) {
                                 flag = 1;
                                 // 지각
-                            } else if(checkedId == R.id.activity_attend_admin_change_absent) {
+                            } else if (checkedId == R.id.activity_attend_admin_change_absent) {
                                 flag = 2;
                                 // 결석
                             }
@@ -168,10 +176,10 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
                     activity_attend_admin_change_button_attendance_change.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(final View v) {
-                            if(flag == 0) {
+                            if (flag == 0) {
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("출석");
                                 // 출석으로 변경
-                            } else if(flag == 1) {
+                            } else if (flag == 1) {
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("지각");
                                 // 지각으로 변경
                             } else {
@@ -184,6 +192,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
 
                     dialog.show();
                 }
+
             });
 
         }
@@ -191,6 +200,7 @@ public class AttendActivity_Admin_Change extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return attendAdminItems.size();
+
         }
 
     }
