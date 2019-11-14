@@ -30,9 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 
-import static com.example.target_club_in_donga.MainActivity.clubName;
+//import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존재하는 게시글 목록창
 
@@ -41,6 +42,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
     private ArrayList<String> uidlist = new ArrayList<>();
     ImageButton backbtn;
     Button write;
+    private static String clubName = "TCID";
     private FirebaseDatabase database;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");
     @Override
@@ -58,23 +60,20 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         final BoardRecy_Adapter boardRecy_adapter = new BoardRecy_Adapter(board_clicklistner);
         recyclerView.setAdapter(boardRecy_adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),1));
-        CheckTypesTask checkTypesTask = new CheckTypesTask();
-        checkTypesTask.execute();
-        boardRecy_adapter.notifyDataSetChanged();
-
 
         database.getReference().child("EveryClub").child(clubName).child("Board").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boardModels.clear();
+                uidlist.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     BoardModel boardModel = snapshot.getValue(BoardModel.class);
                     String uidkey = snapshot.getKey();
                     boardModels.add(boardModel);
                     uidlist.add(uidkey);
                 }
-                boardRecy_adapter.notifyDataSetChanged();
                 recyclerView.scrollToPosition(boardModels.size()-1);
+                boardRecy_adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -134,10 +133,8 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         @Override
         public void onClick(View v) {
             final int position = recyclerView.getChildPosition(v);
-            String pos = String.valueOf(position);
-            Toast.makeText(Board_Main.this, pos, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), Board_Detail.class);
-            intent.putExtra("MODEL", boardModels.get(position));
+            //intent.putExtra("MODEL", boardModels.get(position));
             intent.putExtra("key", uidlist.get(position));
             startActivity(intent);
         }
@@ -161,17 +158,18 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ((CustomViewHolder)holder).title.setText(boardModels.get(position).title);
             ((CustomViewHolder)holder).contents.setText(boardModels.get(position).contents);
-            ((CustomViewHolder)holder).writer.setText(boardModels.get(position).username);
+            //((CustomViewHolder)holder).writer.setText(boardModels.get(position).username);
             long unixTime = (long) boardModels.get(position).timestamp;
             Date date = new Date(unixTime);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
             String time = simpleDateFormat.format(date);
             ((CustomViewHolder)holder).date.setText(time);
-            if( boardModels.get(position).idx == 0 ){ // 사진이 없으면
+            if( boardModels.get(position).Thumbnail == null ){ // 사진이 없으면
                 ((CustomViewHolder)holder).imageView.setVisibility(View.GONE);
+                Glide.with(holder.itemView.getContext()).clear(((CustomViewHolder) holder).imageView);
             }
-            else if ( boardModels.get(position).idx > 0 ) { // 사진이 있으면
-                Glide.with(holder.itemView.getContext()).load(boardModels.get(position).imglist.get(0)).into(((CustomViewHolder)holder).imageView);
+            else if ( boardModels.get(position).Thumbnail != null ) { // 사진이 있으면
+                Glide.with(holder.itemView.getContext()).load(boardModels.get(position).Thumbnail).override(100,100).into(((CustomViewHolder)holder).imageView);
             }
         }
 
