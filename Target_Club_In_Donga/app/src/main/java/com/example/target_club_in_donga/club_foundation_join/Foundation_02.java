@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,11 +27,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
+import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,13 +55,14 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
     private String imagePath;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseStorage firebaseStorage;
+    private FirebaseAuth firebaseAuth;
     private ImageButton foundation_02_button_back;
     private ImageView foundation_02_button_picture;
     private EditText foundation_02_edittext_content, foundation_02_edittext_name;
-    private TextView foundation_02_textview_error;
     private Button foundation_02_button_next;
     private RadioGroup foundation_02_radioGroup_01, foundation_02_radioGroup_02;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +72,12 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         foundation_02_button_back = findViewById(R.id.foundation_02_button_back);
         foundation_02_button_picture = findViewById(R.id.foundation_02_button_picture);
         foundation_02_edittext_name = findViewById(R.id.foundation_02_edittext_name);
         foundation_02_edittext_content = findViewById(R.id.foundation_02_edittext_content);
-        foundation_02_textview_error = findViewById(R.id.foundation_02_textview_error);
+
         foundation_02_button_next = findViewById(R.id.foundation_02_button_next);
         foundation_02_radioGroup_01  = findViewById(R.id.foundation_02_radioGroup_01);
         foundation_02_radioGroup_02 = findViewById(R.id.foundation_02_radioGroup_02);
@@ -85,11 +96,6 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.foundation_02_button_next:
-                /**
-                 * 다이얼로그 하나띄워서 마지막으로 확인 시켜주자
-                 * 모임이름은 변경불가능하다구!!!
-                 *
-                 */
 
                 if(!Pattern.matches("^\\S{2,}$", foundation_02_edittext_name.getText().toString())){ //이름거르기
                     Toast.makeText(this, "모임 이름이 2자 이상이어야 합니다.", Toast.LENGTH_SHORT).show();
@@ -158,7 +164,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
             realName = true;
         }
         else{
-            dialog_foundation_02_realName.setText("별명 모임");
+            dialog_foundation_02_realName.setText("닉네임 모임");
             realName = false;
         }
         if(foundation_02_radioGroup_02.getCheckedRadioButtonId() == R.id.foundation_02_radio_freeSign_Btn){
@@ -177,22 +183,19 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                 insertDB(imagePath,realName,freeSign);
             }
         });
-        /*Button confirmBtn = view2.findViewById(R.id.dialog_agreement_confirmBtn);
-        TextView activity_foundation_01_TextView_Agreement_term_content = view2.findViewById(R.id.dialog_agreement_contents);
-        TextView activity_foundation_01_TextView_text = view2.findViewById(R.id.dialog_agreement_text);
-        activity_foundation_01_TextView_Agreement_term_content.setMovementMethod(new ScrollingMovementMethod());*/
+
 
         dialog2.show();
     }
     private void insertDB(String uri,final boolean realName,final boolean freeSign){
-        progressDialog.setMessage("모임을 만드는 중입니다...");
+        progressDialog.setMessage("로딩중입니다...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         try{
             StorageReference storageRef = firebaseStorage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
             final Uri file = Uri.fromFile(new File(uri));
-            StorageReference riversRef = storageRef.child("EveryClub_Logo/"+file.getLastPathSegment());
+            StorageReference riversRef = storageRef.child("EveryClub_ProfileImages/"+file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
             // Register observers to listen for when the download is done or if it fails
@@ -207,49 +210,108 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                     @SuppressWarnings("VisibleForTests")
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                    ClubData clubData = new ClubData();
-                    clubData.setThisClubName(foundation_02_edittext_name.getText().toString());
-                    clubData.setClubIntroduce(foundation_02_edittext_content.getText().toString());
-                    clubData.setClubCreateTimestamp(System.currentTimeMillis());
-                    clubData.setRealNameSystem(realName);
-                    clubData.setFreeSign(freeSign);
-                    clubData.setClubImageUrl(downloadUrl.toString());
-                    clubData.setClubImageDeleteName(file.getLastPathSegment());
+//                    ClubData clubData = new ClubData();
+//                    clubData.setThisClubName(foundation_02_edittext_name.getText().toString());
+//                    clubData.setClubIntroduce(foundation_02_edittext_content.getText().toString());
+//                    clubData.setClubCreateTimestamp(System.currentTimeMillis());
+//                    clubData.setRealNameSystem(realName);
+//                    clubData.setFreeSign(freeSign);
+//                    clubData.setClubImageUrl(downloadUrl.toString());
+//                    clubData.setClubImageDeleteName(file.getLastPathSegment());
 
-                    firebaseDatabase.getReference().child("EveryClub").child(clubData.getThisClubName()).setValue(clubData);
-                    clubName = clubData.getThisClubName();
-                    firebaseDatabase.getReference().child("EveryClubName").push().setValue(clubData.getThisClubName());
-                    progressDialog.dismiss();
-                    Toast.makeText(Foundation_02.this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Foundation_02.this,ClubFoundationJoin.class);
-                    startActivity(intent);
-                    finish();
-                    /**
-                     * 회장으로 등록시켜줘야함
-                     * 그리고 token도 넣어줘야하공 (가입유저로 데이터 넣어줘야지)
-                     * function 정리한번하고
-                     * 내일 DB 싹갈아업자
-                     */
+                    insertMyClub(freeSign,realName, downloadUrl.toString(), file.getLastPathSegment());
+
                 }
             });
         }catch (NullPointerException e){ //프로필 안햇을경우
-            ClubData clubData = new ClubData();
+
+            insertMyClub(freeSign,realName,"None","None");
+
+        }
+
+    }
+    private void insertMyClub(boolean freeSign,final boolean realName, String downloadUrl, String filePath){
+        final String myUid = firebaseAuth.getCurrentUser().getUid();
+        if(realName){
+            final ClubData clubData = new ClubData();
             clubData.setThisClubName(foundation_02_edittext_name.getText().toString());
             clubData.setClubIntroduce(foundation_02_edittext_content.getText().toString());
             clubData.setClubCreateTimestamp(System.currentTimeMillis());
-            clubData.setRealNameSystem(realName);
+            clubData.setRealNameSystem(true);
             clubData.setFreeSign(freeSign);
-            clubData.setClubImageUrl("None");
-            clubData.setClubImageDeleteName("None");
+            clubData.setClubImageUrl(downloadUrl);
+            clubData.setClubImageDeleteName(filePath);
 
-            firebaseDatabase.getReference().child("EveryClub").child(clubData.getThisClubName()).setValue(clubData);
-            clubName = clubData.getThisClubName();
+            firebaseDatabase.getReference().child("EveryClub").push().setValue(clubData, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    final String clubUid = databaseReference.getKey();
+                    /**
+                     * 회장은 어차피 승인이든 자유든 어차피 바로가입이지롱
+                     * 실명 모임일경우!
+                     */
+
+                    firebaseDatabase.getReference().child("AppUser").child(myUid).child("recentClub").setValue(clubUid);
+                    //firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").child(clubUid).setValue(true);
+                    MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                    myClubSeletedItem.setApprovalCompleted(true);
+                    myClubSeletedItem.setSignUpclubUid(clubUid);
+                    myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
+                    myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                    firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").push().setValue(myClubSeletedItem);
+
+                    firebaseDatabase.getReference().child("AppUser").child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
+                            JoinData joinData = new JoinData();
+                            joinData.setName(appLoginData.getName());
+                            joinData.setPhone(appLoginData.getPhone());
+                            joinData.setRealNameProPicDeleteName(appLoginData.getReailNameProPicDeleteName());
+                            joinData.setRealNameProPicUrl(appLoginData.getReailNameProPicUrl());
+                            joinData.setPushAlarmOnOff(true);
+                            joinData.setAdmin(0);
+                            joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
+                            joinData.setApplicationDate(-1*System.currentTimeMillis()); //가입날짜 or 가입신청날짜
+                            firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(myUid).setValue(joinData);
+                            clubName = clubUid;
+                            /**
+                             * 그클럽으로 인텐트
+                             */
+                            progressDialog.dismiss();
+                            Toast.makeText(Foundation_02.this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Foundation_02.this, HomeActivityView.class);
+                            intent.putExtra("isRecent",true);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            });
+        }
+        else{
             progressDialog.dismiss();
-            Toast.makeText(this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Foundation_02.this,ClubFoundationJoin.class);
+            Intent intent = new Intent(Foundation_02.this, Join_02_nicName.class);
+            intent.putExtra("isFoundation",true);
+            intent.putExtra("thisClubName",foundation_02_edittext_name.getText().toString());
+            intent.putExtra("clubIntroduce",foundation_02_edittext_content.getText().toString());
+            intent.putExtra("clubDownloadUrl",downloadUrl);
+            intent.putExtra("clubFilePath",filePath);
+            intent.putExtra("clubFreeSign",freeSign);
+            //intent.putExtra("foundationUid",clubUid);
             startActivity(intent);
             finish();
         }
+
+
+
+
 
     }
 }

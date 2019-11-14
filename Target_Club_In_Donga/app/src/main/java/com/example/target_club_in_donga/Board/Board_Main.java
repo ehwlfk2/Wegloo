@@ -30,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TimeZone;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
@@ -59,6 +58,10 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         final BoardRecy_Adapter boardRecy_adapter = new BoardRecy_Adapter(board_clicklistner);
         recyclerView.setAdapter(boardRecy_adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),1));
+        CheckTypesTask checkTypesTask = new CheckTypesTask();
+        checkTypesTask.execute();
+        boardRecy_adapter.notifyDataSetChanged();
+
 
         database.getReference().child("EveryClub").child(clubName).child("Board").addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,8 +73,8 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
                     boardModels.add(boardModel);
                     uidlist.add(uidkey);
                 }
-                recyclerView.scrollToPosition(boardModels.size()-1);
                 boardRecy_adapter.notifyDataSetChanged();
+                recyclerView.scrollToPosition(boardModels.size()-1);
             }
 
             @Override
@@ -115,7 +118,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         @Override
         protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중이입니다");
+            asyncDialog.setMessage("로드 중입니다..");
 
             // show dialog
             asyncDialog.show();
@@ -131,8 +134,10 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         @Override
         public void onClick(View v) {
             final int position = recyclerView.getChildPosition(v);
+            String pos = String.valueOf(position);
+            Toast.makeText(Board_Main.this, pos, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), Board_Detail.class);
-            //intent.putExtra("MODEL", boardModels.get(position));
+            intent.putExtra("MODEL", boardModels.get(position));
             intent.putExtra("key", uidlist.get(position));
             startActivity(intent);
         }
@@ -156,17 +161,17 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ((CustomViewHolder)holder).title.setText(boardModels.get(position).title);
             ((CustomViewHolder)holder).contents.setText(boardModels.get(position).contents);
-            //((CustomViewHolder)holder).writer.setText(boardModels.get(position).username);
+            ((CustomViewHolder)holder).writer.setText(boardModels.get(position).username);
             long unixTime = (long) boardModels.get(position).timestamp;
             Date date = new Date(unixTime);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
             String time = simpleDateFormat.format(date);
             ((CustomViewHolder)holder).date.setText(time);
-            if( boardModels.get(position).Thumbnail == null ){ // 사진이 없으면
+            if( boardModels.get(position).idx == 0 ){ // 사진이 없으면
                 ((CustomViewHolder)holder).imageView.setVisibility(View.GONE);
             }
-            else if ( boardModels.get(position).Thumbnail != null ) { // 사진이 있으면
-                Glide.with(holder.itemView.getContext()).load(boardModels.get(position).Thumbnail).into(((CustomViewHolder)holder).imageView);
+            else if ( boardModels.get(position).idx > 0 ) { // 사진이 있으면
+                Glide.with(holder.itemView.getContext()).load(boardModels.get(position).imglist.get(0)).into(((CustomViewHolder)holder).imageView);
             }
         }
 

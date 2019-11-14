@@ -93,12 +93,8 @@
     <com.example.target_club_in_donga.club_foundation_join.CustomAutoCompleteTextView
         android:dropDownAnchor="@id/joinclube_autoCompleteSearch"
         android:dropDownHeight="200dp"
-        android:text=""
-        android:dropDownHorizontalOffset="0dp"
 
         android:id="@+id/joinclube_autoCompleteSearch"
-        android:singleLine = "true"
-        android:maxLines = "1"
         android:hint = "모임 검색 (2자 이상)"
         android:completionThreshold="2"
         android:textColorHint="@color/color_Orange"
@@ -117,6 +113,51 @@
         app:layout_constraintTop_toBottomOf="@+id/joinclube_00_textview_pickclub"
 
         />
+
+    <EditText
+        android:id="@+id/joinclube_edittext_content"
+        android:hint="자기 소개글 (70자 이내)\n모임 임원이 확인하는 정보입니다."
+        android:gravity="start"
+        android:textSize="14dp"
+        android:inputType="textMultiLine"
+        android:textColorHint="@color/color_Orange"
+        android:theme="@style/EditTheme"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:maxLength="70"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintVertical_bias="0.7"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/joinclube_autoCompleteSearch"
+        app:layout_constraintStart_toStartOf="@+id/joinclube_autoCompleteSearch"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/joinclube_button_next"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.776448942"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.0640625"
+        app:layout_constraintVertical_bias="0.86953125"
+
+        android:background="@drawable/logoin_button_ver0"
+        android:elevation="5dp"
+        android:text="모임 정보 확인하기"
+        android:textColor="@color/color_White"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeMaxTextSize="20sp"
+        android:autoSizeTextType="uniform"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -46,12 +47,6 @@ public class ClubFoundationJoin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-    @Override
-    public void onBackPressed() {
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
-        finish();
-        super.onBackPressed();
+
     }
 }

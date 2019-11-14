@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".club_foundation_join.Foundation_02"></activity>
+        <activity android:name=".club_foundation_join.Join_02_nicName"></activity>
+        <activity android:name=".home_viewpager.HomeActivityView" />
+        <activity android:name=".club_foundation_join.Foundation_02" />
         <activity android:name=".club_foundation_join.Join_01" />
         <activity android:name=".club_foundation_join.Foundation_01" />
         <activity android:name=".club_foundation_join.ClubFoundationJoin" />
@@ -64,10 +66,12 @@
         <activity android:name=".Attend.AttendActivity_Home" />
         <activity android:name=".Album.AlbumActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".Material_Rental.MaterialRentalActivity_Home"
+        <activity
+            android:name=".Material_Rental.MaterialRentalActivity_Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Material_Rental.MaterialRentalActivity_History" />
-        <activity android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert"
+        <activity
+            android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".Schedule.ScheduleActivity" />
