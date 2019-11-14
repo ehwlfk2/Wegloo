@@ -34,6 +34,7 @@ import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.club_foundation_join.AutoCompleteDBItem;
 import com.example.target_club_in_donga.club_foundation_join.ClubFoundationJoin;
+import com.example.target_club_in_donga.club_foundation_join.Join_02_nicName;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -158,23 +159,26 @@ public class ClubSelectedFragment0 extends Fragment{
                 public void onClick(View view) {
                     if(data.isApprovalCompleted()){
                         //showProgress("다른 모임 적용중...");
-
+                        viewAdapter.showProgress("모임 적용중...");
                         clubName = data.getSignUpclubUid();
+                        if(viewAdapter.getCount() == 1){
+                            viewAdapter.addItem(new HomeFragment0());
+                        }
                         viewAdapter.notifyDataSetChanged();
                         FirebaseDatabase.getInstance().getReference().child("AppUser")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .child("recentClub").setValue(data.getSignUpclubUid());
-                        viewAdapter.showProgress("모임 적용중...");
                         //viewAdapter.removeFunction();
+
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
+
                                 viewAdapter.homeCurrent();
                                 viewAdapter.dismissDialog();
                                 //write scroll code here
                             }
                         },1000);
-
                     }
                     else{
                         /**

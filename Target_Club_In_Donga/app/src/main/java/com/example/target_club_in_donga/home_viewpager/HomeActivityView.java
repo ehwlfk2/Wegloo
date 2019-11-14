@@ -10,16 +10,24 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.target_club_in_donga.BackPressCloseHandler;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.club_foundation_join.Join_02_nicName;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class HomeActivityView extends AppCompatActivity {
     public static MoviePagerAdapter viewAdapter;
@@ -28,6 +36,8 @@ public class HomeActivityView extends AppCompatActivity {
     private boolean isRecent;
     private BackPressCloseHandler backPressCloseHandler;
     private ProgressDialog progressDialog;
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +45,10 @@ public class HomeActivityView extends AppCompatActivity {
 //        mAdView = findViewById(R.id.activity_home_adView);
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        mAdView.loadAd(adRequest);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
 
         backPressCloseHandler = new BackPressCloseHandler(this);
         activity_home_viewPager = findViewById(R.id.activity_home_viewPager);
@@ -45,14 +59,11 @@ public class HomeActivityView extends AppCompatActivity {
         Intent intent2 = getIntent();
         isRecent = intent2.getExtras().getBoolean("isRecent");
         if(isRecent){
-            ClubSelectedFragment0 clubSelectedFragment0 = new ClubSelectedFragment0();
-            viewAdapter.addItem(clubSelectedFragment0);
-            HomeFragment0 homeFragment0 = new HomeFragment0();
-            viewAdapter.addItem(homeFragment0);
+            viewAdapter.addItem(new ClubSelectedFragment0());
+            viewAdapter.addItem(new HomeFragment0());
         }
         else{
-            ClubSelectedFragment0 clubSelectedFragment0 = new ClubSelectedFragment0();
-            viewAdapter.addItem(clubSelectedFragment0);
+            viewAdapter.addItem(new ClubSelectedFragment0());
         }
 
         activity_home_viewPager.setAdapter(viewAdapter);
@@ -131,12 +142,6 @@ public class HomeActivityView extends AppCompatActivity {
         int count = activity_home_viewPager.getCurrentItem();
         //Log.e("count",count+"");
         if (count == 1) { //어플끄기
-            /*FirebaseAuth.getInstance().signOut();
-            LoginManager.getInstance().logOut();
-            Intent intent = new Intent(HomeActivityView.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            super.onBackPressed();*/
             backPressCloseHandler.onBackPressed();
         }
         else if(count == 0 && isRecent){
