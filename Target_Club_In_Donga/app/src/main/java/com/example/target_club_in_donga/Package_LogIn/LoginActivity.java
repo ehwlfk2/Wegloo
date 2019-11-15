@@ -72,6 +72,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private SessionCallback callback;      //콜백 선언
     private FirebaseFunctions mFunctions;
+    private com.kakao.usermgmt.LoginButton btn_kakao;
     JSONObject json = new JSONObject();
     //유저프로필
     String token = "";
@@ -101,6 +102,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         Button activity_login_login_btn = findViewById(R.id.login_button_login);
         ImageView activity_login_google_btn = findViewById(R.id.login_button_google);
         ImageView activity_login_facebook_btn = findViewById(R.id.login_button_facebook);
+        ImageView activity_login_kakao_btn = findViewById(R.id.login_button_kakao);
+        btn_kakao = findViewById(R.id.oringin_kakao);
         // find email, pw
         activity_login_id_editText = findViewById(R.id.login_edittext_id);
         activity_login_pw_editText = findViewById(R.id.login_edittext_psw);
@@ -124,7 +127,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         activity_login_google_btn.setOnClickListener(this);
         activity_login_facebook_btn.setOnClickListener(this);
         activity_login_login_btn.setOnClickListener(this);
-
+        activity_login_kakao_btn.setOnClickListener(this);
 
 
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -355,6 +358,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             Log.v("develop_check", "로그인 시도");
             loginUser();
             //onStart();
+        } else if (i == R.id.login_button_kakao){
+            progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.show();
+            Log.v("develop_check", "카카오톡 로그인 시도");
+            btn_kakao.performClick();
         }
     }   // onClick
 
@@ -407,47 +415,36 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Log.d("Kakao : ", "유저가입성공");
                 // Create a new user with a first and last name
                 // 유저 카카오톡 아이디 디비에 넣음(첫가입인 경우에만 디비에저장)
-                String token = Session.getCurrentSession().getAccessToken();
+                final String ktoken = Session.getCurrentSession().getAccessToken();
                 //String refresh = Session.getCurrentSession().getRefreshToken();
-
-                try {
-                    json.put("token", token);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                kakaoCustomAuth(json)
-                        .addOnCompleteListener(new OnCompleteListener<JSONObject>() {
-                            @Override
-                            public void onComplete(@NonNull Task<JSONObject> task) {
-                                if( !task.isSuccessful()) {
-                                    Exception e = task.getException();
-                                    if( e instanceof FirebaseFunctionsException){
-                                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
-                                        FirebaseFunctionsException.Code code = ffe.getCode();
-                                        Object details = ffe.getDetails();
-                                    }
-
-                                    //[START_EXCLUDE]
-                                    Log.w("kakaoLogin_Exception", "kakaoAccessToken:onFailure", e);
-                                    Toast.makeText(LoginActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
-                                    return;
-                                    // [END_EXCLUDE]
-                                }
-
-                                // [START_EXCLUDE]
-                                JSONObject result = task.getResult();
-                                Log.w("kakaologin_result", String.valueOf(result));
+                kakaoCustomAuth(ktoken).continueWithTask(new Continuation<String, Task<AuthResult>>() {
+                    @Override
+                    public Task<AuthResult> then(@NonNull Task<String> task) throws Exception {
+                        String firebaseToken = task.getResult();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        return auth.signInWithCustomToken(firebaseToken);
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            /*FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                            if( currentUser != null){
+                                //
                             }
-                        });
-                redirectHomeActivity(); // 로그인 성공시 메인으로
-
+                            else{
+                                //
+                            }*/
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Failed to create a Firebase user.", Toast.LENGTH_LONG).show();
+                            if (task.getException() != null) {
+                                Log.e("tag", task.getException().toString());
+                            }
+                        }
+                    }
+                });
             }
         });
-    }
-
-    private void redirectHomeActivity() {
-        startActivity(new Intent(this,SignUpActivity_01.class));
-        finish();
     }
 
     protected void redirectLoginActivity() {
@@ -474,16 +471,23 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     // [START function_kakaoCustomAuth]
-    private  Task<JSONObject> kakaoCustomAuth(JSONObject json){
+    private  Task<String> kakaoCustomAuth(String ktoken){
         return mFunctions
                 .getHttpsCallable("kakaoCustomAuth")
-                .call(json)
-                .continueWith(new Continuation<HttpsCallableResult, JSONObject>() {
+                .call(ktoken)
+                .continueWith(new Continuation<HttpsCallableResult, String>() {
                     @Override
-                    public JSONObject then(@NonNull Task<HttpsCallableResult> task) throws Exception {
-                        //String result = (String)task.getResult().getData();
-                        task.getResult().getData();
-                        return (JSONObject) task.getResult().getData();
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        try {
+                            Map<String, String> jwt = new HashMap<>();
+                            jwt = (Map<String, String>) task.getResult().getData();
+                            String firebsae_jwt = (String)jwt.get("firebase_token");
+                            return firebsae_jwt;
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            return null;
+                        }
                     }
                 });
     }

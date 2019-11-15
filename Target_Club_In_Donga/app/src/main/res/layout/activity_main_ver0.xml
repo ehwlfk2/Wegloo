@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_artborad"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/artboard_sub_su_ver0">
+    android:layout_height="match_parent">
 
 
     <FrameLayout
-        android:id="@+id/home_frame_album"
-        android:background="@drawable/home_btn_ver0"
-        android:elevation="2dp"
+        android:id="@+id/home_frame_board"
+        style="@style/Custombutton"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -29,12 +27,12 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/home_layout_album"
+            android:id="@+id/home_layout_board"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/home_button_album"
+            <View
+                android:id="@+id/home_button_board"
                 android:layout_width="0dp"
 
                 android:layout_height="0dp"
@@ -79,8 +77,7 @@
 
     <FrameLayout
         android:id="@+id/home_frame_calender"
-        android:background="@drawable/home_btn_ver0"
-        android:elevation="2dp"
+        style="@style/Custombutton"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -102,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
+            <View
                 android:id="@+id/home_button_calender"
                 android:background="@drawable/ic_calender_ver0"
 
@@ -143,15 +140,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-        />
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/home_frame_vote"
-        android:background="@drawable/home_btn_ver0"
-        android:elevation="2dp"
+        style="@style/Custombutton"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -173,7 +169,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
+            <View
                 android:id="@+id/home_button_vote"
                 android:background="@drawable/ic_vote_ver0"
 
@@ -212,15 +208,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-/>
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/home_frame_attendance"
-        android:background="@drawable/home_btn_ver0"
-        android:elevation="2dp"
+        style="@style/Custombutton"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
@@ -241,7 +236,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
+            <View
                 android:id="@+id/home_button_attendance"
                 android:layout_width="0dp"
 
@@ -260,7 +255,7 @@
                 app:layout_constraintWidth_percent="0.429594272" />
 
             <TextView
-                android:id="@+id/home_textview_attendance"
+                android:id="@+id/home_textview_"
 
                 android:layout_width="0dp"
                 app:layout_constraintWidth_default="percent"
@@ -270,7 +265,7 @@
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent="0.19375"
                 app:layout_constraintVertical_bias="0.908854167"
-                android:text="출석체크"
+                android:text="출석"
                 android:autoSizeMaxTextSize="20dp"
                 android:autoSizeMinTextSize="1sp"
                 android:gravity="center"
@@ -421,7 +416,7 @@
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1">
 
-        <ImageView
+        <View
             android:id="@+id/home_view_picture_0"
             android:layout_width="0dp"
 
@@ -437,7 +432,7 @@
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.133394664"
-            app:srcCompat="@drawable/new_notice_vector_ver0" />
+            android:background="@drawable/new_notice_vector_ver0" />
         <TextView
             android:id="@+id/home_textview_notice_0"
 
@@ -498,7 +493,7 @@
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1">
 
-        <ImageView
+        <View
             android:id="@+id/home_view_picture_1"
             android:layout_width="0dp"
 
@@ -514,7 +509,7 @@
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.133394664"
-            app:srcCompat="@drawable/new_notice_vector_ver0" />
+            android:background="@drawable/new_notice_vector_ver0" />
 
         <TextView
             android:id="@+id/home_textview_notice_1"
