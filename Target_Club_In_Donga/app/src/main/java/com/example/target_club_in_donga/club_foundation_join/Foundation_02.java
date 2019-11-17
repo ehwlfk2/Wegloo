@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -163,7 +164,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
             realName = true;
         }
         else{
-            dialog_foundation_02_realName.setText("별명 모임");
+            dialog_foundation_02_realName.setText("닉네임 모임");
             realName = false;
         }
         if(foundation_02_radioGroup_02.getCheckedRadioButtonId() == R.id.foundation_02_radio_freeSign_Btn){
@@ -187,14 +188,14 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
         dialog2.show();
     }
     private void insertDB(String uri,final boolean realName,final boolean freeSign){
-        progressDialog.setMessage("모임을 만드는 중입니다...");
+        progressDialog.setMessage("로딩중입니다...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         try{
             StorageReference storageRef = firebaseStorage.getReferenceFromUrl("gs://target-club-in-donga.appspot.com");
 
             final Uri file = Uri.fromFile(new File(uri));
-            StorageReference riversRef = storageRef.child("EveryClub_Logo/"+file.getLastPathSegment());
+            StorageReference riversRef = storageRef.child("EveryClub_ProfileImages/"+file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
             // Register observers to listen for when the download is done or if it fails
@@ -209,54 +210,56 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                     @SuppressWarnings("VisibleForTests")
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                    ClubData clubData = new ClubData();
-                    clubData.setThisClubName(foundation_02_edittext_name.getText().toString());
-                    clubData.setClubIntroduce(foundation_02_edittext_content.getText().toString());
-                    clubData.setClubCreateTimestamp(System.currentTimeMillis());
-                    clubData.setRealNameSystem(realName);
-                    clubData.setFreeSign(freeSign);
-                    clubData.setClubImageUrl(downloadUrl.toString());
-                    clubData.setClubImageDeleteName(file.getLastPathSegment());
+//                    ClubData clubData = new ClubData();
+//                    clubData.setThisClubName(foundation_02_edittext_name.getText().toString());
+//                    clubData.setClubIntroduce(foundation_02_edittext_content.getText().toString());
+//                    clubData.setClubCreateTimestamp(System.currentTimeMillis());
+//                    clubData.setRealNameSystem(realName);
+//                    clubData.setFreeSign(freeSign);
+//                    clubData.setClubImageUrl(downloadUrl.toString());
+//                    clubData.setClubImageDeleteName(file.getLastPathSegment());
 
-                    insertMyClub(clubData,realName);
+                    insertMyClub(freeSign,realName, downloadUrl.toString(), file.getLastPathSegment());
 
                 }
             });
         }catch (NullPointerException e){ //프로필 안햇을경우
-            ClubData clubData = new ClubData();
-            clubData.setThisClubName(foundation_02_edittext_name.getText().toString());
-            clubData.setClubIntroduce(foundation_02_edittext_content.getText().toString());
-            clubData.setClubCreateTimestamp(System.currentTimeMillis());
-            clubData.setRealNameSystem(realName);
-            clubData.setFreeSign(freeSign);
-            clubData.setClubImageUrl("None");
-            clubData.setClubImageDeleteName("None");
 
-            insertMyClub(clubData,realName);
-
+            insertMyClub(freeSign,realName,"None","None");
 
         }
 
     }
-    private void insertMyClub(final ClubData clubData,final boolean realName){
-        firebaseDatabase.getReference().child("EveryClub").push().setValue(clubData, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                final String clubUid = databaseReference.getKey();
-                final String myUid = firebaseAuth.getCurrentUser().getUid();
-                firebaseDatabase.getReference().child("AppUser").child(myUid).child("recentClub").setValue(clubUid);
-                //firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").child(clubUid).setValue(true);
-                MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
-                myClubSeletedItem.setApprovalCompleted(false);
-                myClubSeletedItem.setSignUpclubUid(clubUid);
-                myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
-                myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
-                firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").push().setValue(myClubSeletedItem);
-                /**
-                 * 회장은 어차피 승인이든 자유든 어차피 바로가입이지롱
-                 * 실명 모임일경우!
-                 */
-                if(realName){
+    private void insertMyClub(boolean freeSign,final boolean realName, String downloadUrl, String filePath){
+        final String myUid = firebaseAuth.getCurrentUser().getUid();
+        if(realName){
+            final ClubData clubData = new ClubData();
+            clubData.setThisClubName(foundation_02_edittext_name.getText().toString());
+            clubData.setClubIntroduce(foundation_02_edittext_content.getText().toString());
+            clubData.setClubCreateTimestamp(System.currentTimeMillis());
+            clubData.setRealNameSystem(true);
+            clubData.setFreeSign(freeSign);
+            clubData.setClubImageUrl(downloadUrl);
+            clubData.setClubImageDeleteName(filePath);
+
+            firebaseDatabase.getReference().child("EveryClub").push().setValue(clubData, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    final String clubUid = databaseReference.getKey();
+                    /**
+                     * 회장은 어차피 승인이든 자유든 어차피 바로가입이지롱
+                     * 실명 모임일경우!
+                     */
+
+                    firebaseDatabase.getReference().child("AppUser").child(myUid).child("recentClub").setValue(clubUid);
+                    //firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").child(clubUid).setValue(true);
+                    MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                    myClubSeletedItem.setApprovalCompleted(true);
+                    myClubSeletedItem.setSignUpclubUid(clubUid);
+                    myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
+                    myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                    firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").push().setValue(myClubSeletedItem);
+
                     firebaseDatabase.getReference().child("AppUser").child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -277,7 +280,8 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                              */
                             progressDialog.dismiss();
                             Toast.makeText(Foundation_02.this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Foundation_02.this,ClubFoundationJoin.class);
+                            Intent intent = new Intent(Foundation_02.this, HomeActivityView.class);
+                            intent.putExtra("isRecent",true);
                             startActivity(intent);
                             finish();
                         }
@@ -287,16 +291,26 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
 
                         }
                     });
-                }
-                else{
-                    /**
-                     * 회장도 별명 프로필 만들게 해줘야지~
-                     *
-                     */
-                }
 
-            }
-        });
+                }
+            });
+        }
+        else{
+            progressDialog.dismiss();
+            Intent intent = new Intent(Foundation_02.this, Join_02_nicName.class);
+            intent.putExtra("isFoundation",true);
+            intent.putExtra("thisClubName",foundation_02_edittext_name.getText().toString());
+            intent.putExtra("clubIntroduce",foundation_02_edittext_content.getText().toString());
+            intent.putExtra("clubDownloadUrl",downloadUrl);
+            intent.putExtra("clubFilePath",filePath);
+            intent.putExtra("clubFreeSign",freeSign);
+            //intent.putExtra("foundationUid",clubUid);
+            startActivity(intent);
+            finish();
+        }
+
+
+
 
 
     }

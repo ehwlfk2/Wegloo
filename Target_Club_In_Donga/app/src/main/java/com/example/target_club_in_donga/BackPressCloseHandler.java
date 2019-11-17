@@ -20,13 +20,16 @@ public class BackPressCloseHandler {
             return;
         }
         if(System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            activity.finish();
+            //activity.finish();
             toast.cancel();
+            activity.finishAffinity();
+            System.runFinalization();
+            System.exit(0);
         }
     }
 
     public void showGide() {
-        toast = Toast.makeText(activity, "뒤로 버튼을 한번 더 누르면 종료합니다.", Toast.LENGTH_SHORT);
+        toast = Toast.makeText(activity, "'뒤로' 버튼을 한번 더 누르시면 종료합니다.", Toast.LENGTH_SHORT);
         toast.show();
     }
 }

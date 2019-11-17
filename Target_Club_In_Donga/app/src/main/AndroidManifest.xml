@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".club_foundation_join.Join_02_nicName"></activity>
         <activity android:name=".home_viewpager.HomeActivityView" />
         <activity android:name=".club_foundation_join.Foundation_02" />
         <activity android:name=".club_foundation_join.Join_01" />
@@ -89,6 +90,7 @@
         <activity android:name=".Board.Board_Main" />
         <activity android:name=".MemberList.MemberList" />
         <activity android:name=".TimeLine.TimeLineActivity_Main" />
+        <activity android:name=".MyInformation"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -118,9 +120,9 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
