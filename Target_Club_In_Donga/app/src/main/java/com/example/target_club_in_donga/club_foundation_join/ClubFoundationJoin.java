@@ -68,31 +68,6 @@ public class ClubFoundationJoin extends AppCompatActivity {
             }
         });
 
-        Button fragment_home_btn_1 = (Button) findViewById(R.id.fragment_home_btn_1);
-        Button fragment_home_btn_2 = (Button) findViewById(R.id.fragment_home_btn_2);
-        Button fragment_home_btn_3 = (Button) findViewById(R.id.fragment_home_btn_3);
-        fragment_home_btn_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                Intent intent  = new Intent(ClubFoundationJoin.this, AttendActivity_Home.class);
-                startActivity(intent);
-            }
-        });
-        fragment_home_btn_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                Intent intent  = new Intent(ClubFoundationJoin.this, UserDetailActivity.class);
-                startActivity(intent);
-            }
-        });
-        fragment_home_btn_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                Intent intent  = new Intent(ClubFoundationJoin.this, AttendActivity_Admin_Home.class);
-                startActivity(intent);
-            }
-        });
-
     }
     @Override
     public void onBackPressed() {
