@@ -194,7 +194,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     }
                 });
 
-                popup.inflate(R.menu.attend_admin_information_popup);
+                popup.inflate(R.menu.attend_admin_home_popup);
 
                 popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                 popup.show();
