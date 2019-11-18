@@ -85,6 +85,7 @@
         <activity android:name=".Vote.VoteActivity_Main" />
         <activity android:name=".Vote.VoteActivity_Insert" />
         <activity android:name=".Notice.NoticeActivity_Insert" />
+        <activity android:name=".Notice.NoticeActivity_Main"/>
         <activity android:name=".Board.Board_viewpager" />
         <activity android:name=".Board.Board_Detail" />
         <activity android:name=".Board.Board_Write" />

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -184,12 +185,23 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             activity_login_pw_editText.setText("");
                             try{
                                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                                clubName = appLoginData.getPhone();
+                                if(appLoginData.getRecentClub() == null){
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivityView.class);
+                                    intent.putExtra("isRecent",false);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    clubName = appLoginData.getRecentClub();
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivityView.class);
+                                    intent.putExtra("isRecent",true);
+                                    startActivity(intent);
+                                }
+
                                 /**
                                  * 임시로 getPhone해둔거임임임
                                  */
-                                Intent intent = new Intent(LoginActivity.this, Congratulation.class);
-                                startActivity(intent);
+//                                Intent intent = new Intent(LoginActivity.this, Congratulation.class);
+//                                startActivity(intent);
                                 //finish();
                             }catch (NullPointerException e){ //auth에는 있는데 db엔 없는경우지 이게 아마?
                                 Intent intent = new Intent(LoginActivity.this, SignUpActivity_04.class);
@@ -325,6 +337,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             //finish();
         } else if (i == R.id.login_button_google) {
             progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             Log.v("develop_check", "구글 로그인 시도");
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -332,12 +345,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         } else if (i == R.id.login_button_facebook) {
             progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             Log.v("develop_check", "페이스북 로그인 시도");
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
         } else if (i == R.id.login_button_login) {
             progressDialog.setMessage("로그인 중입니다...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             Log.v("develop_check", "로그인 시도");
             loginUser();
