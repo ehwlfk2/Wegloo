@@ -8,7 +8,6 @@ public class LoginData {
     private int admin;
     private boolean pushAlarmOnOff;
     private String pushToken;
-
     /*public LoginData(String name, String phone, String studentNumber, String school, int admin, boolean pushAlarmOnOff) {
         this.name = name;
         this.phone = phone;
@@ -17,6 +16,7 @@ public class LoginData {
         this.admin = admin;
         this.pushAlarmOnOff = pushAlarmOnOff;
     }*/
+
 
     public int getAdmin() {
         return admin;
