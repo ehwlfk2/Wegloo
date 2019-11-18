@@ -185,28 +185,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="HardcodedText,UnusedAttribute" />
 
+
     <TextView
         android:id="@+id/login_button_signup"
 
         android:layout_width="0dp"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.498620055"
-        app:layout_constraintHorizontal_bias="0.500459982"
         android:layout_height="0dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.032395833"
-        app:layout_constraintVertical_bias="0.766927083"
-
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeTextType="uniform"
         android:gravity="center_horizontal"
         android:text="회원가입"
-        android:autoSizeMinTextSize="1sp"
-        android:autoSizeMaxTextSize="20dp"
-        android:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.032395833"
+        app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.746"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.498620055"
+        tools:ignore="HardcodedText,UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/reset_id_pw"
+
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center_horizontal"
+        android:text="아이디 / 비밀번호 찾기"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.032395833"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.498620055"
         tools:ignore="HardcodedText,UnusedAttribute" />
 
     <ImageView
