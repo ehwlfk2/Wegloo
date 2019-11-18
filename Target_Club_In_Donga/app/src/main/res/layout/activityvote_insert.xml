@@ -58,8 +58,8 @@
             android:src="@drawable/ic_add"
             android:id="@+id/activityvote_insert_button_listinsert"
             fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_colorPressed="@color/fbutton_color_emerald"
+            fab:fab_colorRipple="@color/fbutton_color_green_sea"
             fab:fab_type="mini"
             />
 
@@ -70,8 +70,8 @@
             android:src="@drawable/ic_remove"
             android:id="@+id/activityvote_insert_button_listremove"
             fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_colorPressed="@color/fbutton_color_emerald"
+            fab:fab_colorRipple="@color/fbutton_color_green_sea"
             fab:fab_type="mini"
             />
 
@@ -120,8 +120,7 @@
         android:src="@drawable/ic_done"
         android:id="@+id/activityvote_insert_button_result"
         fab:fab_colorNormal="@color/fbutton_color_turquoise"
-        fab:fab_colorPressed="@color/fbutton_color_green_sea"
-        fab:fab_colorRipple="@color/fbutton_color_emerald"
-        fab:fab_type="mini"
+        fab:fab_colorPressed="@color/fbutton_color_emerald"
+        fab:fab_colorRipple="@color/fbutton_color_green_sea"
         />
 </LinearLayout>

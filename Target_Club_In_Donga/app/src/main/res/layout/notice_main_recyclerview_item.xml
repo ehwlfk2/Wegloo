@@ -57,17 +57,12 @@
 
     </LinearLayout>
 
-    <com.melnykov.fab.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_add_circle_outline_24px"
         android:id="@+id/notice_main_recyclerview_item_plusBtn"
-        fab:fab_colorNormal="@color/fbutton_color_turquoise"
-        fab:fab_colorPressed="@color/fbutton_color_green_sea"
-        fab:fab_colorRipple="@color/fbutton_color_emerald"
-        fab:fab_type="mini"
-        fab:fab_shadow="false"
         />
 </LinearLayout>
