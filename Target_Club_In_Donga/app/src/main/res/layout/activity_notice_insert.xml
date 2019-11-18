@@ -29,8 +29,8 @@
             android:src="@drawable/ic_text_fields"
             android:id="@+id/activity_notice_insert_button_fontChange"
             fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_colorPressed="@color/fbutton_color_emerald"
+            fab:fab_colorRipple="@color/fbutton_color_green_sea"
             fab:fab_type="mini"
             />
 
@@ -43,8 +43,8 @@
             android:src="@drawable/ic_color"
             android:id="@+id/activity_notice_insert_button_colorChange"
             fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
+            fab:fab_colorPressed="@color/fbutton_color_emerald"
+            fab:fab_colorRipple="@color/fbutton_color_green_sea"
             fab:fab_type="mini"
             />
 
@@ -95,9 +95,8 @@
             android:src="@drawable/ic_done"
             android:id="@+id/activity_notice_insert_button_result"
             fab:fab_colorNormal="@color/fbutton_color_turquoise"
-            fab:fab_colorPressed="@color/fbutton_color_green_sea"
-            fab:fab_colorRipple="@color/fbutton_color_emerald"
-            fab:fab_type="mini"
+            fab:fab_colorPressed="@color/fbutton_color_emerald"
+            fab:fab_colorRipple="@color/fbutton_color_green_sea"
             />
     </FrameLayout>
 

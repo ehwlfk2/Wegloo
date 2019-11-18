@@ -33,9 +33,9 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_add"
             android:id="@+id/activityvote_main_button_intent"
-            fab:fab_colorNormal="@color/colorPrimary"
-            fab:fab_colorPressed="@color/colorPrimaryDark"
-            fab:fab_colorRipple="@color/colorAccent" />
+            fab:fab_colorNormal="@color/default_color"
+            fab:fab_colorPressed="@color/fbutton_color_orange"
+            fab:fab_colorRipple="@color/fbutton_color_carrot" />
     </FrameLayout>
 
 </LinearLayout>

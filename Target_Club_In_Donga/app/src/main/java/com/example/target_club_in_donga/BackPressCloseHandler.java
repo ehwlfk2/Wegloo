@@ -23,8 +23,8 @@ public class BackPressCloseHandler {
             //activity.finish();
             toast.cancel();
             activity.finishAffinity();
-            System.runFinalization();
-            System.exit(0);
+            //System.runFinalization();
+            //System.exit(0);
         }
     }
 

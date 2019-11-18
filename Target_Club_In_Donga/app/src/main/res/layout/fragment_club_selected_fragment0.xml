@@ -35,8 +35,8 @@
             android:src="@drawable/ic_add"
             android:id="@+id/fragment_clubSelected_button_intent"
             fab:fab_colorNormal="@color/default_color"
-            fab:fab_colorPressed="@color/color_Orange"
-            fab:fab_colorRipple="@color/color_Orange" />
+            fab:fab_colorPressed="@color/fbutton_color_orange"
+            fab:fab_colorRipple="@color/fbutton_color_carrot" />
     </FrameLayout>
 
 </LinearLayout>
