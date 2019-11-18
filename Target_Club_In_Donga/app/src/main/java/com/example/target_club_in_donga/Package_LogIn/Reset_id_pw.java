@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Reset_id_pw extends AppCompatActivity {
     private FirebaseDatabase database;
     private FirebaseAuth auth;
-    private LoginData loginData = new LoginData();
+    private AppLoginData appLoginData = new AppLoginData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,9 @@ public class Reset_id_pw extends AppCompatActivity {
         findEmail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( phonenumber.equals(loginData.getPhone()) ){
-
+                if( phonenumber.equals(appLoginData.getPhone()) ){
                     Dialog_Find_Email dialog_find_email = new Dialog_Find_Email(getApplicationContext());
+                    dialog_find_email.callFunction(username, appLoginData.getEmailLoginEmail());
                 }
                 else{
                     Toast.makeText(Reset_id_pw.this, "잘못된 이름이나 휴대폰 번호입니다.", Toast.LENGTH_SHORT).show();
@@ -58,9 +58,8 @@ public class Reset_id_pw extends AppCompatActivity {
         database.getReference().child("AppUser").equalTo(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                loginData = null;
-                loginData = dataSnapshot.getValue(LoginData.class);
-                userkey[0] = dataSnapshot.getKey();
+                appLoginData = null;
+                appLoginData = dataSnapshot.getValue(AppLoginData.class);
             }
 
             @Override
