@@ -59,12 +59,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Attend.AttendActivity" />
         <!--<activity android:name=".Attend.AttendActivity_Admin" />-->
         <activity android:name=".Attend.AttendActivity_Detail_Information" />
         <activity android:name=".Attend.AttendActivity_Admin_Home" />
         <activity android:name=".Attend.AttendActivity_Admin_Detail_Information" />
-        <activity android:name=".Attend.AttendActivity_Home" />
         <activity android:name=".Album.AlbumActivity" />
         <activity android:name=".HomeActivity" />
         <activity
@@ -76,7 +74,6 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".Schedule.ScheduleActivity" />
-        <activity android:name=".UserDetailActivity" />
         <activity android:name=".History.HistoryActivity_Main" />
         <activity android:name=".History.HistoryActivity_Insert" />
         <activity android:name=".Vote.VoteActivity_Result" />

@@ -56,11 +56,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     private int listSize = 0, flag = 0, admin;
 
     public static String uidAdminPath;
-    private static int adminNumber = 2;
-
-    private String formatDate, nowtardyTimeLimit, getTardyTimeLimit;
-
-    private long now;
 
     private String clubName = "TCID";
     // 임시로 바꾼 부분
@@ -511,7 +506,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                     PopupMenu(customViewHolder2, position);
 
-                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
+/*                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() == null) {
@@ -526,7 +521,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                         public void onCancelled(final DatabaseError databaseError) {
 
                         }
-                    });
+                    });*/
 
                     break;
 

@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="#FFFFFF">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/myinfo_profile_Thumbnail"
             android:layout_width="65dp"
             android:layout_height="65dp"

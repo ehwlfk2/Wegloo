@@ -3,6 +3,7 @@ package com.example.target_club_in_donga.Attend;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,28 +40,17 @@ import java.util.List;
 
 public class AttendActivity_Detail_Information extends AppCompatActivity {
 
-    private TextView activity_attend_detail_textview_attend_state;
-
 //    private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc, R.drawable.dd, R.drawable.ee};
 
     private FirebaseDatabase database;
     private FirebaseAuth auth;
 
-    private Button activity_attend_detail_button_attendance, activity_attend_detail_button_cancel, activity_attend_detail_button_admin, activity_attend_detail_button_attend_state;
-    private TextView activity_attend_detail_textview_people_count, activity_attend_detail_textview_people_percent;
-    private TextView activity_attend_detail_textview_certification_number, activity_attend_detail_textview_attend_time_limit, activity_attend_detail_textview_tardy_time_limit;
-    private TextView activity_attend_detail_textview_certification_number_name;
-    private TextView activity_attend_detail_textview_attend;
+    private Button activity_attend_detail_button_attend_state;
+    private TextView activity_attend_detail_textview_certification_number, activity_attend_detail_textview_certification_number_name, activity_attend_detail_textview_attend;
 
-    private int peopleCount = 0, peopleAttendCount = 0, flag = 0, backflag = 0;
+    private int flag = 0, backflag = 0;
 
-    private int getEditCertificationNumber;
-    private String getCertificationNumber, EditCertificationNumber;
-    private String getAttend_Time_Limit, getTardy_Time_Limit;
-
-    private long now;
-    private String nowDate, formatDate, nowtardyTimeLimit;
-    private String getAttendState, setAttendState, getTardyTimeLimit;
+    private String getAttendState;
 
     private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0;
     private static int adminNumber = 2;
@@ -107,6 +97,22 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
             activity_attend_detail_textview_certification_number_name.setVisibility(View.GONE);
             activity_attend_detail_textview_certification_number.setVisibility(View.GONE);
         }
+
+        activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
+            @Override
+            public void onDrawerOpened() {
+                menu_count++;
+            }
+        });
+
+        activity_attend_detail_slidingdrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
+            @Override
+            public void onDrawerClosed() {
+                menu_count--;
+            }
+        });
+
+//        Log.e("값2", menu_count + "");
 
         final AttendActivity_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new AttendActivity_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
 
@@ -305,7 +311,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                     activity_attend_detail_textview_attend.setText("출석현황");
 
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             attendItems.clear();
@@ -341,7 +347,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                     activity_attend_detail_textview_attend.setText("지각현황");
 
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             attendItems.clear();
@@ -376,7 +382,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                     activity_attend_detail_textview_attend.setText("결석현황");
 
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             attendItems.clear();
@@ -421,16 +427,6 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                 }
             });
         }
-
-/*        if (backflag == 1) {
-            activity_attend_detail_slidingdrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
-                @Override
-                public void onDrawerClosed() {
-                    backflag = 0;
-                    menu_count--;
-                }
-            });
-        }*/
 
     }
 
@@ -537,13 +533,13 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
     }
 
-/*    @Override
+    @Override
     public void onBackPressed() {
         if (menu_count > 0) {
-            backflag++;
+            activity_attend_detail_slidingdrawer.animateClose();
         } else {
-            super.onBackPressed();
+            finish();
         }
-    }*/
+    }
 
 }

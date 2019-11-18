@@ -61,7 +61,7 @@ public class AttendFragment0 extends Fragment {
     List<Attend_Admin_Item> attenditems = new ArrayList<>();
     List<String> uidLists = new ArrayList<>();
 
-    Button activity_attend_home_admin_button_insert;
+    private Button activity_attend_home_admin_button_insert;
 
     private FirebaseAuth auth;
     private FirebaseStorage storage;
@@ -88,12 +88,14 @@ public class AttendFragment0 extends Fragment {
     private String nowDate;
     private String getState;
 
+    private TextView activity_attend_home_textview;
+    private Button activity_attend_home_button_attend, activity_attend_home_button_datail, activity_attend_home_button_cancel;
+
     private String clubName = "TCID";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         final View view = inflater.inflate(R.layout.activity_attend_home, container, false);
 
@@ -106,7 +108,13 @@ public class AttendFragment0 extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
 
         progressDialog.setMessage("출석을 불러오는 중입니다...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
+
+        activity_attend_home_textview = (TextView) view.findViewById(R.id.activity_attend_home_textview);
+        activity_attend_home_button_attend = (Button) view.findViewById(R.id.activity_attend_home_button_attend);
+        activity_attend_home_button_datail = (Button) view.findViewById(R.id.activity_attend_home_button_datail);
+        activity_attend_home_button_cancel = (Button) view.findViewById(R.id.activity_attend_home_button_cancel);
 
         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -114,6 +122,7 @@ public class AttendFragment0 extends Fragment {
                 admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
                 if (admin > adminNumber) {
                     activity_attend_home_admin_button_insert.setVisibility(View.GONE);
+                    activity_attend_home_button_cancel.setVisibility(View.GONE);
                 }
             }
 
@@ -123,7 +132,329 @@ public class AttendFragment0 extends Fragment {
             }
         });
 
-        activity_attend_home_admin_recyclerview_main_list = (RecyclerView) view.findViewById(R.id.activity_attend_home_recyclerview_main_list);
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot2) {
+                for (DataSnapshot snapshot : dataSnapshot2.getChildren()) {
+                    if (snapshot.child("Attend_Certification_Number").getValue() != null) {
+                        activity_attend_home_textview.setText("출석중입니다");
+                        activity_attend_home_button_attend.setVisibility(View.VISIBLE);
+                        activity_attend_home_button_datail.setVisibility(View.VISIBLE);
+
+                        activity_attend_home_button_attend.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(final View v) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                                View view = LayoutInflater.from(getActivity())
+                                        .inflate(R.layout.activity_attend_check, null, false);
+                                builder.setView(view);
+
+                                final EditText activity_attend_check_edittext_certification_number = (EditText) view.findViewById(R.id.activity_attend_check_edittext_certification_number);
+                                final Button activity_attend_check_confirm = (Button) view.findViewById(R.id.activity_attend_check_button_confirm);
+                                final Button activity_attend_check_cancel = (Button) view.findViewById(R.id.activity_attend_check_button_cancel);
+
+                                final AlertDialog dialog = builder.create();
+
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getValue() != null) {
+                                            if (dataSnapshot.getValue().toString().equals("출석") || dataSnapshot.getValue().toString().equals("지각")) {
+                                                dialog.dismiss();
+                                                Toast.makeText(getActivity(), "이미 출석을 했습니다", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getValue() == null) {
+                                            Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getValue() == null) {
+                                            Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        } else {
+                                            now = System.currentTimeMillis();
+                                            // 현재시간을 date 변수에 저장한다.
+                                            Date date = new Date(now);
+                                            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                            nowtardyTimeLimit = simpleDateFormat.format(date);
+
+                                            getTardyTimeLimit = dataSnapshot.getValue().toString();
+                                            Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                                            Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                                            long diff = d1.getTime() - d2.getTime();
+                                            if (diff < 0) {
+                                                Toast.makeText(getActivity(), "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                activity_attend_check_confirm.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(final View view) {
+                                        EditCertificationNumber = activity_attend_check_edittext_certification_number.getText().toString();
+                                        EditCertificationNumber.trim();
+
+                                        if (EditCertificationNumber.getBytes().length > 0) {
+                                            getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
+                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                    getCertificationNumber = dataSnapshot.getValue().toString();
+
+                                                    if (Integer.parseInt(getCertificationNumber) == getEditCertificationNumber) {
+
+                                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("attendTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                                getAttend_Time_Limit = dataSnapshot.getValue().toString();
+
+                                                                now = System.currentTimeMillis();
+                                                                // 현재시간을 date 변수에 저장한다.
+                                                                Date date = new Date(now);
+                                                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                                                // "yyyy-MM-dd HH:mm"
+                                                                nowDate = simpleDateFormat.format(date);
+                                                                Date d2 = simpleDateFormat.parse(nowDate, new ParsePosition(0));
+                                                                Date d1 = simpleDateFormat.parse(getAttend_Time_Limit, new ParsePosition(0));
+                                                                long diff = d1.getTime() - d2.getTime();
+                                                                // 출석 끝나는 시간과 현재 시간을 비교해서 출석인지 지각인지 확인하기 위해서
+
+                                                                if (diff > 0) {
+                                                                    Toast.makeText(getActivity(), "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
+                                                                    dialog.dismiss();
+                                                                } else {
+                                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                                            getTardy_Time_Limit = dataSnapshot.child("tardyTimeLimit").getValue().toString();
+                                                                            getStart_Time = dataSnapshot.child("startTime").getValue().toString();
+
+                                                                            now = System.currentTimeMillis();
+                                                                            // 현재시간을 date 변수에 저장한다.
+                                                                            Date date = new Date(now);
+                                                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                                                            // "yyyy-MM-dd HH:mm"
+                                                                            nowDate = simpleDateFormat.format(date);
+                                                                            Date d2 = simpleDateFormat.parse(nowDate, new ParsePosition(0));
+                                                                            Date d1 = simpleDateFormat.parse(getTardy_Time_Limit, new ParsePosition(0));
+                                                                            Date d0 = simpleDateFormat.parse(getStart_Time, new ParsePosition(0));
+                                                                            long diff = d1.getTime() - d2.getTime();
+                                                                            // 지각 끝나는 시간과 현재 시간을 비교해서 지각인지 결석인지 확인하기 위해서
+
+                                                                            if (diff > 0) {
+                                                                                Toast.makeText(getActivity(), "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
+                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
+                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("late_time").setValue("+" + (d2.getTime() - d0.getTime()) / 60000 + "분").toString();
+                                                                                dialog.dismiss();
+                                                                            } else {
+                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                                                                                    @Override
+                                                                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                                                            getState = snapshot.child("attend_state").getValue(String.class);
+                                                                                            if (getState.equals("미출결")) {
+                                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").child(snapshot.getKey()).setValue("결석");
+                                                                                            }
+                                                                                        }
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                                                                    }
+                                                                                });
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                                                        }
+                                                                    });
+                                                                }
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(final DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+
+                                                    } else {
+                                                        Toast.makeText(getActivity(), "인증번호를 다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(final DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                        } else {
+                                            Toast.makeText(getActivity(), "인증번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                });
+
+                                activity_attend_check_cancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(final View view) {
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                dialog.show();
+                            }
+                        });
+
+                        activity_attend_home_button_datail.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(final View v) {
+                                Intent intent = new Intent(getActivity(), AttendActivity_Detail_Information.class);
+                                uidPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).getKey();
+                                intent.putExtra("uidPath", uidPath);
+                                intent.putExtra("checkPage", 1);
+
+/*                            Bundle bundle = new Bundle();
+                            bundle.putString("uidPath", uidPath);
+                            Fragment fragment = new AttendActivity_Fragment();
+                            fragment.setArguments(bundle);*/
+
+                                startActivity(intent);
+                            }
+                        });
+
+                        activity_attend_home_button_cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(final View v) {
+                                AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+
+                                View view2 = LayoutInflater.from(getActivity())
+                                        .inflate(R.layout.activity_attend_admin_delete, null, false);
+                                builder2.setView(view2);
+
+                                final Button confirmButton = (Button) view2.findViewById(R.id.activity_attend_admin_delete_item_button_confirm);
+                                final Button cancelButton = (Button) view2.findViewById(R.id.activity_attend_admin_delete_item_button_cancel);
+
+                                final AlertDialog dialog2 = builder2.create();
+
+                                confirmButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(final View v) {
+                                        Toast.makeText(getActivity(), "출석이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                                        delete_content(0);
+                                        attenditems.remove(0);
+/*                                    notifyItemRemoved(0);
+                                    notifyItemRangeChanged(0, attenditems.size());*/
+                                        dialog2.dismiss();
+                                    }
+                                });
+
+                                cancelButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(final View v) {
+                                        dialog2.dismiss();
+                                    }
+                                });
+
+                                dialog2.show();
+                            }
+                        });
+
+                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(final DataSnapshot dataSnapshot) {
+                                getTardyTimeLimit = dataSnapshot.child("tardyTimeLimit").getValue(String.class);
+                                if (getTardyTimeLimit != null) {
+                                    now = System.currentTimeMillis();
+                                    // 현재시간을 date 변수에 저장한다.
+                                    Date date = new Date(now);
+                                    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    nowtardyTimeLimit = simpleDateFormat.format(date);
+
+                                    Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                                    Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                                    long diff = d1.getTime() - d2.getTime();
+                                    if (diff < 0) {
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    if (snapshot.child("attend_state").getValue().equals("미출결")) {
+                                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                                    }
+                                                }
+                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("Attend_Certification_Number").removeValue();
+                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("attendTimeLimit").removeValue();
+                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(dataSnapshot2.getKey()).child("tardyTimeLimit").removeValue();
+                                            }
+
+                                            @Override
+                                            public void onCancelled(final DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(final DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
+
+        progressDialog.dismiss();
+
+/*        activity_attend_home_admin_recyclerview_main_list = (RecyclerView) view.findViewById(R.id.activity_attend_home_recyclerview_main_list);
         activity_attend_home_admin_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         final AttendFragment0.AttendActivity_AdminRecyclerViewAdapter attendActivity_adminRecyclerViewAdapter = new AttendFragment0.AttendActivity_AdminRecyclerViewAdapter();
@@ -151,13 +482,14 @@ public class AttendFragment0 extends Fragment {
             public void onCancelled(final DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         activity_attend_home_admin_button_insert = (Button) view.findViewById(R.id.activity_attend_home_button_insert);
         activity_attend_home_admin_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog.setMessage("출석을 추가하는 중입니다...");
+                progressDialog.setCancelable(false);
                 progressDialog.show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -341,7 +673,7 @@ public class AttendFragment0 extends Fragment {
 
     // AttendActivity 어댑터
 
-    class AttendActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+/*    class AttendActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
@@ -589,10 +921,10 @@ public class AttendFragment0 extends Fragment {
                                     intent.putExtra("uidPath", uidPath);
                                     intent.putExtra("checkPage", 1);
 
-/*                                    Bundle bundle = new Bundle();
+*//*                                    Bundle bundle = new Bundle();
                                     bundle.putString("uidPath", uidPath);
                                     Fragment fragment = new AttendActivity_Fragment();
-                                    fragment.setArguments(bundle);*/
+                                    fragment.setArguments(bundle);*//*
 
                                     startActivity(intent);
 
@@ -762,6 +1094,22 @@ public class AttendFragment0 extends Fragment {
         public int getItemCount() {
             return attenditems.size();
         }
+
+    }*/
+
+    private void delete_content(final int position) {
+
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(final Void aVoid) {
+                Toast.makeText(getActivity(), "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull final Exception e) {
+
+            }
+        });
 
     }
 

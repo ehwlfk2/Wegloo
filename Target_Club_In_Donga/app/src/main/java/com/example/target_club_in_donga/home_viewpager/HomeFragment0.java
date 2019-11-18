@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
@@ -44,6 +45,9 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private DrawerLayout drawerLayout;
     private View drawer_menu_view;
     private LinearLayout user_infomation, go_board;
+
+    private Button home_admin_attend;
+
     /**
      * 홈 화면
      */
@@ -79,6 +83,15 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         menu_opener = view.findViewById(R.id.home_button_menu);
         user_infomation = view.findViewById(R.id.profile_myinfomation);
         go_board = view.findViewById(R.id.go_Board);
+        home_admin_attend = view.findViewById(R.id.home_admin_attend);
+
+        home_admin_attend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent  = new Intent(getActivity(), AttendActivity_Admin_Home.class);
+                startActivity(intent);
+            }
+        });
 
         menu_opener.setOnClickListener(new View.OnClickListener() {
             @Override

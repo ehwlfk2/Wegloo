@@ -85,6 +85,19 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
         activity_attend_detail_textview_certification_number_name.setVisibility(View.GONE);
         activity_attend_detail_textview_certification_number.setVisibility(View.GONE);
 
+        activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
+            @Override
+            public void onDrawerOpened() {
+                menu_count++;
+            }
+        });
+
+        activity_attend_detail_slidingdrawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
+            @Override
+            public void onDrawerClosed() {
+                menu_count--;
+            }
+        });
 
         activity_attend_detail_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_detail_recyclerview_main_list);
         activity_attend_detail_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(AttendActivity_Admin_Detail_Information.this));
@@ -276,7 +289,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                 activity_attend_detail_textview_attend.setText("출석현황");
 
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                         attendAdminItems.clear();
@@ -314,7 +327,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                 activity_attend_detail_textview_attend.setText("지각현황");
 
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                         attendAdminItems.clear();
@@ -351,7 +364,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                 activity_attend_detail_textview_attend.setText("결석현황");
 
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                         attendAdminItems.clear();
@@ -496,4 +509,14 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if (menu_count > 0) {
+            activity_attend_detail_slidingdrawer.animateClose();
+        } else {
+            finish();
+        }
+    }
+
 }
