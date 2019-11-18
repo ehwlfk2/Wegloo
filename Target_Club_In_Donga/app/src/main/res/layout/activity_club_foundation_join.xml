@@ -13,22 +13,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/fragment_home_btn_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="출석"/>
-
-        <Button
             android:id="@+id/fragment_home_btn_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="출석관리자"/>
-
-        <Button
-            android:id="@+id/fragment_home_btn_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="내정보"/>
 
     </LinearLayout>
 
