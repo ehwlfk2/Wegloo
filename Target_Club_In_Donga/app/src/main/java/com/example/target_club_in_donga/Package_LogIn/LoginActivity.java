@@ -59,8 +59,6 @@ import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +70,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private SessionCallback callback;      //콜백 선언
     private FirebaseFunctions mFunctions;
     private com.kakao.usermgmt.LoginButton btn_kakao;
-    JSONObject json = new JSONObject();
     //유저프로필
     String token = "";
     String name = "";
@@ -102,6 +99,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         ImageView activity_login_google_btn = findViewById(R.id.login_button_google);
         ImageView activity_login_facebook_btn = findViewById(R.id.login_button_facebook);
         ImageView activity_login_kakao_btn = findViewById(R.id.login_button_kakao);
+        TextView reset_id = findViewById(R.id.reset_id_pw);
         btn_kakao = findViewById(R.id.oringin_kakao);
         // find email, pw
         activity_login_id_editText = findViewById(R.id.login_edittext_id);
@@ -127,6 +125,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         activity_login_facebook_btn.setOnClickListener(this);
         activity_login_login_btn.setOnClickListener(this);
         activity_login_kakao_btn.setOnClickListener(this);
+        reset_id.setOnClickListener(this);
 
 
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -348,6 +347,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             progressDialog.show();
             Log.v("develop_check", "카카오톡 로그인 시도");
             btn_kakao.performClick();
+        } else if (i == R.id.reset_id_pw){
+            Intent intent = new Intent(getApplicationContext(), Reset_id_pw.class);
+            startActivity(intent);
         }
     }   // onClick
 
@@ -357,7 +359,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         @Override
         public void onSessionOpened() {
             requestMe();
-            //redirectSignupActivity();  // 세션 연결성공 시 redirectSignupActivity() 호출
         }
 
         @Override
