@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.PushMessages;
 
 import com.example.target_club_in_donga.Package_LogIn.LoginData;
+import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +29,7 @@ public class SendPushMessages {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    LoginData data = snapshot.getValue(LoginData.class);
+                    JoinData data = snapshot.getValue(JoinData.class);
                     if(data.isPushAlarmOnOff() && !(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))){ //자기한텐 안보내기 추가
                         try{
                             SendPushMessages send = new SendPushMessages();

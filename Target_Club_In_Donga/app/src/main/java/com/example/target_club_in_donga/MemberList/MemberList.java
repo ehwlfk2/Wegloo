@@ -32,6 +32,7 @@ import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Execute;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.example.target_club_in_donga.Vote.VoteActivity_Result;
+import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -48,7 +49,7 @@ public class MemberList extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
-    private ArrayList<LoginData> loginDataArrayList = new ArrayList<>();
+    private ArrayList<JoinData> loginDataArrayList = new ArrayList<>();
     private List<String> dbey = new ArrayList<>();
     private int rank, myRank;
     private LinearLayoutManager linearLayoutManager;
@@ -71,7 +72,7 @@ public class MemberList extends AppCompatActivity {
                 loginDataArrayList.clear();
                 dbey.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    LoginData loginData = snapshot.getValue(LoginData.class);
+                    JoinData loginData = snapshot.getValue(JoinData.class);
                     loginDataArrayList.add(loginData);
                     if(snapshot.getKey().equals(auth.getCurrentUser().getUid())){
                         myRank = loginData.getAdmin();
