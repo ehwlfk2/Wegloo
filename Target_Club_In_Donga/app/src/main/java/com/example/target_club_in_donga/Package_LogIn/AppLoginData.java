@@ -10,8 +10,16 @@ public class AppLoginData {
     private String reailNameProPicUrl;
     private String reailNameProPicDeleteName;
     private Object joinedTimestamp; //가입날짜
-
+    private String emailLoginEmail;
     public Map<String, Object> signUpClub  = new HashMap<>();
+
+    public String getEmailLoginEmail() {
+        return emailLoginEmail;
+    }
+
+    public void setEmailLoginEmail(String emailLoginEmail) {
+        this.emailLoginEmail = emailLoginEmail;
+    }
 
     public String getName() {
         return name;

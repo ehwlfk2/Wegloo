@@ -56,11 +56,11 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private TextView home_textview_main;
     private ImageButton menu_opener;
     private FirebaseDatabase firebaseDatabase;
-    private DrawerLayout drawerLayout;
+    public static DrawerLayout drawerLayout;
     private View drawer_menu_view;
     private LinearLayout user_infomation, go_board;
     private ImageButton home_button_timeline;
-
+    public static boolean menuToggle = false;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
     /**
      * 홈 화면
@@ -254,6 +254,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 // 열릴 때
+            menuToggle = true;
         }
 
         @Override
@@ -264,6 +265,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         @Override
         public void onDrawerClosed(@NonNull View drawerView) {
 // 닫혔을때
+            menuToggle = false;
         }
 
         @Override
