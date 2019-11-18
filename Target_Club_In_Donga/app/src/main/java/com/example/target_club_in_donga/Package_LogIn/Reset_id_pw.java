@@ -46,6 +46,7 @@ public class Reset_id_pw extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if( phonenumber.equals(loginData.getPhone()) ){
+
                     Dialog_Find_Email dialog_find_email = new Dialog_Find_Email(getApplicationContext());
                 }
                 else{
