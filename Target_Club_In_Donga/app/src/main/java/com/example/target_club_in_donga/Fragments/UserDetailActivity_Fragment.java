@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.Attend.Attend_Information_Item;
 import com.example.target_club_in_donga.HomeActivity;
-import com.example.target_club_in_donga.Package_LogIn.LoginData;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.firebase.auth.FirebaseAuth;

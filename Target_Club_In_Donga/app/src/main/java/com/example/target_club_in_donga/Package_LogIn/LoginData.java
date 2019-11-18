@@ -46,15 +46,12 @@ public class LoginData {
    /*public String getStudentNumber() {
         return studentNumber;
     }
-
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
     }
-
     public String getSchool() {
         return school;
     }
-
     public void setSchool(String school) {
         this.school = school;
     }*/

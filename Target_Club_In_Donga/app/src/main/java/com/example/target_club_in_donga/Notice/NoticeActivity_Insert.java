@@ -25,8 +25,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.target_club_in_donga.Package_LogIn.LoginData;
-import com.example.target_club_in_donga.PushMessages.NotificationModel;
 import com.example.target_club_in_donga.PushMessages.SendPushMessages;
 import com.example.target_club_in_donga.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,22 +32,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.melnykov.fab.FloatingActionButton;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;

@@ -127,7 +127,6 @@ public class SignUpActivity_03 extends AppCompatActivity implements View.OnClick
     }   // onClick
 
     private void createUser(final String emailAddress, final String pw) {
-        //LoginData data = new LoginData(name, phone, studentNumber, school, 0);
         mAuth.createUserWithEmailAndPassword(emailAddress,pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
