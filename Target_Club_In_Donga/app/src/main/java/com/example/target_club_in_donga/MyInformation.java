@@ -203,8 +203,11 @@ public class MyInformation extends AppCompatActivity {
                 //school.setText(loginData.getSchool());
                 //studentID.setText(loginData.getStudentNumber());
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+
             }
         });*/
 
