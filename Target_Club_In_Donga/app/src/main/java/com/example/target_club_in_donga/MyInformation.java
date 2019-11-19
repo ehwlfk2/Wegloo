@@ -27,11 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Attend.Attend_Information_Item;
-/*import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Admin_Insert;
-import com.example.target_club_in_donga.Material_Rental.MaterialRental_Item;
-import com.example.target_club_in_donga.Package_LogIn.LoginData;*/
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,9 +41,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 //import static com.example.target_club_in_donga.MainActivity.clubName;
@@ -225,14 +219,14 @@ public class MyInformation extends AppCompatActivity {
         activity_user_detail_recyclerview_main_list.setAdapter(MyInformationActivity_adminRecyclerViewAdapter);
         MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
                 uidLists.clear();
                 listSize = 0;
                 for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
-                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {

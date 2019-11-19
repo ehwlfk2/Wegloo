@@ -1,14 +1,11 @@
 package com.example.target_club_in_donga.home_viewpager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
@@ -20,23 +17,19 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
-import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.facebook.login.LoginManager;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -233,9 +226,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.home_frame_attendance:
-                viewAdapter.addItem(new AttendFragment0());
-                viewAdapter.notifyDataSetChanged();
-                viewAdapter.functionCurrent();
+                Intent intent2 = new Intent(getActivity(), AttendActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.home_frame_calender:
 
@@ -254,8 +246,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 viewAdapter.functionCurrent();
                 break;
             case R.id.Manage_Attend:
-                Intent intent2 = new Intent(getActivity(), AttendActivity_Admin_Home.class);
-                startActivity(intent2);
+                Intent intent3 = new Intent(getActivity(), AttendActivity_Admin_Home.class);
+                startActivity(intent3);
                 break;
         }
     }
