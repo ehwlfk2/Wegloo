@@ -20,12 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class Reset_id_pw extends AppCompatActivity {
     private FirebaseDatabase database;
-    private FirebaseAuth auth;
-    ArrayList<AppLoginData> appLoginDatas = new ArrayList<>();
     EditText signed_name, signed_Phone, signed_email;
 
     @Override
@@ -37,7 +33,6 @@ public class Reset_id_pw extends AppCompatActivity {
         signed_Phone = findViewById(R.id.find_user_phonenumber);
         signed_email = findViewById(R.id.find_user_email);
         database = FirebaseDatabase.getInstance();
-        auth = FirebaseAuth.getInstance();
         Button findEmail_btn = findViewById(R.id.find_userID_btn);
         Button findpw = findViewById(R.id.find_user_pw);
 
