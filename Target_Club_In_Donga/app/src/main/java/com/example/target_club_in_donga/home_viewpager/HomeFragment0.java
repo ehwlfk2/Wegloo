@@ -280,4 +280,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         return simpleDateFormat.format(date);
     }
+
+    
 }
