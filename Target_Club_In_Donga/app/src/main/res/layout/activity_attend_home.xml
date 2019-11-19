@@ -31,10 +31,13 @@
             android:layout_gravity="center" />
 
         <LinearLayout
+            android:id="@+id/activity_attend_home_linearlayout_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:padding="10dp"
+            android:visibility="invisible">
 
         <Button
             style="@style/Content_Classification_Text_Style"
@@ -43,8 +46,8 @@
             android:layout_height="wrap_content"
             android:text="출석하기"
             android:layout_gravity="center"
-            android:visibility="invisible"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:padding="10dp" />
 
         <Button
             style="@style/Content_Classification_Text_Style"
@@ -53,18 +56,39 @@
             android:layout_height="wrap_content"
             android:text="상세보기"
             android:layout_gravity="center"
-            android:visibility="invisible"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:padding="10dp" />
 
         </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_attend_home_linearlayout_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:padding="10dp"
+        android:visibility="invisible">
+
+        <Button
+            style="@style/Content_Classification_Text_Style"
+            android:id="@+id/activity_attend_home_button_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="인증번호"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
 
         <Button
             style="@style/Content_Classification_Text_Style"
             android:id="@+id/activity_attend_home_button_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="삭제하기"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

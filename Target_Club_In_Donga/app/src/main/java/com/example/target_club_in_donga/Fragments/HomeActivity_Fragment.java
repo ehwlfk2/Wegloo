@@ -179,14 +179,6 @@ public class HomeActivity_Fragment extends Fragment {
             }
         }); // btn4 일정
 
-        menu_detail_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), UserDetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
         main_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
