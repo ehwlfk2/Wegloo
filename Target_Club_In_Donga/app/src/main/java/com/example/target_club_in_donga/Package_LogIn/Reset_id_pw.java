@@ -52,6 +52,7 @@ public class Reset_id_pw extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getData();
+
             }
         });
 
@@ -78,6 +79,7 @@ public class Reset_id_pw extends AppCompatActivity {
         database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                
                 int flag = 0;
                 for ( DataSnapshot snapshot : dataSnapshot.getChildren() ){
                     AppLoginData appLoginData = snapshot.getValue(AppLoginData.class);
