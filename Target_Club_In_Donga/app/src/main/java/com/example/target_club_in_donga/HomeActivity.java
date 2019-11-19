@@ -9,14 +9,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.target_club_in_donga.Activity_Adapters.HomeActivity_Adapter;
 import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class HomeActivity extends AppCompatActivity implements HomeActivity_Fragment.OnFragmentInteractionListener {
     private ViewPager viewPager;
