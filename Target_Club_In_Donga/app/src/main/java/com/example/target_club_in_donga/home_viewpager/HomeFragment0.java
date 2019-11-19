@@ -25,7 +25,6 @@ import android.widget.TextView;
 import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Board.Board_Main;
-import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
 import com.example.target_club_in_donga.R;
@@ -87,10 +86,12 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         noticeIntentBtn = view.findViewById(R.id.home_layout_notice);
         home_textview_main = view.findViewById(R.id.home_textview_main);
         home_button_timeline = view.findViewById(R.id.home_button_timeline);
+
         drawerLayout = view.findViewById(R.id.drawer_layout);
         drawer_menu_view = view.findViewById(R.id.menu_drawer_ver);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         menu_opener = view.findViewById(R.id.home_button_menu);
+
         user_infomation = view.findViewById(R.id.profile_myinfomation);
         go_board = view.findViewById(R.id.go_Board);
         home_notice_title1 = view.findViewById(R.id.home_notice_title1);
@@ -107,6 +108,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 drawerLayout.openDrawer(drawer_menu_view);
             }
         });
+
         user_infomation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +123,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
+
         drawerLayout.setDrawerListener(listner);
         drawer_menu_view.setOnTouchListener(new View.OnTouchListener() {
             @Override

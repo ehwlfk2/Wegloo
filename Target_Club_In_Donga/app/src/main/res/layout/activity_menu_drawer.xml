@@ -30,7 +30,7 @@
             android:layout_gravity="right|center"
             android:layout_marginRight="15dp"
             android:background="@null"
-            android:src="@drawable/menubtn_logout"/>
+            android:src="@drawable/ic_exit_to_app_24px"/>
     </LinearLayout>
     <!--END 동아리명, 로그아웃-->
 
@@ -223,7 +223,7 @@
                     android:paddingBottom="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="동아리 활동"
+                    android:text="모임 활동"
                     android:textSize="13dp"
                     android:paddingLeft="18dp"
                     android:textColor="#333232"/>
@@ -482,9 +482,10 @@
                     android:paddingLeft="18dp"
                     android:textColor="#333232"/>
             </LinearLayout>
-            <!-- START 물품 관리 -->
+
+            <!-- START 가입 요청 승인 -->
             <LinearLayout
-                android:id="@+id/Manage_Material_Rent"
+                android:id="@+id/Manage_Accept_Request"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -495,7 +496,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:paddingLeft="18dp"
-                    android:text="물품 관리"/>
+                    android:text="모임가입 요청보기"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -507,7 +508,35 @@
                     android:layout_marginRight="15dp"
                     android:layout_gravity="right|center"/>
             </LinearLayout>
-            <!-- END 물품 관리 -->
+            <!-- END 가입 요청 승인 -->
+
+            <!-- START 동아리 정보 수정 -->
+            <LinearLayout
+                android:id="@+id/Manage_Group_Info"
+                android:paddingTop="19dp"
+                android:paddingBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:paddingLeft="18dp"
+                    android:text="모임 관리"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/arrow_btn"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="right|center"/>
+            </LinearLayout>
+            <!-- END 동아리 정보 수정 -->
+
             <!-- START 출결 정보 -->
             <LinearLayout
                 android:id="@+id/Manage_Attend"
@@ -534,9 +563,10 @@
                     android:layout_gravity="right|center"/>
             </LinearLayout>
             <!-- END 출결 정보 -->
-            <!-- START 동아리 정보 수정 -->
+
+            <!-- START 물품 관리 -->
             <LinearLayout
-                android:id="@+id/Manage_Group_Info"
+                android:id="@+id/Manage_Material_Rent"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -559,33 +589,8 @@
                     android:layout_marginRight="15dp"
                     android:layout_gravity="right|center"/>
             </LinearLayout>
-            <!-- END 동아리 정보 수정 -->
-            <!-- START 가입 요청 승인 -->
-            <LinearLayout
-                android:id="@+id/Manage_Accept_Request"
-                android:paddingTop="19dp"
-                android:paddingBottom="10dp"
-                android:background="?attr/selectableItemBackground"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:paddingLeft="18dp"
-                    android:text="회원가입 요청보기"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/arrow_btn"
-                    android:layout_marginRight="15dp"
-                    android:layout_gravity="right|center"/>
-            </LinearLayout>
-            <!-- END 가입 요청 승인 -->
+            <!-- END 물품 관리 -->
+
             <!-- END 관리자 메뉴 -->
 
         </LinearLayout>

@@ -54,15 +54,15 @@ public class VoteActivity_Result extends AppCompatActivity {
         Toast.makeText(this, "항목 클릭하면 누군지 볼수있음!!!", Toast.LENGTH_SHORT).show();
 
         //activityvote_result_listview = (ListView)findViewById(R.id.activityvote_result_listview);
-        activityvote_result_textview_title = (TextView)findViewById(R.id.activityvote_result_textview_title);
-        activityvote_result_textview_date = (TextView)findViewById(R.id.activityvote_result_textview_date);
-        activityvote_result_textview_totalcount = (TextView)findViewById(R.id.activityvote_result_textview_totalcount);
+        activityvote_result_textview_title = findViewById(R.id.activityvote_result_textview_title);
+        activityvote_result_textview_date = findViewById(R.id.activityvote_result_textview_date);
+        activityvote_result_textview_totalcount = findViewById(R.id.activityvote_result_textview_totalcount);
 
         Intent intent = getIntent();
         dbKey = intent.getExtras().getString("key");
 
         database = FirebaseDatabase.getInstance();
-        items = new ArrayList<Vote_Item_Count>();
+        items = new ArrayList<>();
 
         database.getReference().child("EveryClub").child(clubName).child("Vote").child(dbKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
