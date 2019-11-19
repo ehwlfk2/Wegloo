@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.drawerLayout;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.menuToggle;
 
 public class HomeActivityView extends AppCompatActivity {
     public static MoviePagerAdapter viewAdapter;
@@ -142,14 +144,25 @@ public class HomeActivityView extends AppCompatActivity {
         int count = activity_home_viewPager.getCurrentItem();
         //Log.e("count",count+"");
         if (count == 1) { //어플끄기
-            backPressCloseHandler.onBackPressed();
+            if(menuToggle){
+                drawerLayout.closeDrawers();
+            }
+            else{
+                backPressCloseHandler.onBackPressed();
+            }
+
         }
         else if(count == 0 && isRecent){
             activity_home_viewPager.setCurrentItem(1);
         }
         else if(count == 0){
             //어플끄기
-            backPressCloseHandler.onBackPressed();
+            if(menuToggle){
+                drawerLayout.closeDrawers();
+            }
+            else{
+                backPressCloseHandler.onBackPressed();
+            }
         }
         else if(count == 2){
             activity_home_viewPager.setCurrentItem(1);

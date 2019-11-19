@@ -201,6 +201,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
                     itemDTO.setName(name);
                     itemDTO.setPhone(phoneNumber);
                     itemDTO.setJoinedTimestamp(System.currentTimeMillis());
+                    itemDTO.setEmailLoginEmail(firebaseAuth.getCurrentUser().getEmail());
 
                     firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
                     progressDialog.dismiss();
@@ -216,6 +217,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
             itemDTO.setName(name);
             itemDTO.setPhone(phoneNumber);
             itemDTO.setJoinedTimestamp(System.currentTimeMillis());
+            itemDTO.setEmailLoginEmail(firebaseAuth.getCurrentUser().getEmail());
 
             firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
             progressDialog.dismiss();

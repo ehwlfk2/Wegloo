@@ -9,9 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,21 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
-import com.example.target_club_in_donga.Package_LogIn.LoginData;
 import com.example.target_club_in_donga.R;
-import com.example.target_club_in_donga.Vote.VoteActivity_Execute;
-import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.example.target_club_in_donga.Vote.VoteActivity_Result;
+import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -48,7 +39,7 @@ public class MemberList extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
-    private ArrayList<LoginData> loginDataArrayList = new ArrayList<>();
+    private ArrayList<JoinData> loginDataArrayList = new ArrayList<>();
     private List<String> dbey = new ArrayList<>();
     private int rank, myRank;
     private LinearLayoutManager linearLayoutManager;
@@ -71,7 +62,7 @@ public class MemberList extends AppCompatActivity {
                 loginDataArrayList.clear();
                 dbey.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    LoginData loginData = snapshot.getValue(LoginData.class);
+                    JoinData loginData = snapshot.getValue(JoinData.class);
                     loginDataArrayList.add(loginData);
                     if(snapshot.getKey().equals(auth.getCurrentUser().getUid())){
                         myRank = loginData.getAdmin();

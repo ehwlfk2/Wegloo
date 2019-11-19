@@ -56,21 +56,6 @@ public class VoteActivity_Main extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
-        /*
-
-        database.getReference().child("User").child(auth.getCurrentUser().getUid()).child("Admin").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                adminCheck = dataSnapshot.getValue(boolean.class);
-                Log.e("1",""+adminCheck);
-                vvvv();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
 
         //Intent intent = getIntent();
         //adminCheck = intent.getExtras().getBoolean("adminCheck");

@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga.TimeLine;
+package com.example.target_club_in_donga.home_viewpager;
 
 public class TimeLine_Item {
     private String name;
