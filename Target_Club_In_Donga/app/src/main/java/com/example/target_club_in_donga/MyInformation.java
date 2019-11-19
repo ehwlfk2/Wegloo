@@ -108,7 +108,7 @@ public class MyInformation extends AppCompatActivity {
             finish();
         }
 
-        Glide.with(this).load(myInformationItems.get(0).imageUri).into(profile);
+//        Glide.with(this).load(myInformationItems.get(0).imageUri).into(profile);
 
         profile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
