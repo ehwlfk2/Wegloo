@@ -47,13 +47,11 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
     private ImageView activity_material_rental_admin_insert_imageview_image;
     private EditText activity_material_rental_admin_insert_edittext_item_name;
     private Button activity_material_rental_admin_insert_button_insert;
-    private String imagePath;
+    private String imagePath, material_path, getEditName;
 
     private long now;
 
-    String material_path, getEditName;
-
-    int count = 0;
+    private int count = 0;
     //메뉴를 클릭했는지 안했는지 확인하기 위해서 사용
 
     @Override

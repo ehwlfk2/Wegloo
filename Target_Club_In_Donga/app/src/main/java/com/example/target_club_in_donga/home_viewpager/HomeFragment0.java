@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
@@ -49,7 +50,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private FirebaseDatabase firebaseDatabase;
     public static DrawerLayout drawerLayout;
     private View drawer_menu_view;
-    private LinearLayout user_infomation, go_board;
+    private LinearLayout user_infomation, go_board, Manage_Attend;
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
@@ -98,6 +99,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         home_notice_writer2 = view.findViewById(R.id.home_notice_writer2);
         home_notice_date1 = view.findViewById(R.id.home_notice_date1);
         home_notice_date2 = view.findViewById(R.id.home_notice_date2);
+        Manage_Attend = view.findViewById(R.id.Manage_Attend);
 
         menu_opener.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +213,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         boardIntentBtn.setOnClickListener(this);
         noticeIntentBtn.setOnClickListener(this);
         home_button_timeline.setOnClickListener(this);
+        Manage_Attend.setOnClickListener(this);
         return view;
     }
 
@@ -225,7 +228,9 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.home_frame_attendance:
-
+                viewAdapter.addItem(new AttendFragment0());
+                viewAdapter.notifyDataSetChanged();
+                viewAdapter.functionCurrent();
                 break;
             case R.id.home_frame_calender:
 
@@ -242,6 +247,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 viewAdapter.addItem(new TimeLineFragment0());
                 viewAdapter.notifyDataSetChanged();
                 viewAdapter.functionCurrent();
+                break;
+            case R.id.Manage_Attend:
+                Intent intent2 = new Intent(getActivity(), AttendActivity_Admin_Home.class);
+                startActivity(intent2);
                 break;
         }
     }
