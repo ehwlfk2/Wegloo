@@ -10,7 +10,6 @@ public class Attend_Admin_Item {
         this.id = id;
     }
 
-    public String state;
     public String startTime;
     public String attendTimeLimit;
     public String tardyTimeLimit;

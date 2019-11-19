@@ -159,7 +159,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                                 flag = 1;
                                 activity_attend_admin_information_home_category.setText("일자 별");
-                                database.getReference().child("EveryClub").child(clubName).child("AttendActivity").addValueEventListener(new ValueEventListener() {
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                         attenditems.clear();
@@ -227,14 +227,14 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                 attend_admin_information_home_button_search.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").addValueEventListener(new ValueEventListener() {
+                        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                 searchList.clear();
                                 uidLists.clear();
                                 listSize = 0;
                                 for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
-                                    database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -376,7 +376,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                 case R.id.attend_detail:
 
                                     Intent intent = new Intent(AttendActivity_Admin_Home.this, AttendActivity_Detail_Information.class);
-                                    uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(uidLists.get(position)).getKey();
+                                    uidAdminPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).getKey();
                                     intent.putExtra("uidAdminPath", uidAdminPath);
                                     intent.putExtra("checkPage", 0);
 
@@ -506,7 +506,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                     PopupMenu(customViewHolder2, position);
 
-/*                    database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() == null) {
@@ -521,7 +521,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                         public void onCancelled(final DatabaseError databaseError) {
 
                         }
-                    });*/
+                    });
 
                     break;
 
@@ -543,7 +543,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
         private void delete_content(final int position) {
 
-            database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(final Void aVoid) {
                     Toast.makeText(AttendActivity_Admin_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();

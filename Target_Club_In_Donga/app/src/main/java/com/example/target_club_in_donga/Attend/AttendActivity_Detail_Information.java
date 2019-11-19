@@ -123,7 +123,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
 //        attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendItems.clear();
@@ -159,7 +159,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 /*        activity_attend_detail_textview_attend.setText("전체현황");
           // 전체출결을 볼 떄 썼음
 
-        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendItems.clear();
@@ -215,7 +215,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
         final ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
-        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -280,7 +280,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
             }
         });
 
-        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("Attend_Certification_Number").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -311,7 +311,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                     activity_attend_detail_textview_attend.setText("출석현황");
 
-                                    database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             attendItems.clear();
@@ -347,7 +347,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                     activity_attend_detail_textview_attend.setText("지각현황");
 
-                                    database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             attendItems.clear();
@@ -382,7 +382,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                     activity_attend_detail_textview_attend.setText("결석현황");
 
-                                    database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             attendItems.clear();
@@ -486,24 +486,24 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                                     case R.id.attend_state_information_attend:
 
-                                        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("출석");
-                                        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").removeValue();
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("출석");
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").removeValue();
                                         popup.dismiss();
 
                                         return true;
 
                                     case R.id.attend_state_information_tardy:
 
-                                        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("지각");
-                                        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").removeValue();
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("지각");
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").removeValue();
                                         popup.dismiss();
 
                                         return true;
 
                                     case R.id.attend_state_information_absent:
 
-                                        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("결석");
-                                        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").removeValue();
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("결석");
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").removeValue();
                                         popup.dismiss();
 
                                         return true;
