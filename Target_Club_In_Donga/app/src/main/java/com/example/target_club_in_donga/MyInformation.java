@@ -29,9 +29,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Attend.Attend_Information_Item;
-import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Admin_Insert;
+/*import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Admin_Insert;
 import com.example.target_club_in_donga.Material_Rental.MaterialRental_Item;
-import com.example.target_club_in_donga.Package_LogIn.LoginData;
+import com.example.target_club_in_donga.Package_LogIn.LoginData;*/
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -193,7 +193,7 @@ public class MyInformation extends AppCompatActivity {
             }
         });
 
-        database.getReference().child("EveryClub").child(clubName).child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+/*        database.getReference().child("EveryClub").child(clubName).child("User").child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 LoginData loginData = dataSnapshot.getValue(LoginData.class);
@@ -208,7 +208,7 @@ public class MyInformation extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 /*        changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
