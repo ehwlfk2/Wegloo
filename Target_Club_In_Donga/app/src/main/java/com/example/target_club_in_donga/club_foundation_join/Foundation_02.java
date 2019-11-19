@@ -275,6 +275,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                             joinData.setApplicationDate(-1*System.currentTimeMillis()); //가입날짜 or 가입신청날짜
                             firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(myUid).setValue(joinData);
                             clubName = clubUid;
+
                             /**
                              * 그클럽으로 인텐트
                              */

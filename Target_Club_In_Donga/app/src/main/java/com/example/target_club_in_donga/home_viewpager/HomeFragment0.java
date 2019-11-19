@@ -1,14 +1,11 @@
 package com.example.target_club_in_donga.home_viewpager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
@@ -20,23 +17,17 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Board.Board_Main;
-import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
-import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.facebook.login.LoginManager;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -94,10 +85,12 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         noticeIntentBtn = view.findViewById(R.id.home_layout_notice);
         home_textview_main = view.findViewById(R.id.home_textview_main);
         home_button_timeline = view.findViewById(R.id.home_button_timeline);
+
         drawerLayout = view.findViewById(R.id.drawer_layout);
         drawer_menu_view = view.findViewById(R.id.menu_drawer_ver);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         menu_opener = view.findViewById(R.id.home_button_menu);
+
         user_infomation = view.findViewById(R.id.profile_myinfomation);
         go_board = view.findViewById(R.id.go_Board);
         home_notice_title1 = view.findViewById(R.id.home_notice_title1);
@@ -114,6 +107,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 drawerLayout.openDrawer(drawer_menu_view);
             }
         });
+
         user_infomation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,6 +122,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
+
         drawerLayout.setDrawerListener(listner);
         drawer_menu_view.setOnTouchListener(new View.OnTouchListener() {
             @Override

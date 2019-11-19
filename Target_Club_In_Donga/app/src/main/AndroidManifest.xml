@@ -90,8 +90,7 @@
         <activity android:name=".Board.Board_Main" />
         <activity android:name=".MemberList.MemberList" />
         <activity android:name=".TimeLine.TimeLineActivity_Main" />
-        <activity android:name=".MyInformation" />
-
+        <activity android:name=".home_viewpager.MyInformationApp" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />

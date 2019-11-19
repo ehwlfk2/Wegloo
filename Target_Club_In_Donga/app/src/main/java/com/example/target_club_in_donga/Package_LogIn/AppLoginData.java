@@ -1,6 +1,10 @@
 package com.example.target_club_in_donga.Package_LogIn;
 
+import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AppLoginData {
@@ -11,7 +15,7 @@ public class AppLoginData {
     private String reailNameProPicDeleteName;
     private Object joinedTimestamp; //가입날짜
     private String emailLoginEmail;
-    public Map<String, Object> signUpClub  = new HashMap<>();
+    //public List<MyClubSeletedItem> signUpClub = new ArrayList<>();
 
     public String getEmailLoginEmail() {
         return emailLoginEmail;

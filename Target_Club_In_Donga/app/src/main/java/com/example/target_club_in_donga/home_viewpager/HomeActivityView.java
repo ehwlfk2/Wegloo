@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.ClubSelectedFragment0.drawerLayoutApp;
+import static com.example.target_club_in_donga.home_viewpager.ClubSelectedFragment0.menuToggleApp;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.drawerLayout;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.menuToggle;
 
@@ -141,8 +143,10 @@ public class HomeActivityView extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //Log.e("item",+"");
+        //Log.e("menuToggleApp",menuToggleApp+"");
         int count = activity_home_viewPager.getCurrentItem();
         //Log.e("count",count+"");
+        //Log.e("isRecent",isRecent+"");
         if (count == 1) { //어플끄기
             if(menuToggle){
                 drawerLayout.closeDrawers();
@@ -153,12 +157,17 @@ public class HomeActivityView extends AppCompatActivity {
 
         }
         else if(count == 0 && isRecent){
-            activity_home_viewPager.setCurrentItem(1);
+            if(menuToggleApp){
+                drawerLayoutApp.closeDrawers();
+            }
+            else{
+                activity_home_viewPager.setCurrentItem(1);
+            }
         }
         else if(count == 0){
             //어플끄기
-            if(menuToggle){
-                drawerLayout.closeDrawers();
+            if(menuToggleApp){
+                drawerLayoutApp.closeDrawers();
             }
             else{
                 backPressCloseHandler.onBackPressed();
