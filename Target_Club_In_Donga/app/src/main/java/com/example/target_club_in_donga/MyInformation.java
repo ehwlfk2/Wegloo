@@ -207,7 +207,6 @@ public class MyInformation extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-
             }
         });*/
 
