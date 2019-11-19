@@ -10,12 +10,9 @@ public class Attend_Admin_Item {
         this.id = id;
     }
 
-    public String clubName;
+    public String state;
     public String startTime;
     public String attendTimeLimit;
     public String tardyTimeLimit;
-
-    public Attend_Admin_Item() {
-    }
 
 }
