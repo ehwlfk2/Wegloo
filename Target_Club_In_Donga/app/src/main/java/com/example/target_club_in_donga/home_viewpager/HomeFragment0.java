@@ -281,5 +281,4 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         return simpleDateFormat.format(date);
     }
 
-    
 }
