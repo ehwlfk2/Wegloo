@@ -66,6 +66,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     public static boolean thisClubIsRealName;
+    public static String userRealName;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
 
     //메뉴 아이템
@@ -345,10 +346,11 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
                 profile_username.setText(appLoginData.getName());
-                if(!appLoginData.getRealNameProPicUrl().equals("None")){
-                    Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail);
+                if(getActivity() != null){
+                    if(!appLoginData.getRealNameProPicUrl().equals("None")){
+                        Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail);
+                    }
                 }
-
             }
 
             @Override
@@ -377,8 +379,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 JoinData joinData = dataSnapshot.getValue(JoinData.class);
                 profile_username.setText(joinData.getName());
-                if(!joinData.getRealNameProPicUrl().equals("None")){
-                    Glide.with(getActivity()).load(joinData.getRealNameProPicUrl()).into(profile_thumbnail);
+                if(getActivity() != null){
+                    if(!joinData.getRealNameProPicUrl().equals("None")){
+                        Glide.with(getActivity()).load(joinData.getRealNameProPicUrl()).into(profile_thumbnail);
+                    }
                 }
                 adminStr(joinData);
                 //Log.e("myResume",myResume);
