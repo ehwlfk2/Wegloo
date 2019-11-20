@@ -13,21 +13,29 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Board.Board_Main;
+import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
+import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
+import com.example.target_club_in_donga.club_foundation_join.ClubData;
+import com.example.target_club_in_donga.club_foundation_join.JoinData;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -48,22 +56,31 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private TextView home_textview_main;
     private ImageButton menu_opener;
     private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth firebaseAuth;
     public static DrawerLayout drawerLayout;
     private View drawer_menu_view;
     private LinearLayout user_infomation, go_board, Manage_Attend;
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
+    public static boolean thisClubIsRealName;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
+
+    //메뉴 아이템
+    private TextView Group_Name, profile_username, profile_admin;
+    private ImageView profile_thumbnail;
+    private String myResume;
+    private boolean pushOnOff;
     /**
      * 홈 화면
      */
     public HomeFragment0() {
         // Required empty public constructor
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
     }
 
     @Override
@@ -78,6 +95,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         final View view = inflater.inflate(R.layout.fragment_home0, container, false);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         voteIntentBtn = view.findViewById(R.id.home_frame_vote);
         attendIntentBtn = view.findViewById(R.id.home_frame_attendance);
         scheduleIntentBtn = view.findViewById(R.id.home_frame_calender);
@@ -101,6 +119,43 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         home_notice_date2 = view.findViewById(R.id.home_notice_date2);
         Manage_Attend = view.findViewById(R.id.Manage_Attend);
 
+        //메뉴 아이템
+        Group_Name = view.findViewById(R.id.Group_Name);
+        profile_username = view.findViewById(R.id.profile_username);
+        profile_admin = view.findViewById(R.id.profile_admin);
+        profile_thumbnail = view.findViewById(R.id.profile_thumbnail);
+
+
+
+
+        firebaseDatabase.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ClubData clubData = dataSnapshot.getValue(ClubData.class);
+                home_textview_main.setText(clubData.getThisClubName());
+                Group_Name.setText(clubData.getThisClubName());
+                thisClubIsRealName = clubData.isRealNameSystem();
+                //Log.e("thisClubIsRealName",thisClubIsRealName+"");
+
+                String userUid = firebaseAuth.getCurrentUser().getUid();
+                if(thisClubIsRealName){
+                    realNameDB(userUid);
+                }
+                else{
+                    notRealNameDB(userUid);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        /**
+         * 이 true를 수정해줘야해
+         */
+
+
         menu_opener.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +167,9 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MyInformation.class);
+                intent.putExtra("thisClubIsRealName",thisClubIsRealName);
+                intent.putExtra("myResume",myResume);
+                intent.putExtra("pushOnOff",pushOnOff);
                 startActivity(intent);
             }
         });
@@ -130,18 +188,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 return true;
             }
         });
-        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("thisClubName").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String title = dataSnapshot.getValue(String.class);
-                home_textview_main.setText(title);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Notice").orderByChild("timestamp").limitToFirst(2).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -283,6 +330,72 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         Date date = new Date(unixTime);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         return simpleDateFormat.format(date);
+    }
+
+    private void realNameDB(String userUid){
+        firebaseDatabase.getReference().child("AppUser").child(userUid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
+                profile_username.setText(appLoginData.getName());
+                if(!appLoginData.getReailNameProPicUrl().equals("None")){
+                    Glide.with(getActivity()).load(appLoginData.getReailNameProPicUrl()).into(profile_thumbnail);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").child(userUid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                JoinData joinData = dataSnapshot.getValue(JoinData.class);
+                //Log.e("admin",admin);
+                myResume = joinData.getResume();
+                pushOnOff = joinData.isPushAlarmOnOff();
+                adminStr(joinData);
+                //Log.e("myResume",myResume);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void notRealNameDB(String userUid){
+        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").child(userUid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                JoinData joinData = dataSnapshot.getValue(JoinData.class);
+                profile_username.setText(joinData.getName());
+                if(!joinData.getRealNameProPicUrl().equals("None")){
+                    Glide.with(getActivity()).load(joinData.getRealNameProPicUrl()).into(profile_thumbnail);
+                }
+                pushOnOff = joinData.isPushAlarmOnOff();
+                myResume = joinData.getResume();
+                adminStr(joinData);
+                //Log.e("myResume",myResume);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void adminStr(JoinData joinData){
+        if(joinData.getAdmin() == 0)
+            profile_admin.setText("회장");
+        else if(joinData.getAdmin() == 1)
+            profile_admin.setText("부회장");
+        else if(joinData.getAdmin() == 2)
+            profile_admin.setText("임원");
+        else if(joinData.getAdmin() == 3)
+            profile_admin.setText("회원");
     }
 
 }
