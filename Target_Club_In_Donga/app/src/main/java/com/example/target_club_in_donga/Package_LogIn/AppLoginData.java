@@ -11,10 +11,26 @@ public class AppLoginData {
     private String name;
     private String phone;
     private String recentClub;
-    private String reailNameProPicUrl;
-    private String reailNameProPicDeleteName;
+    private String realNameProPicUrl;
+    private String realNameProPicDeleteName;
     private Object joinedTimestamp; //가입날짜
     private String emailLoginEmail;
+
+    public String getRealNameProPicUrl() {
+        return realNameProPicUrl;
+    }
+
+    public void setRealNameProPicUrl(String realNameProPicUrl) {
+        this.realNameProPicUrl = realNameProPicUrl;
+    }
+
+    public String getRealNameProPicDeleteName() {
+        return realNameProPicDeleteName;
+    }
+
+    public void setRealNameProPicDeleteName(String realNameProPicDeleteName) {
+        this.realNameProPicDeleteName = realNameProPicDeleteName;
+    }
     //public List<MyClubSeletedItem> signUpClub = new ArrayList<>();
 
     public String getEmailLoginEmail() {
@@ -41,21 +57,6 @@ public class AppLoginData {
         this.phone = phone;
     }
 
-    public String getReailNameProPicUrl() {
-        return reailNameProPicUrl;
-    }
-
-    public void setReailNameProPicUrl(String reailNameProPicUrl) {
-        this.reailNameProPicUrl = reailNameProPicUrl;
-    }
-
-    public String getReailNameProPicDeleteName() {
-        return reailNameProPicDeleteName;
-    }
-
-    public void setReailNameProPicDeleteName(String reailNameProPicDeleteName) {
-        this.reailNameProPicDeleteName = reailNameProPicDeleteName;
-    }
 
     public String getRecentClub() {
         return recentClub;

@@ -125,7 +125,7 @@
             <EditText
                 android:gravity="start"
                 android:layout_marginRight="20dp"
-                android:id="@+id/myinfo_user_PhoneNumber"
+                android:id="@+id/myinfo_user_resume"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:hint=""

@@ -32,10 +32,12 @@ import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
+import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.example.target_club_in_donga.club_foundation_join.ClubData;
 import com.example.target_club_in_donga.club_foundation_join.JoinData;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -69,8 +71,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     //메뉴 아이템
     private TextView Group_Name, profile_username, profile_admin;
     private ImageView profile_thumbnail;
-    private String myResume;
-    private boolean pushOnOff;
+    private ImageButton logout_btn;
+
     /**
      * 홈 화면
      */
@@ -125,7 +127,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         profile_username = view.findViewById(R.id.profile_username);
         profile_admin = view.findViewById(R.id.profile_admin);
         profile_thumbnail = view.findViewById(R.id.profile_thumbnail);
-
+        logout_btn = view.findViewById(R.id.logout_btn);
 
 
 
@@ -169,8 +171,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MyInformation.class);
                 intent.putExtra("thisClubIsRealName",thisClubIsRealName);
-                intent.putExtra("myResume",myResume);
-                intent.putExtra("pushOnOff",pushOnOff);
                 startActivity(intent);
             }
         });
@@ -262,6 +262,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         noticeIntentBtn.setOnClickListener(this);
         home_button_timeline.setOnClickListener(this);
         Manage_Attend.setOnClickListener(this);
+        logout_btn.setOnClickListener(this);
         return view;
     }
 
@@ -286,7 +287,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.home_layout_notice:
-                //Toast.makeText(getContext(), "공지공지", Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(getActivity(), NoticeActivity_Main.class);
                 startActivity(intent1);
                 break;
@@ -298,6 +298,13 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             case R.id.Manage_Attend:
                 Intent intent2 = new Intent(getActivity(), AttendActivity_Admin_Home.class);
                 startActivity(intent2);
+                break;
+            case R.id.logout_btn:
+                FirebaseAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
+                Intent intent3 = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent3);
+                getActivity().finish();
                 break;
         }
     }
@@ -338,8 +345,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
                 profile_username.setText(appLoginData.getName());
-                if(!appLoginData.getReailNameProPicUrl().equals("None")){
-                    Glide.with(getActivity()).load(appLoginData.getReailNameProPicUrl()).into(profile_thumbnail);
+                if(!appLoginData.getRealNameProPicUrl().equals("None")){
+                    Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail);
                 }
 
             }
@@ -354,8 +361,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 JoinData joinData = dataSnapshot.getValue(JoinData.class);
                 //Log.e("admin",admin);
-                myResume = joinData.getResume();
-                pushOnOff = joinData.isPushAlarmOnOff();
                 adminStr(joinData);
                 //Log.e("myResume",myResume);
             }
@@ -375,8 +380,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 if(!joinData.getRealNameProPicUrl().equals("None")){
                     Glide.with(getActivity()).load(joinData.getRealNameProPicUrl()).into(profile_thumbnail);
                 }
-                pushOnOff = joinData.isPushAlarmOnOff();
-                myResume = joinData.getResume();
                 adminStr(joinData);
                 //Log.e("myResume",myResume);
             }

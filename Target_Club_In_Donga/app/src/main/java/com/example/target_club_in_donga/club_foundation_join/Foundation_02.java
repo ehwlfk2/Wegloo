@@ -261,10 +261,6 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                     firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").push().setValue(myClubSeletedItem);
 
                     JoinData joinData = new JoinData();
-                    //joinData.setName(appLoginData.getName());
-                    //joinData.setPhone(appLoginData.getPhone());
-                    //joinData.setRealNameProPicDeleteName(appLoginData.getReailNameProPicDeleteName());
-                    //joinData.setRealNameProPicUrl(appLoginData.getReailNameProPicUrl());
                     joinData.setPushAlarmOnOff(true);
                     joinData.setAdmin(0);
                     joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
