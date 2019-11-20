@@ -55,6 +55,7 @@ import java.util.Date;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeActivityView.viewAdapter;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
 
 public class ClubSelectedFragment0 extends Fragment implements View.OnClickListener {
 
@@ -128,8 +129,12 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
                 //임시 트라이
                 profile_username_App.setText(appLoginData.getName());
+                userRealName = appLoginData.getName();
                 profile_phoneNumber_App.setText(appLoginData.getPhone());
-                Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail_App);
+                if (getActivity() != null) {
+                    Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail_App);
+                }
+
 
             }
 
