@@ -11,11 +11,9 @@ public class Attend_Admin_Information_Item {
     }
 
     public String name;
-    public String attend_state;
     public String phone;
-    //    public static String attendTimeLimit;
-    public  String attendTimeLimit;
 
     public Attend_Admin_Information_Item() {
+
     }
 }

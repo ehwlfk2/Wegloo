@@ -3,99 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="3dp">
 
     <LinearLayout
         android:id="@+id/activity_attend_admin_information_item_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <TextView
+            android:id="@+id/activity_attend_admin_information_item_textview_name"
+            style="@style/Content_Text_Style"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:text="이름" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+        <TextView
+            android:id="@+id/activity_attend_admin_information_item_textview_phone_number"
+            style="@style/Content_Classification_Text_Style"
+            android:layout_weight="1"
+            android:text="전화번호" />
 
-                <TextView
-                    android:id="@+id/activity_attend_admin_information_item_textview_name"
-                    style="@style/Content_Text_Style"
-                    android:text="이름"
-                    android:layout_weight="1"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <TextView
-                        style="@style/Content_Classification_Text_Style"
-                        android:text="출결"
-                        android:layout_weight="2"/>
-
-                    <TextView
-                        android:id="@+id/activity_attend_admin_information_item_textview_attend_state"
-                        style="@style/Content_Text_Style"
-                        android:text="미출결"
-                        android:layout_weight="1"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                style="@style/Line_Style" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    style="@style/Content_Classification_Text_Style"
-                    android:text="출석일"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/activity_attend_admin_information_item_textview_date"
-                    style="@style/Content_Text_Style"
-                    android:text="없음"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    style="@style/Content_Classification_Text_Style"
-                    android:text="전화번호"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/activity_attend_admin_information_item_textview_phone_number"
-                    style="@style/Content_Text_Style"
-                    android:text="없음"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
 
-    <View
-        style="@style/Line_Style" />
+    <View style="@style/Line_Style" />
 
 </LinearLayout>

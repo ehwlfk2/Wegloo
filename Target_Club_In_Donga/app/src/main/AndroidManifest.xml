@@ -6,14 +6,16 @@
     <application
         android:name=".Package_LogIn.GlobalApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/wegloo_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/wegloo_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".Package_LogIn.Dialog_Find_Email"></activity>
+        <activity android:name=".Package_LogIn.Reset_id_pw" />
+        <activity android:name=".club_foundation_join.Join_02_nicName" />
         <activity android:name=".home_viewpager.HomeActivityView" />
-        <activity android:name=".club_foundation_join.Foundation_03" />
         <activity android:name=".club_foundation_join.Foundation_02" />
         <activity android:name=".club_foundation_join.Join_01" />
         <activity android:name=".club_foundation_join.Foundation_01" />
@@ -59,11 +61,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Attend.AttendActivity" />
-        <activity android:name=".Attend.AttendActivity_Admin" />
-        <activity android:name=".Attend.AttendActivity_Admin_Change" />
-        <activity android:name=".Attend.AttendActivity_Admin_Information" />
-        <activity android:name=".Attend.AttendActivity_Home" />
+        <!--<activity android:name=".Attend.AttendActivity_Admin" />-->
+        <activity android:name=".Attend.AttendActivity_Detail_Information" />
+        <activity android:name=".Attend.AttendActivity_Admin_Home" />
+        <activity android:name=".Attend.AttendActivity_Admin_Detail_Information" />
         <activity android:name=".Album.AlbumActivity" />
         <activity android:name=".HomeActivity" />
         <activity
@@ -75,7 +76,6 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".NoticeActivity" />
         <activity android:name=".Schedule.ScheduleActivity" />
-        <activity android:name=".UserDetailActivity" />
         <activity android:name=".History.HistoryActivity_Main" />
         <activity android:name=".History.HistoryActivity_Insert" />
         <activity android:name=".Vote.VoteActivity_Result" />
@@ -83,13 +83,15 @@
         <activity android:name=".Vote.VoteActivity_Main" />
         <activity android:name=".Vote.VoteActivity_Insert" />
         <activity android:name=".Notice.NoticeActivity_Insert" />
+        <activity android:name=".Notice.NoticeActivity_Main"/>
         <activity android:name=".Board.Board_viewpager" />
         <activity android:name=".Board.Board_Detail" />
         <activity android:name=".Board.Board_Write" />
         <activity android:name=".Board.Board_Main" />
         <activity android:name=".MemberList.MemberList" />
         <activity android:name=".TimeLine.TimeLineActivity_Main" />
-
+        <activity android:name=".MyInformation" />
+        <activity android:name=".MyInformationApp" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />

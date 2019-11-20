@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E7E4E4">
+    <!-- START 뒤로가기, 정보수정 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+        <ImageButton
+            android:id="@+id/myinfo_back_app"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/arrow_back"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="내 정보 수정"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+        <ImageButton
+            android:id="@+id/myinfo_confirm_app"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/done_icon_black"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <!-- END 뒤로가기, 정보수정 -->
+    <!-- 실선  -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E7E4E4" />
+    <!-- START 프로필사진, 이름 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000"
+            android:id="@+id/myinfo_profile_Thumbnail_app"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/face"/>
+    </LinearLayout>
+    <!-- END 프로필사진, 이름 -->
+</LinearLayout>

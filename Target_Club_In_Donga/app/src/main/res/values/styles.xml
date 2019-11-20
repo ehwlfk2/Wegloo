@@ -5,7 +5,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/default_color</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/default_color</item>
         <item name="colorAccent">@color/fbutton_color_orange</item>
         <item name="android:statusBarColor">@color/default_color</item>
 
@@ -54,7 +54,7 @@
         <item name="android:fontFamily">@font/lottedreammedium</item>
         <item name="android:saveEnabled">false</item>
         <item name="android:singleLine">true</item>
-        <item name="android:background">#ff6d61</item>
+        <item name="android:background">@color/default_color</item>
         <item name="android:paddingLeft">20dp</item>
         <item name="android:includeFontPadding">false</item>
     </style>

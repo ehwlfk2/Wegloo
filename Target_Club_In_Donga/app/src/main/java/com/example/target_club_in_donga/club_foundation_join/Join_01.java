@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -29,9 +30,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -84,23 +87,20 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                     final AutoCompleteItem entry = new AutoCompleteItem();
                     entry.title = autoCompleteDBItem.clubTitle;
                     entry.clubUid = snapshot.getKey();
-
+                    entry.imageUrl = autoCompleteDBItem.clubProfile;
                     if(!autoCompleteDBItem.clubProfile.equals("None")){
-                        Glide.with(Join_01.this)
-                                .asBitmap()
-                                .load(autoCompleteDBItem.clubProfile)
-                                .into(new CustomTarget<Bitmap>() {
+                        Glide.with(getApplicationContext()).asBitmap().load(autoCompleteDBItem.clubProfile)
+                                .into(new SimpleTarget<Bitmap>() {
                                     @Override
-                                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                                         entry.image = resource;
-                                    }
-
-                                    @Override
-                                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                                        //할일
 
                                     }
                                 });
                     }
+
+                    //entry.imageUrl = autoCompleteDBItem.clubProfile;
                     list.add(entry);
                     //Toast.makeText(Join_01.this, ""+entry.image, Toast.LENGTH_SHORT).show();
                 }
@@ -163,20 +163,6 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                             else{
                                 joinClubDialog();
                             }
-                            /*
-                            try{
-                                boolean check = dataSnapshot.getValue(boolean.class);
-                                if(check){
-                                    Toast.makeText(Join_01.this, "이미 가입된 모임입니다.", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    Toast.makeText(Join_01.this, "가입 요청중인 모임입니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            catch (NullPointerException e){
-                                joinClubDialog();
-                            }*/
-
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -189,10 +175,9 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
     }
 
     public class SearchItemArrayAdapter extends ArrayAdapter<AutoCompleteItem> {
-        private static final String tag = "SearchItemArrayAdapter";
-        private List<AutoCompleteItem> AutoCompleteItemList;
         private List<AutoCompleteItem> tempItems;
         private List<AutoCompleteItem> suggestions;
+        private Context context;
         /**
          *
          * @param context
@@ -201,29 +186,45 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
          */
         public SearchItemArrayAdapter(Context context, int textViewResourceId, List<AutoCompleteItem> objects) {
             super(context, textViewResourceId, objects);
-            AutoCompleteItemList = objects;
             suggestions = new ArrayList<>(objects);
             tempItems = new ArrayList<>(objects);
+            this.context = context;
         }
-
+        public class ViewHolder {
+            TextView txtCustomer;
+            ImageView ivCustomerImage;
+            ImageView ivCustomerImageVis;
+        }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = LayoutInflater.from(context).inflate(R.layout.search_listitem_icon, parent, false);
+                holder.ivCustomerImage = convertView.findViewById(R.id.category_icon);
+                holder.txtCustomer = convertView.findViewById(R.id.search_auto_item);
+                convertView.setTag(holder);
+            }
+            else{
+                holder = (ViewHolder) convertView.getTag();
+            }
 
             AutoCompleteItem autoCompleteItem = getItem(position);
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_listitem_icon, parent, false);
+            holder.txtCustomer.setText(autoCompleteItem.title);
+
+
+            if(!autoCompleteItem.imageUrl.equals("None")){
+                //Glide.with(context).load(autoCompleteItem.imageUrl).into(holder.ivCustomerImage);
+                holder.ivCustomerImage.setImageBitmap(autoCompleteItem.image);
             }
-            TextView txtCustomer =  convertView.findViewById(R.id.search_auto_item);
-            ImageView ivCustomerImage =  convertView.findViewById(R.id.category_icon);
-            if (txtCustomer != null)
-                txtCustomer.setText(autoCompleteItem.title);
-            if (ivCustomerImage != null)
-                ivCustomerImage.setImageBitmap(autoCompleteItem.image);
-            // Now assign alternate color for rows
+            else{
+                //holder.ivCustomerImage.setVisibility(View.GONE);
+                //holder.ivCustomerImageVis.setVisibility(View.VISIBLE);
+                holder.ivCustomerImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+            }
 
             return convertView;
-
-            //return row;
         }
 
         @Override
@@ -306,7 +307,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                     dialog_joinClub_realName.setText("실명 모임");
                 }
                 else{
-                    dialog_joinClub_realName.setText("별명 모임");
+                    dialog_joinClub_realName.setText("닉네임 모임");
                 }
 
                 if(clubData.isFreeSign()){
@@ -325,71 +326,73 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                          * 그모임이 실명제이면!
                          */
                         if(clubData.isRealNameSystem()){
-                            progressDialog.setMessage("가입 중입니다...");
+                            progressDialog.setMessage("가입중입니다...");
+                            progressDialog.setCancelable(false);
                             progressDialog.show();
-                            firebaseDatabase.getReference().child("AppUser").child(userUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                                    JoinData joinData = new JoinData();
-                                    joinData.setName(appLoginData.getName());
-                                    joinData.setPhone(appLoginData.getPhone());
-                                    joinData.setRealNameProPicDeleteName(appLoginData.getReailNameProPicDeleteName());
-                                    joinData.setRealNameProPicUrl(appLoginData.getReailNameProPicUrl());
-                                    joinData.setResume(joinclube_edittext_content.getText().toString());
-                                    joinData.setPushAlarmOnOff(true);
-                                    joinData.setAdmin(3);
-                                    joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
-                                    joinData.setApplicationDate(-1*System.currentTimeMillis()); //가입날짜 or 가입신청날짜
+                            JoinData joinData = new JoinData();
+                            joinData.setResume(joinclube_edittext_content.getText().toString());
+                            joinData.setPushAlarmOnOff(true);
+                            joinData.setAdmin(3);
+                            joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
+                            joinData.setApplicationDate(-1*System.currentTimeMillis()); //가입날짜 or 가입신청날짜
 
-                                    if(clubData.isFreeSign()){
-                                        //가입된거니까 바로넣어주고
-                                        firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(userUid).setValue(joinData);
-                                        //로그인된 유저의 recentClub에 바로 이모임 넣어주고
-                                        firebaseDatabase.getReference().child("AppUser").child(userUid).child("recentClub").setValue(clubUid);
+                            if(clubData.isFreeSign()){
+                                //가입된거니까 바로넣어주고
+                                firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(userUid).setValue(joinData);
+                                //로그인된 유저의 recentClub에 바로 이모임 넣어주고
+                                firebaseDatabase.getReference().child("AppUser").child(userUid).child("recentClub").setValue(clubUid);
 
-                                        //가입된 클럽중에 가입완료된거니까 true
-                                        //firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(true);
-                                        MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
-                                        myClubSeletedItem.setApprovalCompleted(true);
-                                        myClubSeletedItem.setSignUpclubUid(clubUid);
-                                        myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
-                                        myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
-                                        firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
-                                        clubName = clubUid;
-                                        /**
-                                         * 그클럽 홈으로 intent
-                                         */
-                                        finish();
-                                        progressDialog.dismiss();
-                                    }
-                                    else{
-                                        //가입 신청 바로하고
-                                        firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("WantToJoinUser").child(userUid).setValue(joinData);
+                                //가입된 클럽중에 가입완료된거니까 true
+                                //firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(true);
+                                MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                                myClubSeletedItem.setApprovalCompleted(true);
+                                myClubSeletedItem.setSignUpclubUid(clubUid);
+                                myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
+                                myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                                firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
+                                clubName = clubUid;
+                                progressDialog.dismiss();
+                                Intent intent = new Intent(Join_01.this, HomeActivityView.class);
+                                intent.putExtra("isRecent",true);
+                                startActivity(intent);
+                                /**
+                                 * 그클럽 홈으로 intent
+                                 */
+                                finish();
+                            }
+                            else{
+                                //가입 신청 바로하고
+                                firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("WantToJoinUser").child(userUid).setValue(joinData);
 
-                                        //가입된 클럽중에 가입완료아직 안된거니까 false
-                                        //firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(false);
-                                        MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
-                                        myClubSeletedItem.setApprovalCompleted(false);
-                                        myClubSeletedItem.setSignUpclubUid(clubUid);
-                                        myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
-                                        myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
-                                        firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
-                                        /**
-                                         * 승인중 페이지로 intent
-                                         */
-                                        finish();
-                                        progressDialog.dismiss();
-                                    }
-                                }
+                                //가입된 클럽중에 가입완료아직 안된거니까 false
+                                //firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(false);
+                                MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                                myClubSeletedItem.setApprovalCompleted(false);
+                                myClubSeletedItem.setSignUpclubUid(clubUid);
+                                myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
+                                myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                                firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
+                                /**
+                                 * 승인중 페이지로 intent
+                                 */
+                                progressDialog.dismiss();
+                                Intent intent = new Intent(Join_01.this, HomeActivityView.class);
+                                intent.putExtra("isRecent",false);
+                                startActivity(intent);
+                                finish();
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
+                            }
                         }
                         else{
+                            Intent intent = new Intent(Join_01.this, Join_02_nicName.class);
+                            intent.putExtra("isFoundation",false);
+                            intent.putExtra("clubUid",clubUid);
+                            intent.putExtra("resume",joinclube_edittext_content.getText().toString());
+                            intent.putExtra("isFreeSign",clubData.isFreeSign());
+                            intent.putExtra("thisClubName",clubData.getThisClubName());
+                            intent.putExtra("clubProfileUrl",clubData.getClubImageUrl());
+                            startActivity(intent);
+                            finish();
                             /**
                              * 그 모임이 별명제이면
                              * 별명 프로필 만드는곳으로 가서

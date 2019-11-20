@@ -38,7 +38,7 @@ public class Congratulation extends AppCompatActivity {
         signup_05_artborad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    handler.removeCallbacksAndMessages(null);
+                handler.removeCallbacksAndMessages(null);
                 Intent intent = new Intent(Congratulation.this, ClubFoundationJoin.class);
                 startActivity(intent);
                 finish();

@@ -7,6 +7,7 @@ public class MyClubSeletedItem {
     private String signUpclubUid;
     private String signUpclubProfile;
     private boolean approvalCompleted;
+    //public Bitmap signUpclubProfileBitmap;
 
     public String getSignUpclubName() {
         return signUpclubName;

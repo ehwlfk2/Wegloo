@@ -172,6 +172,7 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
 
     private void insertDB(String uri, final String name, final String phoneNumber){
         progressDialog.setMessage("회원가입 중입니다...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         final String uid = firebaseAuth.getCurrentUser().getUid();
         try{
@@ -195,11 +196,12 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
 
                     AppLoginData itemDTO = new AppLoginData();
 
-                    itemDTO.setReailNameProPicUrl(downloadUrl.toString());
-                    itemDTO.setReailNameProPicDeleteName(file.getLastPathSegment());
+                    itemDTO.setRealNameProPicUrl(downloadUrl.toString());
+                    itemDTO.setRealNameProPicDeleteName(file.getLastPathSegment());
                     itemDTO.setName(name);
                     itemDTO.setPhone(phoneNumber);
                     itemDTO.setJoinedTimestamp(System.currentTimeMillis());
+                    itemDTO.setEmailLoginEmail(firebaseAuth.getCurrentUser().getEmail());
 
                     firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
                     progressDialog.dismiss();
@@ -210,11 +212,12 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
             });
         }catch (NullPointerException e){ //프로필 안햇을경우
             AppLoginData itemDTO = new AppLoginData();
-            itemDTO.setReailNameProPicUrl("None");
-            itemDTO.setReailNameProPicDeleteName("None");
+            itemDTO.setRealNameProPicUrl("None");
+            itemDTO.setRealNameProPicDeleteName("None");
             itemDTO.setName(name);
             itemDTO.setPhone(phoneNumber);
             itemDTO.setJoinedTimestamp(System.currentTimeMillis());
+            itemDTO.setEmailLoginEmail(firebaseAuth.getCurrentUser().getEmail());
 
             firebaseDatabase.getReference().child("AppUser").child(uid).setValue(itemDTO);
             progressDialog.dismiss();

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E7E4E4">
+    <!-- START 뒤로가기, 정보수정 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+        <ImageButton
+            android:id="@+id/myinfo_back"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/arrow_back"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="모임내 정보 수정"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+        <ImageButton
+            android:id="@+id/myinfo_confirm"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/done_icon_black"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <!-- END 뒤로가기, 정보수정 -->
+    <!-- 실선  -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E7E4E4" />
+    <!-- START 프로필사진, 이름 -->
+    <LinearLayout
+        android:id="@+id/myinfo_profile_Thumbnail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="#FF000000"
+            android:id="@+id/myinfo_profile_Thumbnail"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/face"/>
+    </LinearLayout>
+    <!-- END 프로필사진, 이름 -->
+    <!-- START 기본정보 -->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기본정보"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:layout_weight="1"
+                />
+            <Switch
+                android:id="@+id/myinfo_user_pushswitch"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Push 알림 "
+                android:checked="true"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/myinfo_user_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp">
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:textSize="17dp"/>
+            <EditText
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:layout_marginRight="20dp"
+                android:id="@+id/myinfo_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=""
+                android:textSize="17dp"
+                android:textColor="#000000"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
+            >
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="자기소개"
+                android:textSize="17dp"/>
+            <EditText
+                android:gravity="start"
+                android:layout_marginRight="20dp"
+                android:id="@+id/myinfo_user_resume"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint=""
+                android:textSize="17dp"
+                android:inputType="textMultiLine"
+                android:maxLength="70"
+                android:textColor="#000000"/>
+        </LinearLayout>
+    </LinearLayout>
+    <!-- END 기본정보 -->
+</LinearLayout>
