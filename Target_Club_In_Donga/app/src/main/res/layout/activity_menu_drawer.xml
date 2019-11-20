@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="240dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
@@ -47,7 +49,9 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="#FF000000"
             android:id="@+id/profile_thumbnail"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
@@ -65,18 +69,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|left"
-                android:text="이름"
+                android:text="이름(닉네임)"
                 android:textSize="15dp"
                 android:layout_marginTop="23dp"
                 android:textColor="#000000" />
             <TextView
-                android:id="@+id/profile_phoneNumber"
+                android:id="@+id/profile_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:layout_gravity="bottom|left"
                 android:textSize="10dp"
-                android:text="휴대폰 번호" />
+                android:text="직책" />
         </LinearLayout>
         <View
             android:layout_width="0dp"
@@ -411,6 +415,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/go_AttendInfo"
+                    android:paddingTop="19dp"
+                    android:paddingBottom="10dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:paddingLeft="18dp"
+                        android:text="출석 정보"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/arrow_btn"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="right|center"/>
+                </LinearLayout>
                 <!-- START 연혁 -->
                 <LinearLayout
                     android:id="@+id/go_History"
@@ -550,7 +578,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:paddingLeft="18dp"
-                    android:text="출결 정보"/>
+                    android:text="출석 관리"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"

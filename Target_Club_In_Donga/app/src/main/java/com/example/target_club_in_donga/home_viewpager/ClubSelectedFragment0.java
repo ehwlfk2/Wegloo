@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.target_club_in_donga.MyInformationApp;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
@@ -53,6 +54,7 @@ import java.util.Date;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeActivityView.viewAdapter;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
 
 public class ClubSelectedFragment0 extends Fragment implements View.OnClickListener {
 
@@ -124,9 +126,11 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
+                //임시 트라이
                 profile_username_App.setText(appLoginData.getName());
                 profile_phoneNumber_App.setText(appLoginData.getPhone());
                 Glide.with(getActivity()).load(appLoginData.getReailNameProPicUrl()).into(profile_thumbnail_App);
+
             }
 
             @Override
@@ -204,6 +208,8 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
 
                 break;
             case R.id.profile_myinfomation_App:
+                Intent intent1 = new Intent(getActivity(), MyInformationApp.class);
+                startActivity(intent1);
                 break;
             case R.id.go_Exit_App:
                 Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
@@ -251,8 +257,9 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
                 public void onClick(View view) {
                     if(data.isApprovalCompleted()){
                         //showProgress("다른 모임 적용중...");
-                        viewAdapter.showProgress("모임 적용중...");
+                        viewAdapter.showProgress("모임 적용중입니다...");
                         clubName = data.getSignUpclubUid();
+                        //thisClubIsRealName
                         if(viewAdapter.getCount() == 1){
                             viewAdapter.addItem(new HomeFragment0());
                         }
