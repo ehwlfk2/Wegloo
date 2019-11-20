@@ -111,7 +111,7 @@ public class HistoryActivity_Insert extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_CODE) {
             //String path = data.getData();
             try {

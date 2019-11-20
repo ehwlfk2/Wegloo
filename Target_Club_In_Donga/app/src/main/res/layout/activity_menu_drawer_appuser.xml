@@ -79,7 +79,7 @@
                 android:layout_marginTop="13dp"
                 android:layout_gravity="bottom|left"
                 android:textSize="10dp"
-                android:text="01072203986" />
+                android:text="01012341234" />
         </LinearLayout>
         <View
             android:layout_width="0dp"

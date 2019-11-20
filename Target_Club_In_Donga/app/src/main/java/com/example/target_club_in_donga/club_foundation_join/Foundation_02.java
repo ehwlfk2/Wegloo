@@ -260,38 +260,27 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                     myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
                     firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").push().setValue(myClubSeletedItem);
 
-                    firebaseDatabase.getReference().child("AppUser").child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                            JoinData joinData = new JoinData();
-                            joinData.setName(appLoginData.getName());
-                            joinData.setPhone(appLoginData.getPhone());
-                            joinData.setRealNameProPicDeleteName(appLoginData.getReailNameProPicDeleteName());
-                            joinData.setRealNameProPicUrl(appLoginData.getReailNameProPicUrl());
-                            joinData.setPushAlarmOnOff(true);
-                            joinData.setAdmin(0);
-                            joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
-                            joinData.setApplicationDate(-1*System.currentTimeMillis()); //가입날짜 or 가입신청날짜
-                            firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(myUid).setValue(joinData);
-                            clubName = clubUid;
+                    JoinData joinData = new JoinData();
+                    //joinData.setName(appLoginData.getName());
+                    //joinData.setPhone(appLoginData.getPhone());
+                    //joinData.setRealNameProPicDeleteName(appLoginData.getReailNameProPicDeleteName());
+                    //joinData.setRealNameProPicUrl(appLoginData.getReailNameProPicUrl());
+                    joinData.setPushAlarmOnOff(true);
+                    joinData.setAdmin(0);
+                    joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
+                    joinData.setApplicationDate(-1*System.currentTimeMillis()); //가입날짜 or 가입신청날짜
+                    firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(myUid).setValue(joinData);
+                    clubName = clubUid;
 
-                            /**
-                             * 그클럽으로 인텐트
-                             */
-                            progressDialog.dismiss();
-                            Toast.makeText(Foundation_02.this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Foundation_02.this, HomeActivityView.class);
-                            intent.putExtra("isRecent",true);
-                            startActivity(intent);
-                            finish();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+                    /**
+                     * 그클럽으로 인텐트
+                     */
+                    progressDialog.dismiss();
+                    Toast.makeText(Foundation_02.this, "모임 만들기 완료!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Foundation_02.this, HomeActivityView.class);
+                    intent.putExtra("isRecent",true);
+                    startActivity(intent);
+                    finish();
 
                 }
             });
@@ -309,10 +298,5 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }
-
-
-
-
-
     }
 }

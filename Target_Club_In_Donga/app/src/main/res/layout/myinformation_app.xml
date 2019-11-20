@@ -19,20 +19,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="내 정보"
+            android:text="내 정보 수정"
             android:textColor="#000000"
             android:textSize="20dp" />
-        <Button
-            android:id="@+id/Edit_myinfo"
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/myinfo_confirm_app"
+            android:layout_width="35dp"
             android:layout_height="30dp"
-            android:text="정보수정"
             android:layout_margin="15dp"
-            android:textSize="17dp"
-            android:textColor="#000000"
-            android:background="#00ff0000"
-            android:layout_alignParentRight="true"
-            android:gravity="center"/>
+            android:background="@drawable/done_icon_black"
+            android:layout_alignParentRight="true"/>
     </RelativeLayout>
     <!-- END 뒤로가기, 정보수정 -->
     <!-- 실선  -->
@@ -45,9 +41,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#FFFFFF">
-        <ImageView
-            android:id="@+id/myinfo_profile_Thumbnail"
+        android:background="#FFFFFF"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000"
+            android:id="@+id/myinfo_profile_Thumbnail_app"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_gravity="center"
@@ -56,59 +56,4 @@
             android:background="@drawable/face"/>
     </LinearLayout>
     <!-- END 프로필사진, 이름 -->
-    <!-- START 기본정보 -->
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#FFFFFF">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="기본정보"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp">
-            <TextView
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:text="이름"
-                android:textSize="17dp"/>
-            <TextView
-                android:id="@+id/myinfo_user_name_app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사용자 이름"
-                android:textSize="17dp"
-                android:textColor="#000000"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="30dp">
-            <TextView
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:text="전화번호"
-                android:textSize="17dp"/>
-            <TextView
-                android:id="@+id/myinfo_user_PhoneNumber_app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사용자 전화번호"
-                android:textSize="17dp"
-                android:textColor="#000000"/>
-        </LinearLayout>
-    </LinearLayout>
-    <!-- END 기본정보 -->
-
 </LinearLayout>
