@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.MyInformation;
@@ -275,9 +276,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.home_frame_attendance:
-                viewAdapter.addItem(new AttendFragment0());
-                viewAdapter.notifyDataSetChanged();
-                viewAdapter.functionCurrent();
+                Intent intent3 = new Intent(getActivity(), AttendActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.home_frame_calender:
 
