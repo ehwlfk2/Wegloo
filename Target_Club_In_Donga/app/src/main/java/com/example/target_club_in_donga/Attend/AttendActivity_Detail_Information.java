@@ -38,6 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class AttendActivity_Detail_Information extends AppCompatActivity {
 
 //    private final int[] img = {R.drawable.aa, R.drawable.bb, R.drawable.cc, R.drawable.dd, R.drawable.ee};
@@ -61,11 +63,8 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
     private SlidingDrawer activity_attend_detail_slidingdrawer;
 
     private RecyclerView activity_attend_detail_recyclerview_main_list;
-    List<Attend_Admin_Change_Item> attendItems = new ArrayList<>();
-    List<String> uidLists = new ArrayList<>();
-
-    private String clubName = "TCID";
-    // 임시로 바꾼 부분
+    private List<Attend_Admin_Change_Item> attendItems = new ArrayList<>();
+    private List<String> uidLists = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -111,8 +110,6 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                 menu_count--;
             }
         });
-
-//        Log.e("값2", menu_count + "");
 
         final AttendActivity_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new AttendActivity_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
 

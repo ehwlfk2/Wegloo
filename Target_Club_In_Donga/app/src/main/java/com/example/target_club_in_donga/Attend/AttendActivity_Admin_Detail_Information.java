@@ -38,6 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
     private Button activity_attend_detail_button_attend_state;
     private TextView activity_attend_detail_textview_certification_number_name, activity_attend_detail_textview_certification_number, activity_attend_detail_textview_attend;
@@ -50,17 +52,14 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
     private int attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, listSize = 0, menu_count = 0;
 
     private RecyclerView activity_attend_detail_recyclerview_main_list;
-    List<Attend_Information_Item> attendAdminItems = new ArrayList<>();
-    List<String> uidLists = new ArrayList<>();
+    private List<Attend_Information_Item> attendAdminItems = new ArrayList<>();
+    private List<String> uidLists = new ArrayList<>();
 
     private ArrayList<String> listStartTime = new ArrayList<>();
 
     private String startTime, userFlag;
 
     private SlidingDrawer activity_attend_detail_slidingdrawer;
-
-    private String clubName = "TCID";
-    // 임시로 바꾼 부분
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -107,118 +106,127 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
         activity_attend_detail_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
         attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child("EveryClub").child(clubName).child("User").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("realNameSystem").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    database.getReference().child("EveryClub").child(clubName).child("User").child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                if (dataSnapshot.getValue().toString().equals("true")) {
+                    database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.child("name").getValue().equals(userName) && dataSnapshot.child("phone").getValue().equals(userPhone)) {
-                                userId = dataSnapshot.getKey();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                if (snapshot.child("name").getValue().equals(userName) && snapshot.child("phone").getValue().equals(userPhone)) {
+                                    userId = snapshot.getKey();
 
-                                activity_attend_piechart.setUsePercentValues(true);
-                                activity_attend_piechart.getDescription().setEnabled(true);
-                                activity_attend_piechart.setExtraOffsets(5, 10, 5, 5);
+                                    activity_attend_piechart.setUsePercentValues(true);
+                                    activity_attend_piechart.getDescription().setEnabled(true);
+                                    activity_attend_piechart.setExtraOffsets(5, 10, 5, 5);
 
-                                activity_attend_piechart.setDragDecelerationFrictionCoef(0.95f);
+                                    activity_attend_piechart.setDragDecelerationFrictionCoef(0.95f);
 
-                                activity_attend_piechart.setDrawHoleEnabled(true);
-                                activity_attend_piechart.setHoleColor(Color.WHITE);
-                                activity_attend_piechart.setTransparentCircleRadius(61f);
+                                    activity_attend_piechart.setDrawHoleEnabled(true);
+                                    activity_attend_piechart.setHoleColor(Color.WHITE);
+                                    activity_attend_piechart.setTransparentCircleRadius(61f);
 
-                                final ArrayList<PieEntry> pieEntries = new ArrayList<>();
+                                    final ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("출석")) {
-                                                attendCount++;
-                                            } else if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("지각")) {
-                                                tardyCount++;
-                                            } else if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("미출결")) {
-                                                unsentCount++;
-                                            } else {
-                                                absentCount++;
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class) != null) {
+                                                    if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("출석")) {
+                                                        attendCount++;
+                                                    } else if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("지각")) {
+                                                        tardyCount++;
+                                                    } else if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("미출결")) {
+                                                        unsentCount++;
+                                                    } else {
+                                                        absentCount++;
+                                                    }
+                                                }
                                             }
-                                        }
 
-                                        if (attendCount > 0) {
-                                            pieEntries.add(new PieEntry(attendCount, "출석"));
-                                        }
-                                        if (tardyCount > 0) {
-                                            pieEntries.add(new PieEntry(tardyCount, "지각"));
-                                        }
-                                        if (unsentCount > 0) {
-                                            pieEntries.add(new PieEntry(unsentCount, "미출결"));
-                                        }
-                                        if (absentCount > 0) {
-                                            pieEntries.add(new PieEntry(absentCount, "결석"));
-                                        }
+                                            if (attendCount > 0) {
+                                                pieEntries.add(new PieEntry(attendCount, "출석"));
+                                            }
+                                            if (tardyCount > 0) {
+                                                pieEntries.add(new PieEntry(tardyCount, "지각"));
+                                            }
+                                            if (unsentCount > 0) {
+                                                pieEntries.add(new PieEntry(unsentCount, "미출결"));
+                                            }
+                                            if (absentCount > 0) {
+                                                pieEntries.add(new PieEntry(absentCount, "결석"));
+                                            }
 
-                                        Description description = new Description();
-                                        description.setText("출석률");
-                                        description.setTextSize(15);
-                                        activity_attend_piechart.setDescription(description);
+                                            Description description = new Description();
+                                            description.setText("출석률");
+                                            description.setTextSize(15);
+                                            activity_attend_piechart.setDescription(description);
 
-                                        activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+                                            activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
 
-                                        PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
-                                        pieDataSet.setSliceSpace(3f);
-                                        pieDataSet.setSelectionShift(4f);
-                                        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                                            PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
+                                            pieDataSet.setSliceSpace(3f);
+                                            pieDataSet.setSelectionShift(4f);
+                                            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 //                                        pieDataSet.setColors(new int[]{R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
 
-                                        PieData pieData = new PieData((pieDataSet));
-                                        pieData.setValueTextSize(15f);
-                                        pieData.setValueTextColor(Color.WHITE);
+                                            PieData pieData = new PieData((pieDataSet));
+                                            pieData.setValueTextSize(15f);
+                                            pieData.setValueTextColor(Color.WHITE);
 
-                                        activity_attend_piechart.setData(pieData);
+                                            activity_attend_piechart.setData(pieData);
 
-                                    }
-
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                    }
-                                });
-
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        attendAdminItems.clear();
-                                        uidLists.clear();
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            if (snapshot.child("User_State").child(userId).child("attend_state").getValue().equals("출석")) {
-                                                Attend_Information_Item attendAdminChangeItem = snapshot.getValue(Attend_Information_Item.class);
-                                                attendAdminChangeItem.attend_state = snapshot.child("User_State").child(userId).child("attend_state").getValue().toString();
-                                                attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
-                                                String uidKey = snapshot.getKey();
-                                                attendAdminItems.add(attendAdminChangeItem);
-                                                uidLists.add(uidKey);
+                                            if (attendCount + tardyCount + unsentCount + absentCount == 0) {
+                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출결현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                finish();
                                             }
-                                            attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+
                                         }
 
-                                        if (attendAdminItems.size() == 0) {
-                                            activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
-                                                @Override
-                                                public void onDrawerOpened() {
-                                                    Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석현황이 없습니다", Toast.LENGTH_SHORT).show();
-                                                    menu_count++;
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            attendAdminItems.clear();
+                                            uidLists.clear();
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class) != null) {
+                                                    if (snapshot.child("User_State").child(userId).child("attend_state").getValue().equals("출석")) {
+                                                        Attend_Information_Item attendAdminChangeItem = snapshot.getValue(Attend_Information_Item.class);
+                                                        attendAdminChangeItem.attend_state = snapshot.child("User_State").child(userId).child("attend_state").getValue().toString();
+                                                        attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
+                                                        String uidKey = snapshot.getKey();
+                                                        attendAdminItems.add(attendAdminChangeItem);
+                                                        uidLists.add(uidKey);
+                                                    }
+                                                    attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                                 }
-                                            });
+                                            }
+
+                                            if (attendAdminItems.size() == 0) {
+                                                activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
+                                                    @Override
+                                                    public void onDrawerOpened() {
+                                                        Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                        menu_count++;
+                                                    }
+                                                });
+                                            }
+
                                         }
 
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
 
-                                    }
-
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                    }
-                                });
+                                        }
+                                    });
 
 
 /*                                database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
@@ -254,6 +262,12 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                     }
                                 });*/
 
+//                        }
+                                }/* else {
+                        database.getReference().child("AppUser").
+
+                    }*/
+
                             }
                         }
 
@@ -263,8 +277,176 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                         }
                     });
 
-                }
+                } else {
+                    database.getReference().child("EveryClub").child(clubName).child("User").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                if (snapshot.child("name").getValue() != null && snapshot.child("name").getValue().equals(userName)) {
+                                    userId = snapshot.getKey();
 
+                                    activity_attend_piechart.setUsePercentValues(true);
+                                    activity_attend_piechart.getDescription().setEnabled(true);
+                                    activity_attend_piechart.setExtraOffsets(5, 10, 5, 5);
+
+                                    activity_attend_piechart.setDragDecelerationFrictionCoef(0.95f);
+
+                                    activity_attend_piechart.setDrawHoleEnabled(true);
+                                    activity_attend_piechart.setHoleColor(Color.WHITE);
+                                    activity_attend_piechart.setTransparentCircleRadius(61f);
+
+                                    final ArrayList<PieEntry> pieEntries = new ArrayList<>();
+
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class) != null) {
+                                                    if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("출석")) {
+                                                        attendCount++;
+                                                    } else if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("지각")) {
+                                                        tardyCount++;
+                                                    } else if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class).equals("미출결")) {
+                                                        unsentCount++;
+                                                    } else {
+                                                        absentCount++;
+                                                    }
+                                                }
+                                            }
+
+                                            if (attendCount > 0) {
+                                                pieEntries.add(new PieEntry(attendCount, "출석"));
+                                            }
+                                            if (tardyCount > 0) {
+                                                pieEntries.add(new PieEntry(tardyCount, "지각"));
+                                            }
+                                            if (unsentCount > 0) {
+                                                pieEntries.add(new PieEntry(unsentCount, "미출결"));
+                                            }
+                                            if (absentCount > 0) {
+                                                pieEntries.add(new PieEntry(absentCount, "결석"));
+                                            }
+
+                                            Description description = new Description();
+                                            description.setText("출석률");
+                                            description.setTextSize(15);
+                                            activity_attend_piechart.setDescription(description);
+
+                                            activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+                                            PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
+                                            pieDataSet.setSliceSpace(3f);
+                                            pieDataSet.setSelectionShift(4f);
+                                            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+//                                        pieDataSet.setColors(new int[]{R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
+
+                                            PieData pieData = new PieData((pieDataSet));
+                                            pieData.setValueTextSize(15f);
+                                            pieData.setValueTextColor(Color.WHITE);
+
+                                            activity_attend_piechart.setData(pieData);
+
+                                            if (attendCount + tardyCount + unsentCount + absentCount == 0) {
+                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출결현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            attendAdminItems.clear();
+                                            uidLists.clear();
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                if (snapshot.child("User_State").child(userId).child("attend_state").getValue(String.class) != null) {
+                                                    if (snapshot.child("User_State").child(userId).child("attend_state").getValue().equals("출석")) {
+                                                        Attend_Information_Item attendAdminChangeItem = snapshot.getValue(Attend_Information_Item.class);
+                                                        attendAdminChangeItem.attend_state = snapshot.child("User_State").child(userId).child("attend_state").getValue().toString();
+                                                        attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
+                                                        String uidKey = snapshot.getKey();
+                                                        attendAdminItems.add(attendAdminChangeItem);
+                                                        uidLists.add(uidKey);
+                                                    }
+                                                    attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                                }
+                                            }
+
+                                            if (attendAdminItems.size() == 0) {
+                                                activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
+                                                    @Override
+                                                    public void onDrawerOpened() {
+                                                        Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                        menu_count++;
+                                                    }
+                                                });
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+/*                                database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                        attendAdminItems.clear();
+                                        uidLists.clear();
+                                        listSize = 0;
+                                        for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            if (snapshot.child("User_State").child(userId).getKey().equals(auth.getCurrentUser().getUid())) {
+                                                startTime = snapshot.child("startTime").getValue().toString();
+                                                listStartTime.add(startTime);
+                                                Attend_Information_Item attendAdminInformationItem = snapshot.child("User_State").child(userId).getValue(Attend_Information_Item.class);
+                                                String uidKey = snapshot.getKey();
+                                                attendAdminItems.add(0, attendAdminInformationItem);
+                                                uidLists.add(0, uidKey);
+                                                listSize++;
+
+                                                for (int i = 0; i < listSize; i++) {
+                                                    attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
+                                                }
+
+                                                // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+                                                attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                            }
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                    }
+                                });*/
+
+//                        }
+                                }/* else {
+                        database.getReference().child("AppUser").
+
+                    }*/
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+
+                    });
+                }
             }
 
             @Override
