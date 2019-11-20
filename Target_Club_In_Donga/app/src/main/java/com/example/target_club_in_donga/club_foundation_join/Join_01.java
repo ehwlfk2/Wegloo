@@ -330,10 +330,6 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                             progressDialog.setCancelable(false);
                             progressDialog.show();
                             JoinData joinData = new JoinData();
-                            //joinData.setName(appLoginData.getName());
-                            //joinData.setPhone(appLoginData.getPhone());
-                            //joinData.setRealNameProPicDeleteName(appLoginData.getReailNameProPicDeleteName());
-                            //joinData.setRealNameProPicUrl(appLoginData.getReailNameProPicUrl());
                             joinData.setResume(joinclube_edittext_content.getText().toString());
                             joinData.setPushAlarmOnOff(true);
                             joinData.setAdmin(3);

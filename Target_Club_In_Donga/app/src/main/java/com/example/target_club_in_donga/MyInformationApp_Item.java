@@ -1,23 +1,24 @@
 package com.example.target_club_in_donga;
 
 public class MyInformationApp_Item {
-    public String getReailNameProPicDeleteName() {
-        return reailNameProPicDeleteName;
+
+    public String getRealNameProPicDeleteName() {
+        return realNameProPicDeleteName;
     }
 
-    public void setReailNameProPicDeleteName(String reailNameProPicDeleteName) {
-        this.reailNameProPicDeleteName = reailNameProPicDeleteName;
+    public void setRealNameProPicDeleteName(String realNameProPicDeleteName) {
+        this.realNameProPicDeleteName = realNameProPicDeleteName;
     }
 
-    public String getReailNameProPicUrl() {
-        return reailNameProPicUrl;
+    public String getRealNameProPicUrl() {
+        return realNameProPicUrl;
     }
 
-    public void setReailNameProPicUrl(String reailNameProPicUrl) {
-        this.reailNameProPicUrl = reailNameProPicUrl;
+    public void setRealNameProPicUrl(String realNameProPicUrl) {
+        this.realNameProPicUrl = realNameProPicUrl;
     }
 
-    private String reailNameProPicDeleteName;
-    private String reailNameProPicUrl;
+    private String realNameProPicDeleteName;
+    private String realNameProPicUrl;
 
 }
