@@ -36,7 +36,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private int listSize = 0;
-    private String clubName = "TCID", startTime;
+    private String startTime;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -54,14 +54,14 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
         activity_attend_my_information_recyclerview_main_list.setAdapter(MyInformationActivity_adminRecyclerViewAdapter);
         MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        database.getReference().child("EveryClub").child(clubName).child("AttendActivity").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
                 uidLists.clear();
                 listSize = 0;
                 for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
-                    database.getReference().child("EveryClub").child(clubName).child("AttendActivity").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {

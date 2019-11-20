@@ -44,11 +44,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class AttendActivity extends AppCompatActivity {
 
-    RecyclerView activity_attend_home_admin_recyclerview_main_list;
-    List<Attend_Admin_Item> attenditems = new ArrayList<>();
-    List<String> uidLists = new ArrayList<>();
+    private RecyclerView activity_attend_home_admin_recyclerview_main_list;
+    private List<Attend_Admin_Item> attenditems = new ArrayList<>();
+    private List<String> uidLists = new ArrayList<>();
 
     private Button activity_attend_home_admin_button_insert;
 
@@ -81,8 +83,6 @@ public class AttendActivity extends AppCompatActivity {
     private Button activity_attend_home_button_attend, activity_attend_home_button_datail, activity_attend_home_button_number, activity_attend_home_button_cancel;
     private LinearLayout activity_attend_home_linearlayout_user, activity_attend_home_linearlayout_admin;
 
-    private String clubName = "TCID";
-
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +113,6 @@ public class AttendActivity extends AppCompatActivity {
         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
                 if (admin > adminNumber) {
                     activity_attend_home_admin_button_insert.setVisibility(View.GONE);
                 }
@@ -169,50 +168,6 @@ public class AttendActivity extends AppCompatActivity {
                                     }
                                 });
 
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.getValue() == null) {
-                                            Toast.makeText(AttendActivity.this, "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
-                                            dialog.dismiss();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                    }
-                                });
-
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("tardyTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.getValue() == null) {
-                                            Toast.makeText(AttendActivity.this, "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
-                                            dialog.dismiss();
-                                        } else {
-                                            now = System.currentTimeMillis();
-                                            // 현재시간을 date 변수에 저장한다.
-                                            Date date = new Date(now);
-                                            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                            nowtardyTimeLimit = simpleDateFormat.format(date);
-                                            getTardyTimeLimit = dataSnapshot.getValue().toString();
-                                            Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                                            Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                                            long diff = d1.getTime() - d2.getTime();
-                                            if (diff < 0) {
-                                                Toast.makeText(AttendActivity.this, "출석중이 아닙니다", Toast.LENGTH_SHORT).show();
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                    }
-                                });
-
                                 activity_attend_check_confirm.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(final View view) {
@@ -221,91 +176,43 @@ public class AttendActivity extends AppCompatActivity {
 
                                         if (EditCertificationNumber.getBytes().length > 0) {
                                             getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
-                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).addValueEventListener(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                    getCertificationNumber = dataSnapshot.getValue().toString();
+                                                    getCertificationNumber = dataSnapshot.child("Attend_Certification_Number").getValue().toString();
 
                                                     if (Integer.parseInt(getCertificationNumber) == getEditCertificationNumber) {
+                                                        getAttend_Time_Limit = dataSnapshot.child("attendTimeLimit").getValue().toString();
 
-                                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("attendTimeLimit").addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                                getAttend_Time_Limit = dataSnapshot.getValue().toString();
+                                                        now = System.currentTimeMillis();
+                                                        // 현재시간을 date 변수에 저장한다.
+                                                        Date date = new Date(now);
+                                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                                        // "yyyy-MM-dd HH:mm"
+                                                        nowDate = simpleDateFormat.format(date);
+                                                        Date d_nowDate = simpleDateFormat.parse(nowDate, new ParsePosition(0));
+                                                        Date d_getAttend_Time_Limit = simpleDateFormat.parse(getAttend_Time_Limit, new ParsePosition(0));
+                                                        long diff = d_getAttend_Time_Limit.getTime() - d_nowDate.getTime();
+                                                        // 출석 끝나는 시간과 현재 시간을 비교해서 출석인지 지각인지 확인하기 위해서
 
-                                                                now = System.currentTimeMillis();
-                                                                // 현재시간을 date 변수에 저장한다.
-                                                                Date date = new Date(now);
-                                                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                                                // "yyyy-MM-dd HH:mm"
-                                                                nowDate = simpleDateFormat.format(date);
-                                                                Date d2 = simpleDateFormat.parse(nowDate, new ParsePosition(0));
-                                                                Date d1 = simpleDateFormat.parse(getAttend_Time_Limit, new ParsePosition(0));
-                                                                long diff = d1.getTime() - d2.getTime();
-                                                                // 출석 끝나는 시간과 현재 시간을 비교해서 출석인지 지각인지 확인하기 위해서
+                                                        if (diff > 0) {
+                                                            Toast.makeText(AttendActivity.this, "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
+                                                            dialog.dismiss();
+                                                        } else {
+                                                            getTardy_Time_Limit = dataSnapshot.child("tardyTimeLimit").getValue().toString();
+                                                            Date d_getTardy_Time_Limit = simpleDateFormat.parse(getTardy_Time_Limit, new ParsePosition(0));
+                                                            long diff2 = d_getTardy_Time_Limit.getTime() - d_nowDate.getTime();
+                                                            // 지각 끝나는 시간과 현재 시간을 비교해서 지각인지 결석인지 확인하기 위해서
+                                                            Log.e("값", diff2 + "");
 
-                                                                if (diff > 0) {
-                                                                    Toast.makeText(AttendActivity.this, "출석이 완료되었습니다", Toast.LENGTH_SHORT).show();
-                                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("출석");
-                                                                    dialog.dismiss();
-                                                                } else {
-                                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                        @Override
-                                                                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                                            getTardy_Time_Limit = dataSnapshot.child("tardyTimeLimit").getValue().toString();
-                                                                            getStart_Time = dataSnapshot.child("startTime").getValue().toString();
-
-                                                                            now = System.currentTimeMillis();
-                                                                            // 현재시간을 date 변수에 저장한다.
-                                                                            Date date = new Date(now);
-                                                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                                                            // "yyyy-MM-dd HH:mm"
-                                                                            nowDate = simpleDateFormat.format(date);
-                                                                            Date d2 = simpleDateFormat.parse(nowDate, new ParsePosition(0));
-                                                                            Date d1 = simpleDateFormat.parse(getTardy_Time_Limit, new ParsePosition(0));
-                                                                            Date d0 = simpleDateFormat.parse(getStart_Time, new ParsePosition(0));
-                                                                            long diff = d1.getTime() - d2.getTime();
-                                                                            // 지각 끝나는 시간과 현재 시간을 비교해서 지각인지 결석인지 확인하기 위해서
-
-                                                                            if (diff > 0) {
-                                                                                Toast.makeText(AttendActivity.this, "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
-                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
-                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("late_time").setValue("+" + (d2.getTime() - d0.getTime()) / 60000 + "분").toString();
-                                                                                dialog.dismiss();
-                                                                            } else {
-                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
-                                                                                    @Override
-                                                                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                                                            getState = snapshot.child("attend_state").getValue(String.class);
-                                                                                            if (getState.equals("미출결")) {
-                                                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(snapshot.getKey()).setValue("결석");
-                                                                                            }
-                                                                                        }
-                                                                                    }
-
-                                                                                    @Override
-                                                                                    public void onCancelled(final DatabaseError databaseError) {
-
-                                                                                    }
-                                                                                });
-                                                                            }
-                                                                        }
-
-                                                                        @Override
-                                                                        public void onCancelled(final DatabaseError databaseError) {
-
-                                                                        }
-                                                                    });
-                                                                }
-
+                                                            if (diff2 > 0) {
+                                                                Toast.makeText(AttendActivity.this, "출석시간이 지났습니다(지각)", Toast.LENGTH_SHORT).show();
+                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").setValue("지각").toString();
+                                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("late_time").setValue("+" + (d_nowDate.getTime() - d_getAttend_Time_Limit.getTime()) / 60000 + "분").toString();
+                                                                dialog.dismiss();
                                                             }
-
-                                                            @Override
-                                                            public void onCancelled(final DatabaseError databaseError) {
-
-                                                            }
-                                                        });
+                                                        }
 
                                                     } else {
                                                         Toast.makeText(AttendActivity.this, "인증번호를 다시 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -320,9 +227,8 @@ public class AttendActivity extends AppCompatActivity {
                                             });
 
                                         } else {
-                                            Toast.makeText(AttendActivity.this, "인증번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AttendActivity.this, "인증번호를 다시 입력해주세요", Toast.LENGTH_SHORT).show();
                                         }
-
                                     }
                                 });
 
@@ -374,9 +280,6 @@ public class AttendActivity extends AppCompatActivity {
                                         Toast.makeText(AttendActivity.this, "출석이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                         delete_content(snapshot2.getKey());
                                         flag4 = 1;
-/*                                        activity_attend_home_textview.setText("출석중이 아닙니다");
-                                        activity_attend_home_linearlayout_user.setVisibility(View.GONE);
-                                        activity_attend_home_linearlayout_admin.setVisibility(View.GONE);*/
                                         dialog2.dismiss();
                                     }
                                 });
@@ -391,6 +294,7 @@ public class AttendActivity extends AppCompatActivity {
                                 dialog2.show();
 
                             }
+
                         });
 
                         getTardyTimeLimit = snapshot2.child("tardyTimeLimit").getValue(String.class);
@@ -408,11 +312,26 @@ public class AttendActivity extends AppCompatActivity {
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("Attend_Certification_Number").removeValue();
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("attendTimeLimit").removeValue();
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("tardyTimeLimit").removeValue();
+
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            getState = snapshot.child("attend_state").getValue().toString();
+                                            if (getState.equals("미출결")) {
+                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
                         }
 
-                    } else {
-                        activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -436,6 +355,7 @@ public class AttendActivity extends AppCompatActivity {
 
                 if (flag4 == 1) {
                     activity_attend_home_textview.setText("출석중이 아닙니다");
+                    activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
                     activity_attend_home_linearlayout_user.setVisibility(View.GONE);
                     activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
                 }
@@ -586,13 +506,69 @@ public class AttendActivity extends AppCompatActivity {
 
                             // 회원 가입한 날짜와 현재 날짜를 비교해서 출석을 시작 하고 난 후에 회원가입을 하면 그 전에 했던 출석에 포함되지 않아야 한다.
 
-                            database.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            database.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
+                                        database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    // 파이어베이스 AppUser에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
+                                                    getName = snapshot.child("name").getValue(String.class);
+                                                    getPhone = snapshot.child("phone").getValue(String.class);
+
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
+
+                                                    Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
+                                                    attendAdminChangeItem.name = getName;
+                                                    attendAdminChangeItem.attend_state = "미출결";
+                                                    attendAdminChangeItem.phone = getPhone;
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(final DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                    } else {
+                                        database.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    // 파이어베이스 clubName -> User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
+                                                    getName = snapshot.child("name").getValue(String.class);
+
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue("전화번호 없음");
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
+
+                                                    Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
+                                                    attendAdminChangeItem.name = getName;
+                                                    attendAdminChangeItem.attend_state = "미출결";
+                                                    attendAdminChangeItem.phone = "전화번호 없음";
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(final DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+
+/*                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                         // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
-                                        getName = snapshot.child("name").getValue(String.class);
-                                        getPhone = snapshot.child("phone").getValue(String.class);
+                                        getName = snapshot.child("User").child("name").getValue(String.class);
+                                        getPhone = snapshot.child("User").child("phone").getValue(String.class);
+
+
                                         database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
                                         database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
                                         database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
@@ -601,7 +577,7 @@ public class AttendActivity extends AppCompatActivity {
                                         attendAdminChangeItem.name = getName;
                                         attendAdminChangeItem.attend_state = "미출결";
                                         attendAdminChangeItem.phone = getPhone;
-                                    }
+                                    }*/
                                 }
 
                                 @Override
@@ -609,6 +585,7 @@ public class AttendActivity extends AppCompatActivity {
 
                                 }
                             });
+
 
                             Toast.makeText(AttendActivity.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
 /*                            Intent intent = new Intent(AttendActivity_Admin.this, AttendActivity_Home.class);

@@ -277,8 +277,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.home_frame_attendance:
-                Intent intent3 = new Intent(getActivity(), AttendActivity.class);
-                startActivity(intent3);
+                Intent intent4 = new Intent(getActivity(), AttendActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.home_frame_calender:
 
