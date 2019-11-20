@@ -186,16 +186,40 @@
         tools:ignore="HardcodedText,UnusedAttribute" />
 
     <TextView
+        android:id="@+id/login_button_finduser"
+
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.407589696"
+        app:layout_constraintHorizontal_bias="0.254547378"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.039583333"
+        app:layout_constraintVertical_bias="0.759375"
+
+        android:gravity="center_horizontal"
+        android:text="아이디'비밀번호"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeTextType="uniform"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText,UnusedAttribute" />
+
+    <TextView
         android:id="@+id/login_button_signup"
 
         android:layout_width="0dp"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.498620055"
-        app:layout_constraintHorizontal_bias="0.500459982"
+        app:layout_constraintWidth_percent="0.18951242"
+        app:layout_constraintHorizontal_bias="0.686292548"
         android:layout_height="0dp"
         app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.032395833"
-        app:layout_constraintVertical_bias="0.766927083"
+        app:layout_constraintHeight_percent="0.039583333"
+        app:layout_constraintVertical_bias="0.759375"
 
         android:gravity="center_horizontal"
         android:text="회원가입"
@@ -208,7 +232,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="HardcodedText,UnusedAttribute" />
-
     <ImageView
         android:id="@+id/login_button_facebook"
 

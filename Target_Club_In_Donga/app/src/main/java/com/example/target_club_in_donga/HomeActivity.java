@@ -2,15 +2,9 @@ package com.example.target_club_in_donga;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.target_club_in_donga.Activity_Adapters.HomeActivity_Adapter;
@@ -23,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+
 public class HomeActivity extends AppCompatActivity implements HomeActivity_Fragment.OnFragmentInteractionListener {
     private ViewPager viewPager;
     private BackPressCloseHandler backPressCloseHandler;

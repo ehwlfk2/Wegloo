@@ -61,7 +61,9 @@ public class ClubFoundationJoin extends AppCompatActivity {
         tempIntentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent  = new Intent(ClubFoundationJoin.this, Foundation_03.class);
+                startActivity(intent);
+                finish();
             }
         });
 
