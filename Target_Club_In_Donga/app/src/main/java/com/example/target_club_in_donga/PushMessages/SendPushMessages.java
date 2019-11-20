@@ -1,6 +1,5 @@
 package com.example.target_club_in_donga.PushMessages;
 
-import com.example.target_club_in_donga.Package_LogIn.LoginData;
 import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

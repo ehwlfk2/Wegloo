@@ -107,6 +107,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         progressDialog.setMessage("물품대여를 불러오는 중입니다...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
 //        <------------------------------------------------------------------------------------------------------------------------------------------>
@@ -216,6 +217,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             private void search(final String charText) {
 
                 progressDialog.setMessage("검색 중입니다...");
+                progressDialog.setCancelable(false);
                 progressDialog.show();
 
                 if (flag == 0) {
