@@ -42,9 +42,25 @@
 
         </LinearLayout>
 
-        <TextView
-            style="@style/Top_Content_Text_Style"
-            android:text="출결정보" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                style="@style/Top_Content_Text_Style"
+                android:text="출결정보"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/activity_attend_admin_information_home_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="카테고리"
+                android:layout_weight="2"/>
+
+        </LinearLayout>
 
         <View
             style="@style/Line_Style" />

@@ -196,8 +196,8 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
 
                     AppLoginData itemDTO = new AppLoginData();
 
-                    itemDTO.setReailNameProPicUrl(downloadUrl.toString());
-                    itemDTO.setReailNameProPicDeleteName(file.getLastPathSegment());
+                    itemDTO.setRealNameProPicUrl(downloadUrl.toString());
+                    itemDTO.setRealNameProPicDeleteName(file.getLastPathSegment());
                     itemDTO.setName(name);
                     itemDTO.setPhone(phoneNumber);
                     itemDTO.setJoinedTimestamp(System.currentTimeMillis());
@@ -212,8 +212,8 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
             });
         }catch (NullPointerException e){ //프로필 안햇을경우
             AppLoginData itemDTO = new AppLoginData();
-            itemDTO.setReailNameProPicUrl("None");
-            itemDTO.setReailNameProPicDeleteName("None");
+            itemDTO.setRealNameProPicUrl("None");
+            itemDTO.setRealNameProPicDeleteName("None");
             itemDTO.setName(name);
             itemDTO.setPhone(phoneNumber);
             itemDTO.setJoinedTimestamp(System.currentTimeMillis());

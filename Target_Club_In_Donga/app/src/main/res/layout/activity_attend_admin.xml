@@ -6,13 +6,6 @@
     android:padding="10dp">
 
     <TextView
-        style="@style/Top_Content_Text_Style"
-        android:text="출결관리자" />
-
-    <View
-        style="@style/Line_Style" />
-
-    <TextView
         style="@style/Content_Classification_Text_Style"
         android:text="출석시간" />
 
@@ -79,20 +72,11 @@
                 android:layout_weight="1"/>
     </RadioGroup>
 
-    <View
-        style="@style/Line_Style" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <View style="@style/Line_Style" />
 
     <Button
         android:id="@+id/activity_attend_admin_button_attendance_start"
         style="@style/Content_Classification_Text_Style"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-2dp"
-        android:text="출결시작하기" />
-
-    </RelativeLayout>
+        android:text="출석시작하기" />
 
 </LinearLayout>

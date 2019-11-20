@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:id="@+id/menu_drawer_ver_App"
+    android:background="#FFFFFF">
+
+    <!--START 동아리명, 로그아웃-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/Group_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wegloo에 가입된 정보"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:layout_margin="15dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <ImageButton
+            android:id="@+id/logout_btn_App"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:src="@drawable/ic_exit_to_app_24px"/>
+    </LinearLayout>
+    <!--END 동아리명, 로그아웃-->
+
+    <!-- 실선  -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0" />
+
+    <!--START 내정보 -->
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_myinfomation_App"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF000000"
+            android:id="@+id/profile_thumbnail_App"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/face"/>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/profile_username_App"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:text="이름이"
+                android:textSize="15dp"
+                android:layout_marginTop="23dp"
+                android:textColor="#000000" />
+            <TextView
+                android:id="@+id/profile_phoneNumber_App"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="bottom|left"
+                android:textSize="10dp"
+                android:text="01012341234" />
+        </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/arrow_btn"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="right|center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DDE9E7E7">
+        <TextView
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기타"
+            android:textSize="13dp"
+            android:paddingLeft="18dp"
+            android:textColor="#333232"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/go_Exit_App"
+            android:paddingTop="19dp"
+            android:paddingBottom="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:paddingLeft="18dp"
+                android:text="회원 탈퇴"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_btn"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="right|center"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -202,26 +202,6 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
                     finish();
                 }
             });
-
-
-
-
-
-//            firebaseDatabase.getReference().child("AppUser").child(userUid).child("recentClub").setValue(foundationUid);
-//
-//            MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
-//            myClubSeletedItem.setApprovalCompleted(true);
-//            myClubSeletedItem.setSignUpclubProfile(foundationUrl);
-//            myClubSeletedItem.setSignUpclubUid(foundationUid);
-//            myClubSeletedItem.setSignUpclubName(foundationName);
-//
-//            firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
-
-//            progressDialog.dismiss();
-//            Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
-//            intent.putExtra("isRecent",true);
-//            startActivity(intent);
-//            finish();
         }
         /**
          * 일반 가입 프로필

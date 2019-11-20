@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_artborad"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageButton
+        android:id="@+id/home_button_menu_App"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_menu_24px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintHorizontal_bias="0.137465501"
+
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.055833333"
+        app:layout_constraintVertical_bias="0.05925"
+
+        />
+
+    <ImageView
+        android:id="@+id/home_view_logo"
+        android:layout_width="0dp"
+
+        android:layout_height="0dp"
+        android:background="@drawable/wegloo_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.055552083"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.065796875"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.356338546" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintVertical_bias="1"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_clubSelected_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.melnykov.fab.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add"
+            android:id="@+id/fragment_clubSelected_button_intent"
+            fab:fab_colorNormal="@color/default_color"
+            fab:fab_colorPressed="@color/fbutton_color_orange"
+            fab:fab_colorRipple="@color/fbutton_color_carrot" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
