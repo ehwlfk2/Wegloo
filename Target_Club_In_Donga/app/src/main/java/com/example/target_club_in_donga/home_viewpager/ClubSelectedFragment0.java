@@ -129,7 +129,7 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
                 //임시 트라이
                 profile_username_App.setText(appLoginData.getName());
                 profile_phoneNumber_App.setText(appLoginData.getPhone());
-                Glide.with(getActivity()).load(appLoginData.getReailNameProPicUrl()).into(profile_thumbnail_App);
+                Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail_App);
 
             }
 

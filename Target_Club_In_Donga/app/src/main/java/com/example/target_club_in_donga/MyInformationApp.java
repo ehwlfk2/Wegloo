@@ -41,7 +41,7 @@ public class MyInformationApp extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
     private String imagePath;
     private static final int GALLERY_CODE = 10;
-    private String infoUrl;
+    //private String infoUrl;
     private String infoDelete;
     private ProgressDialog progressDialog;
     @Override
@@ -64,11 +64,10 @@ public class MyInformationApp extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 MyInformationApp_Item myInformationApp_item = dataSnapshot.getValue(MyInformationApp_Item.class);
                 //Log.e("imageUrl",imageUrl+"");
-                if(!myInformationApp_item.getReailNameProPicUrl().equals("None")){
-                    Glide.with(MyInformationApp.this).load(myInformationApp_item.getReailNameProPicUrl()).into(myinfo_profile_Thumbnail_app);
+                if(!myInformationApp_item.getRealNameProPicUrl().equals("None")){
+                    Glide.with(MyInformationApp.this).load(myInformationApp_item.getRealNameProPicUrl()).into(myinfo_profile_Thumbnail_app);
                 }
-                infoUrl = myInformationApp_item.getReailNameProPicUrl();
-                infoDelete = myInformationApp_item.getReailNameProPicDeleteName();
+                infoDelete = myInformationApp_item.getRealNameProPicDeleteName();
             }
 
             @Override
@@ -164,15 +163,15 @@ public class MyInformationApp extends AppCompatActivity {
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
                     //firebaseDatabase.getReference().child("AppUser").child(userUid).setValue(myInformationApp_item);
-                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("reailNameProPicDeleteName").setValue(file.getLastPathSegment());
-                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("reailNameProPicUrl").setValue(downloadUrl.toString());
+                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicDeleteName").setValue(file.getLastPathSegment());
+                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicUrl").setValue(downloadUrl.toString());
                     progressDialog.dismiss();
                     finish();
                 }
             });
         }catch (NullPointerException e){
-            firebaseDatabase.getReference().child("AppUser").child(userUid).child("reailNameProPicDeleteName").setValue("None");
-            firebaseDatabase.getReference().child("AppUser").child(userUid).child("reailNameProPicUrl").setValue("None");
+            firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicDeleteName").setValue("None");
+            firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicUrl").setValue("None");
             progressDialog.dismiss();
             //firebaseDatabase.getReference().child("AppUser").child(userUid).setValue(myInformationApp_item);
             finish();
