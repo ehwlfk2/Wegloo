@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -119,16 +120,40 @@ public class MyInformation extends AppCompatActivity {
         myinfo_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(!isRealName){ //닉네임
-                    if(imagePath != null){ //제대로 사진하나를 수정하기위해 눌럿을경우
-                        progressDialog.setMessage("수정중입니다...");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                        delete_item(infoDelete);
-                    }
-                    else{ //사진말고 다른것들만 바꿀경우
-                        textUpload(userUid);
-                    }
+                    firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            boolean nicCheck = false;
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                String tempName = ds.child("name").getValue(String.class);
+                                if(tempName.equals(myinfo_user_name.getText().toString()) && !ds.getKey().equals(userUid)){
+                                    nicCheck = true;
+                                    break;
+                                }
+                            }
+                            if(nicCheck){
+                                Toast.makeText(MyInformation.this, "이미 존재하는 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                if(imagePath != null){ //제대로 사진하나를 수정하기위해 눌럿을경우
+                                    progressDialog.setMessage("수정중입니다...");
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.show();
+                                    delete_item(infoDelete);
+                                }
+                                else{ //사진말고 다른것들만 바꿀경우
+                                    textUpload(userUid);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
                 else{ //실명
                     String resume = myinfo_user_resume.getText().toString();

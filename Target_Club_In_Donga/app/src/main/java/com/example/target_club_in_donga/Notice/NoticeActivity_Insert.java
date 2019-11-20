@@ -39,6 +39,8 @@ import java.util.List;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
 
 public class NoticeActivity_Insert extends AppCompatActivity{
 
@@ -160,15 +162,21 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String uidName = dataSnapshot.getValue(String.class);
+                                String userName = dataSnapshot.getValue(String.class);
 
                                 //Notice_Item notice_item = new Notice_Item(uidName,title,content,activity_notice_insert_switch.isChecked(), System.currentTimeMillis());
                                 //
                                 Notice_Item notice_item = new Notice_Item();
-                                notice_item.setWriter(uidName);
+                                if(thisClubIsRealName){
+                                    notice_item.setWriter(userRealName);
+                                }
+                                else{
+                                    notice_item.setWriter(userName);
+                                }
+
                                 notice_item.setContent(content);
                                 notice_item.setSwitchOnOff(activity_notice_insert_switch.isChecked());
-                                notice_item.setTitle(title.toString());
+                                notice_item.setTitle(title);
                                 notice_item.notice_item_colors = color_item;
                                 //notice_item.style = (Object[]) styleSpans2;
                                 //notice_item.stars.put("title",title);
@@ -200,7 +208,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         notice_item.setWriter(updateWriter);
                         notice_item.setContent(content);
                         notice_item.setSwitchOnOff(activity_notice_insert_switch.isChecked());
-                        notice_item.setTitle(title.toString());
+                        notice_item.setTitle(title);
                         notice_item.notice_item_colors = color_item;
                         notice_item.setTimestamp(-1*System.currentTimeMillis());
                         database.getReference().child("EveryClub").child(clubName).child("Notice").child(dbKey).setValue(notice_item);
