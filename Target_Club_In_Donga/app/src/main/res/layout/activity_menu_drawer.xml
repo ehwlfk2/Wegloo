@@ -369,6 +369,7 @@
 
             <!-- START 관리자 (물품관리, 출결정보, 동아리정보수정, 가입요청승인)-->
             <LinearLayout
+                android:id="@+id/manage_layout1"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -385,8 +386,14 @@
             </LinearLayout>
 
             <!-- START 가입 요청 승인 -->
+        <LinearLayout
+            android:id="@+id/manage_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:id="@+id/Manage_Accept_Request"
+                android:id="@+id/go_Manage_Accept_Request"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -413,7 +420,7 @@
 
             <!-- START 동아리 정보 수정 -->
             <LinearLayout
-                android:id="@+id/Manage_Group_Info"
+                android:id="@+id/go_Manage_Group"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -440,7 +447,7 @@
 
             <!-- START 출결 정보 -->
             <LinearLayout
-                android:id="@+id/Manage_Attend"
+                android:id="@+id/go_Manage_Attend"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -467,7 +474,7 @@
 
             <!-- START 물품 관리 -->
             <LinearLayout
-                android:id="@+id/Manage_Material_Rent"
+                android:id="@+id/go_Manage_Material_Rent"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -493,7 +500,7 @@
             <!-- END 물품 관리 -->
 
             <!-- END 관리자 메뉴 -->
-
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <!-- END 스크롤뷰 -->
