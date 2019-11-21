@@ -35,6 +35,7 @@
 
             <Button
                 android:id="@+id/attend_admin_information_home_button_search"
+                android:background="@drawable/button_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="확인"
@@ -46,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:paddingTop="5dp">
 
             <TextView
                 style="@style/Top_Content_Text_Style"
@@ -55,6 +57,7 @@
 
             <Button
                 android:id="@+id/activity_attend_admin_information_home_category"
+                android:background="@drawable/button_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="카테고리"

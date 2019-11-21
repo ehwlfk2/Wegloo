@@ -17,14 +17,15 @@
         <Button
             android:id="@+id/activity_attend_admin_delete_item_button_confirm"
             style="@style/Content_Classification_Text_Style"
+            android:background="@drawable/button_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인"
-            android:layout_centerHorizontal="true"/>
+            android:text="확인" />
 
         <Button
             android:id="@+id/activity_attend_admin_delete_item_button_cancel"
             style="@style/Content_Classification_Text_Style"
+            android:background="@drawable/button_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"
