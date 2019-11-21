@@ -34,7 +34,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
@@ -53,10 +56,11 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
     private Button activity_attend_admin_information_home_category;
 
-    private String startTime;
+    private String startTime, getTardyTimeLimit, nowtardyTimeLimit, getState;
     private int listSize = 0, flag = 0, admin, flag2 = 0;
 
     private TextView activity_attend_admin_information_item_textview_phone_number;
+    private long now;
 
     public static String uidAdminPath;
 
@@ -80,6 +84,53 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
         activity_attend_admin_information_home_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
         attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
+                    getTardyTimeLimit = snapshot2.child("tardyTimeLimit").getValue(String.class);
+                    if (getTardyTimeLimit != null) {
+                        now = System.currentTimeMillis();
+                        // 현재시간을 date 변수에 저장한다.
+                        Date date = new Date(now);
+                        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        nowtardyTimeLimit = simpleDateFormat.format(date);
+                        Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                        Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                        long diff = d1.getTime() - d2.getTime();
+                        if (diff < 0) {
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("Attend_Certification_Number").removeValue();
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("attendTimeLimit").removeValue();
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("tardyTimeLimit").removeValue();
+
+                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        getState = snapshot.child("attend_state").getValue().toString();
+                                        if (getState.equals("미출결")) {
+                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(final DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
 
         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

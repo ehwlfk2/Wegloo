@@ -10,6 +10,7 @@ public class Attend_Information_Item {
         this.id = id;
     }
 
+    public String late_time;
     public String attend_state;
     public  String attendTimeLimit;
 

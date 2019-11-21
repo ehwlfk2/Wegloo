@@ -65,8 +65,7 @@
         <activity android:name=".Attend.AttendActivity_Admin_Home" />
         <activity android:name=".Attend.AttendActivity_Admin_Detail_Information" />
         <activity android:name=".Attend.AttendActivity" />
-        <activity android:name=".AttendActivity_MyInformation" />
-        <activity android:name=".Album.AlbumActivity" />
+        <activity android:name=".menu.AttendActivity_MyInformation" />
         <activity
             android:name=".Material_Rental.MaterialRentalActivity_Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
