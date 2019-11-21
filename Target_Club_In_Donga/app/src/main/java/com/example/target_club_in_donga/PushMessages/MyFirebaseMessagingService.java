@@ -14,11 +14,9 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.NoticeActivity;
+import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -53,7 +51,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent intent;
             if(clickAction.equals("Notice")){
                 //Log.e("backCheck",backCheck);
-                intent = new Intent(this, NoticeActivity.class);
+                intent = new Intent(this, NoticeActivity_Main.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             else if(clickAction.equals("Vote")){
