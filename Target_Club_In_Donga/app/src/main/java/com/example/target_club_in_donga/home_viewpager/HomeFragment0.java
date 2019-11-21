@@ -317,7 +317,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 viewAdapter.notifyDataSetChanged();
                 viewAdapter.functionCurrent();
                 break;
-            //여기부터 메뉴
+                //여기부터 메뉴
             case R.id.logout_btn: //메뉴 로그아웃
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
