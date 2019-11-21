@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.Attend.Attend_Information_Item;
-<<<<<<< HEAD:Target_Club_In_Donga/app/src/main/java/com/example/target_club_in_donga/AttendActivity_MyInformation.java
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -23,9 +22,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-=======
 import com.example.target_club_in_donga.R;
->>>>>>> LSH:Target_Club_In_Donga/app/src/main/java/com/example/target_club_in_donga/menu/AttendActivity_MyInformation.java
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
