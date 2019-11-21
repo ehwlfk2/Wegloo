@@ -22,6 +22,7 @@
         <activity android:name=".club_foundation_join.ClubFoundationJoin" />
         <activity android:name=".Package_LogIn.Congratulation" />
         <activity android:name=".Accountbook.AccountBookActivity_Main" />
+        <activity android:name=".menu.AttendActivity_MyInformation"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/SplashTheme">

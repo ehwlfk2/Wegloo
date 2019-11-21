@@ -122,8 +122,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         home_notice_date1 = view.findViewById(R.id.home_notice_date1);
         home_notice_date2 = view.findViewById(R.id.home_notice_date2);
         Manage_Attend = view.findViewById(R.id.Manage_Attend);
-        go_AttendInfo = view.findViewById(R.id.go_AttendInfo);
-        go_Material_Rental = view.findViewById(R.id.go_Material_Rental);
+
         Manage_Material_Rent = view.findViewById(R.id.Manage_Material_Rent);
 
         //메뉴 아이템
@@ -132,7 +131,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         profile_admin = view.findViewById(R.id.profile_admin);
         profile_thumbnail = view.findViewById(R.id.profile_thumbnail);
         logout_btn = view.findViewById(R.id.logout_btn);
-
+        go_AttendInfo = view.findViewById(R.id.go_AttendInfo);
+        go_Material_Rental = view.findViewById(R.id.go_Material_Rental);
 
         firebaseDatabase.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
