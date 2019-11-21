@@ -13,7 +13,6 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,10 +26,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
+<<<<<<< HEAD
 import com.example.target_club_in_donga.AttendActivity_MyInformation;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MyInformation;
+=======
+import com.example.target_club_in_donga.menu.MyInformation;
+>>>>>>> LSH
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;

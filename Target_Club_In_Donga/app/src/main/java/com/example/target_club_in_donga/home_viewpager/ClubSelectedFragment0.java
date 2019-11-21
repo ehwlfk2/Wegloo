@@ -1,12 +1,7 @@
 package com.example.target_club_in_donga.home_viewpager;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,12 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,15 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.example.target_club_in_donga.MyInformationApp;
+import com.example.target_club_in_donga.menu.MyInformationApp;
 import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.R;
-import com.example.target_club_in_donga.club_foundation_join.AutoCompleteDBItem;
 import com.example.target_club_in_donga.club_foundation_join.ClubFoundationJoin;
-import com.example.target_club_in_donga.club_foundation_join.Join_02_nicName;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -48,13 +37,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.melnykov.fab.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeActivityView.viewAdapter;
-import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
 
 public class ClubSelectedFragment0 extends Fragment implements View.OnClickListener {

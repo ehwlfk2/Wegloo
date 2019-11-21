@@ -31,7 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity" />
         <activity android:name=".Package_LogIn.LoginActivity">
             <intent-filter>
                 <data
@@ -68,7 +67,6 @@
         <activity android:name=".Attend.AttendActivity" />
         <activity android:name=".AttendActivity_MyInformation" />
         <activity android:name=".Album.AlbumActivity" />
-        <activity android:name=".HomeActivity" />
         <activity
             android:name=".Material_Rental.MaterialRentalActivity_Home"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -76,7 +74,6 @@
         <activity
             android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".NoticeActivity" />
         <activity android:name=".Schedule.ScheduleActivity" />
         <activity android:name=".History.HistoryActivity_Main" />
         <activity android:name=".History.HistoryActivity_Insert" />
@@ -92,8 +89,8 @@
         <activity android:name=".Board.Board_Main" />
         <activity android:name=".MemberList.MemberList" />
         <activity android:name=".TimeLine.TimeLineActivity_Main" />
-        <activity android:name=".MyInformation" />
-        <activity android:name=".MyInformationApp" />
+        <activity android:name=".menu.MyInformation" />
+        <activity android:name=".menu.MyInformationApp" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
