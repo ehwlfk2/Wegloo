@@ -10,11 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <TextView
             style="@style/Top_Content_Text_Style"
@@ -22,100 +18,104 @@
 
         <View style="@style/Line_Style" />
 
-        <TextView
-            android:id="@+id/activity_attend_home_textview"
-            style="@style/Top_Content_Text_Style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="출석중이 아닙니다"
-            android:layout_gravity="center" />
-
-        <LinearLayout
-            android:id="@+id/activity_attend_home_linearlayout_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:padding="10dp"
-            android:visibility="invisible">
-
-        <Button
-            style="@style/Content_Classification_Text_Style"
-            android:id="@+id/activity_attend_home_button_attend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="출석하기"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:padding="10dp" />
-
-        <Button
-            style="@style/Content_Classification_Text_Style"
-            android:id="@+id/activity_attend_home_button_datail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="상세보기"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:padding="10dp" />
-
-        </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_attend_home_linearlayout_admin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:padding="10dp"
-        android:visibility="invisible">
-
-        <Button
-            style="@style/Content_Classification_Text_Style"
-            android:id="@+id/activity_attend_home_button_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="인증번호"
-            android:layout_gravity="center"
-            android:layout_weight="1" />
-
-        <Button
-            style="@style/Content_Classification_Text_Style"
-            android:id="@+id/activity_attend_home_button_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="삭제하기"
-            android:layout_gravity="center"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".Google_Login">
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <TextView
+                android:id="@+id/activity_attend_home_textview"
+                style="@style/Top_Content_Text_Style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="출석중이 아닙니다" />
+
+            <LinearLayout
+                android:id="@+id/activity_attend_home_linearlayout_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:padding="10dp"
+                android:visibility="invisible">
+
+                <Button
+                    style="@style/Content_Classification_Text_Style"
+                    android:background="@drawable/button_background"
+                    android:id="@+id/activity_attend_home_button_attend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="출석하기"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="      " />
+
+                <Button
+                    style="@style/Content_Classification_Text_Style"
+                    android:background="@drawable/button_background"
+                    android:id="@+id/activity_attend_home_button_datail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="상세보기"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_attend_home_linearlayout_admin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:padding="10dp"
+                android:visibility="invisible">
+
+                <Button
+                    style="@style/Content_Classification_Text_Style"
+                    android:background="@drawable/button_background"
+                    android:id="@+id/activity_attend_home_button_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="인증번호"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="      " />
+
+                <Button
+                    style="@style/Content_Classification_Text_Style"
+                    android:background="@drawable/button_background"
+                    android:id="@+id/activity_attend_home_button_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="삭제하기"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/activity_attend_home_button_insert"
                 style="@style/Content_Classification_Text_Style"
+                android:background="@drawable/button_background"
                 android:text="출석추가"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
-
-<!--            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activity_attend_home_recyclerview_main_list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:scrollbarFadeDuration="0"
-                android:scrollbarSize="10dp"
-                android:scrollbarThumbVertical="@android:color/darker_gray"
-                android:scrollbars="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/activity_attend_home_button_insert"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_editor_absoluteX="0dp" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

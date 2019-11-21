@@ -32,6 +32,7 @@
 
             <TextView
                 style="@style/Content_Classification_Text_Style"
+                android:background="@drawable/button_background"
                 android:text="물품명" />
 
             <TextView
@@ -44,6 +45,7 @@
 
             <TextView
                 style="@style/Content_Classification_Text_Style"
+                android:background="@drawable/button_background"
                 android:text="대여자" />
 
             <TextView
@@ -71,12 +73,14 @@
 
             <Button
                 android:id="@+id/activity_material_rental_period_calendar"
+                android:background="@drawable/button_background"
                 style="@style/Content_Classification_Text_Style"
                 android:text="달력"
                 android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/activity_material_rental_period_time"
+                android:background="@drawable/button_background"
                 style="@style/Content_Classification_Text_Style"
                 android:text="시간"
                 android:layout_weight="1"/>
@@ -94,6 +98,7 @@
 
         <Button
             android:id="@+id/activity_material_rental_button"
+            android:background="@drawable/button_background"
             style="@style/Content_Classification_Text_Style"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-2dp"
