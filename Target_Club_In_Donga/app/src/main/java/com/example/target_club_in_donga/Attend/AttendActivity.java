@@ -511,30 +511,34 @@ public class AttendActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
-                                        database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                    // 파이어베이스 AppUser에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
-                                                    getName = snapshot.child("name").getValue(String.class);
-                                                    getPhone = snapshot.child("phone").getValue(String.class);
+                                        for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
+                                            database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                        if (snapshot.getKey().equals(snapshot2.getKey())) {
+                                                            // 파이어베이스 AppUser에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
+                                                            getName = snapshot.child("name").getValue(String.class);
+                                                            getPhone = snapshot.child("phone").getValue(String.class);
 
-                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
-                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
+                                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
+                                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
+                                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
 
-                                                    Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
-                                                    attendAdminChangeItem.name = getName;
-                                                    attendAdminChangeItem.attend_state = "미출결";
-                                                    attendAdminChangeItem.phone = getPhone;
+                                                            Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
+                                                            attendAdminChangeItem.name = getName;
+                                                            attendAdminChangeItem.attend_state = "미출결";
+                                                            attendAdminChangeItem.phone = getPhone;
+                                                        }
+                                                    }
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(final DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(final DatabaseError databaseError) {
 
-                                            }
-                                        });
+                                                }
+                                            });
+                                        }
 
 
                                     } else {
