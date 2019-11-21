@@ -62,7 +62,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     public static DrawerLayout drawerLayout;
     private View drawer_menu_view;
-    private LinearLayout user_infomation, go_board, Manage_Attend;
+    private LinearLayout user_infomation,Manage_Attend;
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     public static boolean thisClubIsRealName;
@@ -114,7 +114,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         menu_opener = view.findViewById(R.id.home_button_menu);
 
         user_infomation = view.findViewById(R.id.profile_myinfomation);
-        go_board = view.findViewById(R.id.go_Board);
+        //go_board = view.findViewById(R.id.go_Board);
         home_notice_title1 = view.findViewById(R.id.home_notice_title1);
         home_notice_title2 = view.findViewById(R.id.home_notice_title2);
         home_notice_writer1 = view.findViewById(R.id.home_notice_writer1);
@@ -129,7 +129,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         profile_admin = view.findViewById(R.id.profile_admin);
         profile_thumbnail = view.findViewById(R.id.profile_thumbnail);
         logout_btn = view.findViewById(R.id.logout_btn);
-
 
 
         firebaseDatabase.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -172,13 +171,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MyInformation.class);
                 intent.putExtra("thisClubIsRealName",thisClubIsRealName);
-                startActivity(intent);
-            }
-        });
-        go_board.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Board_Main.class);
                 startActivity(intent);
             }
         });
