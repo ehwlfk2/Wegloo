@@ -64,7 +64,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     public static DrawerLayout drawerLayout;
     private View drawer_menu_view;
-    private LinearLayout user_infomation, go_board, Manage_Attend, go_AttendInfo, go_Material_Rental, Manage_Material_Rent;
+    private LinearLayout user_infomation,Manage_Attend;
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     public static boolean thisClubIsRealName;
