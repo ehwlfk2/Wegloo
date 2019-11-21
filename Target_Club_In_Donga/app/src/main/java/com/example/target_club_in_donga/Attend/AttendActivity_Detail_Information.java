@@ -241,7 +241,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
                     PieData pieData = new PieData((pieDataSet));
                     pieData.setValueTextSize(20f);
-                    pieData.setValueTextColor(Color.WHITE);
+                    pieData.setValueTextColor(Color.YELLOW);
 
                     activity_attend_piechart.setData(pieData);
                 }

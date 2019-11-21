@@ -61,16 +61,20 @@ public class Reset_id_pw extends AppCompatActivity {
         // [START send_password_reset]
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final String emailAddress = signed_email.getText().toString();
-
-        auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Reset_id_pw.this, "가입된 메일을 확인해주세요.", Toast.LENGTH_SHORT).show();
+        if(emailAddress == null){
+            Toast.makeText(this, "메일을 입력해주세요", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            auth.sendPasswordResetEmail(emailAddress)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Reset_id_pw.this, "가입된 메일을 확인해주세요.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
         // [END send_password_reset]
     }
     private void getData(){
