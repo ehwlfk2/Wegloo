@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".Package_LogIn.Dialog_Find_Email"></activity>
+        <activity android:name=".club_foundation_join.Accept_request"></activity>
+        <activity android:name=".Package_LogIn.Dialog_Find_Email" />
         <activity android:name=".Package_LogIn.Reset_id_pw" />
         <activity android:name=".club_foundation_join.Join_02_nicName" />
         <activity android:name=".home_viewpager.HomeActivityView" />
@@ -22,7 +23,7 @@
         <activity android:name=".club_foundation_join.ClubFoundationJoin" />
         <activity android:name=".Package_LogIn.Congratulation" />
         <activity android:name=".Accountbook.AccountBookActivity_Main" />
-        <activity android:name=".menu.AttendActivity_MyInformation"/>
+        <activity android:name=".menu.AttendActivity_MyInformation" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/SplashTheme">
@@ -60,8 +61,7 @@
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
-        </activity>
-        <!--<activity android:name=".AttendActivity.AttendActivity_Admin" />-->
+        </activity> <!-- <activity android:name=".AttendActivity.AttendActivity_Admin" /> -->
         <activity android:name=".Attend.AttendActivity_Detail_Information" />
         <activity android:name=".Attend.AttendActivity_Admin_Home" />
         <activity android:name=".Attend.AttendActivity_Admin_Detail_Information" />
@@ -83,7 +83,7 @@
         <activity android:name=".Vote.VoteActivity_Main" />
         <activity android:name=".Vote.VoteActivity_Insert" />
         <activity android:name=".Notice.NoticeActivity_Insert" />
-        <activity android:name=".Notice.NoticeActivity_Main"/>
+        <activity android:name=".Notice.NoticeActivity_Main" />
         <activity android:name=".Board.Board_viewpager" />
         <activity android:name=".Board.Board_Detail" />
         <activity android:name=".Board.Board_Write" />
@@ -92,6 +92,7 @@
         <activity android:name=".TimeLine.TimeLineActivity_Main" />
         <activity android:name=".menu.MyInformation" />
         <activity android:name=".menu.MyInformationApp" />
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
@@ -120,9 +121,9 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
