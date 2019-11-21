@@ -566,22 +566,6 @@ public class AttendActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
-
-/*                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                        // 파이어베이스 User에 있는 키값을 하나씩 찾아서 그 키값에서 이름과 전화번호를 가지고 온다
-                                        getName = snapshot.child("User").child("name").getValue(String.class);
-                                        getPhone = snapshot.child("User").child("phone").getValue(String.class);
-
-
-                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
-                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue(getPhone);
-                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
-
-                                        Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
-                                        attendAdminChangeItem.name = getName;
-                                        attendAdminChangeItem.attend_state = "미출결";
-                                        attendAdminChangeItem.phone = getPhone;
-                                    }*/
                                 }
 
                                 @Override
@@ -592,9 +576,6 @@ public class AttendActivity extends AppCompatActivity {
 
 
                             Toast.makeText(AttendActivity.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
-/*                            Intent intent = new Intent(AttendActivity_Admin.this, AttendActivity_Home.class);
-                            intent.putExtra("findKey", findkey);
-                            startActivity(intent);*/
 
                             dialog.dismiss();
                         } else if (flag == 0) {
