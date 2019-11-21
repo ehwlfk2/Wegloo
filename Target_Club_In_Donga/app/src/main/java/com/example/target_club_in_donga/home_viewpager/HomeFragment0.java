@@ -22,11 +22,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
+import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
+import com.example.target_club_in_donga.MemberList.MemberList;
 import com.example.target_club_in_donga.menu.AttendActivity_MyInformation;
 import com.example.target_club_in_donga.menu.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
@@ -62,7 +65,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     public static DrawerLayout drawerLayout;
     private View drawer_menu_view;
-    private LinearLayout user_infomation,Manage_Attend, go_AttendInfo, go_Material_Rental, Manage_Material_Rent;
+
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     public static boolean thisClubIsRealName;
@@ -73,7 +76,9 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private TextView Group_Name, profile_username, profile_admin;
     private ImageView profile_thumbnail;
     private ImageButton logout_btn;
-
+    private LinearLayout user_infomation,go_Manage_Attend, go_AttendInfo, go_Material_Rental, go_Manage_Material_Rent;
+    private LinearLayout go_Member_List,go_Gallery, go_History, go_Group_Info, go_Withdraw, go_Wegloo_Info;
+    private LinearLayout go_Manage_Accept_Request, go_Manage_Group;
     /**
      * 홈 화면
      */
@@ -121,9 +126,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         home_notice_writer2 = view.findViewById(R.id.home_notice_writer2);
         home_notice_date1 = view.findViewById(R.id.home_notice_date1);
         home_notice_date2 = view.findViewById(R.id.home_notice_date2);
-        Manage_Attend = view.findViewById(R.id.Manage_Attend);
 
-        Manage_Material_Rent = view.findViewById(R.id.Manage_Material_Rent);
 
         //메뉴 아이템
         Group_Name = view.findViewById(R.id.Group_Name);
@@ -131,8 +134,19 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         profile_admin = view.findViewById(R.id.profile_admin);
         profile_thumbnail = view.findViewById(R.id.profile_thumbnail);
         logout_btn = view.findViewById(R.id.logout_btn);
+
         go_AttendInfo = view.findViewById(R.id.go_AttendInfo);
         go_Material_Rental = view.findViewById(R.id.go_Material_Rental);
+        go_Manage_Attend = view.findViewById(R.id.go_Manage_Attend);
+        go_Manage_Material_Rent = view.findViewById(R.id.go_Manage_Material_Rent);
+        go_Member_List = view.findViewById(R.id.go_Member_List);
+        go_Gallery = view.findViewById(R.id.go_Gallery);
+        go_History = view.findViewById(R.id.go_History);
+        go_Group_Info = view.findViewById(R.id.go_Group_Info);
+        go_Withdraw = view.findViewById(R.id.go_Withdraw);
+        go_Wegloo_Info = view.findViewById(R.id.go_Wegloo_Info);
+        go_Manage_Accept_Request = view.findViewById(R.id.go_Manage_Accept_Request);
+        go_Manage_Group = view.findViewById(R.id.go_Manage_Group);
 
         firebaseDatabase.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -257,11 +271,20 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         boardIntentBtn.setOnClickListener(this);
         noticeIntentBtn.setOnClickListener(this);
         home_button_timeline.setOnClickListener(this);
-        Manage_Attend.setOnClickListener(this);
         logout_btn.setOnClickListener(this);
+
+        go_Manage_Attend.setOnClickListener(this);
         go_AttendInfo.setOnClickListener(this);
         go_Material_Rental.setOnClickListener(this);
-        Manage_Material_Rent.setOnClickListener(this);
+        go_Manage_Material_Rent.setOnClickListener(this);
+        go_Member_List.setOnClickListener(this);
+        go_Gallery.setOnClickListener(this);
+        go_History.setOnClickListener(this);
+        go_Group_Info.setOnClickListener(this);
+        go_Withdraw.setOnClickListener(this);
+        go_Wegloo_Info.setOnClickListener(this);
+        go_Manage_Accept_Request.setOnClickListener(this);
+        go_Manage_Group.setOnClickListener(this);
         return view;
     }
 
@@ -271,55 +294,80 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
          * 알아서들 기능별로 intent 시키시길
          */
         switch (view.getId()){
-            case R.id.home_frame_vote:
+            case R.id.home_frame_vote: //홈화면 투표
                 Intent intent = new Intent(getActivity(), VoteActivity_Main.class);
                 startActivity(intent);
                 break;
-            case R.id.home_frame_attendance:
+            case R.id.home_frame_attendance: //홈화면 출석
                 Intent intent4 = new Intent(getActivity(), AttendActivity.class);
                 startActivity(intent4);
                 break;
-            case R.id.home_frame_calender:
+            case R.id.home_frame_calender: //홈화면 일정
 
                 break;
-            case R.id.home_frame_board:
+            case R.id.home_frame_board: //홈화면 자유게시판
 
                 break;
-            case R.id.home_layout_notice:
+            case R.id.home_layout_notice: //홈화면 공지사항
                 Intent intent1 = new Intent(getActivity(), NoticeActivity_Main.class);
                 startActivity(intent1);
                 break;
-            case  R.id.home_button_timeline:
+            case  R.id.home_button_timeline: //홈화면 타임라인(종모양)
                 viewAdapter.addItem(new TimeLineFragment0());
                 viewAdapter.notifyDataSetChanged();
                 viewAdapter.functionCurrent();
                 break;
-            case R.id.Manage_Attend:
-                Intent intent2 = new Intent(getActivity(), AttendActivity_Admin_Home.class);
-                startActivity(intent2);
-                break;
-            case R.id.logout_btn:
+            //여기부터 메뉴
+            case R.id.logout_btn: //메뉴 로그아웃
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
                 Intent intent3 = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent3);
                 getActivity().finish();
                 break;
-            case R.id.go_AttendInfo:
+            case R.id.go_Manage_Attend: //메뉴 출석관리
+                Intent intent2 = new Intent(getActivity(), AttendActivity_Admin_Home.class);
+                startActivity(intent2);
+                break;
+            case R.id.go_AttendInfo: //메뉴 출석정보
                 Intent intent5 = new Intent(getActivity(), AttendActivity_MyInformation.class);
                 startActivity(intent5);
                 break;
-            case R.id.go_Material_Rental:
+            case R.id.go_Material_Rental: //메뉴 물품대여
                 Intent intent6 = new Intent(getActivity(), MaterialRentalActivity_Home.class);
                 intent6.putExtra("differFlag", 0);
                 startActivity(intent6);
                 break;
-            case R.id.Manage_Material_Rent:
+            case R.id.go_Manage_Material_Rent: //메뉴 물품대여관리?
                 Intent intent7 = new Intent(getActivity(), MaterialRentalActivity_Home.class);
                 intent7.putExtra("differFlag", 1);
                 startActivity(intent7);
                 break;
-
+            case R.id.go_Member_List: //메뉴 회원목록
+                Intent intent8 = new Intent(getActivity(), MemberList.class);
+                startActivity(intent8);
+                break;
+            case R.id.go_Gallery: //메뉴 모임앨범
+                Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.go_History: //메뉴 모임연혁
+                Intent intent9 = new Intent(getActivity(), HistoryActivity_Main.class);
+                startActivity(intent9);
+                break;
+            case R.id.go_Group_Info: //메뉴 모임정보
+                Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.go_Withdraw: //메뉴 모임탈퇴
+                Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.go_Wegloo_Info: //메뉴 Wegloo정보
+                Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.go_Manage_Accept_Request: //메뉴 가입신청
+                break;
+            case R.id.go_Manage_Group: //메뉴 모임관리
+                Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
     DrawerLayout.DrawerListener listner = new DrawerLayout.DrawerListener() {
