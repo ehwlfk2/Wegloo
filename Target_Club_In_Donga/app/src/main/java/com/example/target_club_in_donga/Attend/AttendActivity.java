@@ -550,13 +550,13 @@ public class AttendActivity extends AppCompatActivity {
                                                     getName = snapshot.child("name").getValue(String.class);
 
                                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("name").setValue(getName);
-                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue("전화번호 없음");
+//                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("phone").setValue("전화번호 없음");
                                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("미출결");
 
                                                     Attend_Admin_Change_Item attendAdminChangeItem = new Attend_Admin_Change_Item();
                                                     attendAdminChangeItem.name = getName;
                                                     attendAdminChangeItem.attend_state = "미출결";
-                                                    attendAdminChangeItem.phone = "전화번호 없음";
+//                                                    attendAdminChangeItem.phone = "전화번호 없음";
                                                 }
                                             }
 

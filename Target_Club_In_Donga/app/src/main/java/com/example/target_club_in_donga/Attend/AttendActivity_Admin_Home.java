@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.Attend;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -53,7 +54,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     private Button activity_attend_admin_information_home_category;
 
     private String startTime;
-    private int listSize = 0, flag = 0, admin;
+    private int listSize = 0, flag = 0, admin, flag2 = 0;
 
     private TextView activity_attend_admin_information_item_textview_phone_number;
 
@@ -103,7 +104,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                             Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
                             String uidKey = snapshot.getKey();
                             if (snapshot.child("phone").getValue() == null) {
-                                attendItem.phone = "전화번호 없음";
+//                                attendItem.phone = "전화번호 없음";
+                                flag2 = 1;
                             }
                             userList.add(0, attendItem);
                             uidLists.add(0, uidKey);
@@ -166,7 +168,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                                 Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
                                                 String uidKey = snapshot.getKey();
                                                 if (snapshot.child("phone").getValue() == null) {
-                                                    attendItem.phone = "전화번호 없음";
+//                                                    attendItem.phone = "전화번호 없음";
+                                                    flag2 = 1;
                                                 }
                                                 userList.add(0, attendItem);
                                                 uidLists.add(0, uidKey);
@@ -529,7 +532,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     customViewHolder.activity_attend_admin_information_item_textview_phone_number.setGravity(Gravity.LEFT);
 
                     customViewHolder.activity_attend_admin_information_item_textview_name.setText(userList.get(position).name);
-                    customViewHolder.activity_attend_admin_information_item_textview_phone_number.setText(userList.get(position).phone);
+                    customViewHolder.activity_attend_admin_information_item_textview_phone_number.setVisibility(View.INVISIBLE);
 
                     customViewHolder.activity_attend_admin_information_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                         @Override
