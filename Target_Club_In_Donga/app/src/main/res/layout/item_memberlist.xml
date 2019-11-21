@@ -1,91 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
     android:background="#FFFFFF"
-    android:id="@+id/memberlist_layout">
+    android:id="@+id/memberlist_layout"
+    android:weightSum="10">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        app:civ_border_width="0.5dp"
-        app:civ_border_color="#FF000000"
-        android:id="@+id/memberlist_imgview"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037"
-        android:background="@drawable/face"/>
-
-    <TextView
-        android:id="@+id/memberlist_position"
-        android:layout_width="80dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="직책"
-        android:textColor="#0C0B0B"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.625"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <TextView
-        android:id="@+id/memberlist_name"
-        android:layout_width="80dp"
-        android:layout_height="28dp"
-        android:text="이름"
-        android:textColor="#0C0B0B"
-        android:textSize="20dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.353"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="23dp"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="17dp"
-        android:background="#908686"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
-
-    <TextView
-        android:id="@+id/memberlist_phone"
+    <!-- 이미지 -->
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginLeft="25dp"
-        android:gravity="top|left"
-        android:text="전화번호"
-        android:textColor="#0C0B0B"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/memberlist_imgview"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/memberlist_imgview"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/face"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+    <!-- 이미지 -->
+    <!-- 이름, 직책 ,전번 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="5">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/memberlist_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:text="이름"
+                android:textColor="#000000"
+                android:textSize="21dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/memberlist_position"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="11dp"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp"
+                android:background="@drawable/button_round_corner"
+                android:text="회원"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/memberlist_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="전화번호"
+                android:textColor="#666464"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 이름, 직책 ,전번 -->
+    <!-- 직책 변경 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_weight="3">
+
+        <ImageButton
+            android:id="@+id/posi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFFFF"
+            android:src="@drawable/member_posi"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.872"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.32" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 직책 변경 -->
+</LinearLayout>

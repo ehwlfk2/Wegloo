@@ -21,6 +21,7 @@
             android:background="@drawable/ic_keyboard_arrow_left_24px"
             android:layout_alignParentLeft="true"/>
         <TextView
+            android:id="@+id/mem_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
