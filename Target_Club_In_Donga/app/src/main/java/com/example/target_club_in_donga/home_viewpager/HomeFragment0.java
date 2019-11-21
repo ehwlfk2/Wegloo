@@ -30,6 +30,7 @@ import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
+import com.example.target_club_in_donga.club_foundation_join.Accept_request;
 import com.example.target_club_in_donga.menu.AttendActivity_MyInformation;
 import com.example.target_club_in_donga.menu.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
@@ -303,10 +304,24 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent4);
                 break;
             case R.id.home_frame_calender: //홈화면 일정
-
+                /**
+                 * 여기만 비어있다곤ㅇ마뢰뇌아뤀ㄴ디ㅏㅜ라ㅣㄴ둘키다ㅜㄹㅈ다ㅣ루;ㅣㅈ둘;ㅏㅣ뭊ㄹ
+                 * 시방ㄹ
+                 * 닥치라 개쉐이야
+                 * 시발
+                 * 시
+                 * 발
+                 * 시
+                 * 발
+                 * 시
+                 * 발
+                 *
+                 */
                 break;
             case R.id.home_frame_board: //홈화면 자유게시판
-
+                /**
+                 * 정한성이 요기 채워랑라ㅣㄴ어ㅣ랔ㄴㄷㄹ
+                 */
                 break;
             case R.id.home_layout_notice: //홈화면 공지사항
                 Intent intent1 = new Intent(getActivity(), NoticeActivity_Main.class);
@@ -364,6 +379,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.go_Manage_Accept_Request: //메뉴 가입신청
+                Intent intent10 = new Intent(getActivity(), Accept_request.class);
+                startActivity(intent10);
                 break;
             case R.id.go_Manage_Group: //메뉴 모임관리
                 Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
