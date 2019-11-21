@@ -61,6 +61,9 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
     private SlidingDrawer activity_attend_detail_slidingdrawer;
 
+    final int[] MY_COLORS = {Color.rgb(152,247,145), Color.rgb(255,187,0), Color.rgb(189,189,189), Color.rgb(255,0,0)};
+    ArrayList<Integer> colors = new ArrayList<Integer>();
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,15 +146,19 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                             if (attendCount > 0) {
                                                 pieEntries.add(new PieEntry(attendCount, "출석"));
+                                                colors.add(MY_COLORS[0]);
                                             }
                                             if (tardyCount > 0) {
                                                 pieEntries.add(new PieEntry(tardyCount, "지각"));
+                                                colors.add(MY_COLORS[1]);
                                             }
                                             if (unsentCount > 0) {
                                                 pieEntries.add(new PieEntry(unsentCount, "미출결"));
+                                                colors.add(MY_COLORS[2]);
                                             }
                                             if (absentCount > 0) {
                                                 pieEntries.add(new PieEntry(absentCount, "결석"));
+                                                colors.add(MY_COLORS[3]);
                                             }
 
                                             Description description = new Description();
@@ -164,12 +171,12 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                             PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
                                             pieDataSet.setSliceSpace(3f);
                                             pieDataSet.setSelectionShift(4f);
-                                            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-//                                        pieDataSet.setColors(new int[]{R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
+//                                            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                                            pieDataSet.setColors(colors);
 
                                             PieData pieData = new PieData((pieDataSet));
                                             pieData.setValueTextSize(20f);
-                                            pieData.setValueTextColor(Color.WHITE);
+                                            pieData.setValueTextColor(Color.YELLOW);
 
                                             activity_attend_piechart.setData(pieData);
 
@@ -311,15 +318,19 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                             if (attendCount > 0) {
                                                 pieEntries.add(new PieEntry(attendCount, "출석"));
+                                                colors.add(MY_COLORS[0]);
                                             }
                                             if (tardyCount > 0) {
                                                 pieEntries.add(new PieEntry(tardyCount, "지각"));
+                                                colors.add(MY_COLORS[1]);
                                             }
                                             if (unsentCount > 0) {
                                                 pieEntries.add(new PieEntry(unsentCount, "미출결"));
+                                                colors.add(MY_COLORS[2]);
                                             }
                                             if (absentCount > 0) {
                                                 pieEntries.add(new PieEntry(absentCount, "결석"));
+                                                colors.add(MY_COLORS[3]);
                                             }
 
                                             Description description = new Description();
@@ -332,8 +343,8 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                             PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
                                             pieDataSet.setSliceSpace(3f);
                                             pieDataSet.setSelectionShift(4f);
-                                            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-//                                        pieDataSet.setColors(new int[]{R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
+//                                            pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                                            pieDataSet.setColors(colors);
 
                                             PieData pieData = new PieData((pieDataSet));
                                             pieData.setValueTextSize(20f);
