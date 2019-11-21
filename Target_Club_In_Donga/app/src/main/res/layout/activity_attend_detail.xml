@@ -83,82 +83,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="6"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:elevation="1dp">
 
-        <RelativeLayout
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/activity_attend_piechart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </com.github.mikephil.charting.charts.PieChart>
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="org.androidtown.graph.MainActivity" >
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/activity_attend_piechart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-                </com.github.mikephil.charting.charts.PieChart>
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/test"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
-
-        <View
-            style="@style/Line_Style" />
-
-        <RelativeLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
-            <Gallery
-                android:id="@+id/activity_attend_detail_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true">
-
-            </Gallery>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/activity_attend_detail_textview_certification_number_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="인증번호 "
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/activity_attend_detail_textview_certification_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:layout_toRightOf="@+id/activity_attend_detail_textview_certification_number_name" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:weightSum="2">
-
-            </LinearLayout>
-        </RelativeLayout>
     </LinearLayout>
 
 </FrameLayout>

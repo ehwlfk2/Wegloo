@@ -1,5 +1,6 @@
 package com.example.target_club_in_donga.menu;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.Attend.Attend_Information_Item;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.example.target_club_in_donga.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +45,11 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private int listSize = 0;
-    private String startTime;
+    private String startTime ,getAttendState;
+
+    private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0;
+
+    private PieChart activity_attend_my_information_piechart;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -47,6 +59,8 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
+        activity_attend_my_information_piechart = (PieChart) findViewById(R.id.activity_attend_my_information_piechart);
+
         activity_attend_my_information_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_my_information_recyclerview_main_list);
         activity_attend_my_information_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(AttendActivity_MyInformation.this));
 
@@ -54,6 +68,93 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
 
         activity_attend_my_information_recyclerview_main_list.setAdapter(MyInformationActivity_adminRecyclerViewAdapter);
         MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+
+        activity_attend_my_information_piechart.setUsePercentValues(true);
+        activity_attend_my_information_piechart.getDescription().setEnabled(true);
+        activity_attend_my_information_piechart.setExtraOffsets(5, 10, 5, 5);
+
+        activity_attend_my_information_piechart.setDragDecelerationFrictionCoef(0.95f);
+
+        activity_attend_my_information_piechart.setDrawHoleEnabled(true);
+        activity_attend_my_information_piechart.setHoleColor(Color.WHITE);
+        activity_attend_my_information_piechart.setTransparentCircleRadius(61f);
+
+        final ArrayList<PieEntry> pieEntries = new ArrayList<>();
+
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    attendCount = 0;
+                    tardyCount = 0;
+                    unsentCount = 0;
+                    absentCount = 0;
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("출석")) {
+                            attendCount++;
+                        } else if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("지각")) {
+                            tardyCount++;
+                        } else if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("미출결")) {
+                            unsentCount++;
+                        } else {
+                            absentCount++;
+                        }
+
+/*                        if (snapshot.child("attend_state").getValue() != null) {
+
+                            pieEntries.clear();
+                            getAttendState = snapshot.child("attend_state").getValue(String.class);
+                            if (getAttendState.equals("출석")) {
+                                attendCount++;
+                            } else if (getAttendState.equals("지각")) {
+                                tardyCount++;
+                            } else if (getAttendState.equals("미출결")) {
+                                unsentCount++;
+                            } else {
+                                absentCount++;
+                            }
+                        }*/
+                    }
+
+                    if (attendCount > 0) {
+                        pieEntries.add(new PieEntry(attendCount, "출석"));
+                    }
+                    if (tardyCount > 0) {
+                        pieEntries.add(new PieEntry(tardyCount, "지각"));
+                    }
+                    if (unsentCount > 0) {
+                        pieEntries.add(new PieEntry(unsentCount, "미출결"));
+                    }
+                    if (absentCount > 0) {
+                        pieEntries.add(new PieEntry(absentCount, "결석"));
+                    }
+
+                    Description description = new Description();
+                    description.setText("출석률");
+                    description.setTextSize(15);
+                    activity_attend_my_information_piechart.setDescription(description);
+
+                    activity_attend_my_information_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+
+                    PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
+                    pieDataSet.setSliceSpace(3f);
+                    pieDataSet.setSelectionShift(4f);
+                    pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+//                    pieDataSet.setColors(new int [] {R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
+
+                    PieData pieData = new PieData((pieDataSet));
+                    pieData.setValueTextSize(15f);
+                    pieData.setValueTextColor(Color.WHITE);
+
+                    activity_attend_my_information_piechart.setData(pieData);
+                }
+            }
+
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
+
+            }
+        });
 
         database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
             @Override

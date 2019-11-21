@@ -42,7 +42,7 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
     private Button activity_attend_detail_button_attend_state;
-    private TextView activity_attend_detail_textview_certification_number_name, activity_attend_detail_textview_certification_number, activity_attend_detail_textview_attend;
+    private TextView activity_attend_detail_textview_attend;
 
     private PieChart activity_attend_piechart;
     private FirebaseDatabase database;
@@ -70,8 +70,6 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
         userName = intent.getExtras().getString("userName");
         userPhone = intent.getExtras().getString("userPhone");
 
-        activity_attend_detail_textview_certification_number_name = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number_name);
-        activity_attend_detail_textview_certification_number = (TextView) findViewById(R.id.activity_attend_detail_textview_certification_number);
         activity_attend_detail_button_attend_state = (Button) findViewById(R.id.activity_attend_detail_button_attend_state);
         activity_attend_detail_textview_attend = (TextView) findViewById(R.id.activity_attend_detail_textview_attend);
         activity_attend_detail_slidingdrawer = (SlidingDrawer) findViewById(R.id.activity_attend_detail_slidingdrawer);
@@ -80,9 +78,6 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
-
-        activity_attend_detail_textview_certification_number_name.setVisibility(View.GONE);
-        activity_attend_detail_textview_certification_number.setVisibility(View.GONE);
 
         activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
             @Override
@@ -161,7 +156,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                             Description description = new Description();
                                             description.setText("출석률");
-                                            description.setTextSize(15);
+                                            description.setTextSize(30f);
                                             activity_attend_piechart.setDescription(description);
 
                                             activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
@@ -173,7 +168,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 //                                        pieDataSet.setColors(new int[]{R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
 
                                             PieData pieData = new PieData((pieDataSet));
-                                            pieData.setValueTextSize(15f);
+                                            pieData.setValueTextSize(20f);
                                             pieData.setValueTextColor(Color.WHITE);
 
                                             activity_attend_piechart.setData(pieData);
@@ -329,7 +324,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                             Description description = new Description();
                                             description.setText("출석률");
-                                            description.setTextSize(15);
+                                            description.setTextSize(30f);
                                             activity_attend_piechart.setDescription(description);
 
                                             activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
@@ -341,7 +336,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 //                                        pieDataSet.setColors(new int[]{R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
 
                                             PieData pieData = new PieData((pieDataSet));
-                                            pieData.setValueTextSize(15f);
+                                            pieData.setValueTextSize(20f);
                                             pieData.setValueTextColor(Color.WHITE);
 
                                             activity_attend_piechart.setData(pieData);
