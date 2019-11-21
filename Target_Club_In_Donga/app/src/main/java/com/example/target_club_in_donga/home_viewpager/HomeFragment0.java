@@ -29,6 +29,7 @@ import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.AttendActivity_MyInformation;
 import com.example.target_club_in_donga.Board.Board_Main;
+import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Notice.Notice_Item;
@@ -63,7 +64,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     public static DrawerLayout drawerLayout;
     private View drawer_menu_view;
-    private LinearLayout user_infomation, go_board, Manage_Attend, go_AttendInfo;
+    private LinearLayout user_infomation, go_board, Manage_Attend, go_AttendInfo, go_Material_Rental, Manage_Material_Rent;
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     public static boolean thisClubIsRealName;
@@ -124,6 +125,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         home_notice_date2 = view.findViewById(R.id.home_notice_date2);
         Manage_Attend = view.findViewById(R.id.Manage_Attend);
         go_AttendInfo = view.findViewById(R.id.go_AttendInfo);
+        go_Material_Rental = view.findViewById(R.id.go_Material_Rental);
+        Manage_Material_Rent = view.findViewById(R.id.Manage_Material_Rent);
 
         //메뉴 아이템
         Group_Name = view.findViewById(R.id.Group_Name);
@@ -267,6 +270,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         Manage_Attend.setOnClickListener(this);
         logout_btn.setOnClickListener(this);
         go_AttendInfo.setOnClickListener(this);
+        go_Material_Rental.setOnClickListener(this);
+        Manage_Material_Rent.setOnClickListener(this);
         return view;
     }
 
@@ -314,6 +319,17 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 Intent intent5 = new Intent(getActivity(), AttendActivity_MyInformation.class);
                 startActivity(intent5);
                 break;
+            case R.id.go_Material_Rental:
+                Intent intent6 = new Intent(getActivity(), MaterialRentalActivity_Home.class);
+                intent6.putExtra("differFlag", 0);
+                startActivity(intent6);
+                break;
+            case R.id.Manage_Material_Rent:
+                Intent intent7 = new Intent(getActivity(), MaterialRentalActivity_Home.class);
+                intent7.putExtra("differFlag", 1);
+                startActivity(intent7);
+                break;
+
         }
     }
     DrawerLayout.DrawerListener listner = new DrawerLayout.DrawerListener() {

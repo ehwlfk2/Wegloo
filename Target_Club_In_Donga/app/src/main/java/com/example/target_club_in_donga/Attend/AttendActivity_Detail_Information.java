@@ -236,12 +236,11 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                     PieDataSet pieDataSet = new PieDataSet(pieEntries, "인원 수");
                     pieDataSet.setSliceSpace(3f);
                     pieDataSet.setSelectionShift(4f);
-                    pieDataSet.setValueTextSize(20f);
                     pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 //                    pieDataSet.setColors(new int [] {R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
 
                     PieData pieData = new PieData((pieDataSet));
-                    pieData.setValueTextSize(25f);
+                    pieData.setValueTextSize(20f);
                     pieData.setValueTextColor(Color.WHITE);
 
                     activity_attend_piechart.setData(pieData);
