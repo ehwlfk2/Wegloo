@@ -60,7 +60,7 @@ public class Accept_request extends AppCompatActivity {
 
 
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("WantToJoinUser").orderByChild("applicationDate").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("WantToJoinUser").orderByChild("applicationDate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 data.clear();
@@ -77,10 +77,11 @@ public class Accept_request extends AppCompatActivity {
                                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
                                 Log.e("appLoginData",appLoginData.getName()+"");
                                 Accept_request_expandAdapter.Item places = new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.HEADER,
+                                        dataSnapshot.getKey(),
                                         appLoginData.getName(),applicationDate,
                                         appLoginData.getRealNameProPicUrl(),null);
                                 places.invisibleChildren = new ArrayList<>();
-                                places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,null,joinData.getResume()));
+                                places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,null,null,joinData.getResume()));
                                 data.add(places);
                                 requestKey.add(dataSnapshot.getKey());
                                 adapter.notifyDataSetChanged();
@@ -94,10 +95,11 @@ public class Accept_request extends AppCompatActivity {
                     }
                     else{
                         Accept_request_expandAdapter.Item places = new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.HEADER,
+                                snapshot.getKey(),
                                 joinData.getName(),applicationDate,
                                 joinData.getRealNameProPicUrl(),null);
                         places.invisibleChildren = new ArrayList<>();
-                        places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,null,joinData.getResume()));
+                        places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,null,null,joinData.getResume()));
                         data.add(places);
                         requestKey.add(dataSnapshot.getKey());
                     }

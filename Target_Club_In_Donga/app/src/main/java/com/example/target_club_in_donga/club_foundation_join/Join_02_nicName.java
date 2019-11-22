@@ -196,7 +196,7 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
                     myClubSeletedItem.setSignUpclubProfile(clubDownloadUrl);
                     myClubSeletedItem.setSignUpclubUid(clubUid);
                     myClubSeletedItem.setSignUpclubName(thisClubName);
-                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
+                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
 
                     progressDialog.dismiss();
                     Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
@@ -250,7 +250,7 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
                             myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
                             myClubSeletedItem.setSignUpclubUid(clubUid);
                             myClubSeletedItem.setSignUpclubName(thisClubName);
-                            firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
+                            firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
 
                             clubName = clubUid;
                             progressDialog.dismiss();
@@ -266,7 +266,7 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
                             myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
                             myClubSeletedItem.setSignUpclubUid(clubUid);
                             myClubSeletedItem.setSignUpclubName(thisClubName);
-                            firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
+                            firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
                             progressDialog.dismiss();
                             Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
                             intent.putExtra("isRecent",false);
