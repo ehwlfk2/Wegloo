@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- bg_container_corner_16_solid_red_ripple.xml -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?colorControlHighlight">
+    <item android:drawable="@drawable/timeline_back" />
+</ripple>

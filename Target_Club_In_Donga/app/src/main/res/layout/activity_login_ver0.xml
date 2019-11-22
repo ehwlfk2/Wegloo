@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_artborad"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    tools:ignore="MissingDefaultResource">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/login_logo_0"
@@ -28,9 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        tools:ignore="ContentDescription" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/login_frame_id"
@@ -50,9 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="5dp"
-
-        tools:ignore="Autofill,ContentDescription,LabelFor,TextFields">
+        android:elevation="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/login_constant_id"
@@ -89,8 +83,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.071335927"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintWidth_percent="0.071335927" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -113,9 +106,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:elevation="5dp"
-
-        tools:ignore="Autofill,ContentDescription,LabelFor,TextFields">
+        android:elevation="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/login_constant_psw"
@@ -152,8 +143,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.071335927"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintWidth_percent="0.071335927" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -182,8 +172,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="HardcodedText,UnusedAttribute" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <TextView
@@ -206,8 +195,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.746"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.498620055"
-        tools:ignore="HardcodedText,UnusedAttribute" />
+        app:layout_constraintWidth_percent="0.498620055" />
 
     <TextView
         android:id="@+id/reset_id_pw"
@@ -229,8 +217,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.79"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.498620055"
-        tools:ignore="HardcodedText,UnusedAttribute" />
+        app:layout_constraintWidth_percent="0.498620055" />
 
     <ImageView
         android:id="@+id/login_button_facebook"
@@ -242,16 +229,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.063541667 "
-        app:layout_constraintHorizontal_bias="0.342686293 "
+        app:layout_constraintHorizontal_bias="0.657313707 "
 
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.866145833 "
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.111315547 "
-        tools:ignore="ContentDescription" />
+        app:layout_constraintWidth_percent="0.111315547" />
 
     <ImageView
         android:id="@+id/login_button_google"
@@ -270,8 +255,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.866145833 "
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.111315547 "
-        tools:ignore="ContentDescription" />
+        app:layout_constraintWidth_percent="0.111315547 " />
 
     <ImageView
         android:id="@+id/login_button_kakao"
@@ -282,15 +266,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.063541667 "
-        app:layout_constraintHorizontal_bias="0.657313707 "
+        app:layout_constraintHorizontal_bias="0.342686293 "
 
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.866145833 "
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.111315547"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintWidth_percent="0.111315547" />
+
     <com.kakao.usermgmt.LoginButton
         android:id="@+id/oringin_kakao"
         android:layout_width="wrap_content"
