@@ -23,7 +23,6 @@
         <activity android:name=".club_foundation_join.ClubFoundationJoin" />
         <activity android:name=".Package_LogIn.Congratulation" />
         <activity android:name=".Accountbook.AccountBookActivity_Main" />
-        <activity android:name=".menu.AttendActivity_MyInformation" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/SplashTheme">
@@ -74,7 +73,7 @@
         <activity
             android:name=".Material_Rental.MaterialRentalActivity_Admin_Insert"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Schedule.ScheduleActivity" />
+        <!--<activity android:name=".Schedule.ScheduleActivity" />-->
         <activity android:name=".History.HistoryActivity_Main" />
         <activity android:name=".History.HistoryActivity_Insert" />
         <activity android:name=".Vote.VoteActivity_Result" />

@@ -80,9 +80,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private LinearLayout user_infomation,go_Manage_Attend, go_AttendInfo, go_Material_Rental, go_Manage_Material_Rent;
     private LinearLayout go_Member_List,go_Gallery, go_History, go_Group_Info, go_Withdraw, go_Wegloo_Info;
     private LinearLayout go_Manage_Accept_Request, go_Manage_Group;
-    /**
-     * 홈 화면
-     */
+
+      /*홈 화면*/
+
+
     public HomeFragment0() {
         // Required empty public constructor
     }
@@ -172,9 +173,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
 
             }
         });
-        /**
-         * 이 true를 수정해줘야해
-         */
+
+          /*이 true를 수정해줘야해*/
+
+
 
 
         menu_opener.setOnClickListener(new View.OnClickListener() {
@@ -291,9 +293,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        /**
-         * 알아서들 기능별로 intent 시키시길
-         */
+
+          /*알아서들 기능별로 intent 시키시길*/
+
+
         switch (view.getId()){
             case R.id.home_frame_vote: //홈화면 투표
                 Intent intent = new Intent(getActivity(), VoteActivity_Main.class);
@@ -304,24 +307,26 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent4);
                 break;
             case R.id.home_frame_calender: //홈화면 일정
-                /**
-                 * 여기만 비어있다곤ㅇ마뢰뇌아뤀ㄴ디ㅏㅜ라ㅣㄴ둘키다ㅜㄹㅈ다ㅣ루;ㅣㅈ둘;ㅏㅣ뭊ㄹ
-                 * 시방ㄹ
-                 * 닥치라 개쉐이야
-                 * 시발
-                 * 시
-                 * 발
-                 * 시
-                 * 발
-                 * 시
-                 * 발
-                 *
-                 */
+
+/*                  여기만 비어있다곤ㅇ마뢰뇌아뤀ㄴ디ㅏㅜ라ㅣㄴ둘키다ㅜㄹㅈ다ㅣ루;ㅣㅈ둘;ㅏㅣ뭊ㄹ
+                  시방ㄹ
+                  닥치라 개쉐이야
+                  시발
+                  시
+                  발
+                  시
+                  발
+                  시
+                  발*/
+
+
+
                 break;
             case R.id.home_frame_board: //홈화면 자유게시판
-                /**
-                 * 정한성이 요기 채워랑라ㅣㄴ어ㅣ랔ㄴㄷㄹ
-                 */
+
+                 /*정한성이 요기 채워랑라ㅣㄴ어ㅣ랔ㄴㄷㄹ*/
+
+
                 break;
             case R.id.home_layout_notice: //홈화면 공지사항
                 Intent intent1 = new Intent(getActivity(), NoticeActivity_Main.class);

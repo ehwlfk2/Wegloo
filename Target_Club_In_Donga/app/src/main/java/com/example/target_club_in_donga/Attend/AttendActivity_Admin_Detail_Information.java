@@ -100,16 +100,16 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
         activity_attend_detail_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_detail_recyclerview_main_list);
         activity_attend_detail_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(AttendActivity_Admin_Detail_Information.this));
 
-        final AttendActivity_Admin_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter attendAdminInformationActivity_adminRecyclerViewAdapter = new AttendActivity_Admin_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter();
+        final AttendActivity_Admin_Detail_Information.AttendAdminDetailInformationActivity_RecyclerViewAdapter attendAdminDetailInformationActivity_recyclerViewAdapter = new AttendActivity_Admin_Detail_Information.AttendAdminDetailInformationActivity_RecyclerViewAdapter();
 
-        activity_attend_detail_recyclerview_main_list.setAdapter(attendAdminInformationActivity_adminRecyclerViewAdapter);
-        attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+        activity_attend_detail_recyclerview_main_list.setAdapter(attendAdminDetailInformationActivity_recyclerViewAdapter);
+        attendAdminDetailInformationActivity_recyclerViewAdapter.notifyDataSetChanged();
 
         database.getReference().child("EveryClub").child(clubName).child("realNameSystem").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue().equals("true")) {
-                    database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                    database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -206,10 +206,10 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                         attendAdminChangeItem.attend_state = snapshot.child("User_State").child(userId).child("attend_state").getValue().toString();
                                                         attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
                                                         String uidKey = snapshot.getKey();
-                                                        attendAdminItems.add(attendAdminChangeItem);
-                                                        uidLists.add(uidKey);
+                                                        attendAdminItems.add(0, attendAdminChangeItem);
+                                                        uidLists.add(0, uidKey);
                                                     }
-                                                    attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                                    attendAdminDetailInformationActivity_recyclerViewAdapter.notifyDataSetChanged();
                                                 }
                                             }
 
@@ -253,7 +253,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                 }
 
                                                 // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-                                                attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                                attendAdminDetailInformationActivity_recyclerViewAdapter.notifyDataSetChanged();
                                             }
 
                                         }
@@ -378,10 +378,10 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                         attendAdminChangeItem.attend_state = snapshot.child("User_State").child(userId).child("attend_state").getValue().toString();
                                                         attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
                                                         String uidKey = snapshot.getKey();
-                                                        attendAdminItems.add(attendAdminChangeItem);
-                                                        uidLists.add(uidKey);
+                                                        attendAdminItems.add(0, attendAdminChangeItem);
+                                                        uidLists.add(0, uidKey);
                                                     }
-                                                    attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                                    attendAdminDetailInformationActivity_recyclerViewAdapter.notifyDataSetChanged();
                                                 }
                                             }
 
@@ -489,10 +489,10 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                 attendAdminChangeItem.attend_state = snapshot.child("User_State").child(userId).child("attend_state").getValue().toString();
                                                 attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
                                                 String uidKey = snapshot.getKey();
-                                                attendAdminItems.add(attendAdminChangeItem);
-                                                uidLists.add(uidKey);
+                                                attendAdminItems.add(0, attendAdminChangeItem);
+                                                uidLists.add(0, uidKey);
                                             }
-                                            attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                            attendAdminDetailInformationActivity_recyclerViewAdapter.notifyDataSetChanged();
                                         }
 
                                         if (attendAdminItems.size() == 0) {
@@ -528,10 +528,10 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                 attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
                                                 attendAdminChangeItem.late_time = snapshot.child("User_State").child(userId).child("late_time").getValue().toString();
                                                 String uidKey = snapshot.getKey();
-                                                attendAdminItems.add(attendAdminChangeItem);
-                                                uidLists.add(uidKey);
+                                                attendAdminItems.add(0, attendAdminChangeItem);
+                                                uidLists.add(0, uidKey);
                                             }
-                                            attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                            attendAdminDetailInformationActivity_recyclerViewAdapter.notifyDataSetChanged();
                                         }
 
                                         if (attendAdminItems.size() == 0) {
@@ -565,10 +565,10 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                 attendAdminChangeItem.attend_state = snapshot.child("User_State").child(userId).child("attend_state").getValue().toString();
                                                 attendAdminChangeItem.attendTimeLimit = snapshot.child("startTime").getValue().toString();
                                                 String uidKey = snapshot.getKey();
-                                                attendAdminItems.add(attendAdminChangeItem);
-                                                uidLists.add(uidKey);
+                                                attendAdminItems.add(0, attendAdminChangeItem);
+                                                uidLists.add(0, uidKey);
                                             }
-                                            attendAdminInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                                            attendAdminDetailInformationActivity_recyclerViewAdapter.notifyDataSetChanged();
                                         }
 
                                         if (attendAdminItems.size() == 0) {
@@ -603,7 +603,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
     }
 
-    class AttendAdminInformationActivity_AdminRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    class AttendAdminDetailInformationActivity_RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
@@ -631,12 +631,12 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.activity_attend_information_item, viewGroup, false);
 
-            return new AttendActivity_Admin_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder(view);
+            return new AttendActivity_Admin_Detail_Information.AttendAdminDetailInformationActivity_RecyclerViewAdapter.CustomViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewholder, final int position) {
-            final AttendActivity_Admin_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Admin_Detail_Information.AttendAdminInformationActivity_AdminRecyclerViewAdapter.CustomViewHolder) viewholder);
+            final AttendActivity_Admin_Detail_Information.AttendAdminDetailInformationActivity_RecyclerViewAdapter.CustomViewHolder customViewHolder = ((AttendActivity_Admin_Detail_Information.AttendAdminDetailInformationActivity_RecyclerViewAdapter.CustomViewHolder) viewholder);
             customViewHolder.activity_attend_information_item_textview_attend_state.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_information_item_textview_date.setGravity(Gravity.LEFT);
             customViewHolder.activity_attend_information_item_textview_tardy_time.setGravity(Gravity.LEFT);
@@ -647,8 +647,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
             customViewHolder.activity_attend_information_item_linearlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-
+                public void onClick(final View v) {
                     final PopupMenu popup = new PopupMenu(AttendActivity_Admin_Detail_Information.this, v);
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -661,7 +660,9 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                 case R.id.attend_state_information_attend:
 
                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("출석");
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("late_time").removeValue();
+                                    if (activity_attend_detail_textview_attend.getText().toString().equals("지각현황")) {
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("late_time").removeValue();
+                                    }
                                     popup.dismiss();
 
                                     return true;
@@ -704,7 +705,6 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                     });
 
                                     dialog.show();
-
                                     popup.dismiss();
 
                                     return true;
@@ -712,7 +712,9 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                 case R.id.attend_state_information_absent:
 
                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("결석");
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("late_time").removeValue();
+                                    if (activity_attend_detail_textview_attend.getText().toString().equals("지각현황")) {
+                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("late_time").removeValue();
+                                    }
                                     popup.dismiss();
 
                                     return true;
@@ -728,6 +730,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
                     popup.show();
+
                 }
 
             });
