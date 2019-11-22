@@ -43,6 +43,7 @@
                         android:layout_weight="3" />
 
                     <ImageView
+                        android:id="@+id/activity_attend_admin_change_imageview"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/arrow_btn"

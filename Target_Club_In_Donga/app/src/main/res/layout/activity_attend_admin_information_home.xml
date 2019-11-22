@@ -26,7 +26,7 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/attend_admin_information_home_edittext_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
