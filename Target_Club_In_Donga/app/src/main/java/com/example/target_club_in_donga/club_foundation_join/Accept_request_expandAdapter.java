@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -32,6 +34,8 @@ import java.util.List;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth firebaseAuth;
     private Activity activity;
     public static final int HEADER = 0;
     public static final int CHILD = 1;
@@ -41,6 +45,8 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
     public Accept_request_expandAdapter(Activity activity, List<Item> data) {
         this.data = data;
         this.activity = activity;
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -119,7 +125,11 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
                 itemController.item_request_true.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        firebaseDatabase.getReference().child("AppUser").child(item.uid).child("signUpClub").child(clubName)
+                                .child("approvalCompleted").setValue(true);
+                        itemController.item_request_layout.setVisibility(View.GONE);
+                        //notifyDataSetChanged();
+                        //Log.e("uid",item.uid);
                     }
                 });
                 itemController.item_request_false.setOnClickListener(new View.OnClickListener() {
@@ -186,15 +196,17 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
         public String applicationDate;
         public String resume;
         public String imageUrl;
+        public String uid;
 
         public List<Item> invisibleChildren;
 
-        public Item(int type, String nameNic, String applicationDate,String imageUrl, String resume) {
+        public Item(int type, String uid, String nameNic, String applicationDate,String imageUrl, String resume) {
             this.type = type;
             this.nameNic = nameNic;
             this.applicationDate = applicationDate;
             this.resume = resume;
             this.imageUrl = imageUrl;
+            this.uid = uid;
         }
     }
 }
