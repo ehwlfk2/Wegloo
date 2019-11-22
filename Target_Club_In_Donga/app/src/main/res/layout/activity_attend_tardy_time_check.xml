@@ -6,7 +6,8 @@
 
     <TextView
         style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/button_background"
+        android:background="@drawable/logoin_button_ver0"
+        android:textColor="@color/color_White"
         android:text="지각시간을 입력해주세요" />
 
     <EditText
@@ -23,7 +24,8 @@
 
     <Button
         android:id="@+id/activity_attend_tardy_time_check_button_confirm"
-        android:background="@drawable/button_background"
+        android:background="@drawable/logoin_button_ver0"
+        android:textColor="@color/color_White"
         style="@style/Content_Classification_Text_Style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +34,8 @@
 
         <Button
             android:id="@+id/activity_attend_tardy_time_check_button_cancel"
-            android:background="@drawable/button_background"
+            android:background="@drawable/logoin_button_ver0"
+            android:textColor="@color/color_White"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

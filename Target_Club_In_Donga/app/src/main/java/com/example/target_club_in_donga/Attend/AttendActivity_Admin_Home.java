@@ -335,7 +335,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     listItem.clear();
                     listItem.addAll(userList);
                     searchFlag = 1;
-//                    flag3 = 0;
                 }
 
                 // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
@@ -344,7 +343,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                 // 문자 입력이 없을때는 모든 데이터를 보여준다.
                 if (charText.length() == 0) {
                     userList.addAll(listItem);
-//                    flag2 = 1;
                 }
                 // 문자 입력을 할때..
                 else {
@@ -356,7 +354,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                             userList.add(listItem.get(i));
                         }
                     }
-//                    flag2 = 0;
                 }
                 // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
                 attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();

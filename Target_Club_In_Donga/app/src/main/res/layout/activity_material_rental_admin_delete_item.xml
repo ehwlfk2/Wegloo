@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        style="@style/Content_Text_Style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="정말 삭제 하시겠습니까?" />
@@ -16,16 +17,18 @@
 
         <Button
             android:id="@+id/activity_material_rental_admin_delete_item_button_confirm"
-            android:background="@drawable/button_background"
+            android:background="@drawable/logoin_button_ver0"
+            android:textColor="@color/color_White"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="확인"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/activity_material_rental_admin_delete_item_button_cancel"
-            android:background="@drawable/button_background"
+            android:background="@drawable/logoin_button_ver0"
+            android:textColor="@color/color_White"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

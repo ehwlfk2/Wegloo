@@ -7,7 +7,8 @@
 
     <TextView
         style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/button_background"
+        android:background="@drawable/logoin_button_ver0"
+        android:textColor="@color/color_White"
         android:text="출석시간" />
 
     <RadioGroup
@@ -43,7 +44,8 @@
 
     <TextView
         style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/button_background"
+        android:background="@drawable/logoin_button_ver0"
+        android:textColor="@color/color_White"
         android:text="지각시간" />
 
     <RadioGroup
@@ -79,7 +81,8 @@
     <Button
         android:id="@+id/activity_attend_admin_button_attendance_start"
         style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/button_background"
+        android:background="@drawable/logoin_button_ver0"
+        android:textColor="@color/color_White"
         android:text="출석시작하기" />
 
 </LinearLayout>

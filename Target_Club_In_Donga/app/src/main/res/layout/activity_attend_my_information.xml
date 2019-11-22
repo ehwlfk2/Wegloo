@@ -6,8 +6,9 @@
     android:padding="10dp">
 
     <TextView
-        style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/button_background"
+        style="@style/Top_Content_Text_Style"
+        android:background="@drawable/logoin_button_ver0"
+        android:textColor="@color/color_White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="내 출석정보"/>

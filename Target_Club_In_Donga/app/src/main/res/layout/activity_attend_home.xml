@@ -111,11 +111,12 @@
             <Button
                 android:id="@+id/activity_attend_home_button_insert"
                 style="@style/Content_Classification_Text_Style"
-                android:background="@drawable/button_background"
+                android:background="@drawable/logoin_button_ver0"
                 android:text="출석추가"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                tools:layout_editor_absoluteX="0dp" />
+                tools:layout_editor_absoluteX="0dp"
+                android:textColor="@color/color_White"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
