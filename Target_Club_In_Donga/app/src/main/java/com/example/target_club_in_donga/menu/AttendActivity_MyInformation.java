@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -209,6 +210,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
             LinearLayout activity_attend_information_item_linearlayout;
             TextView activity_attend_information_item_textview_date;
             TextView activity_attend_information_item_textview_attend_state;
+            ImageView activity_attend_information_item_imageview;
 
             public CustomViewHolder(View view) {
                 super(view);
@@ -216,6 +218,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                 activity_attend_information_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_information_item_linearlayout);
                 activity_attend_information_item_textview_date = (TextView) view.findViewById(R.id.activity_attend_information_item_textview_date);
                 activity_attend_information_item_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_information_item_textview_attend_state);
+                activity_attend_information_item_imageview = (ImageView) view.findViewById(R.id.activity_attend_information_item_imageview);
 
             }
 
@@ -237,6 +240,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
 
             customViewHolder.activity_attend_information_item_textview_attend_state.setText(attendAdminItems.get(position).attend_state);
             customViewHolder.activity_attend_information_item_textview_date.setText(attendAdminItems.get(position).attendTimeLimit);
+            customViewHolder.activity_attend_information_item_imageview.setVisibility(View.INVISIBLE);
 
         }
 
