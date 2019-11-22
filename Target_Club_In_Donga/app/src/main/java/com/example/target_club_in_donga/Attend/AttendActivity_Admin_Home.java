@@ -308,6 +308,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
             }
         });
+
+//        Log.e("값",  memberList + "");
         attend_admin_information_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.attend_admin_information_home_edittext_search);
         attend_admin_information_home_edittext_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -364,10 +366,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     public void onClick(final View v) {*/
 
 
-
-
-
-
 /*                        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -413,10 +411,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                             }
                         });*/
-
-
-
-
 
 
 /*                    }
