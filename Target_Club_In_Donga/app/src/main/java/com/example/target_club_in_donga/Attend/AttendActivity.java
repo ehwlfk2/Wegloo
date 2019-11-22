@@ -572,6 +572,7 @@ public class AttendActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
+                                    //Log.e("sned",thisClubName);
                                     SendPushMessages send = new SendPushMessages();
                                     send.multipleSendMessage(thisClubName,"출석체크 시작","Attend");
                                 }
