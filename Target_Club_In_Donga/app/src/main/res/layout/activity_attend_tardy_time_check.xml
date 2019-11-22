@@ -5,18 +5,14 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/Top_Content_Text_Style"
-        android:text="출석체크" />
-
-    <TextView
         style="@style/Content_Classification_Text_Style"
         android:background="@drawable/button_background"
-        android:text="인증번호를 입력해주세요" />
+        android:text="지각시간을 입력해주세요" />
 
     <EditText
-        android:id="@+id/activity_attend_check_edittext_certification_number"
+        android:id="@+id/activity_attend_tardy_time_check_edittext_tardy_time"
         style="@style/Content_Text_Style"
-        android:hint="숫자만 입력해주세요"
+        android:hint="분 단위로 입력"
         android:inputType="number"
         android:digits="0123456789"/>
 
@@ -26,7 +22,7 @@
         android:orientation="horizontal" >
 
     <Button
-        android:id="@+id/activity_attend_check_button_confirm"
+        android:id="@+id/activity_attend_tardy_time_check_button_confirm"
         android:background="@drawable/button_background"
         style="@style/Content_Classification_Text_Style"
         android:layout_width="wrap_content"
@@ -35,13 +31,13 @@
         android:layout_centerHorizontal="true"/>
 
         <Button
-            android:id="@+id/activity_attend_check_button_cancel"
+            android:id="@+id/activity_attend_tardy_time_check_button_cancel"
             android:background="@drawable/button_background"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"
-            android:layout_toRightOf="@+id/activity_attend_check_button_confirm"/>
+            android:layout_toRightOf="@+id/activity_attend_tardy_time_check_button_confirm"/>
 
 
     </RelativeLayout>

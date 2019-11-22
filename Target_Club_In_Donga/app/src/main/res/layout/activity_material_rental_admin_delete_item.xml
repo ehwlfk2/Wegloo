@@ -16,6 +16,7 @@
 
         <Button
             android:id="@+id/activity_material_rental_admin_delete_item_button_confirm"
+            android:background="@drawable/button_background"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
 
         <Button
             android:id="@+id/activity_material_rental_admin_delete_item_button_cancel"
+            android:background="@drawable/button_background"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

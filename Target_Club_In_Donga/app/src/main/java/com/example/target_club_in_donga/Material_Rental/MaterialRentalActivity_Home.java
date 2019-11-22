@@ -710,18 +710,19 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                     if (differFlag == 0) {
                         popup.getMenu().getItem(2).setVisible(false);
-                    } else {
                         if (!materialRentalItems.get(position).lender.equals("없음")) {
                             popup.getMenu().getItem(0).setVisible(false);
                         }
-
+                        if (materialRentalItems.get(position).lender.equals("없음") || !materialRentalItems.get(position).lender.equals(uidName)) {
+                            popup.getMenu().getItem(3).setVisible(false);
+                        }
+                    } else {
+                        popup.getMenu().getItem(0).setVisible(false);
+                        popup.getMenu().getItem(3).setVisible(false);
                         if (admin > adminNumber || !materialRentalItems.get(position).lender.equals("없음") && admin <= adminNumber) {
                             popup.getMenu().getItem(2).setVisible(false);
                         }
 
-                        if (materialRentalItems.get(position).lender.equals("없음") || !materialRentalItems.get(position).lender.equals(uidName)) {
-                            popup.getMenu().getItem(3).setVisible(false);
-                        }
                     }
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
