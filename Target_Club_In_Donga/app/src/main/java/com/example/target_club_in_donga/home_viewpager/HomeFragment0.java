@@ -70,6 +70,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     public static boolean thisClubIsRealName;
+    public static String thisClubName;
     public static String userRealName;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
 
@@ -156,6 +157,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 ClubData clubData = dataSnapshot.getValue(ClubData.class);
                 home_textview_main.setText(clubData.getThisClubName());
                 Group_Name.setText(clubData.getThisClubName());
+                thisClubName = clubData.getThisClubName();
                 thisClubIsRealName = clubData.isRealNameSystem();
                 clubName = dataSnapshot.getKey();
                 //Log.e("thisClubIsRealName",thisClubIsRealName+"");
