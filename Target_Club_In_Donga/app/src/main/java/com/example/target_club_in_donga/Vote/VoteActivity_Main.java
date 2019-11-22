@@ -1,8 +1,10 @@
 package com.example.target_club_in_donga.Vote;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
@@ -281,5 +286,22 @@ public class VoteActivity_Main extends AppCompatActivity {
                 }
             });
         }
+    }
+    @Override
+    public void onBackPressed() {
+//        FirebaseAuth.getInstance().signOut();
+//        LoginManager.getInstance().logOut();
+//        finish();
+        //ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
+        //List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
+
+        if(isTaskRoot()){
+            Intent intent = new Intent(VoteActivity_Main.this, HomeActivityView.class);
+            intent.putExtra("isRecent",true);
+            startActivity(intent);
+            finish();
+            //// This is last activity
+        }
+        super.onBackPressed();
     }
 }
