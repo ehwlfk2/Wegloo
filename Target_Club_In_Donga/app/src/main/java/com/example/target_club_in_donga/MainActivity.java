@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Package_LogIn.Congratulation;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                      finish();
                                  }
                                  else if(fcmCheck.equals("Attend")){
-                                     Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
+                                     Intent intent = new Intent(MainActivity.this, AttendActivity.class);
                                      intent.putExtra("isRecent",true);
                                      startActivity(intent);
                                      finish();
