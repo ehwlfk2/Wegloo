@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -134,5 +135,23 @@ public class NoticeActivity_Main extends AppCompatActivity {
         Date date = new Date(unixTime);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         return simpleDateFormat.format(date);
+    }
+
+    @Override
+    public void onBackPressed() {
+//        FirebaseAuth.getInstance().signOut();
+//        LoginManager.getInstance().logOut();
+//        finish();
+        //ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
+        //List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
+
+        if(isTaskRoot()){
+            Intent intent = new Intent(NoticeActivity_Main.this, HomeActivityView.class);
+            intent.putExtra("isRecent",true);
+            startActivity(intent);
+            finish();
+            //// This is last activity
+        }
+        super.onBackPressed();
     }
 }

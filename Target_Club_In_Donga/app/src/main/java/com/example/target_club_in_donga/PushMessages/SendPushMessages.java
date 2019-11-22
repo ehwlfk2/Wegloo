@@ -31,8 +31,8 @@ public class SendPushMessages {
                     JoinData data = snapshot.getValue(JoinData.class);
                     if(data.isPushAlarmOnOff() && !(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))){ //자기한텐 안보내기 추가
                         try{
-                            SendPushMessages send = new SendPushMessages();
-                            send.sendFcm(data.getPushToken(), title,text, clickAction);
+                            //SendPushMessages send = new SendPushMessages();
+                            sendFcm(data.getPushToken(), title,text, clickAction);
                         }catch (NullPointerException e){
 
                         }

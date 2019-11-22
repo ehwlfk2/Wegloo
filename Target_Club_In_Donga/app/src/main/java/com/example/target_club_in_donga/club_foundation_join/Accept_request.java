@@ -79,9 +79,11 @@ public class Accept_request extends AppCompatActivity {
                                 Accept_request_expandAdapter.Item places = new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.HEADER,
                                         dataSnapshot.getKey(),
                                         appLoginData.getName(),applicationDate,
-                                        appLoginData.getRealNameProPicUrl(),null);
+                                        appLoginData.getRealNameProPicUrl(),
+                                        null,false, joinData.getPushToken());
                                 places.invisibleChildren = new ArrayList<>();
-                                places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,null,null,joinData.getResume()));
+                                places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,
+                                        null,null,joinData.getResume(), false, joinData.getPushToken()));
                                 data.add(places);
                                 requestKey.add(dataSnapshot.getKey());
                                 adapter.notifyDataSetChanged();
@@ -97,9 +99,10 @@ public class Accept_request extends AppCompatActivity {
                         Accept_request_expandAdapter.Item places = new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.HEADER,
                                 snapshot.getKey(),
                                 joinData.getName(),applicationDate,
-                                joinData.getRealNameProPicUrl(),null);
+                                joinData.getRealNameProPicUrl(),null, false, joinData.getPushToken());
                         places.invisibleChildren = new ArrayList<>();
-                        places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,null,null,joinData.getResume()));
+                        places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,
+                                null,null,joinData.getResume(), false, joinData.getPushToken()));
                         data.add(places);
                         requestKey.add(dataSnapshot.getKey());
                     }

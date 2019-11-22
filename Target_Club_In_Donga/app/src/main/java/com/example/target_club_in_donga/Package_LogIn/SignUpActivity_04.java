@@ -68,28 +68,6 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
         activity_signup_04_nextBtn.setOnClickListener(this);
         activity_signup_04_cancelBtn.setOnClickListener(this);
         activity_signup_04_realNameProfile.setOnClickListener(this);
-        /*final Button btn_tcid = findViewById(R.id.btn_tcid);
-        btn_tcid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clubName = btn_tcid.getText().toString();
-                dbdb();
-                Intent intent = new Intent(SignUpActivity_04.this , HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        final Button btn_ka = findViewById(R.id.btn_ka);
-        btn_ka.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clubName = btn_ka.getText().toString();
-                dbdb();
-                Intent intent = new Intent(SignUpActivity_04.this , HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });*/
 
     }   // onCreate
 

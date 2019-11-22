@@ -322,6 +322,7 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
 
             }
         });
+//        adapter.notifyDataSetChanged();
     }
 
 }

@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.target_club_in_donga.PushMessages.SendPushMessages;
 import com.example.target_club_in_donga.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubName;
 
 public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private FirebaseDatabase firebaseDatabase;
@@ -127,7 +129,13 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View view) {
                         firebaseDatabase.getReference().child("AppUser").child(item.uid).child("signUpClub").child(clubName)
                                 .child("approvalCompleted").setValue(true);
-                        itemController.item_request_layout.setVisibility(View.GONE);
+                        //itemController.item_request_layout.setVisibility(View.INVISIBLE);
+                        item.visCheck = true;
+                        /**
+                         * FCM 보내줘야해
+                         */
+                        SendPushMessages send = new SendPushMessages();
+                        send.sendFcm(item.pushToken, thisClubName, "가입요청이 승인되었습니다.","AcceptRequest");
                         //notifyDataSetChanged();
                         //Log.e("uid",item.uid);
                     }
@@ -135,9 +143,16 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
                 itemController.item_request_false.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        firebaseDatabase.getReference().child("AppUser").child(item.uid).child("signUpClub").child(clubName).removeValue();
+                        item.visCheck = true;
+                        /**
+                         * 거절당했을땐 슬프니까 보내주지말자
+                         */
                     }
                 });
+                if(item.visCheck){
+                    itemController.item_request_layout.setVisibility(View.GONE);
+                }
 
                 break;
             case CHILD:
@@ -197,16 +212,20 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
         public String resume;
         public String imageUrl;
         public String uid;
+        public String pushToken;
+        public boolean visCheck;
 
         public List<Item> invisibleChildren;
 
-        public Item(int type, String uid, String nameNic, String applicationDate,String imageUrl, String resume) {
+        public Item(int type, String uid, String nameNic, String applicationDate,String imageUrl, String resume, boolean visCheck, String pushToken) {
             this.type = type;
             this.nameNic = nameNic;
             this.applicationDate = applicationDate;
             this.resume = resume;
             this.imageUrl = imageUrl;
             this.uid = uid;
+            this.visCheck = visCheck;
+            this.pushToken = pushToken;
         }
     }
 }

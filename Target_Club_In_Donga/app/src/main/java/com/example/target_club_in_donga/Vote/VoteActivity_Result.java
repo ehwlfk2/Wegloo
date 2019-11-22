@@ -85,7 +85,7 @@ public class VoteActivity_Result extends AppCompatActivity {
 
                         if(last_item.stars.get(key) == i){ //uid가 같으면 이름받아오기
 
-                            database.getReference().child("EveryClub").child(clubName).child("User").child(key).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).child("User").child(key).child("name").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String name = dataSnapshot.getValue(String.class);
