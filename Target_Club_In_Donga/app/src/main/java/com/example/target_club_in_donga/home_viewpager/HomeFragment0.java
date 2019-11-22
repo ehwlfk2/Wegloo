@@ -156,6 +156,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 home_textview_main.setText(clubData.getThisClubName());
                 Group_Name.setText(clubData.getThisClubName());
                 thisClubIsRealName = clubData.isRealNameSystem();
+                clubName = dataSnapshot.getKey();
                 //Log.e("thisClubIsRealName",thisClubIsRealName+"");
 
                 String userUid = firebaseAuth.getCurrentUser().getUid();
@@ -481,6 +482,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             profile_admin.setText("임원");
         else if(joinData.getAdmin() == 3)
             profile_admin.setText("회원");
+
     }
 
 }
