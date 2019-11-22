@@ -13,6 +13,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.MainActivity;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.R;
@@ -63,6 +64,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             else if(clickAction.equals("AcceptRequest")){
                 intent = new Intent(this, HomeActivityView.class);
                 intent.putExtra("isRecent",true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
+            else if(clickAction.equals("Attend")){
+                intent = new Intent(this, AttendActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             else{

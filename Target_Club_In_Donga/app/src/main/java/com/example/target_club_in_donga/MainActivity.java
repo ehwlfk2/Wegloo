@@ -94,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
                                      startActivity(intent);
                                      finish();
                                  }
+                                 else if(fcmCheck.equals("Attend")){
+                                     Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
+                                     intent.putExtra("isRecent",true);
+                                     startActivity(intent);
+                                     finish();
+                                 }
                                  else {
                                      //oast.makeText(MainActivity.this, "" + recentClub, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, HomeActivityView.class);

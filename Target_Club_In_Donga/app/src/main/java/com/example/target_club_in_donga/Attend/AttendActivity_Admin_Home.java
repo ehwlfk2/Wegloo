@@ -46,13 +46,14 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class AttendActivity_Admin_Home extends AppCompatActivity {
     private RecyclerView activity_attend_admin_information_home_recyclerview_main_list;
-    private List<Attend_Admin_Information_Search_Item> searchList = new ArrayList<>();
+//    private List<Attend_Admin_Information_Search_Item> searchList = new ArrayList<>();
     private List<Attend_Admin_Information_Item> userList = new ArrayList<>();
     private List<Attend_Admin_Item> attenditems = new ArrayList<>();
     private List<String> uidLists = new ArrayList<>();
     private List<Attend_Admin_Information_Item> listItem = new ArrayList<>();
 
     private ArrayList<String> listStartTime = new ArrayList<>();
+    private List<String> memberList;
 
     private FirebaseDatabase database;
     private FirebaseAuth auth;
@@ -64,6 +65,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     private int searchFlag = 0, searchFlag2 = 0;
 
     private TextView activity_attend_admin_information_item_textview_phone_number;
+    private EditText attend_admin_information_home_edittext_search;
     private long now;
 
     public static String uidAdminPath;
@@ -82,7 +84,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
         activity_attend_admin_information_home_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_admin_information_home_recyclerview_main_list);
         activity_attend_admin_information_home_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
 
-        final Button attend_admin_information_home_button_search = (Button) findViewById(R.id.attend_admin_information_home_button_search);
+//        final Button attend_admin_information_home_button_search = (Button) findViewById(R.id.attend_admin_information_home_button_search);
 
         final AttendActivity_Admin_Home.AttendAdminHomeActivity_RecyclerViewAdapter attendAdminHomeActivity_recyclerViewAdapter = new AttendActivity_Admin_Home.AttendAdminHomeActivity_RecyclerViewAdapter();
 
@@ -155,6 +157,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     if (dataSnapshot.child("realNameSystem").getValue().equals(false)) {
                         userList.clear();
                         uidLists.clear();
+                        memberList = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.child("User").getChildren()) {
                             Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
                             String uidKey = snapshot.getKey();
@@ -162,6 +165,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 //                                attendItem.phone = "전화번호 없음";
                                 flag2 = 1;
                             }
+                            memberList.add(attendItem.name);
                             userList.add(0, attendItem);
                             uidLists.add(0, uidKey);
                         }
@@ -212,7 +216,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                                 flag = 0;
                                 activity_attend_admin_information_home_category.setText("회원 별");
-
+                                attend_admin_information_home_edittext_search.setVisibility(View.VISIBLE);
                                 database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -266,6 +270,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                                 flag = 1;
                                 activity_attend_admin_information_home_category.setText("일자 별");
+                                attend_admin_information_home_edittext_search.setVisibility(View.INVISIBLE);
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -304,7 +309,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
             }
         });
 
-        final EditText attend_admin_information_home_edittext_search = (EditText) findViewById(R.id.attend_admin_information_home_edittext_search);
+//        Log.e("값",  memberList + "");
+        attend_admin_information_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.attend_admin_information_home_edittext_search);
         attend_admin_information_home_edittext_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
@@ -324,12 +330,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
             private void search(final String charText) {
                 activity_attend_admin_information_home_category.setText("카테고리");
-                flag = 2;
-
-                if (charText.length() == 0) {
-                    searchFlag = 0;
-                    attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
-                }
 
                 if (searchFlag == 0) {
                     listItem.clear();
@@ -361,40 +361,9 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                 // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
                 attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
 
-                attend_admin_information_home_button_search.setOnClickListener(new View.OnClickListener() {
+/*                attend_admin_information_home_button_search.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(final View v) {
-
-/*                        if (flag == 0) {
-                            listItem.clear();
-                            listItem.addAll(userList);
-                            flag = 1;
-                            flag3 = 0;
-                        }
-
-                        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-                        userList.clear();
-
-                        // 문자 입력이 없을때는 모든 데이터를 보여준다.
-                        if (charText.length() == 0) {
-                            userList.addAll(listItem);
-                            flag2 = 1;
-                        }
-                        // 문자 입력을 할때..
-                        else {
-                            // 리스트의 모든 데이터를 검색한다.
-                            for (int i = 0; i < listItem.size(); i++) {
-                                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-                                if (listItem.get(i).name.toLowerCase().contains(charText)) {
-                                    // 검색된 데이터를 리스트에 추가한다.
-                                    userList.add(listItem.get(i));
-                                }
-                            }
-                            flag2 = 0;
-                        }
-                        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-                        attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();*/
-
+                    public void onClick(final View v) {*/
 
 
 /*                        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
@@ -444,18 +413,14 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                         });*/
 
 
-
-
-
-
-                    }
-                });
+/*                    }
+                });*/
 
             }
         });
 
         AutoCompleteTextView attend_admin_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.attend_admin_information_home_edittext_search);
-        attend_admin_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, uidLists));
+        attend_admin_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, memberList));
     }
 
     // AttendAdminHomeActivity 어댑터
@@ -484,7 +449,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
         private class CustomViewHolder2 extends RecyclerView.ViewHolder {
 
             LinearLayout activity_attend_home_item_linearlayout;
-            LinearLayout activity_attend_home_linearlayout_attend;
             TextView activity_attend_home_item_textview_recyclerview_start_time;
             TextView activity_attend_home_item_recyclerview_attend_time_limit_tilte;
             TextView activity_attend_home_item_recyclerview_attend_time_limit;
@@ -501,8 +465,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                 activity_attend_home_item_textview_recyclerview_tardy_time_limit = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_tardy_time_limit);
                 activity_attend_home_item_textview_recyclerview_tardy_time_limit_title = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_tardy_time_limit_title);
 
-
-                activity_attend_home_linearlayout_attend.setVisibility(View.GONE);
             }
 
         }
