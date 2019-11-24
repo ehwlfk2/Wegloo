@@ -296,7 +296,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
             // 아이템 내 각 위젯에 데이터 반영
 
             if(listViewItem.getImageUrl().equals("None")){
-                holder.imageview.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                //holder.imageview.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
             }
             else{
                 Glide.with(convertView).load(listViewItem.getImageUrl()).into(holder.imageview);
@@ -488,7 +488,7 @@ public class HistoryActivity_Main extends AppCompatActivity {
         final ImageView imageView = (ImageView) view2.findViewById(R.id.history_main_dialog_imageview);
 
         if(imageUrl.equals("None")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+            //imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
             exportBtn.setVisibility(View.INVISIBLE);
         }
         else{

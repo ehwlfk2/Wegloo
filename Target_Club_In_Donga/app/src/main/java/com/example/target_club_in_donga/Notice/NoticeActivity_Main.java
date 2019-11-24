@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +36,7 @@ public class NoticeActivity_Main extends AppCompatActivity {
 
     private FloatingActionButton activity_notice_main_button_intent;
     private RecyclerView activity_notice_main_recyclerview;
-    public static List<ExpandableListAdapter.Item> data = new ArrayList<>();
+    public static List<ExpandableListAdapter.Item> noticeData = new ArrayList<>();
     public static List<String> noticeDbKey = new ArrayList<>();
     private ExpandableListAdapter adapter;
     private FirebaseDatabase database;
@@ -61,63 +62,74 @@ public class NoticeActivity_Main extends AppCompatActivity {
                 Intent intent = new Intent(NoticeActivity_Main.this, NoticeActivity_Insert.class);
                 intent.putExtra("type","insert");
                 startActivity(intent);
+                finish();
             }
         });
-
+        noticeData.clear();
+        noticeDbKey.clear();
         activity_notice_main_recyclerview.setLayoutManager(new LinearLayoutManager(NoticeActivity_Main.this, LinearLayoutManager.VERTICAL, false));
         activity_notice_main_recyclerview.setHasFixedSize(true);
 
-        adapter = new ExpandableListAdapter(NoticeActivity_Main.this,data);
+        adapter = new ExpandableListAdapter(NoticeActivity_Main.this,noticeData);
         activity_notice_main_recyclerview.setAdapter(adapter);
 
+
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("EveryClub").child(clubName).child("Notice").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Notice").orderByChild("timestamp").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                data.clear();
+                noticeData.clear();
                 noticeDbKey.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
 
                     final Notice_Item notice_item = snapshot.getValue(Notice_Item.class);
-                    SpannableStringBuilder ssb = new SpannableStringBuilder(notice_item.getTitle());
-                    for(int i=0;i<notice_item.notice_item_colors.size();i++){
-                        int start = notice_item.notice_item_colors.get(i).getStart();
-                        int end = notice_item.notice_item_colors.get(i).getEnd();
-                        try{
-                            if(notice_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
-                                ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
-                            }
-                            else if(notice_item.notice_item_colors.get(i).getStyle().equals("ITALIC")){
-                                ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
-                            }
-                            else if(notice_item.notice_item_colors.get(i).getStyle().equals("UnderLine")){
-                                ssb.setSpan(new UnderlineSpan(), start, end, 1);
-                            }
-                            else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack){
-                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
-                            }
-                            else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin){
-                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
-                            }
-                            else if(Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole){
-                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
-                            }
-                            else{
-                                int color = Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle());
-                                ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
-                            }
-                        }
-                        catch (IllegalStateException e){ //무슨예외??
-
-                        }
-                    }
 
                     if(!thisClubIsRealName){ //닉네임일경우
                         database.getReference().child("EveryClub").child(clubName).child("User").child(notice_item.getWriter()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String nicName = dataSnapshot.getValue(String.class);
-                                notice_item.setWriter(nicName);
+                                //Log.e("nic",nicName);
+                                SpannableStringBuilder ssb = new SpannableStringBuilder(notice_item.getTitle());
+                                try{
+                                    for(int i=0;i<notice_item.notice_item_colors.size();i++) {
+                                        int start = notice_item.notice_item_colors.get(i).getStart();
+                                        int end = notice_item.notice_item_colors.get(i).getEnd();
+                                        if (notice_item.notice_item_colors.get(i).getStyle().equals("BOLD")) {
+                                            ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
+                                        } else if (notice_item.notice_item_colors.get(i).getStyle().equals("ITALIC")) {
+                                            ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
+                                        } else if (notice_item.notice_item_colors.get(i).getStyle().equals("UnderLine")) {
+                                            ssb.setSpan(new UnderlineSpan(), start, end, 1);
+                                        } else if (Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack) {
+                                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
+                                        } else if (Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin) {
+                                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
+                                        } else if (Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole) {
+                                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
+                                        } else {
+                                            int color = Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle());
+                                            ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
+                                        }
+                                    }
+                                }
+                                catch (IllegalStateException e){ //무슨예외??
+                                    ssb.clear();
+                                    ssb = new SpannableStringBuilder(notice_item.getTitle());
+                                }
+                                catch(IndexOutOfBoundsException e){
+                                    ssb.clear();
+                                    ssb = new SpannableStringBuilder(notice_item.getTitle());
+                                }
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                String tt= timeStampToString(notice_item.getTimestamp(),simpleDateFormat);
+                                ExpandableListAdapter.Item places = new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER, ssb,null,
+                                        nicName,tt);
+                                places.invisibleChildren = new ArrayList<>();
+                                places.invisibleChildren.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD,null,notice_item.getContent(),null,null));
+                                noticeData.add(places);
+                                noticeDbKey.add(snapshot.getKey());
+                                adapter.notifyDataSetChanged();
                             }
 
                             @Override
@@ -126,15 +138,49 @@ public class NoticeActivity_Main extends AppCompatActivity {
                             }
                         });
                     }
+                    else{
+                        SpannableStringBuilder ssb = new SpannableStringBuilder(notice_item.getTitle());
+                        try{
+                            for(int i=0;i<notice_item.notice_item_colors.size();i++) {
+                                int start = notice_item.notice_item_colors.get(i).getStart();
+                                int end = notice_item.notice_item_colors.get(i).getEnd();
+                                if (notice_item.notice_item_colors.get(i).getStyle().equals("BOLD")) {
+                                    ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
+                                } else if (notice_item.notice_item_colors.get(i).getStyle().equals("ITALIC")) {
+                                    ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
+                                } else if (notice_item.notice_item_colors.get(i).getStyle().equals("UnderLine")) {
+                                    ssb.setSpan(new UnderlineSpan(), start, end, 1);
+                                } else if (Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack) {
+                                    ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
+                                } else if (Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin) {
+                                    ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
+                                } else if (Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole) {
+                                    ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
+                                } else {
+                                    int color = Integer.parseInt(notice_item.notice_item_colors.get(i).getStyle());
+                                    ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
+                                }
+                            }
+                        }
+                        catch (IllegalStateException e){ //무슨예외??
+                            ssb.clear();
+                            ssb = new SpannableStringBuilder(notice_item.getTitle());
+                        }
+                        catch(IndexOutOfBoundsException e){
+                            ssb.clear();
+                            ssb = new SpannableStringBuilder(notice_item.getTitle());
+                        }
 
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    String tt= timeStampToString(notice_item.getTimestamp(),simpleDateFormat);
-                    ExpandableListAdapter.Item places = new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER,ssb,null,
-                            notice_item.getWriter(),tt);
-                    places.invisibleChildren = new ArrayList<>();
-                    places.invisibleChildren.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD,null,notice_item.getContent(),null,null));
-                    data.add(places);
-                    noticeDbKey.add(snapshot.getKey());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        String tt= timeStampToString(notice_item.getTimestamp(),simpleDateFormat);
+                        ExpandableListAdapter.Item places = new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER,ssb,null,
+                                notice_item.getWriter(),tt);
+                        places.invisibleChildren = new ArrayList<>();
+                        places.invisibleChildren.add(new ExpandableListAdapter.Item(ExpandableListAdapter.CHILD,null,notice_item.getContent(),null,null));
+                        noticeData.add(places);
+                        noticeDbKey.add(snapshot.getKey());
+                        //adapter.notifyDataSetChanged();
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }

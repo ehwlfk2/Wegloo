@@ -221,7 +221,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
             else{
                 //holder.ivCustomerImage.setVisibility(View.GONE);
                 //holder.ivCustomerImageVis.setVisibility(View.VISIBLE);
-                holder.ivCustomerImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                //holder.ivCustomerImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
             }
 
             return convertView;
@@ -297,7 +297,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                 dialog_joinClub_text.setText(clubData.getThisClubName());
                 dialog_joinClub_content.setText(clubData.getClubIntroduce());
                 if(clubData.getClubImageUrl().equals("None")){
-                    dialog_joinClub_button_picture.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                    //dialog_joinClub_button_picture.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
                 }
                 else{
                     Glide.with(Join_01.this).load(clubData.getClubImageUrl()).into(dialog_joinClub_button_picture);

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/activityhistory_insert_imageview"
-        android:src="@drawable/ic_launcher_foreground"/>
+        android:background="@color/color_WhiteGray"/>
 
     <TextView
         android:layout_width="match_parent"
