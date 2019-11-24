@@ -50,6 +50,7 @@
 
         <Button
             android:id="@+id/activity_material_rental_admin_insert_button_insert"
+            android:background="@drawable/button_background"
             style="@style/Content_Classification_Text_Style"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-2dp"

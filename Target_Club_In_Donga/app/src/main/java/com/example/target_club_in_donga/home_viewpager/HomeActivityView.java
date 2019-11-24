@@ -37,7 +37,7 @@ public class HomeActivityView extends AppCompatActivity {
     public static MoviePagerAdapter viewAdapter;
     private ViewPager activity_home_viewPager;
     private AdView mAdView;
-    private boolean isRecent;
+    private boolean isRecent = false;
     private BackPressCloseHandler backPressCloseHandler;
     private ProgressDialog progressDialog;
     private FirebaseDatabase firebaseDatabase;

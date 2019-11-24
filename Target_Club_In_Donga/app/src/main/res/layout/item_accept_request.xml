@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:background="#FFFFFF"
+    android:id="@+id/item_request_layout">
+
+    <ImageView
+        android:id="@+id/item_request_toggle"
+        android:layout_marginStart="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_expand_more_24px"
+        android:layout_gravity="center"/>
+    <!-- 이미지 -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_request_imageview"
+        android:layout_gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/face"
+        android:layout_marginStart="5dp" />
+    <!-- 이미지 -->
+    <!-- 이름, 직책 ,전번 -->
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp">
+        <TextView
+            android:id="@+id/item_request_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:text="이름이름"
+            android:textColor="#000000"
+            android:textSize="21dp" />
+        <TextView
+            android:id="@+id/item_request_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="2019-11-20"
+            android:textColor="#666464"
+            android:textSize="13dp" />
+    </LinearLayout>
+
+    <com.melnykov.fab.FloatingActionButton
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_done"
+        android:id="@+id/item_request_true"
+        fab:fab_colorNormal="@color/fbutton_color_turquoise"
+        fab:fab_colorPressed="@color/fbutton_color_green_sea"
+        fab:fab_colorRipple="@color/fbutton_color_emerald"
+        fab:fab_type="mini"
+        />
+
+    <com.melnykov.fab.FloatingActionButton
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_clear"
+        android:id="@+id/item_request_false"
+        fab:fab_colorNormal="@color/fbutton_color_turquoise"
+        fab:fab_colorPressed="@color/fbutton_color_green_sea"
+        fab:fab_colorRipple="@color/fbutton_color_emerald"
+        fab:fab_type="mini"
+        />
+
+    <!-- 이름, 직책 ,전번 -->
+
+</LinearLayout>

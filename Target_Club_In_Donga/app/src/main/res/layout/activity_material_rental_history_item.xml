@@ -24,5 +24,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/arrow_btn"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="right|center"/>
+
     </LinearLayout>
 </LinearLayout>

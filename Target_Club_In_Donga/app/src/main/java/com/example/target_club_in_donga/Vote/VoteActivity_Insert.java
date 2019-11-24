@@ -253,9 +253,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                 holder = new ViewHolder();
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.vote_insert_listview_item, parent, false);
-                holder.editText = (EditText)convertView.findViewById(R.id.vote_insert_listview_item_edittext);
-                //holder.editText2 = (EditText)convertView.findViewById(R.id.editText2);
-                //holder.editText3 = (EditText)convertView.findViewById(R.id.editText3);
+                holder.editText = convertView.findViewById(R.id.vote_insert_listview_item_edittext);
 
                 convertView.setTag(holder);
             }else{
@@ -265,19 +263,11 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
             holder.ref = position;
 
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-            final EditText editText1 = (EditText)convertView.findViewById(R.id.vote_insert_listview_item_edittext);
 
             // Data Set(filteredItemList)에서 position에 위치한 데이터 참조 획득
             final Vote_Item_Count listViewItem = filteredItemList.get(position);
 
             holder.editText.setText(listViewItem.getName());
-            //holder.editText2.setText(listViewItem.getCount());
-            // holder.editText3.setText(listViewItem.getPrice());
-
-            //name+=holder.editText1.getText()+"#";
-            //count+=holder.editText1.getText()+"#";
-            //price+=holder.editText1.getText()+"#";
-
             holder.editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

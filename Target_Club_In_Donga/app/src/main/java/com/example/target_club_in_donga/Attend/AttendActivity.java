@@ -23,7 +23,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.target_club_in_donga.PushMessages.SendPushMessages;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +47,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubName;
 
 public class AttendActivity extends AppCompatActivity {
 
@@ -529,6 +532,8 @@ public class AttendActivity extends AppCompatActivity {
                                                             attendAdminChangeItem.name = getName;
                                                             attendAdminChangeItem.attend_state = "미출결";
                                                             attendAdminChangeItem.phone = getPhone;
+
+
                                                         }
                                                     }
                                                 }
@@ -558,6 +563,7 @@ public class AttendActivity extends AppCompatActivity {
                                                     attendAdminChangeItem.attend_state = "미출결";
 //                                                    attendAdminChangeItem.phone = "전화번호 없음";
                                                 }
+
                                             }
 
                                             @Override
@@ -566,6 +572,9 @@ public class AttendActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
+                                    //Log.e("sned",thisClubName);
+                                    SendPushMessages send = new SendPushMessages();
+                                    send.multipleSendMessage(thisClubName,"출석체크 시작","Attend");
                                 }
 
                                 @Override
@@ -576,6 +585,7 @@ public class AttendActivity extends AppCompatActivity {
 
 
                             Toast.makeText(AttendActivity.this, "출석시간이 정해졌습니다", Toast.LENGTH_SHORT).show();
+
 
                             dialog.dismiss();
                         } else if (flag == 0) {
@@ -1069,6 +1079,17 @@ public class AttendActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        if(isTaskRoot()){
+            Intent intent = new Intent(AttendActivity.this, HomeActivityView.class);
+            intent.putExtra("isRecent",true);
+            startActivity(intent);
+            finish();
+            //// This is last activity
+        }
+        super.onBackPressed();
     }
 
 }

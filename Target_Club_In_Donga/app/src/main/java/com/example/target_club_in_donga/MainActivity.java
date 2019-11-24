@@ -3,11 +3,14 @@ package com.example.target_club_in_donga;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.target_club_in_donga.Attend.AttendActivity;
+import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.Package_LogIn.Congratulation;
 import com.example.target_club_in_donga.Package_LogIn.LoginActivity;
 import com.example.target_club_in_donga.Package_LogIn.SignUpActivity_04;
@@ -64,39 +67,46 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else{ //recentClub이 있는경우 fcm체크후 보내줌 근데 현재는 FCM 없앨꺼니까 바로 홈으로 땡길꺼임 일단
                                 clubName = recentClub;
-                                /**
                                  Bundle extras = getIntent().getExtras();
                                  String fcmCheck = "None";
                                  if(extras != null) {
-                                 if (extras.containsKey("fcmCheck")) {
-                                 fcmCheck = extras.getString("fcmCheck");
+                                     if (extras.containsKey("fcmCheck")) {
+                                        fcmCheck = extras.getString("fcmCheck");
+                                     }
                                  }
-                                 }
+                                //Log.e("fcm",fcmCheck);
 
                                  if(fcmCheck.equals("Vote")){
-                                 Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
-                                 Intent intent = new Intent(MainActivity.this, VoteActivity_Main.class);
-                                 startActivity(intent);
-                                 finish();
+                                     //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                     Intent intent = new Intent(MainActivity.this, VoteActivity_Main.class);
+                                     startActivity(intent);
+                                     finish();
                                  }
                                  else if(fcmCheck.equals("Notice")){
-                                 Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
-                                 Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
-                                 startActivity(intent);
-                                 finish();
+                                     //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                     Intent intent = new Intent(MainActivity.this, NoticeActivity_Main.class);
+                                     startActivity(intent);
+                                     finish();
                                  }
-                                 else{
-                                 Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
-                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                 startActivity(intent);
-                                 finish();
+                                 else if(fcmCheck.equals("AcceptRequest")){
+                                     //Toast.makeText(MainActivity.this, "" + recentClub, Toast.LENGTH_SHORT).show();
+                                     Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
+                                     intent.putExtra("isRecent",false);
+                                     startActivity(intent);
+                                     finish();
                                  }
-                                 */
-                                //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
-                                intent.putExtra("isRecent",true);
-                                startActivity(intent);
-                                finish();
+                                 else if(fcmCheck.equals("Attend")){
+                                     Intent intent = new Intent(MainActivity.this, AttendActivity.class);
+                                     intent.putExtra("isRecent",true);
+                                     startActivity(intent);
+                                     finish();
+                                 }
+                                 else {
+                                     Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
+                                     intent.putExtra("isRecent",true);
+                                     startActivity(intent);
+                                     finish();
+                                 }
                             }
                         }
                         @Override

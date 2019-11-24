@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E7E4E4">
+    <!-- START 회원목록, 검색 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF">
+        <ImageButton
+            android:id="@+id/accept_request_back"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/ic_keyboard_arrow_left_24px"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="모임가입 요청"
+            android:textColor="#4D4646"
+            android:textSize="20dp" />
+    </RelativeLayout>
+    <!--END 회원목록, 검색-->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accept_request_recy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp" />
+
+
+</LinearLayout>

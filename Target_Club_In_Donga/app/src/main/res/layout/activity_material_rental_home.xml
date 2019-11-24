@@ -24,7 +24,7 @@
             android:id="@+id/material_rental_home_edtitext_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="검색어를 입력하세요."
+            android:hint="검색어를 입력하세요"
             android:completionThreshold="1" />
 
 <!--        <AutoCompleteTextView
@@ -52,6 +52,7 @@
 
             <Button
                 android:id="@+id/activity_material_rental_home_button_insert"
+                android:background="@drawable/button_background"
                 style="@style/Content_Classification_Text_Style"
                 android:text="새상품 추가"
                 app:layout_constraintBottom_toBottomOf="parent" />
