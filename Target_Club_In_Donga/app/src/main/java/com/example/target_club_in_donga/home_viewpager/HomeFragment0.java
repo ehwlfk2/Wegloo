@@ -84,7 +84,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private LinearLayout go_Member_List,go_Gallery, go_History, go_Group_Info, go_Withdraw, go_Wegloo_Info;
     private LinearLayout go_Manage_Accept_Request, go_Manage_Group, manage_layout1, manage_layout2, go_clubDelete;
 
-      /*홈 화면*/
 
 
     public HomeFragment0() {
@@ -299,7 +298,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-          /*알아서들 기능별로 intent 시키시길*/
+        /*알아서들 기능별로 intent 시키시길*/
+
 
 
         switch (view.getId()){
@@ -313,25 +313,11 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.home_frame_calender: //홈화면 일정
 
-/*                  여기만 비어있다곤ㅇ마뢰뇌아뤀ㄴ디ㅏㅜ라ㅣㄴ둘키다ㅜㄹㅈ다ㅣ루;ㅣㅈ둘;ㅏㅣ뭊ㄹ
-                  시방ㄹ
-                  닥치라 개쉐이야
-                  시발
-                  시
-                  발
-                  시
-                  발
-                  시
-                  발*/
 
 
 
                 break;
             case R.id.home_frame_board: //홈화면 자유게시판
-
-                 /*정한성이 요기 채워랑라ㅣㄴ어ㅣ랔ㄴㄷㄹ*/
-
-
                 break;
             case R.id.home_layout_notice: //홈화면 공지사항
                 Intent intent1 = new Intent(getActivity(), NoticeActivity_Main.class);
@@ -342,7 +328,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 viewAdapter.notifyDataSetChanged();
                 viewAdapter.functionCurrent();
                 break;
-                //여기부터 메뉴
+            //여기부터 메뉴
             case R.id.logout_btn: //메뉴 로그아웃
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
@@ -510,8 +496,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             manage_layout1.setVisibility(View.GONE);
             manage_layout2.setVisibility(View.GONE);
         }
-
-
     }
 
 }
