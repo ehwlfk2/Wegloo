@@ -68,32 +68,34 @@ public class MemberList extends AppCompatActivity {
         mem_txt =findViewById(R.id.mem_txt);
 
         if ( thisClubIsRealName == true ){ // 실명제 동아리
-            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addValueEventListener(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     loginDataArrayList.clear(); // 동아리 user
                     dbey.clear(); // user keys
                     for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
                         final JoinData groupData = snapshot.getValue(JoinData.class); // 동아리 유저정보 컨테이너 가져오고
-                        String key = snapshot.getKey(); // 키값 가져오고
+                        final String key = snapshot.getKey(); // 키값 가져오고
                         if(key.equals(auth.getCurrentUser().getUid())){ // 지금 접속중인 유저 키찾아서 권한가져오고
                             myRank = groupData.getAdmin();
                         }
-                        database.getReference().child("AppUser").child(key).addValueEventListener(new ValueEventListener() { // 가져온 키로 디비검색
+                        dbey.add(key);
+                        database.getReference().child("AppUser").child(key).addListenerForSingleValueEvent(new ValueEventListener() { // 가져온 키로 디비검색
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 JoinData appuserdata = dataSnapshot.getValue(JoinData.class);
                                 rank = groupData.getAdmin();
                                 appuserdata.setAdmin(rank);
                                 loginDataArrayList.add(appuserdata); // 이름, 프사, 폰번호 가져올것
-                                memberList_recy.notifyDataSetChanged();
+                                if (key.equals(dbey.get(dbey.size()-1))){
+                                    memberList_recy.notifyDataSetChanged();
+                                }
                             }
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
 
                             }
                         });
-                        dbey.add(key);
                     }
                 }
                 @Override
@@ -102,7 +104,7 @@ public class MemberList extends AppCompatActivity {
             });
         }
         else if( thisClubIsRealName == false){ // 별명제
-            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addValueEventListener(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     loginDataArrayList.clear();
@@ -196,7 +198,7 @@ public class MemberList extends AppCompatActivity {
         }
     }
     public void PopupMenu(final RecyclerView.ViewHolder holder, final int position, final int rank){
-        ((MemberList_Recy.CustomViewHolder)holder).layout.setOnClickListener(new View.OnClickListener() {
+        ((MemberList_Recy.CustomViewHolder)holder).posi_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
