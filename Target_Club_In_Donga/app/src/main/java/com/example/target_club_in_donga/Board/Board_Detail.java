@@ -23,11 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,6 +40,7 @@ import java.util.TimeZone;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userAdmin;
 
 public class Board_Detail extends AppCompatActivity {
     ImageButton detail_back, edt_menu;
@@ -49,6 +50,7 @@ public class Board_Detail extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
+    private FirebaseAuth auth;
     BoardModel boardModel = new BoardModel();
     String getkey;
     String updateKey;
@@ -76,6 +78,7 @@ public class Board_Detail extends AppCompatActivity {
         recyclerView.addItemDecoration(recyclerViewDecoration);
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
         getkey = intent.getStringExtra("key");
@@ -87,7 +90,7 @@ public class Board_Detail extends AppCompatActivity {
         });
 
         if (thisClubIsRealName){ //실명
-            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).addValueEventListener(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     boardModel = null;
@@ -95,43 +98,52 @@ public class Board_Detail extends AppCompatActivity {
                     title.setText(boardModel.title);
                     contents.setText(boardModel.contents);
                     name.setText(boardModel.name); // 실명제 이름은 안바뀌니까
+                    if(boardModel.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3){ // 작성자면,
+                        edt_menu.setVisibility(View.VISIBLE);
+                    }
                     long unixTime = (long) boardModel.timestamp;
                     Date date = new Date(unixTime);
                     simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
                     String time = simpleDateFormat.format(date);
                     timestamp.setText(time);
-                    database.getReference().child("AppUser").child(boardModel.uid).child("realNameProPicUrl").addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("AppUser").child(boardModel.uid).child("realNameProPicUrl").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             String picurl = snapshot.getValue(String.class);
                             Glide.with(getApplicationContext()).load(picurl).into(userprofilepic);
                             detail_recyAdapter.notifyDataSetChanged();
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+
                 }
             });
         }
-        if(!thisClubIsRealName){ //닉네임
-            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).addValueEventListener(new ValueEventListener() {
+        else if(!thisClubIsRealName){ //닉네임
+            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     boardModel = null;
                     boardModel = dataSnapshot.getValue(BoardModel.class);
                     title.setText(boardModel.title);
                     contents.setText(boardModel.contents);
+                    if(boardModel.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3){ // 작성자면,
+                        edt_menu.setVisibility(View.VISIBLE);
+                    }
                     long unixTime = (long) boardModel.timestamp;
                     Date date = new Date(unixTime);
                     simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
                     String time = simpleDateFormat.format(date);
                     timestamp.setText(time);
-                    database.getReference().child("EveryClub").child(clubName).child("User").child(boardModel.uid).addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("EveryClub").child(clubName).child("User").child(boardModel.uid).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             JoinData joinData = snapshot.getValue(JoinData.class);
@@ -154,10 +166,47 @@ public class Board_Detail extends AppCompatActivity {
         edt_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showOption(view);
+                if (boardModel.uid.equals(auth.getCurrentUser().getUid())){
+                    showOption(view);
+                }
+                else if(userAdmin < 3){
+                    mastershowOption(view);
+                }
             }
         });
+    }
 
+    void mastershowOption(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.inflate(R.menu.delete_board);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.delete_board_master:
+                        if( boardModel.idx == 0 ){ // 사진이 없으면
+                            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getApplicationContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "db 삭제 오류", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else if( boardModel.idx > 0 ){ // 사진이 있으면
+                            delete_content();
+                        }
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
     }
     void showOption(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);

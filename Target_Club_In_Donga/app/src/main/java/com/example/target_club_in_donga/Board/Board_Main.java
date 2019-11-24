@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
-import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,7 +37,6 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
     private RecyclerView recyclerView;
     private ArrayList<BoardModel> boardModels = new ArrayList<>();
     private ArrayList<String> uidlist = new ArrayList<>();
-    private ArrayList<String> names = new ArrayList<>();
     ImageButton backbtn;
     Button write;
     private FirebaseDatabase database;
@@ -91,7 +87,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                         final BoardModel boardModel = snapshot.getValue(BoardModel.class);
                         final String uidkey = snapshot.getKey();
-                        database.getReference().child("EveryClub").child(clubName).child("User").child(boardModel.uid).child("name").addValueEventListener(new ValueEventListener() {
+                        database.getReference().child("EveryClub").child(clubName).child("User").child(boardModel.uid).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 boardModel.name = dataSnapshot.getValue(String.class);

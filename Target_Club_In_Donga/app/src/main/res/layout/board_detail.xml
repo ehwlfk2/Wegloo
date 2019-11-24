@@ -28,6 +28,7 @@
         android:id="@+id/board_detail_3dotmenu"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:visibility="gone"
         android:background="@drawable/ic_menu_3dot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

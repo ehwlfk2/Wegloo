@@ -68,7 +68,7 @@ public class MemberList extends AppCompatActivity {
         mem_txt =findViewById(R.id.mem_txt);
 
         if ( thisClubIsRealName == true ){ // 실명제 동아리
-            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addValueEventListener(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     loginDataArrayList.clear(); // 동아리 user
@@ -80,7 +80,7 @@ public class MemberList extends AppCompatActivity {
                             myRank = groupData.getAdmin();
                         }
                         dbey.add(key);
-                        database.getReference().child("AppUser").child(key).addValueEventListener(new ValueEventListener() { // 가져온 키로 디비검색
+                        database.getReference().child("AppUser").child(key).addListenerForSingleValueEvent(new ValueEventListener() { // 가져온 키로 디비검색
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 JoinData appuserdata = dataSnapshot.getValue(JoinData.class);
@@ -104,7 +104,7 @@ public class MemberList extends AppCompatActivity {
             });
         }
         else if( thisClubIsRealName == false){ // 별명제
-            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addValueEventListener(new ValueEventListener() {
+            database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     loginDataArrayList.clear();
