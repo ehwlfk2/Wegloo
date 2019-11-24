@@ -7,6 +7,8 @@ import android.app.TimePickerDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -642,6 +644,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     final Button cancelButton = (Button) view.findViewById(R.id.activity_material_rental_admin_delete_item_button_cancel);
 
                                     final AlertDialog dialog = builder.create();
+
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                                     confirmButton.setOnClickListener(new View.OnClickListener() {
                                         @Override

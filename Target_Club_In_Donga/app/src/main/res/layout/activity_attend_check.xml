@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/layout_rounded"
+    android:padding="20dp">
 
     <TextView
         style="@style/Top_Content_Text_Style"
@@ -27,24 +29,24 @@
         android:orientation="horizontal" >
 
     <Button
-        android:id="@+id/activity_attend_check_button_confirm"
+        android:id="@+id/activity_attend_check_button_cancel"
         android:background="@drawable/logoin_button_ver0"
         android:textColor="@color/color_White"
         style="@style/Content_Classification_Text_Style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="확인"
+        android:text="취소"
         android:layout_centerHorizontal="true"/>
 
         <Button
-            android:id="@+id/activity_attend_check_button_cancel"
+            android:id="@+id/activity_attend_check_button_confirm"
             android:background="@drawable/logoin_button_ver0"
             android:textColor="@color/color_White"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소"
-            android:layout_toRightOf="@+id/activity_attend_check_button_confirm"/>
+            android:text="확인"
+            android:layout_toRightOf="@+id/activity_attend_check_button_cancel"/>
 
 
     </RelativeLayout>

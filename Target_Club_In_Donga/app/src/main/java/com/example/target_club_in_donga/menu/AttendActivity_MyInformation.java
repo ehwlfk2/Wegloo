@@ -46,7 +46,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private int listSize = 0;
-    private String startTime ,getAttendState;
+    private String startTime;
 
     private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0;
 
@@ -100,21 +100,6 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                         } else {
                             absentCount++;
                         }
-
-/*                        if (snapshot.child("attend_state").getValue() != null) {
-
-                            pieEntries.clear();
-                            getAttendState = snapshot.child("attend_state").getValue(String.class);
-                            if (getAttendState.equals("출석")) {
-                                attendCount++;
-                            } else if (getAttendState.equals("지각")) {
-                                tardyCount++;
-                            } else if (getAttendState.equals("미출결")) {
-                                unsentCount++;
-                            } else {
-                                absentCount++;
-                            }
-                        }*/
                     }
 
                     if (attendCount > 0) {

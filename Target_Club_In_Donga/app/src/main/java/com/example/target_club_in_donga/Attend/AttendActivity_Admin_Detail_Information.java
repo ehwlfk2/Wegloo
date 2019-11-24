@@ -2,6 +2,7 @@ package com.example.target_club_in_donga.Attend;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -182,7 +183,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                             activity_attend_piechart.setData(pieData);
 
                                             if (attendCount + tardyCount + unsentCount + absentCount == 0) {
-                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출결현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출결현황이 없습니다.", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }
 
@@ -217,7 +218,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                 activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
                                                     @Override
                                                     public void onDrawerOpened() {
-                                                        Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석 현황이 없습니다.", Toast.LENGTH_SHORT).show();
                                                         menu_count++;
                                                     }
                                                 });
@@ -354,7 +355,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                             activity_attend_piechart.setData(pieData);
 
                                             if (attendCount + tardyCount + unsentCount + absentCount == 0) {
-                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출결현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출결현황이 없습니다.", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }
 
@@ -389,7 +390,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                 activity_attend_detail_slidingdrawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
                                                     @Override
                                                     public void onDrawerOpened() {
-                                                        Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석 현황이 없습니다.", Toast.LENGTH_SHORT).show();
                                                         menu_count++;
                                                     }
                                                 });
@@ -496,7 +497,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                         }
 
                                         if (attendAdminItems.size() == 0) {
-                                            Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AttendActivity_Admin_Detail_Information.this, "출석 현황이 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
 
 
@@ -535,7 +536,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                         }
 
                                         if (attendAdminItems.size() == 0) {
-                                            Toast.makeText(AttendActivity_Admin_Detail_Information.this, "지각현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AttendActivity_Admin_Detail_Information.this, "지각 현황이 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
@@ -572,7 +573,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                         }
 
                                         if (attendAdminItems.size() == 0) {
-                                            Toast.makeText(AttendActivity_Admin_Detail_Information.this, "결석현황이 없습니다", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AttendActivity_Admin_Detail_Information.this, "결석 현황이 없습니다.", Toast.LENGTH_SHORT).show();
                                         }
 
                                     }
@@ -681,6 +682,8 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                                     final AlertDialog dialog = builder.create();
 
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                                     activity_attend_tardy_time_check_button_confirm.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(final View v) {
@@ -691,7 +694,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                                 database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("late_time").setValue("+" + EditTardyTime);
                                                 dialog.dismiss();
                                             } else {
-                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "지각시간을 다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(AttendActivity_Admin_Detail_Information.this, "지각시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
                                             }
 
                                         }
