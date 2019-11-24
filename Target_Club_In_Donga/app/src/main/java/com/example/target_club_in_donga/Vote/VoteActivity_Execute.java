@@ -52,12 +52,12 @@ public class VoteActivity_Execute extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activityvote_execute);
 
-        activityvote_execute_listview = (ListView)findViewById(R.id.activityvote_execute_listview);
-        activityvote_execute_textview_title = (TextView)findViewById(R.id.activityvote_execute_textview_title);
-        activityvote_execute_textview_date = (TextView)findViewById(R.id.activityvote_execute_textview_date);
+        activityvote_execute_listview = findViewById(R.id.activityvote_execute_listview);
+        activityvote_execute_textview_title = findViewById(R.id.activityvote_execute_textview_title);
+        activityvote_execute_textview_date = findViewById(R.id.activityvote_execute_textview_date);
         //excuteLayout = (LinearLayout)findViewById(R.id.excute_layout);
-        activityvote_execute_button_result = (FloatingActionButton)findViewById(R.id.activityvote_execute_button_result);
-        activityvote_execute_button_randomresult = (FloatingActionButton)findViewById(R.id.activityvote_execute_button_randomresult);
+        activityvote_execute_button_result = findViewById(R.id.activityvote_execute_button_result);
+        activityvote_execute_button_randomresult = findViewById(R.id.activityvote_execute_button_randomresult);
 
         activityvote_execute_button_result.show(false);
         activityvote_execute_button_randomresult.show(false);
@@ -68,7 +68,7 @@ public class VoteActivity_Execute extends AppCompatActivity {
         dbKey = intent.getExtras().getString("key");
 
         //Toast.makeText(this, dbKey+"", Toast.LENGTH_SHORT).show();
-        items = new ArrayList<Vote_Item_Count>();
+        items = new ArrayList<>();
         //Vote_Item_Count item = new Vote_Item_Count();
 
 

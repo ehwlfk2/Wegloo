@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userAdmin;
 
 public class VoteActivity_Main extends AppCompatActivity {
     private RecyclerView activityvote_main_recyclerview;
@@ -48,7 +49,7 @@ public class VoteActivity_Main extends AppCompatActivity {
     private FirebaseDatabase database;
     private FirebaseAuth auth;
     private SimpleDateFormat simpleDateFormat;
-    public boolean adminCheck;
+    //public boolean adminCheck;
     public static final int insertPageNumber = 1001;
 
     private ArrayList<Vote_Item_Main> list = new ArrayList<>();//ItemFrom을 통해 받게되는 데이터를 어레이 리스트화 시킨다.
@@ -64,16 +65,16 @@ public class VoteActivity_Main extends AppCompatActivity {
 
         //Intent intent = getIntent();
         //adminCheck = intent.getExtras().getBoolean("adminCheck");
-        adminCheck = true;
+        //adminCheck = true;
 
-        activityvote_main_button_intent = (FloatingActionButton)findViewById(R.id.activityvote_main_button_intent);
+        activityvote_main_button_intent = findViewById(R.id.activityvote_main_button_intent);
 
-        if(!adminCheck){
+        if(userAdmin >= 2){
             activityvote_main_button_intent.setVisibility(View.INVISIBLE);
         }
 
 
-        activityvote_main_recyclerview = (RecyclerView)findViewById(R.id.activityvote_main_recyclerview);
+        activityvote_main_recyclerview = findViewById(R.id.activityvote_main_recyclerview);
         activityvote_main_button_intent.attachToRecyclerView(activityvote_main_recyclerview);
         activityvote_main_button_intent.show();
 
@@ -215,9 +216,9 @@ public class VoteActivity_Main extends AppCompatActivity {
             public MyViewholder(final View v){
                 super(v);
 
-                voteTitle = (TextView) v.findViewById(R.id.vote_main_recyclerview_item_textview_title);
-                voteDate = (TextView) v.findViewById(R.id.vote_main_recyclerview_item_textview_date);
-                voteLayout = (LinearLayout) v.findViewById(R.id.vote_main_recyclerview_item_linarlayout);
+                voteTitle = v.findViewById(R.id.vote_main_recyclerview_item_textview_title);
+                voteDate = v.findViewById(R.id.vote_main_recyclerview_item_textview_date);
+                voteLayout = v.findViewById(R.id.vote_main_recyclerview_item_linarlayout);
 
             }
         }
@@ -268,11 +269,10 @@ public class VoteActivity_Main extends AppCompatActivity {
                         }
                     });
                     popup.inflate(R.menu.vote_main_popup);
-                    if(!adminCheck){
+                    if(userAdmin >= 2){
                         popup.getMenu().getItem(2).setVisible(false);
                         popup.getMenu().getItem(3).setVisible(false);
                     }
-
                     if(color == "orange"){
                         popup.getMenu().getItem(0).setTitle("재투표 하기");
                     }
