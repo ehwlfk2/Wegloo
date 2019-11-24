@@ -30,6 +30,7 @@ import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
+import com.example.target_club_in_donga.club_foundation_join.Accept_request;
 import com.example.target_club_in_donga.menu.AttendActivity_MyInformation;
 import com.example.target_club_in_donga.menu.MyInformation;
 import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
@@ -69,7 +70,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private ImageButton home_button_timeline;
     public static boolean menuToggle = false;
     public static boolean thisClubIsRealName;
+    public static boolean thisClubIsFreeSign;
+    public static String thisClubName;
     public static String userRealName;
+    public static int userAdmin;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
 
     //메뉴 아이템
@@ -78,10 +82,11 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private ImageButton logout_btn;
     private LinearLayout user_infomation,go_Manage_Attend, go_AttendInfo, go_Material_Rental, go_Manage_Material_Rent;
     private LinearLayout go_Member_List,go_Gallery, go_History, go_Group_Info, go_Withdraw, go_Wegloo_Info;
-    private LinearLayout go_Manage_Accept_Request, go_Manage_Group;
-    /**
-     * 홈 화면
-     */
+    private LinearLayout go_Manage_Accept_Request, go_Manage_Group, manage_layout1, manage_layout2, go_clubDelete;
+
+    /*홈 화면*/
+
+
     public HomeFragment0() {
         // Required empty public constructor
     }
@@ -147,6 +152,9 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         go_Wegloo_Info = view.findViewById(R.id.go_Wegloo_Info);
         go_Manage_Accept_Request = view.findViewById(R.id.go_Manage_Accept_Request);
         go_Manage_Group = view.findViewById(R.id.go_Manage_Group);
+        manage_layout1 = view.findViewById(R.id.manage_layout1);
+        manage_layout2 = view.findViewById(R.id.manage_layout2);
+        go_clubDelete = view.findViewById(R.id.go_clubDelete);
 
         firebaseDatabase.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -154,7 +162,10 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 ClubData clubData = dataSnapshot.getValue(ClubData.class);
                 home_textview_main.setText(clubData.getThisClubName());
                 Group_Name.setText(clubData.getThisClubName());
+                thisClubName = clubData.getThisClubName();
                 thisClubIsRealName = clubData.isRealNameSystem();
+                thisClubIsFreeSign = clubData.isFreeSign();
+                clubName = dataSnapshot.getKey();
                 //Log.e("thisClubIsRealName",thisClubIsRealName+"");
 
                 String userUid = firebaseAuth.getCurrentUser().getUid();
@@ -171,10 +182,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
 
             }
         });
-        /**
-         * 이 true를 수정해줘야해
-         */
-
 
         menu_opener.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,14 +292,16 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         go_Wegloo_Info.setOnClickListener(this);
         go_Manage_Accept_Request.setOnClickListener(this);
         go_Manage_Group.setOnClickListener(this);
+        go_clubDelete.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        /**
-         * 알아서들 기능별로 intent 시키시길
-         */
+
+        /*알아서들 기능별로 intent 시키시길*/
+
+
         switch (view.getId()){
             case R.id.home_frame_vote: //홈화면 투표
                 Intent intent = new Intent(getActivity(), VoteActivity_Main.class);
@@ -304,8 +313,24 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 break;
             case R.id.home_frame_calender: //홈화면 일정
 
+/*                  여기만 비어있다곤ㅇ마뢰뇌아뤀ㄴ디ㅏㅜ라ㅣㄴ둘키다ㅜㄹㅈ다ㅣ루;ㅣㅈ둘;ㅏㅣ뭊ㄹ
+                  시방ㄹ
+                  닥치라 개쉐이야
+                  시발
+                  시
+                  발
+                  시
+                  발
+                  시
+                  발*/
+
+
+
                 break;
             case R.id.home_frame_board: //홈화면 자유게시판
+
+                /*정한성이 요기 채워랑라ㅣㄴ어ㅣ랔ㄴㄷㄹ*/
+
 
                 break;
             case R.id.home_layout_notice: //홈화면 공지사항
@@ -317,7 +342,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 viewAdapter.notifyDataSetChanged();
                 viewAdapter.functionCurrent();
                 break;
-                //여기부터 메뉴
+            //여기부터 메뉴
             case R.id.logout_btn: //메뉴 로그아웃
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
@@ -364,10 +389,16 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.go_Manage_Accept_Request: //메뉴 가입신청
+                Intent intent10 = new Intent(getActivity(), Accept_request.class);
+                startActivity(intent10);
                 break;
             case R.id.go_Manage_Group: //메뉴 모임관리
                 Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.go_clubDelete: //메뉴 모임삭제
+                Toast.makeText(getActivity(), "구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                break;
+
         }
     }
     DrawerLayout.DrawerListener listner = new DrawerLayout.DrawerListener() {
@@ -456,14 +487,31 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         });
     }
     private void adminStr(JoinData joinData){
-        if(joinData.getAdmin() == 0)
+        userAdmin = joinData.getAdmin();
+        if(joinData.getAdmin() == 0){
             profile_admin.setText("회장");
-        else if(joinData.getAdmin() == 1)
+            if(thisClubIsFreeSign){
+                go_Manage_Accept_Request.setVisibility(View.GONE);
+            }
+        }
+        else if(joinData.getAdmin() == 1){
             profile_admin.setText("부회장");
-        else if(joinData.getAdmin() == 2)
+            if(thisClubIsFreeSign){
+                go_Manage_Accept_Request.setVisibility(View.GONE);
+            }
+        }
+        else if(joinData.getAdmin() == 2){
             profile_admin.setText("임원");
-        else if(joinData.getAdmin() == 3)
+            manage_layout1.setVisibility(View.GONE);
+            manage_layout2.setVisibility(View.GONE);
+        }
+        else if(joinData.getAdmin() == 3){
             profile_admin.setText("회원");
+            manage_layout1.setVisibility(View.GONE);
+            manage_layout2.setVisibility(View.GONE);
+        }
+
+
     }
 
 }

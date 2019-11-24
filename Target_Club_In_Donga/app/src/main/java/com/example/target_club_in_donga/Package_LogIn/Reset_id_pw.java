@@ -61,7 +61,7 @@ public class Reset_id_pw extends AppCompatActivity {
         // [START send_password_reset]
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final String emailAddress = signed_email.getText().toString();
-        if(emailAddress == null){
+        if(emailAddress.getBytes().length<=0){
             Toast.makeText(this, "메일을 입력해주세요", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -88,7 +88,7 @@ public class Reset_id_pw extends AppCompatActivity {
                 for ( DataSnapshot snapshot : dataSnapshot.getChildren() ){
                     AppLoginData appLoginData = snapshot.getValue(AppLoginData.class);
                     if (appLoginData.getName().equals(username) && appLoginData.getPhone().equals(phonenumber) ) {
-                        if( username == null | phonenumber == null){
+                        if( username.getBytes().length <= 0 || phonenumber.getBytes().length <= 0){
                             Toast.makeText(Reset_id_pw.this, "정보를 입력해주세요", Toast.LENGTH_SHORT).show();
                         }
                         else {
