@@ -159,6 +159,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                 }
                 else{
                     if(type.equals("insert")){ //추가
+                        /*
                         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -178,8 +179,6 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                                 notice_item.setSwitchOnOff(activity_notice_insert_switch.isChecked());
                                 notice_item.setTitle(title);
                                 notice_item.notice_item_colors = color_item;
-                                //notice_item.style = (Object[]) styleSpans2;
-                                //notice_item.stars.put("title",title);
 
                                 notice_item.setTimestamp(-1*System.currentTimeMillis());
                                 database.getReference().child("EveryClub").child(clubName).child("Notice").push().setValue(notice_item);
@@ -197,6 +196,30 @@ public class NoticeActivity_Insert extends AppCompatActivity{
 
                             }
                         });
+                         */
+                        Notice_Item notice_item = new Notice_Item();
+                        if(thisClubIsRealName){
+                            notice_item.setWriter(userRealName);
+                        }
+                        else{
+                            notice_item.setWriter(auth.getCurrentUser().getUid());
+                            //닉네임모임일때는 main에서 체크
+                        }
+
+                        notice_item.setContent(content);
+                        notice_item.setSwitchOnOff(activity_notice_insert_switch.isChecked());
+                        notice_item.setTitle(title);
+                        notice_item.notice_item_colors = color_item;
+
+                        notice_item.setTimestamp(-1*System.currentTimeMillis());
+                        database.getReference().child("EveryClub").child(clubName).child("Notice").push().setValue(notice_item);
+
+                        if(activity_notice_insert_switch.isChecked()){
+                            SendPushMessages send = new SendPushMessages();
+                            send.multipleSendMessage("공지사항이 추가되었습니다",title, "Notice");
+                        }
+                        Toast.makeText(NoticeActivity_Insert.this, "공지 올렷스무디", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                     else{
                         if(activity_notice_insert_switch.isChecked()){

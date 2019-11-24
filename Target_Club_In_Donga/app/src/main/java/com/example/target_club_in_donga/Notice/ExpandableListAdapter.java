@@ -29,6 +29,7 @@ import java.util.List;
 
 import static com.example.target_club_in_donga.Notice.NoticeActivity_Main.noticeDbKey;
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userAdmin;
 
 public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private FirebaseDatabase database;
@@ -109,39 +110,42 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
                 });
 
-                itemController.linearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        PopupMenu popup = new PopupMenu(view.getContext(), view);
+                if(userAdmin < 2){
+                    itemController.linearLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            PopupMenu popup = new PopupMenu(view.getContext(), view);
 
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                //int x = item.getItemId();
-                                switch (item.getItemId()){
-                                    case R.id.notice_update:
-                                        Intent intent = new Intent(activity,NoticeActivity_Insert.class);
-                                        intent.putExtra("type","update");
-                                        //Log.e("position",position+"");
-                                        intent.putExtra("updateKey",noticeDbKey.get(position));
-                                        activity.startActivity(intent);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    //int x = item.getItemId();
+                                    switch (item.getItemId()){
+                                        case R.id.notice_update:
+                                            Intent intent = new Intent(activity,NoticeActivity_Insert.class);
+                                            intent.putExtra("type","update");
+                                            //Log.e("position",position+"");
+                                            intent.putExtra("updateKey",noticeDbKey.get(position));
+                                            activity.startActivity(intent);
 
-                                        return true;
-                                    case R.id.notice_delete:
-                                        delete_item(position);
-                                        return true;
+                                            return true;
+                                        case R.id.notice_delete:
+                                            delete_item(position);
+                                            return true;
 
-                                    default:
-                                        return false;
+                                        default:
+                                            return false;
+                                    }
+                                    //return false;
                                 }
-                                //return false;
-                            }
-                        });
-                        popup.inflate(R.menu.notice_main_popup);
-                        popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
-                        popup.show();
-                    }
-                });
+                            });
+                            popup.inflate(R.menu.notice_main_popup);
+                            popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게
+                            popup.show();
+                        }
+                    });
+                }
+
                 break;
             case CHILD:
                 TextView itemTextView = (TextView) holder.itemView;

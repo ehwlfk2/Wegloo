@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,6 +28,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userAdmin;
 
 public class NoticeActivity_Main extends AppCompatActivity {
 
@@ -47,6 +50,10 @@ public class NoticeActivity_Main extends AppCompatActivity {
 
         activity_notice_main_button_intent.attachToRecyclerView(activity_notice_main_recyclerview);
         activity_notice_main_button_intent.show();
+
+        if(userAdmin >= 2){
+            activity_notice_main_button_intent.setVisibility(View.GONE);
+        }
 
         activity_notice_main_button_intent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,14 +78,7 @@ public class NoticeActivity_Main extends AppCompatActivity {
                 noticeDbKey.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                    Notice_Item notice_item = snapshot.getValue(Notice_Item.class);
-                    notice_item.setTimestamp(-1*(long)notice_item.getTimestamp());
-                    //CharacterStyle cs = (CharacterStyle) (notice_item.style.get(0));
-                    //notice_item.setTitle();
-                    /*CharacterStyle[] cs = new CharacterStyle[];
-                    for(int i=0;i<notice_item.style.size();i++){
-                        cs[i] = (CharacterStyle)notice_item.style.get(i);
-                    }*/
+                    final Notice_Item notice_item = snapshot.getValue(Notice_Item.class);
                     SpannableStringBuilder ssb = new SpannableStringBuilder(notice_item.getTitle());
                     for(int i=0;i<notice_item.notice_item_colors.size();i++){
                         int start = notice_item.notice_item_colors.get(i).getStart();
@@ -112,6 +112,21 @@ public class NoticeActivity_Main extends AppCompatActivity {
                         }
                     }
 
+                    if(!thisClubIsRealName){ //닉네임일경우
+                        database.getReference().child("EveryClub").child(clubName).child("User").child(notice_item.getWriter()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String nicName = dataSnapshot.getValue(String.class);
+                                notice_item.setWriter(nicName);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                     String tt= timeStampToString(notice_item.getTimestamp(),simpleDateFormat);
                     ExpandableListAdapter.Item places = new ExpandableListAdapter.Item(ExpandableListAdapter.HEADER,ssb,null,
@@ -131,7 +146,7 @@ public class NoticeActivity_Main extends AppCompatActivity {
         });
     }
     private String timeStampToString(Object timestamp, SimpleDateFormat simpleDateFormat){
-        long unixTime = (long) timestamp;
+        long unixTime = -1*(long) timestamp;
         Date date = new Date(unixTime);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         return simpleDateFormat.format(date);
@@ -139,12 +154,6 @@ public class NoticeActivity_Main extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        FirebaseAuth.getInstance().signOut();
-//        LoginManager.getInstance().logOut();
-//        finish();
-        //ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
-        //List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
-
         if(isTaskRoot()){
             Intent intent = new Intent(NoticeActivity_Main.this, HomeActivityView.class);
             intent.putExtra("isRecent",true);
