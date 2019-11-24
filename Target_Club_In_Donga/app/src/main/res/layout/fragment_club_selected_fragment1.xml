@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_artborad"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    class="com.example.target_club_in_donga.home_viewpager.HomeActivityView">
 
 
     <ImageButton

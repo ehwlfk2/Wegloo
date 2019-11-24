@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:id="@+id/account_dialog_imageview"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_launcher_foreground"
+            android:background="@color/color_WhiteGray"
             />
 
     </LinearLayout>

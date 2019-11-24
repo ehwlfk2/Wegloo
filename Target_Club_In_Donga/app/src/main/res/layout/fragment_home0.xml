@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer_layout">
+    android:id="@+id/drawer_layout"
+    class="com.example.target_club_in_donga.home_viewpager.HomeActivityView">
     <include layout="@layout/activity_main_ver0"/>
     <include layout="@layout/activity_menu_drawer"/>
 
