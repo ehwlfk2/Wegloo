@@ -83,9 +83,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private LinearLayout user_infomation,go_Manage_Attend, go_AttendInfo, go_Material_Rental, go_Manage_Material_Rent;
     private LinearLayout go_Member_List,go_Gallery, go_History, go_Group_Info, go_Withdraw, go_Wegloo_Info;
     private LinearLayout go_Manage_Accept_Request, go_Manage_Group, manage_layout1, manage_layout2, go_clubDelete;
-    
-
-
     public HomeFragment0() {
         // Required empty public constructor
     }
@@ -297,11 +294,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
-                /*알아서들 기능별로 intent 시키시길*/
-
-
-
         switch (view.getId()){
             case R.id.home_frame_vote: //홈화면 투표
                 Intent intent = new Intent(getActivity(), VoteActivity_Main.class);
@@ -496,7 +488,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             manage_layout1.setVisibility(View.GONE);
             manage_layout2.setVisibility(View.GONE);
         }
-
 
     }
 
