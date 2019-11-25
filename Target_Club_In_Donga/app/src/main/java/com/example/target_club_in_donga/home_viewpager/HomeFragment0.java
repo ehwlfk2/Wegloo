@@ -214,7 +214,6 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     final Notice_Item notice_item = snapshot.getValue(Notice_Item.class);
                     notice_item.setTimestamp(-1*(long)notice_item.getTimestamp());
-
                     SpannableStringBuilder ssb = new SpannableStringBuilder(notice_item.getTitle());
                     try{
                     for(int i=0;i<notice_item.notice_item_colors.size();i++){
@@ -258,13 +257,13 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                     String tt = timeStampToString(notice_item.getTimestamp(),simpleDateFormat);
                     if(!noticeFlag){
                         home_notice_title1.setText(ssb);
-                        //home_notice_writer1.setText(notice_item.getWriter());
+                        home_notice_writer1.setText(notice_item.getWriter());
                         home_notice_date1.setText(tt);
                         noticeFlag = true;
                     }
                     else{
                         home_notice_title2.setText(ssb);
-                        //home_notice_writer2.setText(notice_item.getWriter());
+                        home_notice_writer2.setText(notice_item.getWriter());
                         home_notice_date2.setText(tt);
                         //noticeFlag = false;
                     }
