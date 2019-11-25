@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,6 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.example.target_club_in_donga.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -51,6 +51,9 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
     private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0;
 
     private PieChart activity_attend_my_information_piechart;
+
+    final int[] MY_COLORS = {Color.rgb(152, 247, 145), Color.rgb(255, 187, 0), Color.rgb(189, 189, 189), Color.rgb(255, 0, 0)};
+    ArrayList<Integer> colors = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -104,15 +107,19 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
 
                     if (attendCount > 0) {
                         pieEntries.add(new PieEntry(attendCount, "출석"));
+                        colors.add(MY_COLORS[0]);
                     }
                     if (tardyCount > 0) {
                         pieEntries.add(new PieEntry(tardyCount, "지각"));
+                        colors.add(MY_COLORS[1]);
                     }
                     if (unsentCount > 0) {
                         pieEntries.add(new PieEntry(unsentCount, "미출결"));
+                        colors.add(MY_COLORS[2]);
                     }
                     if (absentCount > 0) {
                         pieEntries.add(new PieEntry(absentCount, "결석"));
+                        colors.add(MY_COLORS[3]);
                     }
 
                     Description description = new Description();
@@ -125,14 +132,17 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                     PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
                     pieDataSet.setSliceSpace(3f);
                     pieDataSet.setSelectionShift(4f);
-                    pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-//                    pieDataSet.setColors(new int [] {R.drawable.border_green, R.drawable.border_orange, R.drawable.border_gray});
+//                    pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                    pieDataSet.setColors(colors);
 
                     PieData pieData = new PieData((pieDataSet));
                     pieData.setValueTextSize(15f);
                     pieData.setValueTextColor(Color.WHITE);
 
                     activity_attend_my_information_piechart.setData(pieData);
+                } else {
+                    Toast.makeText(AttendActivity_MyInformation.this, "출결 현황이 없습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
@@ -142,7 +152,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
             }
         });
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 attendAdminItems.clear();
@@ -152,22 +162,24 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
-                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                if (snapshot.getKey().equals(auth.getCurrentUser().getUid())) {
-                                    startTime = snapshot2.child("startTime").getValue().toString();
-                                    listStartTime.add(startTime);
-                                    Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
-                                    String uidKey = snapshot.getKey();
-                                    attendAdminItems.add(0, attendAdminInformationItem);
-                                    uidLists.add(0, uidKey);
-                                    listSize++;
+                            if (dataSnapshot.getValue() != null) {
+                                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    if (snapshot.getKey().equals(auth.getCurrentUser().getUid())) {
+                                        startTime = snapshot2.child("startTime").getValue().toString();
+                                        listStartTime.add(startTime);
+                                        Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
+                                        String uidKey = snapshot.getKey();
+                                        attendAdminItems.add(0, attendAdminInformationItem);
+                                        uidLists.add(0, uidKey);
+                                        listSize++;
 
-                                    for (int i = 0; i < listSize; i++) {
-                                        attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
+                                        for (int i = 0; i < listSize; i++) {
+                                            attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
+                                        }
+
+                                        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+                                        MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                     }
-
-                                    // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-                                    MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                 }
                             }
                         }

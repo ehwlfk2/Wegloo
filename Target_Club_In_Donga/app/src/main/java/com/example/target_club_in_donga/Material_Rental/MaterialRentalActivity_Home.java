@@ -79,6 +79,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         private ArrayAdapter<String> adapter;
         private AutoCompleteTextView material_rental_home_edittext_search;*/
     private EditText material_rental_home_edittext_search;
+    private TextView activity_material_rental_home_textview;
 
     private FirebaseAuth auth;
     private FirebaseStorage storage;
@@ -116,9 +117,12 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         progressDialog.show();
 
         activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
+        activity_material_rental_home_textview = (TextView) findViewById(R.id.activity_material_rental_home_textview);
 
         if (differFlag == 0) {
             activity_material_rental_home_button_insert.setVisibility(View.GONE);
+        } else {
+            activity_material_rental_home_textview.setText("물품관리");
         }
 
         this.activity_material_rental_admin_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_rental_admin_item_imageview_recyclerview_image);
@@ -137,13 +141,12 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                Log.e("값", dataSnapshot.child("realNameSystem").getValue().toString());
-                if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
+                if (dataSnapshot.getValue() != null && dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                     admin = Integer.parseInt(dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("admin").getValue().toString());
                     if (admin > adminNumber) {
                         activity_material_rental_home_button_insert.setVisibility(View.GONE);
                     }
-                    database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
+                    database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             uidName = dataSnapshot.child(auth.getCurrentUser().getUid()).child("name").getValue().toString();
@@ -174,17 +177,18 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         database.getReference().child("EveryClub").child(clubName).child("Material_Rental").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                materialRentalItems.clear();
-                uidLists.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    MaterialRental_Item materialRentalItem = snapshot.getValue(MaterialRental_Item.class);
-                    String uidKey = snapshot.getKey();
-                    materialRentalItems.add(0, materialRentalItem);
-                    uidLists.add(0, uidKey);
-                }
+                if (dataSnapshot.getValue() != null) {
+                    materialRentalItems.clear();
+                    uidLists.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        MaterialRental_Item materialRentalItem = snapshot.getValue(MaterialRental_Item.class);
+                        String uidKey = snapshot.getKey();
+                        materialRentalItems.add(0, materialRentalItem);
+                        uidLists.add(0, uidKey);
+                    }
 
-                materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
-                progressDialog.dismiss();
+                    materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
 
 /*                materialListSize = materialRentalItems.size();
 
@@ -194,6 +198,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                     list.add(snapshot.child("title").getValue(String.class) + "");
                 }
                 material_rental_home_edittext_search.setAdapter(adapter);*/
+                }
 
             }
 

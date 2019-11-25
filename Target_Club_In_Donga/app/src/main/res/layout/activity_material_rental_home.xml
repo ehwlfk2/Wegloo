@@ -37,6 +37,7 @@
             android:completionThreshold="1" />-->
 
         <TextView
+            android:id="@+id/activity_material_rental_home_textview"
             style="@style/Top_Content_Text_Style"
             android:text="물품대여" />
 
