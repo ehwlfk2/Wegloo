@@ -46,8 +46,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
-import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userAdmin;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userNicName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userProfileUrl;
 
 public class Board_Detail extends AppCompatActivity {
     ImageButton detail_back, edt_menu;
@@ -56,6 +57,7 @@ public class Board_Detail extends AppCompatActivity {
     ImageView userprofilepic, upload_comment;
     RecyclerView recyclerView, comment_recycler;
     ArrayList<Comment_Model> comment_models = new ArrayList<>();
+    ArrayList<String> comment_keys = new ArrayList<>();
     Comment_Model comment_model = new Comment_Model();
     LinearLayoutManager linearLayoutManager;
     private FirebaseDatabase database;
@@ -65,6 +67,7 @@ public class Board_Detail extends AppCompatActivity {
     String getkey;
     InputMethodManager imm;
     ConstraintLayout detail_view;
+    int delete_comment_admin = 0;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd HH:mm");
     RecyclerViewDecoration recyclerViewDecoration = new RecyclerViewDecoration(30);
@@ -118,8 +121,10 @@ public class Board_Detail extends AppCompatActivity {
                     Toast.makeText(Board_Detail.this, "댓글 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     comment_model.comment = comments;
-                    comment_model.uid = auth.getCurrentUser().getUid();
+                    comment_model.name = userNicName;
+                    comment_model.userProfilePic = userProfileUrl;
                     comment_model.time = ServerValue.TIMESTAMP;
+                    comment_model.uid = auth.getCurrentUser().getUid();
                     DatabaseReference databaseReference = database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).child("Comment");
                     databaseReference.push().setValue(comment_model);
                 }
@@ -129,9 +134,16 @@ public class Board_Detail extends AppCompatActivity {
         database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).child("Comment").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                delete_comment_admin = 0;
                 comment_models.clear();
+                comment_keys.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Comment_Model comment_model = snapshot.getValue(Comment_Model.class);
+                    String key = snapshot.getKey();
+                    if (comment_model.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3){ // 내댓글, 임원
+                        delete_comment_admin =1;
+                    }
+                    comment_keys.add(key);
                     comment_models.add(comment_model);
                 }
                 comment_adapter.notifyDataSetChanged();
@@ -148,6 +160,8 @@ public class Board_Detail extends AppCompatActivity {
                 boardModel = dataSnapshot.getValue(BoardModel.class);
                 title.setText(boardModel.title);
                 contents.setText(boardModel.contents);
+                name.setText(boardModel.name);
+                Glide.with(getApplicationContext()).load(userProfileUrl).into(userprofilepic);
                 if (boardModel.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3) { // 작성자면,
                     edt_menu.setVisibility(View.VISIBLE);
                 }
@@ -157,19 +171,6 @@ public class Board_Detail extends AppCompatActivity {
                 String time = simpleDateFormat.format(date);
                 timestamp.setText(time);
                 detail_recyAdapter.notifyDataSetChanged();
-                database.getReference().child("EveryClub").child(clubName).child("User").child(boardModel.uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        JoinData joinData = snapshot.getValue(JoinData.class);
-                        boardModel.name = joinData.getName();
-                        name.setText(boardModel.name);
-                        String picurl = joinData.getRealNameProPicUrl();
-                        Glide.with(getApplicationContext()).load(picurl).into(userprofilepic);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -222,6 +223,9 @@ public class Board_Detail extends AppCompatActivity {
                         } else if (boardModel.idx > 0) { // 사진이 있으면
                             delete_content();
                         }
+                        Intent intent = new Intent();
+                        intent.putExtra("delete_board_detail", 2);
+                        setResult(RESULT_OK, intent);
                         finish();
                         break;
                 }
@@ -266,6 +270,9 @@ public class Board_Detail extends AppCompatActivity {
                         } else if (boardModel.idx > 0) { // 사진이 있으면
                             delete_content();
                         }
+                        Intent intent = new Intent();
+                        intent.putExtra("delete_board_detail", 2);
+                        setResult(RESULT_OK, intent);
                         finish();
                         break;
                 }
@@ -364,7 +371,7 @@ public class Board_Detail extends AppCompatActivity {
 
             public CustomViewholder(View view) {
                 super(view);
-                imageView = (ImageView) view.findViewById(R.id.item_board__detail_img);
+                imageView = view.findViewById(R.id.item_board__detail_img);
                 GradientDrawable drawable = (GradientDrawable) view.getContext().getDrawable(R.drawable.imageview_round_corner);
                 imageView.setBackground(drawable);
                 imageView.setClipToOutline(true);
@@ -383,9 +390,14 @@ public class Board_Detail extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            ((Commentholder) holder).name.setText("이름");
+            ((Commentholder) holder).name.setText(comment_models.get(position).name);
             ((Commentholder) holder).comment.setText(comment_models.get(position).comment);
-
+            Glide.with(holder.itemView.getContext()).load(comment_models.get(position).userProfilePic).override(35,35).placeholder(R.drawable.face).into(((Commentholder)holder).proPic);
+            long unixTime = (long) comment_models.get(position).time;
+            Date date = new Date(unixTime);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
+            String time = simpleDateFormat.format(date);
+            ((Commentholder)holder).time.setText(time);
         }
 
         @Override
@@ -404,6 +416,29 @@ public class Board_Detail extends AppCompatActivity {
                 comment = view.findViewById(R.id.comment_content);
                 time = view.findViewById(R.id.comment_time);
                 delete = view.findViewById(R.id.comment_delete);
+                if (delete_comment_admin == 1){
+                    delete.setVisibility(View.VISIBLE);
+                }
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION){
+                            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).child("Comment").child(comment_keys.get(pos)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getApplicationContext(), "댓글 삭제 완료", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "댓글 삭제 오류", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            notifyItemChanged(pos);
+                        }
+                    }
+                });
             }
         }
     }

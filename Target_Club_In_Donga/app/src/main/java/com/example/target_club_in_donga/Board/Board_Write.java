@@ -44,6 +44,7 @@ import java.util.Date;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userNicName;
 
 public class Board_Write extends AppCompatActivity {
     ImageButton board_img_upload_btn,x_btn;
@@ -78,7 +79,6 @@ public class Board_Write extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.getRecycledViewPool().setMaxRecycledViews(1, 0);
-
         x_btn = findViewById(R.id.x_btn);
         upload_btn = findViewById(R.id.board_write_upload_btn);
         title = findViewById(R.id.title_write_edt);
@@ -129,9 +129,7 @@ public class Board_Write extends AppCompatActivity {
                     progressDialog.show();
 
                     boardModel.uid = auth.getCurrentUser().getUid();
-                    if (thisClubIsRealName){
-                        boardModel.name = userRealName;
-                    } //실명넣어주기
+                    boardModel.name = userNicName;
 
                     if (edt_key == 1) { // 수정 시
                         if (IMAGEs.size() != 0) { // 사진 있음
@@ -228,6 +226,9 @@ public class Board_Write extends AppCompatActivity {
         boardModel.timestamp = ServerValue.TIMESTAMP;
         databaseReference.child(updatekey).setValue(boardModel);
         progressDialog.dismiss();
+        Intent intent = new Intent();
+        intent.putExtra("upload_complete", 1);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -238,6 +239,9 @@ public class Board_Write extends AppCompatActivity {
         boardModel.timestamp = ServerValue.TIMESTAMP;
         databaseReference.push().setValue(boardModel);
         progressDialog.dismiss();
+        Intent intent = new Intent();
+        intent.putExtra("upload_complete", 1);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
