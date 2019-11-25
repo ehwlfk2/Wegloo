@@ -160,7 +160,7 @@ public class MemberList extends AppCompatActivity {
         }
     }
     public void PopupMenu(final RecyclerView.ViewHolder holder, final int position, final int rank){
-        ((MemberList_Recy.CustomViewHolder)holder).layout.setOnClickListener(new View.OnClickListener() {
+        ((MemberList_Recy.CustomViewHolder)holder).posi_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
