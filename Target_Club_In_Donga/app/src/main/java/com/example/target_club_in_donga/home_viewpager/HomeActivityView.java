@@ -50,7 +50,6 @@ public class HomeActivityView extends AppCompatActivity {
 //        mAdView = findViewById(R.id.activity_home_adView);
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        mAdView.loadAd(adRequest);
-        passPushTokenToServer();
 
 
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -175,12 +174,5 @@ public class HomeActivityView extends AppCompatActivity {
         else if(count == 2){
             activity_home_viewPager.setCurrentItem(1);
         }
-    }
-    public void passPushTokenToServer() {
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Map<String, Object> map = new HashMap<>();
-        map.put("pushToken", token);
-        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(uid).updateChildren(map);
     }
 }

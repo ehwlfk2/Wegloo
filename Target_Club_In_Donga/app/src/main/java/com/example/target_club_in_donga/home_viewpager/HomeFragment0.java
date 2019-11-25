@@ -47,9 +47,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
@@ -74,6 +77,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     public static String thisClubName;
     public static String userRealName;
     public static String userNicName;
+    public static String userProfileUrl;
     public static int userAdmin;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
 
@@ -105,6 +109,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_home0, container, false);
 
+        passPushTokenToServer();
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         voteIntentBtn = view.findViewById(R.id.home_frame_vote);
@@ -422,6 +427,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 JoinData joinData = dataSnapshot.getValue(JoinData.class);
                 userNicName = joinData.getName();
+                userProfileUrl = joinData.getRealNameProPicUrl();
                 profile_username.setText(joinData.getName());
                 if(getActivity() != null){
                     if(!joinData.getRealNameProPicUrl().equals("None")){
@@ -464,5 +470,11 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         }
 
     }
-
+    public void passPushTokenToServer() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pushToken", token);
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(uid).updateChildren(map);
+    }
 }
