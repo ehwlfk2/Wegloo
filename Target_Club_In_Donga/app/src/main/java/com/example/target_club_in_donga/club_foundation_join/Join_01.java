@@ -357,6 +357,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                                         myClubSeletedItem.setSignUpclubUid(clubUid);
                                         myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
                                         myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                                        myClubSeletedItem.setSignUpclubRealName(clubData.isRealNameSystem());
                                         firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
                                         clubName = clubUid;
                                         progressDialog.dismiss();
@@ -379,6 +380,7 @@ public class Join_01 extends AppCompatActivity implements View.OnClickListener {
                                         myClubSeletedItem.setSignUpclubUid(clubUid);
                                         myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
                                         myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                                        myClubSeletedItem.setSignUpclubRealName(clubData.isRealNameSystem());
                                         firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
                                         /**
                                          * 승인중 페이지로 intent

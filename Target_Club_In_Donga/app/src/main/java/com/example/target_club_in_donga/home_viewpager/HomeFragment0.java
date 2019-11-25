@@ -73,6 +73,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     public static boolean thisClubIsFreeSign;
     public static String thisClubName;
     public static String userRealName;
+    public static String userNicName;
     public static int userAdmin;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
 
@@ -165,12 +166,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 //Log.e("thisClubIsRealName",thisClubIsRealName+"");
 
                 String userUid = firebaseAuth.getCurrentUser().getUid();
-                if(thisClubIsRealName){
-                    realNameDB(userUid);
-                }
-                else{
-                    notRealNameDB(userUid);
-                }
+                menuDB(userUid);
             }
 
             @Override
@@ -420,44 +416,12 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         return simpleDateFormat.format(date);
     }
 
-    private void realNameDB(String userUid){
-        firebaseDatabase.getReference().child("AppUser").child(userUid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                profile_username.setText(appLoginData.getName());
-                if(getActivity() != null){
-                    if(!appLoginData.getRealNameProPicUrl().equals("None")){
-                        Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    private void menuDB(String userUid){
         firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").child(userUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 JoinData joinData = dataSnapshot.getValue(JoinData.class);
-                //Log.e("admin",admin);
-                adminStr(joinData);
-                //Log.e("myResume",myResume);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    private void notRealNameDB(String userUid){
-        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").child(userUid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                JoinData joinData = dataSnapshot.getValue(JoinData.class);
+                userNicName = joinData.getName();
                 profile_username.setText(joinData.getName());
                 if(getActivity() != null){
                     if(!joinData.getRealNameProPicUrl().equals("None")){
