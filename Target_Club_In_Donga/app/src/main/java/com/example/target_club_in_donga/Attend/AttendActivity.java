@@ -315,9 +315,11 @@ public class AttendActivity extends AppCompatActivity {
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             if (dataSnapshot.getValue() != null) {
                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                    getState = snapshot.child("attend_state").getValue().toString();
-                                                    if (getState.equals("미출결")) {
-                                                        database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                                    if (snapshot.getValue() != null) {
+                                                        getState = snapshot.child("attend_state").getValue().toString();
+                                                        if (getState.equals("미출결")) {
+                                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                                        }
                                                     }
                                                 }
                                             }

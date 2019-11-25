@@ -181,10 +181,12 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                     materialRentalItems.clear();
                     uidLists.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        MaterialRental_Item materialRentalItem = snapshot.getValue(MaterialRental_Item.class);
-                        String uidKey = snapshot.getKey();
-                        materialRentalItems.add(0, materialRentalItem);
-                        uidLists.add(0, uidKey);
+                        if (snapshot.getValue() != null) {
+                            MaterialRental_Item materialRentalItem = snapshot.getValue(MaterialRental_Item.class);
+                            String uidKey = snapshot.getKey();
+                            materialRentalItems.add(0, materialRentalItem);
+                            uidLists.add(0, uidKey);
+                        }
                     }
 
                     materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();

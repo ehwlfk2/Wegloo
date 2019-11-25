@@ -91,39 +91,44 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
                     for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
-                        getTardyTimeLimit = snapshot2.child("tardyTimeLimit").getValue(String.class);
-                        if (getTardyTimeLimit != null) {
-                            now = System.currentTimeMillis();
-                            // 현재시간을 date 변수에 저장한다.
-                            Date date = new Date(now);
-                            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                            nowtardyTimeLimit = simpleDateFormat.format(date);
-                            Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
-                            Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
-                            long diff = d1.getTime() - d2.getTime();
-                            if (diff < 0) {
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("Attend_Certification_Number").removeValue();
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("attendTimeLimit").removeValue();
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("tardyTimeLimit").removeValue();
+                        if (snapshot2.getValue() != null) {
+                            getTardyTimeLimit = snapshot2.child("tardyTimeLimit").getValue(String.class);
+                            if (getTardyTimeLimit != null) {
+                                now = System.currentTimeMillis();
+                                // 현재시간을 date 변수에 저장한다.
+                                Date date = new Date(now);
+                                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                nowtardyTimeLimit = simpleDateFormat.format(date);
+                                Date d2 = simpleDateFormat.parse(nowtardyTimeLimit, new ParsePosition(0));
+                                Date d1 = simpleDateFormat.parse(getTardyTimeLimit, new ParsePosition(0));
+                                long diff = d1.getTime() - d2.getTime();
+                                if (diff < 0) {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("Attend_Certification_Number").removeValue();
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("attendTimeLimit").removeValue();
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("tardyTimeLimit").removeValue();
 
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.getValue() != null) {
-                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                getState = snapshot.child("attend_state").getValue().toString();
-                                                if (getState.equals("미출결")) {
-                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.getValue() != null) {
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    if (snapshot.getValue() != null) {
+                                                        getState = snapshot.child("attend_state").getValue().toString();
+                                                        if (getState.equals("미출결")) {
+                                                            database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(snapshot.getKey()).child("attend_state").setValue("결석");
+                                                        }
+
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
 
-                                    }
-                                });
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
@@ -155,29 +160,31 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                 public void onDataChange(final DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null && dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                         for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
-                            database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(final DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.getValue() != null) {
-                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                            if (snapshot2.getKey().equals(snapshot.getKey())) {
-                                                userList.clear();
-                                                uidLists.clear();
-                                                Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
-                                                String uidKey = snapshot.getKey();
-                                                userList.add(0, attendItem);
-                                                uidLists.add(0, uidKey);
-                                                attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
+                            if (snapshot2.getValue() != null) {
+                                database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getValue() != null) {
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                if (snapshot2.getKey().equals(snapshot.getKey())) {
+                                                    userList.clear();
+                                                    uidLists.clear();
+                                                    Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
+                                                    String uidKey = snapshot.getKey();
+                                                    userList.add(0, attendItem);
+                                                    uidLists.add(0, uidKey);
+                                                    attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
+                                                }
                                             }
                                         }
                                     }
-                                }
 
-                                @Override
-                                public void onCancelled(final DatabaseError databaseError) {
+                                    @Override
+                                    public void onCancelled(final DatabaseError databaseError) {
 
-                                }
-                            });
+                                    }
+                                });
+                            }
                         }
                     } else {
                         userList.clear();
@@ -461,7 +468,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                             attendItems.remove(position);
                                             notifyItemRemoved(position);
                                             notifyItemRangeChanged(position, attendItems.size());
-                                            notifyItemRangeChanged(position, uidLists.size());
                                             dialog.dismiss();
                                         }
                                     });

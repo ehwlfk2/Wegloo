@@ -94,14 +94,16 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                     unsentCount = 0;
                     absentCount = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("출석")) {
-                            attendCount++;
-                        } else if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("지각")) {
-                            tardyCount++;
-                        } else if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("미출결")) {
-                            unsentCount++;
-                        } else {
-                            absentCount++;
+                        if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state") != null) {
+                            if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("출석")) {
+                                attendCount++;
+                            } else if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("지각")) {
+                                tardyCount++;
+                            } else if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("미출결")) {
+                                unsentCount++;
+                            } else {
+                                absentCount++;
+                            }
                         }
                     }
 
@@ -164,21 +166,23 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                         public void onDataChange(final DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() != null) {
                                 for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    if (snapshot.getKey().equals(auth.getCurrentUser().getUid())) {
-                                        startTime = snapshot2.child("startTime").getValue().toString();
-                                        listStartTime.add(startTime);
-                                        Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
-                                        String uidKey = snapshot.getKey();
-                                        attendAdminItems.add(0, attendAdminInformationItem);
-                                        uidLists.add(0, uidKey);
-                                        listSize++;
+                                    if (snapshot.getValue() != null) {
+                                        if (snapshot.getKey().equals(auth.getCurrentUser().getUid())) {
+                                            startTime = snapshot2.child("startTime").getValue().toString();
+                                            listStartTime.add(startTime);
+                                            Attend_Information_Item attendAdminInformationItem = snapshot.getValue(Attend_Information_Item.class);
+                                            String uidKey = snapshot.getKey();
+                                            attendAdminItems.add(0, attendAdminInformationItem);
+                                            uidLists.add(0, uidKey);
+                                            listSize++;
 
-                                        for (int i = 0; i < listSize; i++) {
-                                            attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
+                                            for (int i = 0; i < listSize; i++) {
+                                                attendAdminItems.get(i).attendTimeLimit = listStartTime.get(listSize - 1 - i);
+                                            }
+
+                                            // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+                                            MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                         }
-
-                                        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-                                        MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
                                     }
                                 }
                             }
