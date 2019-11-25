@@ -486,5 +486,4 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         map.put("pushToken", token);
         FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(uid).updateChildren(map);
     }
-
 }
