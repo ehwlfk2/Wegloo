@@ -70,8 +70,6 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
         setContentView(R.layout.activity_attend_detail);
 
         Intent intent = getIntent();
-        intent.getExtras().getString("uidPath");
-
         findkey = intent.getExtras().getString("uidPath");
         if (findkey == null) {
             findkey = intent.getExtras().getString("uidAdminPath");
@@ -81,7 +79,6 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
         activity_attend_detail_button_attend_state = (Button) findViewById(R.id.activity_attend_detail_button_attend_state);
         activity_attend_detail_slidingdrawer = (SlidingDrawer) findViewById(R.id.activity_attend_detail_slidingdrawer);
         activity_attend_detail_textview = (TextView) findViewById(R.id.activity_attend_detail_textview);
-
 
         activity_attend_piechart = (PieChart) findViewById(R.id.activity_attend_piechart);
 

@@ -94,7 +94,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                     unsentCount = 0;
                     absentCount = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state") != null) {
+                        if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class) != null) {
                             if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("출석")) {
                                 attendCount++;
                             } else if (snapshot.child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").getValue(String.class).equals("지각")) {

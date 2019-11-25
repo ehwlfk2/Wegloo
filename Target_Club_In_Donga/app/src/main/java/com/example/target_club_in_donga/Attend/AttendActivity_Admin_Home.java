@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -234,7 +235,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                                             for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
-                                                database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -286,7 +287,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                 flag = 1;
                                 activity_attend_admin_information_home_category.setText("일자 별");
                                 attend_admin_information_home_edittext_search.setVisibility(View.INVISIBLE);
-                                database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
+                                database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                         attendItems.clear();
@@ -559,6 +560,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setText(attendItems.get(position).tardyTimeLimit);
 
                     PopupMenu(customViewHolder2, position);
+
+                    Log.e("값", uidLists.get(position));
 
                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

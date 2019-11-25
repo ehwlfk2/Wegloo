@@ -21,8 +21,9 @@
         <TextView
             android:id="@+id/activity_attend_admin_information_item_textview_phone_number"
             style="@style/Content_Classification_Text_Style"
-            android:layout_weight="1"
-            android:text="전화번호"/>
+            android:text="전화번호"
+            android:textColor="@color/colorWhite"
+            android:layout_weight="1"/>
 
         <ImageView
             android:layout_width="20dp"
