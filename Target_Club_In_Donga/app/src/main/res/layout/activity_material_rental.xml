@@ -7,7 +7,7 @@
 
     <TextView
         style="@style/Top_Content_Text_Style"
-        android:text="물품대여하기"/>
+        android:text="물품 대여하기"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,14 +15,23 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/activity_material_rental_imageview_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:saveEnabled="false"
-            android:scaleType="fitStart"
-            android:src="@mipmap/ic_launcher"
-            android:layout_weight="1"/>
+            app:civ_border_width="0.5dp"
+            app:civ_border_color="#FF000000"
+            android:layout_width="150dp"
+            android:background="@drawable/picture_que_ver0"
+
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_height="150dp"
+
+            app:layout_constraintVertical_bias="0.4"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +41,8 @@
 
             <TextView
                 style="@style/Content_Classification_Text_Style"
-                android:background="@drawable/button_background"
+                android:background="@drawable/logoin_button_ver0"
+                android:textColor="@color/color_White"
                 android:text="물품명" />
 
             <TextView
@@ -45,7 +55,8 @@
 
             <TextView
                 style="@style/Content_Classification_Text_Style"
-                android:background="@drawable/button_background"
+                android:background="@drawable/logoin_button_ver0"
+                android:textColor="@color/color_White"
                 android:text="대여자" />
 
             <TextView
@@ -73,14 +84,16 @@
 
             <Button
                 android:id="@+id/activity_material_rental_period_calendar"
-                android:background="@drawable/button_background"
+                android:background="@drawable/logoin_button_ver0"
+                android:textColor="@color/color_White"
                 style="@style/Content_Classification_Text_Style"
-                android:text="달력"
+                android:text="날짜"
                 android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/activity_material_rental_period_time"
-                android:background="@drawable/button_background"
+                android:background="@drawable/logoin_button_ver0"
+                android:textColor="@color/color_White"
                 style="@style/Content_Classification_Text_Style"
                 android:text="시간"
                 android:layout_weight="1"/>
@@ -98,7 +111,8 @@
 
         <Button
             android:id="@+id/activity_material_rental_button"
-            android:background="@drawable/button_background"
+            android:background="@drawable/logoin_button_ver0"
+            android:textColor="@color/color_White"
             style="@style/Content_Classification_Text_Style"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="-2dp"

@@ -29,18 +29,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="5">
 
                 <TextView
                     style="@style/Content_Classification_Text_Style"
                     android:text="출석일"
-                    android:layout_weight="2" />
+                    android:textColor="@color/colorWhite"
+                    android:layout_weight="3" />
 
                 <TextView
                     android:id="@+id/activity_attend_home_item_textview_recyclerview_start_time"
                     style="@style/Content_Text_Style"
                     android:text="없음"
-                    android:layout_weight="1" />
+                    android:layout_weight="2" />
 
             </LinearLayout>
 
@@ -48,19 +49,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/activity_attend_home_item_recyclerview_attend_time_limit_tilte"
                     style="@style/Content_Classification_Text_Style"
-                    android:text="출석 인정 시간"
-                    android:layout_weight="2"/>
+                    android:text="출석 시간"
+                    android:textColor="@color/colorWhite"
+                    android:layout_weight="3"/>
 
                 <TextView
                     android:id="@+id/activity_attend_home_item_recyclerview_attend_time_limit"
                     style="@style/Content_Text_Style"
                     android:text="없음"
-                    android:layout_weight="1"/>
+                    android:layout_weight="2"/>
 
             </LinearLayout>
 
@@ -68,19 +70,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/activity_attend_home_item_textview_recyclerview_tardy_time_limit_title"
                     style="@style/Content_Classification_Text_Style"
-                    android:text="지각 인정 시간"
-                    android:layout_weight="2"/>
+                    android:text="지각 시간"
+                    android:textColor="@color/colorWhite"
+                    android:layout_weight="3"/>
 
                 <TextView
                     android:id="@+id/activity_attend_home_item_textview_recyclerview_tardy_time_limit"
                     style="@style/Content_Text_Style"
                     android:text="없음"
-                    android:layout_weight="1"/>
+                    android:layout_weight="2"/>
 
             </LinearLayout>
         </LinearLayout>
