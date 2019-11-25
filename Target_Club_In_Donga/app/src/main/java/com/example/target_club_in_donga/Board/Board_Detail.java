@@ -2,6 +2,7 @@ package com.example.target_club_in_donga.Board;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -30,11 +34,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -45,15 +52,19 @@ import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.user
 public class Board_Detail extends AppCompatActivity {
     ImageButton detail_back, edt_menu;
     TextView name, timestamp, title, contents;
-    ImageView userprofilepic;
-    RecyclerView recyclerView;
+    EditText comment;
+    ImageView userprofilepic, upload_comment;
+    RecyclerView recyclerView, comment_recycler;
+    ArrayList<Comment_Model> comment_models = new ArrayList<>();
+    Comment_Model comment_model = new Comment_Model();
     LinearLayoutManager linearLayoutManager;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
     private FirebaseAuth auth;
     BoardModel boardModel = new BoardModel();
     String getkey;
-    String updateKey;
+    InputMethodManager imm;
+    ConstraintLayout detail_view;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd HH:mm");
     RecyclerViewDecoration recyclerViewDecoration = new RecyclerViewDecoration(30);
@@ -70,15 +81,25 @@ public class Board_Detail extends AppCompatActivity {
         contents = findViewById(R.id.board_detail_contents);
         recyclerView = findViewById(R.id.board_detail_recy);
         userprofilepic = findViewById(R.id.board_detail_user_imageView);
+        comment_recycler = findViewById(R.id.board_comment_recy);
+        comment = findViewById(R.id.board_comment);
+        upload_comment = findViewById(R.id.board_comment_upload);
+        detail_view = findViewById(R.id.detail_view);
+        detail_view.setOnClickListener(viewclick);
 
-        linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         final Detail_recyAdapter detail_recyAdapter = new Detail_recyAdapter(img_clicklistner);
+        final Comment_Adapter comment_adapter = new Comment_Adapter();
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(detail_recyAdapter);
         recyclerView.addItemDecoration(recyclerViewDecoration);
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
+        imm = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
+
+        comment_recycler.setLayoutManager(new LinearLayoutManager(this));
+        comment_recycler.setAdapter(comment_adapter);
 
         Intent intent = getIntent();
         getkey = intent.getStringExtra("key");
@@ -88,92 +109,94 @@ public class Board_Detail extends AppCompatActivity {
                 finish();
             }
         });
+        upload_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard();
+                String comments = comment.getText().toString();
+                if (comments.getBytes().length <= 0) {
+                    Toast.makeText(Board_Detail.this, "댓글 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+                } else {
+                    comment_model.comment = comments;
+                    comment_model.uid = auth.getCurrentUser().getUid();
+                    comment_model.time = ServerValue.TIMESTAMP;
+                    DatabaseReference databaseReference = database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).child("Comment");
+                    databaseReference.push().setValue(comment_model);
+                }
+                comment.setText("");
+            }
+        });
+        database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).child("Comment").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                comment_models.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Comment_Model comment_model = snapshot.getValue(Comment_Model.class);
+                    comment_models.add(comment_model);
+                }
+                comment_adapter.notifyDataSetChanged();
+            }
 
-        if (thisClubIsRealName){ //실명
-            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    boardModel = null;
-                    boardModel = dataSnapshot.getValue(BoardModel.class);
-                    title.setText(boardModel.title);
-                    contents.setText(boardModel.contents);
-                    name.setText(boardModel.name); // 실명제 이름은 안바뀌니까
-                    if(boardModel.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3){ // 작성자면,
-                        edt_menu.setVisibility(View.VISIBLE);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boardModel = null;
+                boardModel = dataSnapshot.getValue(BoardModel.class);
+                title.setText(boardModel.title);
+                contents.setText(boardModel.contents);
+                if (boardModel.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3) { // 작성자면,
+                    edt_menu.setVisibility(View.VISIBLE);
+                }
+                long unixTime = (long) boardModel.timestamp;
+                Date date = new Date(unixTime);
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
+                String time = simpleDateFormat.format(date);
+                timestamp.setText(time);
+                detail_recyAdapter.notifyDataSetChanged();
+                database.getReference().child("EveryClub").child(clubName).child("User").child(boardModel.uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        JoinData joinData = snapshot.getValue(JoinData.class);
+                        boardModel.name = joinData.getName();
+                        name.setText(boardModel.name);
+                        String picurl = joinData.getRealNameProPicUrl();
+                        Glide.with(getApplicationContext()).load(picurl).into(userprofilepic);
                     }
-                    long unixTime = (long) boardModel.timestamp;
-                    Date date = new Date(unixTime);
-                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
-                    String time = simpleDateFormat.format(date);
-                    timestamp.setText(time);
-                    database.getReference().child("AppUser").child(boardModel.uid).child("realNameProPicUrl").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            String picurl = snapshot.getValue(String.class);
-                            Glide.with(getApplicationContext()).load(picurl).into(userprofilepic);
-                            detail_recyAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-        else if(!thisClubIsRealName){ //닉네임
-            database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    boardModel = null;
-                    boardModel = dataSnapshot.getValue(BoardModel.class);
-                    title.setText(boardModel.title);
-                    contents.setText(boardModel.contents);
-                    if(boardModel.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3){ // 작성자면,
-                        edt_menu.setVisibility(View.VISIBLE);
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                     }
-                    long unixTime = (long) boardModel.timestamp;
-                    Date date = new Date(unixTime);
-                    simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Korea"));
-                    String time = simpleDateFormat.format(date);
-                    timestamp.setText(time);
-                    database.getReference().child("EveryClub").child(clubName).child("User").child(boardModel.uid).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            JoinData joinData = snapshot.getValue(JoinData.class);
-                            boardModel.name = joinData.getName();
-                            name.setText(boardModel.name);
-                            String picurl = joinData.getRealNameProPicUrl();
-                            Glide.with(getApplicationContext()).load(picurl).into(userprofilepic);
-                            detail_recyAdapter.notifyDataSetChanged();
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
+                });
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
         edt_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (boardModel.uid.equals(auth.getCurrentUser().getUid())){
+                if (boardModel.uid.equals(auth.getCurrentUser().getUid())) {
                     showOption(view);
-                }
-                else if(userAdmin < 3){
+                } else if (userAdmin < 3) {
                     mastershowOption(view);
                 }
             }
         });
+    }
+
+    View.OnClickListener viewclick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            hideKeyboard();
+        }
+    };
+
+    private void hideKeyboard() {
+        imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
     }
 
     void mastershowOption(View view) {
@@ -184,7 +207,7 @@ public class Board_Detail extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.delete_board_master:
-                        if( boardModel.idx == 0 ){ // 사진이 없으면
+                        if (boardModel.idx == 0) { // 사진이 없으면
                             database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -196,8 +219,7 @@ public class Board_Detail extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "db 삭제 오류", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }
-                        else if( boardModel.idx > 0 ){ // 사진이 있으면
+                        } else if (boardModel.idx > 0) { // 사진이 있으면
                             delete_content();
                         }
                         finish();
@@ -208,6 +230,7 @@ public class Board_Detail extends AppCompatActivity {
         });
         popupMenu.show();
     }
+
     void showOption(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.inflate(R.menu.detail_edit_menu);
@@ -216,14 +239,19 @@ public class Board_Detail extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.editwrite:
+                        if (comment_models.size() != 0) { // 댓글이 있으면 수정 불가
+                            Toast.makeText(Board_Detail.this, "댓글이 달린 게시글은 수정이 불가능합니다.", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         Intent intent1 = new Intent(getApplicationContext(), Board_Write.class);
                         intent1.putExtra("edt_model", boardModel);
                         intent1.putExtra("edt_key", 1);
                         intent1.putExtra("updatekey", getkey);
                         startActivity(intent1);
+                        finish();
                         break;
                     case R.id.deletedetail:
-                        if( boardModel.idx == 0 ){ // 사진이 없으면
+                        if (boardModel.idx == 0) { // 사진이 없으면
                             database.getReference().child("EveryClub").child(clubName).child("Board").child(getkey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -235,8 +263,7 @@ public class Board_Detail extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "db 삭제 오류", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }
-                        else if( boardModel.idx > 0 ){ // 사진이 있으면
+                        } else if (boardModel.idx > 0) { // 사진이 있으면
                             delete_content();
                         }
                         finish();
@@ -255,46 +282,13 @@ public class Board_Detail extends AppCompatActivity {
             final int position = recyclerView.getChildPosition(v);
             Intent intent = new Intent(getApplicationContext(), Board_viewpager.class);
             intent.putExtra("imglist", boardModel.imglist);
-            intent.putExtra("position",position);
+            intent.putExtra("position", position);
             startActivity(intent);
         }
     };
-    private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog asyncDialog = new ProgressDialog(
-                Board_Detail.this);
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                for (int i = 0; i < 2; i++) {
-                    //asyncDialog.setProgress(i * 30);
-                    Thread.sleep(500);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중입니다..");
-
-            // show dialog
-            asyncDialog.show();
-            super.onPreExecute();
-        }
-        @Override
-        protected void onPostExecute(Void result) {
-            asyncDialog.dismiss();
-            super.onPostExecute(result);
-        }
-    }
-
-    public void delete_content(){ // 이미지 여러개 삭제후 데이터베이스 하나를 날려야된다
-        for(int i = 0; i < boardModel.imgName.size() ; i++){
+    public void delete_content() { // 이미지 여러개 삭제후 데이터베이스 하나를 날려야된다
+        for (int i = 0; i < boardModel.imgName.size(); i++) {
             storage.getReference().child("EveryClub").child(clubName).child("Board").child(boardModel.imgName.get(i)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -320,12 +314,13 @@ public class Board_Detail extends AppCompatActivity {
     }
 
 
-    public class RecyclerViewDecoration extends RecyclerView.ItemDecoration{ // 리사이클러 이미지 간격 띄우는 클래스
-        private  final int divheight;
+    public class RecyclerViewDecoration extends RecyclerView.ItemDecoration { // 리사이클러 이미지 간격 띄우는 클래스
+        private final int divheight;
 
-        public RecyclerViewDecoration(int divheight){
+        public RecyclerViewDecoration(int divheight) {
             this.divheight = divheight;
         }
+
         @Override
         public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
@@ -335,26 +330,27 @@ public class Board_Detail extends AppCompatActivity {
         }
     }
 
-    class Detail_recyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    class Detail_recyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View.OnClickListener img_clicklistner;
-        public Detail_recyAdapter(View.OnClickListener img_clicklistner){
+
+        public Detail_recyAdapter(View.OnClickListener img_clicklistner) {
             this.img_clicklistner = img_clicklistner;
         }
+
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_board_detail, parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_board_detail, parent, false);
             view.setOnClickListener(img_clicklistner);
             return new CustomViewholder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            if( boardModel.idx == 0 ){
+            if (boardModel.idx == 0) {
                 // do nothing
-            }
-            else if ( boardModel.idx > 0 ){
-                Glide.with(holder.itemView.getContext()).load(boardModel.imglist.get(position)).override(100,100).placeholder(R.drawable.default_loadimg).into(((CustomViewholder)holder).imageView);
+            } else if (boardModel.idx > 0) {
+                Glide.with(holder.itemView.getContext()).load(boardModel.imglist.get(position)).override(100, 100).placeholder(R.drawable.default_loadimg).into(((CustomViewholder) holder).imageView);
             }
         }
 
@@ -362,14 +358,52 @@ public class Board_Detail extends AppCompatActivity {
         public int getItemCount() {
             return boardModel.idx;
         }
-        private class CustomViewholder extends RecyclerView.ViewHolder{
+
+        private class CustomViewholder extends RecyclerView.ViewHolder {
             ImageView imageView;
-            public CustomViewholder(View view){
+
+            public CustomViewholder(View view) {
                 super(view);
-                imageView = (ImageView)view.findViewById(R.id.item_board__detail_img);
-                GradientDrawable drawable = (GradientDrawable)view.getContext().getDrawable(R.drawable.imageview_round_corner);
+                imageView = (ImageView) view.findViewById(R.id.item_board__detail_img);
+                GradientDrawable drawable = (GradientDrawable) view.getContext().getDrawable(R.drawable.imageview_round_corner);
                 imageView.setBackground(drawable);
                 imageView.setClipToOutline(true);
+            }
+        }
+    }
+
+    class Comment_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_board_comment, parent, false);
+            return new Commentholder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            ((Commentholder) holder).name.setText("이름");
+            ((Commentholder) holder).comment.setText(comment_models.get(position).comment);
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return comment_models.size();
+        }
+
+        private class Commentholder extends RecyclerView.ViewHolder {
+            TextView name, comment, time, delete;
+            ImageView proPic;
+
+            public Commentholder(View view) {
+                super(view);
+                proPic = view.findViewById(R.id.comment_proPic);
+                name = view.findViewById(R.id.comment_name);
+                comment = view.findViewById(R.id.comment_content);
+                time = view.findViewById(R.id.comment_time);
+                delete = view.findViewById(R.id.comment_delete);
             }
         }
     }

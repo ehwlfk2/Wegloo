@@ -57,7 +57,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         recyclerView.setAdapter(boardRecy_adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),1));
 
-        if(thisClubIsRealName){
+        if(thisClubIsRealName){ // 실명
             database.getReference().child("EveryClub").child(clubName).child("Board").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

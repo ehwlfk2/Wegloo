@@ -6,18 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,19 +24,13 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
-import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -51,8 +38,6 @@ import com.sangcomz.fishbun.FishBun;
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter;
 import com.sangcomz.fishbun.define.Define;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,6 +49,7 @@ public class Board_Write extends AppCompatActivity {
     ImageButton board_img_upload_btn,x_btn;
     Button upload_btn;
     EditText title, contents;
+    ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private Recy_Adapter adapter;
     private ArrayList<Uri> uris = new ArrayList<>(); // 이미지 uri 리스트
@@ -86,6 +72,7 @@ public class Board_Write extends AppCompatActivity {
 
         board_img_upload_btn = findViewById(R.id.board_img_upload_btn);
         recyclerView = findViewById(R.id.board_img_horizontal_recy);
+        progressDialog = new ProgressDialog(this);
 
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
@@ -123,7 +110,7 @@ public class Board_Write extends AppCompatActivity {
                 finish();
             }
         });
-        upload_btn.setOnClickListener(new View.OnClickListener() { //완료
+        upload_btn.setOnClickListener(new View.OnClickListener() { //업로드
             @Override
             public void onClick(View v) {
                 String titles = title.getText().toString();
@@ -137,16 +124,20 @@ public class Board_Write extends AppCompatActivity {
                     Toast.makeText(Board_Write.this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    progressDialog.setMessage("업로드 중입니다...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
                     boardModel.uid = auth.getCurrentUser().getUid();
                     if (thisClubIsRealName){
                         boardModel.name = userRealName;
-                    }
-                    if (edt_key == 1) { // 수정
-                        if (IMAGEs.size() != 0) { // 사진 있음 이슈 : 사진 추가없이 삭제만 할시, uris가 0이라 제목 본문이 바뀌어도 업데이트 되지않고 넘어가는 이슈.
+                    } //실명넣어주기
+
+                    if (edt_key == 1) { // 수정 시
+                        if (IMAGEs.size() != 0) { // 사진 있음
                             boardEditInfo();
                         } else if (IMAGEs.size() == 0) { // 사진 없음
                             Edit_StoreDatabase();
-                            finish();
                         }
 
                     } else { // 글쓰기
@@ -154,7 +145,6 @@ public class Board_Write extends AppCompatActivity {
                             writeGalleryInfo();
                         } else if (IMAGEs.size() == 0) { // 사진없음
                             StoreDatabase();
-                            finish();
                         }
                     }
 
@@ -173,43 +163,14 @@ public class Board_Write extends AppCompatActivity {
             }
         });
     }
-    private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog asyncDialog = new ProgressDialog(
-                Board_Write.this);
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                for (int i = 0; i < 3; i++) {
-                    //asyncDialog.setProgress(i * 30);
-                    Thread.sleep(400);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("업로드 중입니다..");
-
-            // show dialog
-            asyncDialog.show();
-            super.onPreExecute();
-        }
-    }
     private void boardEditInfo(){
         final StorageReference storageRef = storage.getReference();
         long unix = System.currentTimeMillis();
         Date date = new Date(unix);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
         final String times = simpleDateFormat.format(date);
-        CheckTypesTask task = new CheckTypesTask();
-        task.execute();
-        if( uris == null ){ // 사진은 있는데 추가사진 없이 사진을 삭제하거나, 텍스트만 변경 -> 스토리지업로드는 따로 무필요
+        if( uris.size() ==0 ){ // 사진은 있는데 추가사진 없이 사진을 삭제하거나, 텍스트만 변경 -> 스토리지업로드는 따로 무필요
             Edit_StoreDatabase();
         }
         else {
@@ -228,7 +189,6 @@ public class Board_Write extends AppCompatActivity {
                         if (boardModel.idx == IMAGEs.size()) {
                             boardModel.Thumbnail = boardModel.imglist.get(0);
                             Edit_StoreDatabase();
-                            finish();
                         }
                     }
                 });
@@ -241,8 +201,6 @@ public class Board_Write extends AppCompatActivity {
         Date date = new Date(unix);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
         final String times = simpleDateFormat.format(date);
-        CheckTypesTask task = new CheckTypesTask();
-        task.execute();
         for (int i = 0; i < IMAGEs.size(); i++) {
             final Uri individualImage = Uri.parse(IMAGEs.get(i));
             final StorageReference ImageName = storageRef.child("EveryClub").child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
@@ -258,7 +216,6 @@ public class Board_Write extends AppCompatActivity {
                     if( boardModel.idx == uris.size() ){
                         boardModel.Thumbnail = boardModel.imglist.get(0);
                         StoreDatabase();
-                        finish();
                     }
                 }
             });
@@ -270,16 +227,18 @@ public class Board_Write extends AppCompatActivity {
         boardModel.contents = contents.getText().toString();
         boardModel.timestamp = ServerValue.TIMESTAMP;
         databaseReference.child(updatekey).setValue(boardModel);
+        progressDialog.dismiss();
+        finish();
     }
 
     private void StoreDatabase(){
-        CheckTypesTask task = new CheckTypesTask();
-        task.execute();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");
         boardModel.title = title.getText().toString();
         boardModel.contents = contents.getText().toString();
         boardModel.timestamp = ServerValue.TIMESTAMP;
         databaseReference.push().setValue(boardModel);
+        progressDialog.dismiss();
+        finish();
     }
 
 
@@ -323,22 +282,27 @@ public class Board_Write extends AppCompatActivity {
                             storage.getReference().child("EveryClub").child(clubName).child("Board").child(boardModel.imgName.get(position)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
+                                    boardModel.imglist.remove(position); // 이내용도 포함돼야함
+                                    IMAGEs.remove(position);
+                                    boardModel.imgName.remove(position);
+                                    boardModel.idx -= 1;
+                                    if (boardModel.idx == 0){ // 사진이 없어지면
+                                        boardModel.Thumbnail = null;
+                                        recyclerView.removeAllViewsInLayout();
+                                    }
+                                    adapter.notifyDataSetChanged();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getApplicationContext(), "storage 삭제 오류", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), "storage 삭제 오류", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            boardModel.imglist.remove(position); // 이내용도 포함돼야함
-                            IMAGEs.remove(position);
-                            boardModel.imgName.remove(position);
-                            boardModel.idx -= 1;
                         }
                         else { // 수정이 아닐때 삭제는 앨범리스트만
                             IMAGEs.remove(position);
+                            adapter.notifyDataSetChanged();
                         }
-                        adapter.notifyDataSetChanged();
                         break;
                 }
                 return false;
