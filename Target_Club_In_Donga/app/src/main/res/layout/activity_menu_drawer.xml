@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:id="@+id/menu_drawer_ver"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    class="com.example.target_club_in_donga.home_viewpager.HomeActivityView">
 
     <!--START 동아리명, 로그아웃-->
     <LinearLayout
@@ -16,7 +17,7 @@
             android:id="@+id/Group_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TCID"
+            android:text=""
             android:textStyle="bold"
             android:textSize="15dp"
             android:textColor="#000000"
@@ -101,114 +102,6 @@
         android:layout_height="1dp"
         android:background="#EBE7E7" />
 
-    <!-- START 동아리정보, 회원목록, 공지, 설정 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!--START 동아리정보 -->
-        <LinearLayout
-            android:id="@+id/go_Group_Info"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:background="?attr/selectableItemBackground">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/groupinfoimg" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="모임정보"
-                android:textSize="13dp"
-                android:layout_gravity="center"
-                android:textColor="#000000"/>
-        </LinearLayout>
-        <!--END 동아리정보 -->
-        <!--START 회원목록 -->
-        <LinearLayout
-            android:id="@+id/go_Member_List"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:orientation="vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/memberlistpic"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="회원목록"
-                android:textColor="#000000"/>
-        </LinearLayout>
-        <!--END 회원목록 -->
-        <!--START 공지사항 -->
-        <LinearLayout
-            android:id="@+id/go_Notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="?attr/selectableItemBackground"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/noticepic"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="공지사항"
-                android:textColor="#000000" />
-        </LinearLayout>
-        <!--END 공지사항 -->
-        <!--START 설정 -->
-        <LinearLayout
-            android:id="@+id/go_Settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center"
-            android:background="?attr/selectableItemBackground"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/settingspic"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="설정"
-                android:layout_gravity="center"
-                android:textColor="#000000" />
-        </LinearLayout>
-        <!--END 설정 -->
-    </LinearLayout>
-    <!-- END 동아리정보, 회원목록, 공지, 설정 -->
-
     <!-- START 스크롤뷰 -->
     <ScrollView
         android:layout_width="wrap_content"
@@ -237,9 +130,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- START 일정보기 -->
                 <LinearLayout
-                    android:id="@+id/go_Calendar"
+                    android:id="@+id/go_Member_List"
                     android:paddingTop="19dp"
                     android:paddingBottom="10dp"
                     android:background="?attr/selectableItemBackground"
@@ -250,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:paddingLeft="18dp"
-                        android:text="일정보기"/>
+                        android:text="회원 목록"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -262,7 +154,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_gravity="right|center"/>
                 </LinearLayout>
-                <!-- END 일정보기 -->
+
                 <!-- START 물품 대여 -->
                 <LinearLayout
                     android:id="@+id/go_Material_Rental"
@@ -276,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:paddingLeft="18dp"
-                        android:text="물품 대여하기"/>
+                        android:text="물품 대여"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -289,58 +181,7 @@
                         android:layout_gravity="right|center"/>
                 </LinearLayout>
                 <!-- END 물품 대여 -->
-                <!-- START 자유 게시판 -->
-                <LinearLayout
-                    android:id="@+id/go_Board"
-                    android:paddingTop="19dp"
-                    android:paddingBottom="10dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:paddingLeft="18dp"
-                        android:text="자유 게시판"/>
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/arrow_btn"
-                        android:layout_marginRight="15dp"
-                        android:layout_gravity="right|center"/>
-                </LinearLayout>
-                <!-- END 자유 게시판 -->
-                <!-- START 투표 -->
-                <LinearLayout
-                    android:id="@+id/go_Vote"
-                    android:paddingTop="19dp"
-                    android:paddingBottom="10dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:paddingLeft="18dp"
-                        android:text="투표하기"/>
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/arrow_btn"
-                        android:layout_marginRight="15dp"
-                        android:layout_gravity="right|center"/>
-                </LinearLayout>
-                <!-- END 투표 -->
+
                 <!-- START 앨범 -->
                 <LinearLayout
                     android:id="@+id/go_Gallery"
@@ -354,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:paddingLeft="18dp"
-                        android:text="모임 앨범보기"/>
+                        android:text="모임 앨범"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -367,9 +208,10 @@
                         android:layout_gravity="right|center"/>
                 </LinearLayout>
                 <!-- END 앨범 -->
-                <!-- START 출석 -->
+
+                <!-- START 연혁 -->
                 <LinearLayout
-                    android:id="@+id/go_Attend"
+                    android:id="@+id/go_History"
                     android:paddingTop="19dp"
                     android:paddingBottom="10dp"
                     android:background="?attr/selectableItemBackground"
@@ -380,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:paddingLeft="18dp"
-                        android:text="출석하기"/>
+                        android:text="모임 연혁"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -392,7 +234,8 @@
                         android:layout_marginRight="15dp"
                         android:layout_gravity="right|center"/>
                 </LinearLayout>
-                <!-- END 앨범 -->
+                <!-- END 연혁 -->
+
             </LinearLayout>
             <!-- END 동아리 활동 -->
             <!-- START 기타 (연혁, 동아리 탈퇴)-->
@@ -439,9 +282,10 @@
                         android:layout_marginRight="15dp"
                         android:layout_gravity="right|center"/>
                 </LinearLayout>
-                <!-- START 연혁 -->
+
+                <!-- START 모임정보 -->
                 <LinearLayout
-                    android:id="@+id/go_History"
+                    android:id="@+id/go_Group_Info"
                     android:paddingTop="19dp"
                     android:paddingBottom="10dp"
                     android:background="?attr/selectableItemBackground"
@@ -452,7 +296,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:paddingLeft="18dp"
-                        android:text="모임 연혁"/>
+                        android:text="모임 정보"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -464,7 +308,9 @@
                         android:layout_marginRight="15dp"
                         android:layout_gravity="right|center"/>
                 </LinearLayout>
-                <!-- END 연혁 -->
+                <!-- END 모임정보 -->
+
+
                 <!-- START 동아리 탈퇴 -->
                 <LinearLayout
                     android:id="@+id/go_Withdraw"
@@ -491,11 +337,40 @@
                         android:layout_gravity="right|center"/>
                 </LinearLayout>
                 <!-- END 동아리 탈퇴 -->
+
+                <!-- START 앱 정보 -->
+                <LinearLayout
+                    android:id="@+id/go_Wegloo_Info"
+                    android:paddingTop="19dp"
+                    android:paddingBottom="10dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:paddingLeft="18dp"
+                        android:text="Wegloo 정보"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/arrow_btn"
+                        android:layout_marginRight="15dp"
+                        android:layout_gravity="right|center"/>
+                </LinearLayout>
+                <!-- END 앱 정보 -->
+
             </LinearLayout>
             <!-- END 기타 (연혁, 동아리 탈퇴)-->
 
             <!-- START 관리자 (물품관리, 출결정보, 동아리정보수정, 가입요청승인)-->
             <LinearLayout
+                android:id="@+id/manage_layout1"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -512,8 +387,14 @@
             </LinearLayout>
 
             <!-- START 가입 요청 승인 -->
+        <LinearLayout
+            android:id="@+id/manage_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:id="@+id/Manage_Accept_Request"
+                android:id="@+id/go_Manage_Accept_Request"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -524,7 +405,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:paddingLeft="18dp"
-                    android:text="모임가입 요청보기"/>
+                    android:text="모임가입 요청"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -540,7 +421,7 @@
 
             <!-- START 동아리 정보 수정 -->
             <LinearLayout
-                android:id="@+id/Manage_Group_Info"
+                android:id="@+id/go_Manage_Group"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -567,7 +448,7 @@
 
             <!-- START 출결 정보 -->
             <LinearLayout
-                android:id="@+id/Manage_Attend"
+                android:id="@+id/go_Manage_Attend"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -594,7 +475,7 @@
 
             <!-- START 물품 관리 -->
             <LinearLayout
-                android:id="@+id/Manage_Material_Rent"
+                android:id="@+id/go_Manage_Material_Rent"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp"
                 android:background="?attr/selectableItemBackground"
@@ -619,8 +500,35 @@
             </LinearLayout>
             <!-- END 물품 관리 -->
 
-            <!-- END 관리자 메뉴 -->
+            <!-- START 물품 관리 -->
+            <LinearLayout
+                android:id="@+id/go_clubDelete"
+                android:paddingTop="19dp"
+                android:paddingBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:paddingLeft="18dp"
+                    android:text="모임 삭제"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/arrow_btn"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="right|center"/>
+            </LinearLayout>
+            <!-- END 물품 관리 -->
 
+            <!-- END 관리자 메뉴 -->
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <!-- END 스크롤뷰 -->

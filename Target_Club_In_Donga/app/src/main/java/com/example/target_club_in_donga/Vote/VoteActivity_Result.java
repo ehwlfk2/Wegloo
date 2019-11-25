@@ -51,7 +51,6 @@ public class VoteActivity_Result extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activityvote_result);
-        Toast.makeText(this, "항목 클릭하면 누군지 볼수있음!!!", Toast.LENGTH_SHORT).show();
 
         //activityvote_result_listview = (ListView)findViewById(R.id.activityvote_result_listview);
         activityvote_result_textview_title = findViewById(R.id.activityvote_result_textview_title);
@@ -68,7 +67,7 @@ public class VoteActivity_Result extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Vote_Item last_item = dataSnapshot.getValue(Vote_Item.class); //큰거 하나!
-                activityvote_result_listview = (ExpandableListView)findViewById(R.id.activityvote_result_listview);
+                activityvote_result_listview = findViewById(R.id.activityvote_result_listview);
                 //last_item.listItems 이게 그안에 이름 + 카운터수
                 //starts가 투표한닝겐
 
@@ -85,7 +84,7 @@ public class VoteActivity_Result extends AppCompatActivity {
 
                         if(last_item.stars.get(key) == i){ //uid가 같으면 이름받아오기
 
-                            database.getReference().child("EveryClub").child(clubName).child("User").child(key).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).child("User").child(key).child("name").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String name = dataSnapshot.getValue(String.class);
@@ -103,20 +102,9 @@ public class VoteActivity_Result extends AppCompatActivity {
                     data.add(parentData);
                 }
 
-                /*parentData.child.add(new Child("01011111111", "서울 서대문구"));
-                data.add(parentData);
-
-                ParentData parentData2 = new ParentData("근육몬", "28", "남자");
-                parentData2.child.add(new Child("01022222222", "부산 서구"));
-                data.add(parentData2);*/
 
                 adapter = new VoteActivity_ResultListAdapter(VoteActivity_Result.this,data);
                 activityvote_result_listview.setAdapter(adapter);
-
-
-
-                /*adapter = new VoteActivity_ResultListAdapter(last_item.listItems);
-                activityvote_result_listview.setAdapter(adapter);*/
 
                 activityvote_result_textview_totalcount.setText("투표 수 : "+last_item.totalCount);
 
@@ -136,57 +124,7 @@ public class VoteActivity_Result extends AppCompatActivity {
 
             }
         });
-
-       /* activityvote_result_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(VoteActivity_Result.this, "position : "+position+"\n사실아직 구현안함", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
     }
-
-    /*public class VoteActivity_ResultListAdapter extends BaseAdapter {
-        LayoutInflater inflater = null;
-        private ArrayList<Vote_Item_Count> m_oData = null;
-        //private int nListCnt = 0;
-        public VoteActivity_ResultListAdapter(ArrayList<Vote_Item_Count> _oData) {
-            m_oData = _oData;
-        }
-        @Override
-        public int getCount() {
-            //Log.i("TAG", "getCount");
-            return m_oData.size();
-        }
-        @Override
-        public Object getItem(int position) {
-            return m_oData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                final Context context = parent.getContext();
-                if (inflater == null) {
-                    inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                }
-                convertView = inflater.inflate(R.layout.vote_result_listview_item, parent, false);
-            }
-
-            TextView oTextName = (TextView) convertView.findViewById(R.id.vote_result_listview_textview_name);
-            TextView oTextCount = (TextView) convertView.findViewById(R.id.vote_result_listview_textview_count);
-
-            oTextName.setText(m_oData.get(position).getName());
-            oTextCount.setText(m_oData.get(position).getCount()+" 명");
-
-            return convertView;
-        }
-    }*/
     public class VoteActivity_ResultListAdapter extends BaseExpandableListAdapter {
 
         private static final int PARENT_ROW = R.layout.vote_result_listview_item;

@@ -10,18 +10,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
 
 public class MemberList extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -42,6 +47,9 @@ public class MemberList extends AppCompatActivity {
     private ArrayList<JoinData> loginDataArrayList = new ArrayList<>();
     private List<String> dbey = new ArrayList<>();
     private int rank, myRank;
+    private EditText search_name;
+    private TextView mem_txt;
+    private ImageButton back, search;
     private LinearLayoutManager linearLayoutManager;
 
     @Override
@@ -50,24 +58,28 @@ public class MemberList extends AppCompatActivity {
         setContentView(R.layout.activity_member_list);
         recyclerView = findViewById(R.id.memberlist_recy);
         final MemberList_Recy memberList_recy = new MemberList_Recy();
-        //final MemberList_Recy memberList_recy = new MemberList_Recy(memberlist_click);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+        search_name = findViewById(R.id.search_member_name);
+        back = findViewById(R.id.memberlist_back);
+        search = findViewById(R.id.memberlist_search);
+        mem_txt =findViewById(R.id.mem_txt);
 
         database.getReference().child("EveryClub").child(clubName).child("User").orderByChild("admin").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 loginDataArrayList.clear();
                 dbey.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    JoinData loginData = snapshot.getValue(JoinData.class);
-                    loginDataArrayList.add(loginData);
-                    if(snapshot.getKey().equals(auth.getCurrentUser().getUid())){
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    JoinData loginData = snapshot.getValue(JoinData.class); // 동아리 유저정보 컨테이너 가져오고
+                    String key = snapshot.getKey(); // 키값 가져오고
+                    loginDataArrayList.add(loginData); // 유저정보 넣고
+                    if(key.equals(auth.getCurrentUser().getUid())){ // 지금 접속중인 유저 키찾아서 권한가져오고
                         myRank = loginData.getAdmin();
                     }
-                    dbey.add(snapshot.getKey());
+                    dbey.add(key);
                 }
                 memberList_recy.notifyDataSetChanged();
             }
@@ -76,42 +88,34 @@ public class MemberList extends AppCompatActivity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mem_txt.setVisibility(View.GONE);
+                search_name.setVisibility(View.VISIBLE);
+            }
+        });
         recyclerView.setAdapter(memberList_recy);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
     }
 
-    /*public View.OnClickListener memberlist_click = new View.OnClickListener() { // 아이템 클릭 이벤트
-        @Override
-        public void onClick(View v) {
-            final int position = recyclerView.getChildPosition(v);
-            FirebaseUser user = auth.getCurrentUser();
-            String currentuseradmin = user.getUid();
-            Toast.makeText(MemberList.this, loginDataArrayList.get(position).getAdmin(), Toast.LENGTH_SHORT).show();
-            if( currentuseradmin == database.getReference().child("User").getKey() ){
-
-            }
-            if( admin > 0 ){ // 현재 접속자가 임원인지 분별해줘야한다. 그럼 auth에 currentUid 를 가져와서 User DB에서 검색을 한다음 admin등급이 몇인지 확인해줘야한다.
-
-            }
-        }
-    };*/
-
     class MemberList_Recy extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-        /*View.OnClickListener memberlist_click;
-        public MemberList_Recy(View.OnClickListener memberlist_click){
-            this.memberlist_click = memberlist_click;
-        }*/
 
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_memberlist, parent,false);
-            //view.setOnClickListener(memberlist_click);
             return new CustomViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) { //
             ((CustomViewHolder)holder).name.setText(loginDataArrayList.get(position).getName());
             rank = loginDataArrayList.get(position).getAdmin();
             if( rank == 3){
@@ -127,9 +131,10 @@ public class MemberList extends AppCompatActivity {
                 ((CustomViewHolder)holder).postion.setText("회장");
             }
             else if( rank < 0 ){
-                ((CustomViewHolder)holder).postion.setText("Master");
+                ((CustomViewHolder)holder).postion.setText("Admin");
             }
             ((CustomViewHolder)holder).phone.setText(loginDataArrayList.get(position).getPhone());
+            Glide.with(holder.itemView.getContext()).load(loginDataArrayList.get(position).getRealNameProPicUrl()).override(60,60).into(((CustomViewHolder)holder).imageView);
             PopupMenu(holder,position, rank);
         }
 
@@ -138,9 +143,11 @@ public class MemberList extends AppCompatActivity {
             return loginDataArrayList.size();
         }
         private class CustomViewHolder extends RecyclerView.ViewHolder {
-            TextView name, postion, phone;
+            TextView name, phone;
+            Button postion;
             ImageView imageView;
-            ConstraintLayout layout;
+            ImageButton posi_btn;
+            LinearLayout layout;
             public CustomViewHolder(View view){
                 super(view);
                 name = view.findViewById(R.id.memberlist_name);
@@ -148,6 +155,7 @@ public class MemberList extends AppCompatActivity {
                 phone = view.findViewById(R.id.memberlist_phone);
                 imageView = view.findViewById(R.id.memberlist_imgview);
                 layout = view.findViewById(R.id.memberlist_layout);
+                posi_btn = view.findViewById(R.id.posi_btn);
             }
         }
     }
@@ -165,24 +173,20 @@ public class MemberList extends AppCompatActivity {
                         //int x = item.getItemId();
                         switch (item.getItemId()){
                             case R.id.member_president:
-                                alert("회장 위임",loginDataArrayList.get(position).getName()+"에게 '회장'을 위임하겠습니까? \n직전 회장은 '회원'으로 바뀌게됩니다."
+                                alert("회장 위임",loginDataArrayList.get(position).getName()+" 에게 '회장'을 위임하겠습니까? \n직전 회장은 '회원'으로 바뀌게됩니다."
                                         , 0, position, "회장");
                                 return true;
                             case R.id.member_vicePresident:
-                                alert("부회장 변경",loginDataArrayList.get(position).getName()+"에게 '부회장'을 부여하겠습니까?"
+                                alert("부회장 변경",loginDataArrayList.get(position).getName()+" 에게 '부회장'을 부여하겠습니까?"
                                         , 1, position, "부회장");
                                 return true;
                             case R.id.member_executives:
-                                /*alert("임원 변경",loginDataArrayList.get(position).getName()+"에게 '임원'을 부여하겠습니까?"
-                                        , 2, position, "임원");*/
                                 setAdmin(2, position);
-                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '임원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+" 이(가) '임원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                                 return true;
                             case R.id.member_member:
-                                /*alert("회원 변경",loginDataArrayList.get(position).getName()+"에게 '회원'을 부여하겠습니까?"
-                                    , 3, position, "회원");*/
                                 setAdmin(3, position);
-                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '회원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+" 이(가) '회원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                                 return true;
                             case R.id.member_kickOut:
                                 alert("모임 추방", loginDataArrayList.get(position).getName()+"을 정말로 '추방'하시겠습니까?"
@@ -261,16 +265,6 @@ public class MemberList extends AppCompatActivity {
                                 setAdmin(1, position);
                                 Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '부회장'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
                             }
-                            /*else if(type == 2){
-                                //FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(2);
-                                setAdmin(2, position);
-                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '임원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
-                            }
-                            else if(type == 3){
-                                //FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(dbey.get(position)).child("admin").setValue(3);
-                                setAdmin(3, position);
-                                Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 '회원'으로 변경되었습니다", Toast.LENGTH_SHORT).show();
-                            }*/
                             else{
                                 FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(dbey.get(position)).removeValue();
                                 Toast.makeText(MemberList.this, loginDataArrayList.get(position).getName()+"이 모임에서 '추방' 되었습니다", Toast.LENGTH_SHORT).show();
@@ -279,7 +273,6 @@ public class MemberList extends AppCompatActivity {
                         else{
                             Toast.makeText(MemberList.this, "다시 작성해주세요~", Toast.LENGTH_SHORT).show();
                         }
-                        //Toast.makeText(getApplicationContext(),edittext.getText().toString() ,Toast.LENGTH_LONG).show();
                     }
                 });
         builder.setNegativeButton("취소",

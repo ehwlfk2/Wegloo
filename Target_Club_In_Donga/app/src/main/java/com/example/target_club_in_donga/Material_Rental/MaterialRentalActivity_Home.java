@@ -90,7 +90,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
     private String findkey, uidName, uidAdminPath;
 
-    private int admin, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0/*, listSize, materialListSize, listSizeFlag = 0*/, removeFlag = 1, removeFlag2 = 1, removeList, removeList2;
+    private int admin, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0, differFlag/*, listSize, materialListSize, listSizeFlag = 0*/, removeFlag = 1, removeFlag2 = 1, removeList, removeList2;
     private static int adminNumber = 2;
 
     private ProgressDialog progressDialog;
@@ -99,6 +99,9 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material_rental_home);
+
+        Intent intent = getIntent();
+        differFlag = intent.getExtras().getInt("differFlag");
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -110,12 +113,11 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
-//        <------------------------------------------------------------------------------------------------------------------------------------------>
+        activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
+
+        if (differFlag == 0) {
+            activity_material_rental_home_button_insert.setVisibility(View.GONE);
+        }
 
         this.activity_material_rental_admin_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_rental_admin_item_imageview_recyclerview_image);
 
@@ -130,14 +132,34 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
 //        material_rental_home_edittext_search = (EditText) findViewById(R.id.material_rental_home_edtitext_search);
 
-        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
-                uidName = dataSnapshot.child("name").getValue().toString();
+                Log.e("값", dataSnapshot.child("realNameSystem").getValue().toString());
+                if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
+                    admin = Integer.parseInt(dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("admin").getValue().toString());
+                    if (admin > adminNumber) {
+                        activity_material_rental_home_button_insert.setVisibility(View.GONE);
+                    }
+                    database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            uidName = dataSnapshot.child(auth.getCurrentUser().getUid()).child("name").getValue().toString();
+                        }
 
-                if (admin > adminNumber) {
-                    activity_material_rental_home_button_insert.setVisibility(View.GONE);
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+                    });
+
+                } else {
+                    admin = Integer.parseInt(dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("admin").getValue().toString());
+                    uidName = dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("name").getValue().toString();
+
+                    if (admin > adminNumber) {
+                        activity_material_rental_home_button_insert.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -182,7 +204,6 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 /*        adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, list);
         material_rental_home_edittext_search.setAdapter(adapter);*/
 
-        activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
         activity_material_rental_home_button_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -687,16 +708,21 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                     popup.inflate(R.menu.material_rental_home_popup);
 
-                    if (!materialRentalItems.get(position).lender.equals("없음")) {
-                        popup.getMenu().getItem(0).setVisible(false);
-                    }
-
-                    if (admin > adminNumber || !materialRentalItems.get(position).lender.equals("없음") && admin <= adminNumber) {
+                    if (differFlag == 0) {
                         popup.getMenu().getItem(2).setVisible(false);
-                    }
-
-                    if (materialRentalItems.get(position).lender.equals("없음") || !materialRentalItems.get(position).lender.equals(uidName)) {
+                        if (!materialRentalItems.get(position).lender.equals("없음")) {
+                            popup.getMenu().getItem(0).setVisible(false);
+                        }
+                        if (materialRentalItems.get(position).lender.equals("없음") || !materialRentalItems.get(position).lender.equals(uidName)) {
+                            popup.getMenu().getItem(3).setVisible(false);
+                        }
+                    } else {
+                        popup.getMenu().getItem(0).setVisible(false);
                         popup.getMenu().getItem(3).setVisible(false);
+                        if (admin > adminNumber || !materialRentalItems.get(position).lender.equals("없음") && admin <= adminNumber) {
+                            popup.getMenu().getItem(2).setVisible(false);
+                        }
+
                     }
 
                     popup.setGravity(Gravity.RIGHT); //오른쪽 끝에 뜨게

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,16 +61,20 @@ public class Reset_id_pw extends AppCompatActivity {
         // [START send_password_reset]
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final String emailAddress = signed_email.getText().toString();
-
-        auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Reset_id_pw.this, "가입된 메일을 확인해주세요.", Toast.LENGTH_SHORT).show();
+        if(emailAddress.getBytes().length<=0){
+            Toast.makeText(this, "메일을 입력해주세요", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            auth.sendPasswordResetEmail(emailAddress)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Reset_id_pw.this, "가입된 메일을 확인해주세요.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
         // [END send_password_reset]
     }
     private void getData(){
@@ -83,7 +88,7 @@ public class Reset_id_pw extends AppCompatActivity {
                 for ( DataSnapshot snapshot : dataSnapshot.getChildren() ){
                     AppLoginData appLoginData = snapshot.getValue(AppLoginData.class);
                     if (appLoginData.getName().equals(username) && appLoginData.getPhone().equals(phonenumber) ) {
-                        if( username == null | phonenumber == null){
+                        if( username.getBytes().length <= 0 || phonenumber.getBytes().length <= 0){
                             Toast.makeText(Reset_id_pw.this, "정보를 입력해주세요", Toast.LENGTH_SHORT).show();
                         }
                         else {

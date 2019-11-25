@@ -31,14 +31,19 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.target_club_in_donga.Package_LogIn.AppLoginData;
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.club_foundation_join.JoinData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -51,22 +56,24 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-//import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
 
 public class Board_Write extends AppCompatActivity {
     ImageButton board_img_upload_btn,x_btn;
     Button upload_btn;
     EditText title, contents;
-    private static String clubName = "TCID";
     private RecyclerView recyclerView;
     private Recy_Adapter adapter;
     private ArrayList<Uri> uris = new ArrayList<>(); // 이미지 uri 리스트
     private ArrayList<String> IMAGEs = new ArrayList<>(); // boardmodel 이미지랑 uri 이미지 합치기
-    private ArrayList<String> imageNames = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     RecyclerViewDecoration recyclerViewDecoration = new RecyclerViewDecoration(30);
     private FirebaseStorage storage;
+    private FirebaseDatabase database;
     private FirebaseAuth auth;
+    private String uid;
     BoardModel boardModel = new BoardModel();
     int edt_key = 0;
     String updatekey;
@@ -91,8 +98,9 @@ public class Board_Write extends AppCompatActivity {
         contents = findViewById(R.id.content_write_edt);
 
         storage = FirebaseStorage.getInstance();
+        database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
-
+        uid = auth.getCurrentUser().getUid();
         adapter = new Recy_Adapter(clicklistner);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(recyclerViewDecoration);
@@ -118,14 +126,21 @@ public class Board_Write extends AppCompatActivity {
         upload_btn.setOnClickListener(new View.OnClickListener() { //완료
             @Override
             public void onClick(View v) {
-                if(title.getText().toString() == null){
+                String titles = title.getText().toString();
+                titles = titles.trim();
+                String content = contents.getText().toString();
+                content = content.trim();
+                if(titles.getBytes().length<=0){
                     Toast.makeText(Board_Write.this, "제목을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
-                else if(contents.getText().toString() == null){
+                else if(content.getBytes().length<=0){
                     Toast.makeText(Board_Write.this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-
+                    boardModel.uid = auth.getCurrentUser().getUid();
+                    if (thisClubIsRealName){
+                        boardModel.name = userRealName;
+                    }
                     if (edt_key == 1) { // 수정
                         if (IMAGEs.size() != 0) { // 사진 있음 이슈 : 사진 추가없이 삭제만 할시, uris가 0이라 제목 본문이 바뀌어도 업데이트 되지않고 넘어가는 이슈.
                             boardEditInfo();
@@ -211,6 +226,7 @@ public class Board_Write extends AppCompatActivity {
                         boardModel.imgName.add(individualImage.getLastPathSegment() + '-' + times);
                         boardModel.idx += 1;
                         if (boardModel.idx == IMAGEs.size()) {
+                            boardModel.Thumbnail = boardModel.imglist.get(0);
                             Edit_StoreDatabase();
                             finish();
                         }
@@ -227,7 +243,6 @@ public class Board_Write extends AppCompatActivity {
         final String times = simpleDateFormat.format(date);
         CheckTypesTask task = new CheckTypesTask();
         task.execute();
-        CreatNuploadThumbnail(times, storageRef);
         for (int i = 0; i < IMAGEs.size(); i++) {
             final Uri individualImage = Uri.parse(IMAGEs.get(i));
             final StorageReference ImageName = storageRef.child("EveryClub").child(clubName).child("Board/" + individualImage.getLastPathSegment() + '-' + times);
@@ -241,37 +256,13 @@ public class Board_Write extends AppCompatActivity {
                     boardModel.imgName.add(individualImage.getLastPathSegment()+'-'+times);
                     boardModel.idx += 1;
                     if( boardModel.idx == uris.size() ){
+                        boardModel.Thumbnail = boardModel.imglist.get(0);
                         StoreDatabase();
-                        //boardModel.idx = 0;
                         finish();
                     }
                 }
             });
         }
-    }
-    private void CreatNuploadThumbnail(final String times, StorageReference storageRef){
-        Cursor c = getContentResolver().query(uris.get(0),null,null,null,null);
-        c.moveToNext();
-        String path = c.getString(c.getColumnIndex(MediaStore.MediaColumns.DATA)); // 절대경로 생성
-        Bitmap source = BitmapFactory.decodeFile(path);
-        c.close();
-        Bitmap inimage = ThumbnailUtils.extractThumbnail(source, 149, 86); // 비트맵 생성
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(); // 비트맵 스트링
-        inimage.compress(Bitmap.CompressFormat.JPEG,100, baos);
-        String thumbpath = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), inimage, "", null); // -> content://
-
-        final Uri thumburi = Uri.parse(thumbpath);
-        final StorageReference ThumbName = storageRef.child("EveryClub").child(clubName).child("Board/" + thumburi.getLastPathSegment() + '-' + times);
-        UploadTask upt = ThumbName.putFile(thumburi);
-        upt.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri link = taskSnapshot.getDownloadUrl();
-                String url = String.valueOf(link);
-                boardModel.Thumbnail = url;
-                boardModel.ThumbName = thumburi.getLastPathSegment()+'-'+times;
-            }
-        });
     }
     private void Edit_StoreDatabase(){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Board");

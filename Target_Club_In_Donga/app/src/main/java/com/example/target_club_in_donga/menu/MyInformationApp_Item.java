@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.menu;
 
 public class MyInformationApp_Item {
 

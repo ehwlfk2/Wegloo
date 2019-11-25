@@ -13,12 +13,12 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.MainActivity;
-import com.example.target_club_in_donga.NoticeActivity;
+import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -53,12 +53,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent intent;
             if(clickAction.equals("Notice")){
                 //Log.e("backCheck",backCheck);
-                intent = new Intent(this, NoticeActivity.class);
+                intent = new Intent(this, NoticeActivity_Main.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             else if(clickAction.equals("Vote")){
                 //Log.e("backCheck",backCheck);
                 intent = new Intent(this, VoteActivity_Main.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
+            else if(clickAction.equals("AcceptRequest")){
+                intent = new Intent(this, HomeActivityView.class);
+                intent.putExtra("isRecent",true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            }
+            else if(clickAction.equals("Attend")){
+                intent = new Intent(this, AttendActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             else{
@@ -81,7 +90,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "wegloo";
+            String channelId = "Wegloo";
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder =

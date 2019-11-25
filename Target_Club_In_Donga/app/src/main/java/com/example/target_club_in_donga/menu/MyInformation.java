@@ -1,4 +1,4 @@
-package com.example.target_club_in_donga;
+package com.example.target_club_in_donga.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
@@ -119,16 +122,40 @@ public class MyInformation extends AppCompatActivity {
         myinfo_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(!isRealName){ //닉네임
-                    if(imagePath != null){ //제대로 사진하나를 수정하기위해 눌럿을경우
-                        progressDialog.setMessage("수정중입니다...");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                        delete_item(infoDelete);
-                    }
-                    else{ //사진말고 다른것들만 바꿀경우
-                        textUpload(userUid);
-                    }
+                    firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            boolean nicCheck = false;
+                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                String tempName = ds.child("name").getValue(String.class);
+                                if(tempName.equals(myinfo_user_name.getText().toString()) && !ds.getKey().equals(userUid)){
+                                    nicCheck = true;
+                                    break;
+                                }
+                            }
+                            if(nicCheck){
+                                Toast.makeText(MyInformation.this, "이미 존재하는 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                if(imagePath != null){ //제대로 사진하나를 수정하기위해 눌럿을경우
+                                    progressDialog.setMessage("수정중입니다...");
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.show();
+                                    delete_item(infoDelete);
+                                }
+                                else{ //사진말고 다른것들만 바꿀경우
+                                    textUpload(userUid);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
                 else{ //실명
                     String resume = myinfo_user_resume.getText().toString();
@@ -218,20 +245,33 @@ public class MyInformation extends AppCompatActivity {
                     @SuppressWarnings("VisibleForTests")
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("realNameProPicDeleteName",file.getLastPathSegment());
+                    map.put("realNameProPicUrl",downloadUrl.toString());
                     firebaseDatabase.getReference().child("EveryClub").child(clubName)
+                            .child("User").child(userUid)
+                            .updateChildren(map);
+                    /*firebaseDatabase.getReference().child("EveryClub").child(clubName)
                             .child("User").child(userUid)
                             .child("realNameProPicDeleteName")
                             .setValue(file.getLastPathSegment());
                     firebaseDatabase.getReference().child("EveryClub").child(clubName)
                             .child("User").child(userUid)
                             .child("realNameProPicUrl")
-                            .setValue(downloadUrl.toString());
+                            .setValue(downloadUrl.toString());*/
                     textUpload(userUid);
                     progressDialog.dismiss();
                     finish();
                 }
             });
         }catch (NullPointerException e){
+            Map<String, Object> map = new HashMap<>();
+            map.put("realNameProPicDeleteName","None");
+            map.put("realNameProPicUrl","None");
+            firebaseDatabase.getReference().child("EveryClub").child(clubName)
+                    .child("User").child(userUid)
+                    .updateChildren(map);
+            /*
             firebaseDatabase.getReference().child("EveryClub").child(clubName)
                     .child("User").child(userUid)
                     .child("realNameProPicDeleteName")
@@ -239,7 +279,7 @@ public class MyInformation extends AppCompatActivity {
             firebaseDatabase.getReference().child("EveryClub").child(clubName)
                     .child("User").child(userUid)
                     .child("realNameProPicUrl")
-                    .setValue("None");
+                    .setValue("None");*/
             textUpload(userUid);
             progressDialog.dismiss();
             //firebaseDatabase.getReference().child("AppUser").child(userUid).setValue(myInformationApp_item);

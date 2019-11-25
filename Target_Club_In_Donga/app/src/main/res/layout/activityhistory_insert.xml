@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/activityhistory_insert_imageview"
-        android:src="@drawable/ic_launcher_foreground"/>
+        android:background="@color/color_WhiteGray"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -35,8 +35,8 @@
         android:src="@drawable/ic_done"
         android:id="@+id/activityhistory_insert_button_insert"
         fab:fab_colorNormal="@color/fbutton_color_turquoise"
-        fab:fab_colorPressed="@color/fbutton_color_green_sea"
-        fab:fab_colorRipple="@color/fbutton_color_emerald"
+        fab:fab_colorPressed="@color/fbutton_color_emerald"
+        fab:fab_colorRipple="@color/fbutton_color_green_sea"
         fab:fab_type="mini"
         />
 

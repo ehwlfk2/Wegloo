@@ -24,8 +24,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.ClubSelectedFragment0.drawerLayoutApp;
@@ -37,11 +40,9 @@ public class HomeActivityView extends AppCompatActivity {
     public static MoviePagerAdapter viewAdapter;
     private ViewPager activity_home_viewPager;
     private AdView mAdView;
-    private boolean isRecent;
+    private boolean isRecent = false;
     private BackPressCloseHandler backPressCloseHandler;
     private ProgressDialog progressDialog;
-    private FirebaseDatabase firebaseDatabase;
-    private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +50,7 @@ public class HomeActivityView extends AppCompatActivity {
 //        mAdView = findViewById(R.id.activity_home_adView);
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        mAdView.loadAd(adRequest);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-
+        passPushTokenToServer();
 
 
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -176,5 +175,12 @@ public class HomeActivityView extends AppCompatActivity {
         else if(count == 2){
             activity_home_viewPager.setCurrentItem(1);
         }
+    }
+    public void passPushTokenToServer() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Map<String, Object> map = new HashMap<>();
+        map.put("pushToken", token);
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").child(uid).updateChildren(map);
     }
 }

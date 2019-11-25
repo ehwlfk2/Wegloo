@@ -10,6 +10,7 @@
 
     <TextView
         style="@style/Content_Classification_Text_Style"
+        android:background="@drawable/button_background"
         android:text="인증번호를 입력해주세요" />
 
     <EditText
@@ -26,6 +27,7 @@
 
     <Button
         android:id="@+id/activity_attend_check_button_confirm"
+        android:background="@drawable/button_background"
         style="@style/Content_Classification_Text_Style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +36,7 @@
 
         <Button
             android:id="@+id/activity_attend_check_button_cancel"
+            android:background="@drawable/button_background"
             style="@style/Content_Classification_Text_Style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

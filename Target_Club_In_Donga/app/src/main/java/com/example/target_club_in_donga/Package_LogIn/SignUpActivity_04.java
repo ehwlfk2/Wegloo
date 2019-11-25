@@ -4,12 +4,8 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -23,29 +19,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
-import com.example.target_club_in_donga.Fragments.HomeActivity_Fragment;
-import com.example.target_club_in_donga.History.History_Item;
-import com.example.target_club_in_donga.HomeActivity;
 import com.example.target_club_in_donga.R;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
-
-import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class SignUpActivity_04 extends AppCompatActivity implements View.OnClickListener {
     private static final int GALLERY_CODE = 10;
@@ -83,28 +68,6 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
         activity_signup_04_nextBtn.setOnClickListener(this);
         activity_signup_04_cancelBtn.setOnClickListener(this);
         activity_signup_04_realNameProfile.setOnClickListener(this);
-        /*final Button btn_tcid = findViewById(R.id.btn_tcid);
-        btn_tcid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clubName = btn_tcid.getText().toString();
-                dbdb();
-                Intent intent = new Intent(SignUpActivity_04.this , HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        final Button btn_ka = findViewById(R.id.btn_ka);
-        btn_ka.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clubName = btn_ka.getText().toString();
-                dbdb();
-                Intent intent = new Intent(SignUpActivity_04.this , HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });*/
 
     }   // onCreate
 

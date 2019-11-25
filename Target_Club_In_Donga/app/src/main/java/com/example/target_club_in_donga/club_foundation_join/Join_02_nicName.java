@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,9 +26,11 @@ import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -193,7 +196,7 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
                     myClubSeletedItem.setSignUpclubProfile(clubDownloadUrl);
                     myClubSeletedItem.setSignUpclubUid(clubUid);
                     myClubSeletedItem.setSignUpclubName(thisClubName);
-                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
+                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
 
                     progressDialog.dismiss();
                     Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
@@ -208,51 +211,80 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
          */
         else{
             Intent intent2 = getIntent();
-            String clubUid = intent2.getExtras().getString("clubUid");
-            String resume = intent2.getExtras().getString("resume");
-            boolean isFreeSign = intent2.getExtras().getBoolean("isFreeSign");
-            String thisClubName = intent2.getExtras().getString("thisClubName");
-            String clubProfileUrl = intent2.getExtras().getString("clubProfileUrl");
+            final String clubUid = intent2.getExtras().getString("clubUid");
+            final String resume = intent2.getExtras().getString("resume");
+            final boolean isFreeSign = intent2.getExtras().getBoolean("isFreeSign");
+            final String thisClubName = intent2.getExtras().getString("thisClubName");
+            final String clubProfileUrl = intent2.getExtras().getString("clubProfileUrl");
+            final String nic = join_02_nicName_edittext_nicname.getText().toString();
+            firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    boolean nicCheck = false;
+                    for(DataSnapshot ds : dataSnapshot.getChildren()){
+                        String tempName = ds.child("name").getValue(String.class);
+                        if(tempName.equals(nic)){
+                            nicCheck = true;
+                            break;
+                        }
+                    }
+                    if(nicCheck){
+                        Toast.makeText(Join_02_nicName.this, "이미 존재하는 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                    else{
 
-            joinData.setName(join_02_nicName_edittext_nicname.getText().toString());
-            joinData.setAdmin(3);
-            joinData.setPushAlarmOnOff(true);
-            joinData.setRealNameProPicUrl(downloadUrl);
-            joinData.setRealNameProPicDeleteName(filePath);
-            joinData.setApplicationDate(-1*System.currentTimeMillis());
-            joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
-            joinData.setResume(resume);
-            if(isFreeSign){
-                firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(userUid).setValue(joinData);
-                firebaseDatabase.getReference().child("AppUser").child(userUid).child("recentClub").setValue(clubUid);
-                MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
-                myClubSeletedItem.setApprovalCompleted(true);
-                myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
-                myClubSeletedItem.setSignUpclubUid(clubUid);
-                myClubSeletedItem.setSignUpclubName(thisClubName);
-                firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
+                        joinData.setName(nic);
+                        joinData.setAdmin(3);
+                        joinData.setPushAlarmOnOff(true);
+                        joinData.setRealNameProPicUrl(downloadUrl);
+                        joinData.setRealNameProPicDeleteName(filePath);
+                        joinData.setApplicationDate(-1*System.currentTimeMillis());
+                        joinData.setPushToken(FirebaseInstanceId.getInstance().getToken());
+                        joinData.setResume(resume);
+                        if(isFreeSign){
+                            firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("User").child(userUid).setValue(joinData);
+                            firebaseDatabase.getReference().child("AppUser").child(userUid).child("recentClub").setValue(clubUid);
+                            MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                            myClubSeletedItem.setApprovalCompleted(true);
+                            myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
+                            myClubSeletedItem.setSignUpclubUid(clubUid);
+                            myClubSeletedItem.setSignUpclubName(thisClubName);
+                            myClubSeletedItem.setSignUpclubRealName(false);
+                            firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
 
-                clubName = clubUid;
-                progressDialog.dismiss();
-                Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
-                intent.putExtra("isRecent",true);
-                startActivity(intent);
-                finish();
-            }
-            else{
-                firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("WantToJoinUser").child(userUid).setValue(joinData);
-                MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
-                myClubSeletedItem.setApprovalCompleted(false);
-                myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
-                myClubSeletedItem.setSignUpclubUid(clubUid);
-                myClubSeletedItem.setSignUpclubName(thisClubName);
-                firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").push().setValue(myClubSeletedItem);
-                progressDialog.dismiss();
-                Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
-                intent.putExtra("isRecent",false);
-                startActivity(intent);
-                finish();
-            }
+                            clubName = clubUid;
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
+                            intent.putExtra("isRecent",true);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else{
+                            firebaseDatabase.getReference().child("EveryClub").child(clubUid).child("WantToJoinUser").child(userUid).setValue(joinData);
+                            MyClubSeletedItem myClubSeletedItem = new MyClubSeletedItem();
+                            myClubSeletedItem.setApprovalCompleted(false);
+                            myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
+                            myClubSeletedItem.setSignUpclubUid(clubUid);
+                            myClubSeletedItem.setSignUpclubName(thisClubName);
+                            myClubSeletedItem.setSignUpclubRealName(false);
+                            firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
+                            intent.putExtra("isRecent",false);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
         }
     }
 }

@@ -18,7 +18,7 @@ import com.example.target_club_in_donga.Accountbook.AccountBookActivity_Main;
 import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
-import com.example.target_club_in_donga.NoticeActivity;
+import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.google.firebase.database.DataSnapshot;
@@ -56,7 +56,7 @@ public class TimeLineFragment0 extends Fragment {
         adapter = new TimeLineFragment0_RecyclerviewAdapter(getContext(), list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
         recyclerView.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
-        database.getReference().child("EveryClub").child(clubName).child("TimeLine").orderByChild("nowTimeStamp").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("TimeLine").orderByChild("nowTimeStamp").limitToFirst(100).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 list.clear();
@@ -112,7 +112,7 @@ public class TimeLineFragment0 extends Fragment {
                 @Override
                 public void onClick(View view) {
                     if(data.getType().equals("Notice")){
-                        Intent intent  = new Intent(context, NoticeActivity.class);
+                        Intent intent  = new Intent(context, NoticeActivity_Main.class);
                         startActivity(intent);
                         //finish();
                     }
