@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.target_club_in_donga.Attend.AttendActivity;
 import com.example.target_club_in_donga.Attend.AttendActivity_Admin_Home;
+import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
@@ -48,6 +49,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import java.text.SimpleDateFormat;
@@ -218,9 +221,9 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                     notice_item.setTimestamp(-1*(long)notice_item.getTimestamp());
                     SpannableStringBuilder ssb = new SpannableStringBuilder(notice_item.getTitle());
                     try{
-                    for(int i=0;i<notice_item.notice_item_colors.size();i++){
-                        int start = notice_item.notice_item_colors.get(i).getStart();
-                        int end = notice_item.notice_item_colors.get(i).getEnd();
+                        for(int i=0;i<notice_item.notice_item_colors.size();i++){
+                            int start = notice_item.notice_item_colors.get(i).getStart();
+                            int end = notice_item.notice_item_colors.get(i).getEnd();
 
                             if(notice_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
                                 ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
@@ -322,6 +325,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.home_frame_board: //홈화면 자유게시판
+                Intent board_intent = new Intent(getActivity(), Board_Main.class);
+                startActivity(board_intent);
                 break;
             case R.id.home_layout_notice: //홈화면 공지사항
                 Intent intent1 = new Intent(getActivity(), NoticeActivity_Main.class);
@@ -334,8 +339,13 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 break;
             //여기부터 메뉴
             case R.id.logout_btn: //메뉴 로그아웃
-                FirebaseAuth.getInstance().signOut();
-                LoginManager.getInstance().logOut();
+                UserManagement.requestLogout(new LogoutResponseCallback() {
+                    @Override
+                    public void onCompleteLogout() {
+                        FirebaseAuth.getInstance().signOut();
+                        LoginManager.getInstance().logOut();
+                    }
+                });
                 Intent intent3 = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent3);
                 getActivity().finish();
