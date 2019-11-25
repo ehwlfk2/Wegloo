@@ -34,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
@@ -243,20 +245,33 @@ public class MyInformation extends AppCompatActivity {
                     @SuppressWarnings("VisibleForTests")
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("realNameProPicDeleteName",file.getLastPathSegment());
+                    map.put("realNameProPicUrl",downloadUrl.toString());
                     firebaseDatabase.getReference().child("EveryClub").child(clubName)
+                            .child("User").child(userUid)
+                            .updateChildren(map);
+                    /*firebaseDatabase.getReference().child("EveryClub").child(clubName)
                             .child("User").child(userUid)
                             .child("realNameProPicDeleteName")
                             .setValue(file.getLastPathSegment());
                     firebaseDatabase.getReference().child("EveryClub").child(clubName)
                             .child("User").child(userUid)
                             .child("realNameProPicUrl")
-                            .setValue(downloadUrl.toString());
+                            .setValue(downloadUrl.toString());*/
                     textUpload(userUid);
                     progressDialog.dismiss();
                     finish();
                 }
             });
         }catch (NullPointerException e){
+            Map<String, Object> map = new HashMap<>();
+            map.put("realNameProPicDeleteName","None");
+            map.put("realNameProPicUrl","None");
+            firebaseDatabase.getReference().child("EveryClub").child(clubName)
+                    .child("User").child(userUid)
+                    .updateChildren(map);
+            /*
             firebaseDatabase.getReference().child("EveryClub").child(clubName)
                     .child("User").child(userUid)
                     .child("realNameProPicDeleteName")
@@ -264,7 +279,7 @@ public class MyInformation extends AppCompatActivity {
             firebaseDatabase.getReference().child("EveryClub").child(clubName)
                     .child("User").child(userUid)
                     .child("realNameProPicUrl")
-                    .setValue("None");
+                    .setValue("None");*/
             textUpload(userUid);
             progressDialog.dismiss();
             //firebaseDatabase.getReference().child("AppUser").child(userUid).setValue(myInformationApp_item);
