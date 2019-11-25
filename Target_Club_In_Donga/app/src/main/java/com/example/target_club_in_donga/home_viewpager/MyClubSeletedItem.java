@@ -6,6 +6,7 @@ public class MyClubSeletedItem {
     private String signUpclubName;
     private String signUpclubUid;
     private String signUpclubProfile;
+    private boolean signUpclubRealName;
     private boolean approvalCompleted;
     //public Bitmap signUpclubProfileBitmap;
 
@@ -39,6 +40,14 @@ public class MyClubSeletedItem {
 
     public void setApprovalCompleted(boolean approvalCompleted) {
         this.approvalCompleted = approvalCompleted;
+    }
+
+    public boolean isSignUpclubRealName() {
+        return signUpclubRealName;
+    }
+
+    public void setSignUpclubRealName(boolean signUpclubRealName) {
+        this.signUpclubRealName = signUpclubRealName;
     }
 
 }

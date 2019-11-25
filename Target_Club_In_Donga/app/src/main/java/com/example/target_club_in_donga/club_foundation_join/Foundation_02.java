@@ -258,6 +258,7 @@ public class Foundation_02 extends AppCompatActivity implements View.OnClickList
                     myClubSeletedItem.setSignUpclubUid(clubUid);
                     myClubSeletedItem.setSignUpclubName(clubData.getThisClubName());
                     myClubSeletedItem.setSignUpclubProfile(clubData.getClubImageUrl());
+                    myClubSeletedItem.setSignUpclubRealName(true);
                     firebaseDatabase.getReference().child("AppUser").child(myUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
 
                     firebaseDatabase.getReference().child("AppUser").child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {

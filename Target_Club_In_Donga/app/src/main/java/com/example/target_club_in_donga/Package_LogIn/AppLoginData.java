@@ -1,12 +1,5 @@
 package com.example.target_club_in_donga.Package_LogIn;
 
-import com.example.target_club_in_donga.home_viewpager.MyClubSeletedItem;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class AppLoginData {
     private String name;
     private String phone;

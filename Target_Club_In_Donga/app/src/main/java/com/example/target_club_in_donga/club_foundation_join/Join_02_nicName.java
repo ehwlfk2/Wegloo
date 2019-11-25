@@ -250,6 +250,7 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
                             myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
                             myClubSeletedItem.setSignUpclubUid(clubUid);
                             myClubSeletedItem.setSignUpclubName(thisClubName);
+                            myClubSeletedItem.setSignUpclubRealName(false);
                             firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
 
                             clubName = clubUid;
@@ -266,6 +267,7 @@ public class Join_02_nicName extends AppCompatActivity implements View.OnClickLi
                             myClubSeletedItem.setSignUpclubProfile(clubProfileUrl);
                             myClubSeletedItem.setSignUpclubUid(clubUid);
                             myClubSeletedItem.setSignUpclubName(thisClubName);
+                            myClubSeletedItem.setSignUpclubRealName(false);
                             firebaseDatabase.getReference().child("AppUser").child(userUid).child("signUpClub").child(clubUid).setValue(myClubSeletedItem);
                             progressDialog.dismiss();
                             Intent intent = new Intent(Join_02_nicName.this, HomeActivityView.class);
