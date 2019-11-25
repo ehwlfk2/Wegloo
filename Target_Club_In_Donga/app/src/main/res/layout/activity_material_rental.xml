@@ -7,7 +7,7 @@
 
     <TextView
         style="@style/Top_Content_Text_Style"
-        android:text="물품대여하기"/>
+        android:text="물품 대여하기"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                 android:background="@drawable/logoin_button_ver0"
                 android:textColor="@color/color_White"
                 style="@style/Content_Classification_Text_Style"
-                android:text="달력"
+                android:text="날짜"
                 android:layout_weight="1"/>
 
             <Button

@@ -11,7 +11,7 @@
         android:textColor="@color/color_White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="내 출석정보"/>
+        android:text="출석 정보"/>
 
     <LinearLayout
         android:layout_width="match_parent"

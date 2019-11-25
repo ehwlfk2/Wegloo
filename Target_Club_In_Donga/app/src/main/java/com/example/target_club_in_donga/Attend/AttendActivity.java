@@ -129,7 +129,7 @@ public class AttendActivity extends AppCompatActivity {
                     for (final DataSnapshot snapshot2 : dataSnapshot.getChildren()) {
                         if (snapshot2.child("Attend_Certification_Number").getValue() != null) {
                             flag3 = 1;
-                            activity_attend_home_textview.setText("출석중입니다");
+                            activity_attend_home_textview.setText("출석 중입니다");
                             activity_attend_home_linearlayout_user.setVisibility(View.VISIBLE);
                             activity_attend_home_admin_button_insert.setVisibility(View.GONE);
 

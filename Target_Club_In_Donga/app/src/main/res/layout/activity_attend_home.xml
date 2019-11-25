@@ -33,7 +33,7 @@
                 style="@style/Top_Content_Text_Style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="출석중이 아닙니다" />
+                android:text="출석 중이 아닙니다" />
 
             <LinearLayout
                 android:id="@+id/activity_attend_home_linearlayout_user"
@@ -116,7 +116,7 @@
                 android:id="@+id/activity_attend_home_button_insert"
                 style="@style/Content_Classification_Text_Style"
                 android:background="@drawable/logoin_button_ver0"
-                android:text="출석추가"
+                android:text="출석 추가"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 tools:layout_editor_absoluteX="0dp"

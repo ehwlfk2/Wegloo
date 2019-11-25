@@ -122,7 +122,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         if (differFlag == 0) {
             activity_material_rental_home_button_insert.setVisibility(View.GONE);
         } else {
-            activity_material_rental_home_textview.setText("물품관리");
+            activity_material_rental_home_textview.setText("물품 관리");
         }
 
         this.activity_material_rental_admin_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_rental_admin_item_imageview_recyclerview_image);

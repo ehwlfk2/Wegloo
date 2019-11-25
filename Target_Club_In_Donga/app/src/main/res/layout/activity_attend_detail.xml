@@ -28,7 +28,7 @@
                 android:id="@+id/activity_attend_detail_slidingdrawer_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="출결정보"
+                android:text="출결 정보"
                 android:textColor="#FFFFFF"
                 android:paddingTop="10dp"/>
 
@@ -51,13 +51,13 @@
                     android:id="@+id/activity_attend_detail_textview_attend"
                     style="@style/Top_Content_Text_Style"
                     android:layout_weight="1"
-                    android:text="출석현황"/>
+                    android:text="출석 현황"/>
 
                 <Button
                     android:id="@+id/activity_attend_detail_button_attend_state"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="출결상태"
+                    android:text="출결 상태"
                     android:layout_weight="2" />
 
             </LinearLayout>

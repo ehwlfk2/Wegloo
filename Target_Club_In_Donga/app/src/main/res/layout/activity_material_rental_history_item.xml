@@ -14,17 +14,14 @@
 
         <TextView
             android:id="@+id/activity_material_rental_history_item_date"
-            style="@style/Content_Classification_Text_Style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="false"
-            android:text="날짜"
-            android:textColor="@color/colorWhite" />
+            android:text="날짜" />
 
         <TextView
             android:id="@+id/activity_material_rental_history_item_name"
-            style="@style/Content_Text_Style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

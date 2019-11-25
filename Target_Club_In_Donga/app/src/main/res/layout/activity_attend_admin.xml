@@ -46,7 +46,7 @@
         style="@style/Content_Classification_Text_Style"
         android:background="@drawable/logoin_button_ver0"
         android:textColor="@color/color_White"
-        android:text="지각시간" />
+        android:text="지각시간 (+ 출석시간)" />
 
     <RadioGroup
         android:id="@+id/activity_attend_admin_radiogroup_tardy"
@@ -83,6 +83,6 @@
         style="@style/Content_Classification_Text_Style"
         android:background="@drawable/logoin_button_ver0"
         android:textColor="@color/color_White"
-        android:text="출석시작하기" />
+        android:text="출석 시작" />
 
 </LinearLayout>

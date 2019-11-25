@@ -39,12 +39,10 @@
         <TextView
             android:id="@+id/activity_material_rental_home_textview"
             style="@style/Top_Content_Text_Style"
-            android:text="물품대여" />
+            android:text="물품 대여" />
 
         <View
             style="@style/Line_Style" />
-
-        // 물품관리
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -56,7 +54,7 @@
                 android:background="@drawable/logoin_button_ver0"
                 android:textColor="@color/color_White"
                 style="@style/Content_Classification_Text_Style"
-                android:text="새상품 추가"
+                android:text="물품 추가"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView

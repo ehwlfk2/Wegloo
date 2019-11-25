@@ -22,7 +22,7 @@
 
         <TextView
             style="@style/Top_Content_Text_Style"
-            android:text="출결변경" />
+            android:text="출결 변경" />
 
         <View
             style="@style/Line_Style" />
