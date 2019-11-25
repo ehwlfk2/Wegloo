@@ -177,8 +177,7 @@
                             android:id="@+id/fragment_home_btn_1"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/notification_icon_black" />
+                            android:layout_centerHorizontal="true" />
 
                         <TextView
                             android:layout_width="wrap_content"

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:id="@+id/menu_drawer_ver"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    class="com.example.target_club_in_donga.home_viewpager.HomeActivityView">
 
     <!--START 동아리명, 로그아웃-->
     <LinearLayout

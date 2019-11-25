@@ -76,6 +76,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     public static boolean thisClubIsFreeSign;
     public static String thisClubName;
     public static String userRealName;
+    public static String userNicName;
     public static int userAdmin;
     private TextView home_notice_title1, home_notice_title2, home_notice_writer1, home_notice_writer2,home_notice_date1, home_notice_date2 ;
 
@@ -168,12 +169,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 //Log.e("thisClubIsRealName",thisClubIsRealName+"");
 
                 String userUid = firebaseAuth.getCurrentUser().getUid();
-                if(thisClubIsRealName){
-                    realNameDB(userUid);
-                }
-                else{
-                    notRealNameDB(userUid);
-                }
+                menuDB(userUid);
             }
 
             @Override
@@ -209,16 +205,20 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Notice").orderByChild("timestamp").limitToFirst(2).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean flag = true;
+                boolean noticeFlag = false;
+                home_notice_title1.setText("");
+                home_notice_date1.setText("");
+                home_notice_title2.setText("");
+                home_notice_date2.setText("");
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Notice_Item notice_item = snapshot.getValue(Notice_Item.class);
+                    final Notice_Item notice_item = snapshot.getValue(Notice_Item.class);
                     notice_item.setTimestamp(-1*(long)notice_item.getTimestamp());
-
                     SpannableStringBuilder ssb = new SpannableStringBuilder(notice_item.getTitle());
+                    try{
                     for(int i=0;i<notice_item.notice_item_colors.size();i++){
                         int start = notice_item.notice_item_colors.get(i).getStart();
                         int end = notice_item.notice_item_colors.get(i).getEnd();
-                        try{
+
                             if(notice_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
                                 ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
                             }
@@ -242,23 +242,29 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                                 ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
                             }
                         }
-                        catch (IllegalStateException e){ //무슨예외??
-
-                        }
+                    }
+                    catch (IllegalStateException e){ //무슨예외??
+                        ssb.clear();
+                        ssb = new SpannableStringBuilder(notice_item.getTitle());
+                    }
+                    catch (IndexOutOfBoundsException e){
+                        ssb.clear();
+                        ssb = new SpannableStringBuilder(notice_item.getTitle());
                     }
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                     String tt = timeStampToString(notice_item.getTimestamp(),simpleDateFormat);
-                    if(flag){
+                    if(!noticeFlag){
                         home_notice_title1.setText(ssb);
                         home_notice_writer1.setText(notice_item.getWriter());
                         home_notice_date1.setText(tt);
-                        flag = false;
+                        noticeFlag = true;
                     }
                     else{
                         home_notice_title2.setText(ssb);
                         home_notice_writer2.setText(notice_item.getWriter());
                         home_notice_date2.setText(tt);
+                        //noticeFlag = false;
                     }
                 }
             }
@@ -420,44 +426,12 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         return simpleDateFormat.format(date);
     }
 
-    private void realNameDB(String userUid){
-        firebaseDatabase.getReference().child("AppUser").child(userUid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                profile_username.setText(appLoginData.getName());
-                if(getActivity() != null){
-                    if(!appLoginData.getRealNameProPicUrl().equals("None")){
-                        Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    private void menuDB(String userUid){
         firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").child(userUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 JoinData joinData = dataSnapshot.getValue(JoinData.class);
-                //Log.e("admin",admin);
-                adminStr(joinData);
-                //Log.e("myResume",myResume);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    private void notRealNameDB(String userUid){
-        firebaseDatabase.getReference().child("EveryClub").child(clubName).child("User").child(userUid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                JoinData joinData = dataSnapshot.getValue(JoinData.class);
+                userNicName = joinData.getName();
                 profile_username.setText(joinData.getName());
                 if(getActivity() != null){
                     if(!joinData.getRealNameProPicUrl().equals("None")){

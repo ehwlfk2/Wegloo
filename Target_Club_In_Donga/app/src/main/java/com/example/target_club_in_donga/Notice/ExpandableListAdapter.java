@@ -27,6 +27,7 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.target_club_in_donga.Notice.NoticeActivity_Main.noticeData;
 import static com.example.target_club_in_donga.Notice.NoticeActivity_Main.noticeDbKey;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userAdmin;
@@ -127,7 +128,7 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                             //Log.e("position",position+"");
                                             intent.putExtra("updateKey",noticeDbKey.get(position));
                                             activity.startActivity(intent);
-
+                                            activity.finish();
                                             return true;
                                         case R.id.notice_delete:
                                             delete_item(position);
@@ -208,8 +209,12 @@ public class ExpandableListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             @Override
             public void onSuccess(Void aVoid) {
                 //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
-                Toast.makeText(activity, "삭제성공", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(activity, "공지사항이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity,NoticeActivity_Main.class);
+                activity.finish();
+                activity.startActivity(intent);
+                //noticeData.clear();
+                //noticeDbKey.clear();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

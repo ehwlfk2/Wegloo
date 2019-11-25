@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.club_foundation_join;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
@@ -18,7 +19,6 @@ public class ClubFoundationJoin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_foundation_join);
-
         backBtn = findViewById(R.id.joinorcreate_00_button_back);
         clubFoundation_nextBtn = findViewById(R.id.joinorcreate_00_layout_create);
         clubJoin_nextBtn = findViewById(R.id.joinorcreate_00_layout_join);

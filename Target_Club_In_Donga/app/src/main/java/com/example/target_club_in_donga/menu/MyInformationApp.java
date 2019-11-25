@@ -30,6 +30,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyInformationApp extends AppCompatActivity {
     private ImageButton myinfo_back_app, myinfo_confirm_app;
@@ -160,16 +162,22 @@ public class MyInformationApp extends AppCompatActivity {
                     @SuppressWarnings("VisibleForTests")
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("realNameProPicDeleteName",file.getLastPathSegment());
+                    map.put("realNameProPicUrl",downloadUrl.toString());
+                    firebaseDatabase.getReference().child("AppUser").child(userUid).updateChildren(map);
                     //firebaseDatabase.getReference().child("AppUser").child(userUid).setValue(myInformationApp_item);
-                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicDeleteName").setValue(file.getLastPathSegment());
-                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicUrl").setValue(downloadUrl.toString());
+//                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicDeleteName").setValue(file.getLastPathSegment());
+//                    firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicUrl").setValue(downloadUrl.toString());
                     progressDialog.dismiss();
                     finish();
                 }
             });
         }catch (NullPointerException e){
-            firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicDeleteName").setValue("None");
-            firebaseDatabase.getReference().child("AppUser").child(userUid).child("realNameProPicUrl").setValue("None");
+            Map<String, Object> map = new HashMap<>();
+            map.put("realNameProPicDeleteName","None");
+            map.put("realNameProPicUrl","None");
+            firebaseDatabase.getReference().child("AppUser").child(userUid).updateChildren(map);
             progressDialog.dismiss();
             //firebaseDatabase.getReference().child("AppUser").child(userUid).setValue(myInformationApp_item);
             finish();

@@ -386,7 +386,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
 
             holder.accountPrice.setText(data.getPrice()+" 원");
             if(data.getImageUrl().equals("None")){
-                holder.accountImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+                //holder.accountImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
                 //holder.accountImage.setVisibility(View.GONE);
             }
             else{
@@ -537,7 +537,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         final ImageView imageView = view2.findViewById(R.id.account_main_image_dialog_imageview);
 
         if(imageUrl.equals("None")){
-            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
+            //imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_foreground));
             exportBtn.setVisibility(View.INVISIBLE);
         }
         else{
