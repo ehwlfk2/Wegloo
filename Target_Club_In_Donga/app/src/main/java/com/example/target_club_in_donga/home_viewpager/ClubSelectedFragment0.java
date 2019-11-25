@@ -35,13 +35,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeActivityView.viewAdapter;
-import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
 
 public class ClubSelectedFragment0 extends Fragment implements View.OnClickListener {
 
@@ -113,14 +115,21 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                //임시 트라이
                 profile_username_App.setText(appLoginData.getName());
-                userRealName = appLoginData.getName();
                 profile_phoneNumber_App.setText(appLoginData.getPhone());
                 if (getActivity() != null) {
                     Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail_App);
                 }
+                /*
+                try{
 
+
+                }
+                catch (NullPointerException e){
+                    FirebaseAuth.getInstance().signOut();
+                    LoginManager.getInstance().logOut();
+                    getActivity().finish();
+                }*/
 
             }
 
