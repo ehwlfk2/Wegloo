@@ -73,7 +73,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         type = intent.getExtras().getString("type");
         if(type.equals("update")){
             dbKey = intent.getExtras().getString("updateKey");
@@ -87,35 +87,41 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                     //updateSwitch = update_item.isSwitchOnOff();
 
                     SpannableStringBuilder ssb = new SpannableStringBuilder(update_item.getTitle());
-                    for(int i=0;i<update_item.notice_item_colors.size();i++){
-                        color_item.add(update_item.notice_item_colors.get(i));
+                    try{
+                        for(int i=0;i<update_item.notice_item_colors.size();i++){
+                            color_item.add(update_item.notice_item_colors.get(i));
 
-                        int start = update_item.notice_item_colors.get(i).getStart();
-                        int end = update_item.notice_item_colors.get(i).getEnd();
-                        if(update_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
-                            ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
+                            int start = update_item.notice_item_colors.get(i).getStart();
+                            int end = update_item.notice_item_colors.get(i).getEnd();
+                            if(update_item.notice_item_colors.get(i).getStyle().equals("BOLD")){
+                                ssb.setSpan(new StyleSpan(Typeface.BOLD), start, end, 1);
+                            }
+                            else if(update_item.notice_item_colors.get(i).getStyle().equals("ITALIC")){
+                                ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
+                            }
+                            else if(update_item.notice_item_colors.get(i).getStyle().equals("UnderLine")){
+                                ssb.setSpan(new UnderlineSpan(), start, end, 1);
+                            }
+                            else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack){
+                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
+                            }
+                            else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin){
+                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
+                            }
+                            else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole){
+                                ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
+                            }
+                            else{
+                                int color = Integer.parseInt(update_item.notice_item_colors.get(i).getStyle());
+                                ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
+                            }
                         }
-                        else if(update_item.notice_item_colors.get(i).getStyle().equals("ITALIC")){
-                            ssb.setSpan(new StyleSpan(Typeface.ITALIC), start, end, 1);
-                        }
-                        else if(update_item.notice_item_colors.get(i).getStyle().equals("UnderLine")){
-                            ssb.setSpan(new UnderlineSpan(), start, end, 1);
-                        }
-                        else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.colorBlack){
-                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), start, end, 1);
-                        }
-                        else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_alizarin){
-                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_alizarin)), start, end, 1);
-                        }
-                        else if(Integer.parseInt(update_item.notice_item_colors.get(i).getStyle()) == R.color.fbutton_color_belize_hole){
-                            ssb.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.fbutton_color_belize_hole)), start, end, 1);
-                        }
-                        else{
-                            int color = Integer.parseInt(update_item.notice_item_colors.get(i).getStyle());
-                            ssb.setSpan(new ForegroundColorSpan(color), start, end, 1);
-                        }
+                        activity_notice_insert_edittext_title.setText(ssb);
                     }
-                    activity_notice_insert_edittext_title.setText(ssb);
+                    catch (IndexOutOfBoundsException e){
+                        ssb.clear();
+                        activity_notice_insert_edittext_title.setText(update_item.getTitle());
+                    }
                 }
 
                 @Override
@@ -159,36 +165,26 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                 }
                 else{
                     if(type.equals("insert")){ //추가
+
                         database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String userName = dataSnapshot.getValue(String.class);
-
-                                //Notice_Item notice_item = new Notice_Item(uidName,title,content,activity_notice_insert_switch.isChecked(), System.currentTimeMillis());
-                                //
+                                String uidName = dataSnapshot.getValue(String.class);
                                 Notice_Item notice_item = new Notice_Item();
-                                if(thisClubIsRealName){
-                                    notice_item.setWriter(userRealName);
-                                }
-                                else{
-                                    notice_item.setWriter(userName);
-                                }
-
+                                notice_item.setWriter(uidName);
                                 notice_item.setContent(content);
                                 notice_item.setSwitchOnOff(activity_notice_insert_switch.isChecked());
                                 notice_item.setTitle(title);
                                 notice_item.notice_item_colors = color_item;
-                                //notice_item.style = (Object[]) styleSpans2;
-                                //notice_item.stars.put("title",title);
 
                                 notice_item.setTimestamp(-1*System.currentTimeMillis());
                                 database.getReference().child("EveryClub").child(clubName).child("Notice").push().setValue(notice_item);
 
                                 if(activity_notice_insert_switch.isChecked()){
                                     SendPushMessages send = new SendPushMessages();
-                                    send.multipleSendMessage("공지사항이 추가되었습니다",title, "Notice");
+                                    send.multipleSendMessage("공지사항이 추가되었습니다.",title, "Notice");
                                 }
-                                Toast.makeText(NoticeActivity_Insert.this, "공지 올렷스무디", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NoticeActivity_Insert.this, "공지사항이 추가되었습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
 
@@ -199,11 +195,6 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         });
                     }
                     else{
-                        if(activity_notice_insert_switch.isChecked()){
-                            SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage("공지사항이 수정되었습니다",title, "Notice");
-                        }
-
                         Notice_Item notice_item = new Notice_Item();
                         notice_item.setWriter(updateWriter);
                         notice_item.setContent(content);
@@ -212,7 +203,13 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         notice_item.notice_item_colors = color_item;
                         notice_item.setTimestamp(-1*System.currentTimeMillis());
                         database.getReference().child("EveryClub").child(clubName).child("Notice").child(dbKey).setValue(notice_item);
-                        Toast.makeText(NoticeActivity_Insert.this, "수정완료", Toast.LENGTH_SHORT).show();
+                        if(activity_notice_insert_switch.isChecked()){
+                            SendPushMessages send = new SendPushMessages();
+                            send.multipleSendMessage("공지사항이 수정되었습니다.",title, "Notice");
+                        }
+                        Toast.makeText(NoticeActivity_Insert.this, "공지사항이 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(NoticeActivity_Insert.this, NoticeActivity_Main.class);
+                        startActivity(intent);
                         finish();
                     }
 
@@ -237,10 +234,10 @@ public class NoticeActivity_Insert extends AppCompatActivity{
             //If you want to add any listeners to your textviews, these are two //textviews.
             //final TextView itema = (TextView) layout.findViewById(R.id.ItemA);
             //final TextView itemb = (TextView) layout.findViewById(R.id.ItemB);
-            FloatingActionButton boldBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_bold);
-            FloatingActionButton italicBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_italic);
-            FloatingActionButton underlineBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_underline);
-            FloatingActionButton replyBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup2_reply);
+            FloatingActionButton boldBtn = layout.findViewById(R.id.activity_notice_insert_popup2_bold);
+            FloatingActionButton italicBtn = layout.findViewById(R.id.activity_notice_insert_popup2_italic);
+            FloatingActionButton underlineBtn = layout.findViewById(R.id.activity_notice_insert_popup2_underline);
+            FloatingActionButton replyBtn = layout.findViewById(R.id.activity_notice_insert_popup2_reply);
 
             final SpannableStringBuilder ssb2 = new SpannableStringBuilder(activity_notice_insert_edittext_title.getText());
             final int titleLen2 = activity_notice_insert_edittext_title.length();
@@ -319,11 +316,11 @@ public class NoticeActivity_Insert extends AppCompatActivity{
             //If you want to add any listeners to your textviews, these are two //textviews.
             //final TextView itema = (TextView) layout.findViewById(R.id.ItemA);
             //final TextView itemb = (TextView) layout.findViewById(R.id.ItemB);
-            FloatingActionButton blackBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup_black);
-            FloatingActionButton redBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup_red);
-            FloatingActionButton blueBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup_blue);
-            FloatingActionButton plusBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup_plus);
-            FloatingActionButton replyBtn = (FloatingActionButton)layout.findViewById(R.id.activity_notice_insert_popup_reply);
+            FloatingActionButton blackBtn = layout.findViewById(R.id.activity_notice_insert_popup_black);
+            FloatingActionButton redBtn = layout.findViewById(R.id.activity_notice_insert_popup_red);
+            FloatingActionButton blueBtn = layout.findViewById(R.id.activity_notice_insert_popup_blue);
+            FloatingActionButton plusBtn = layout.findViewById(R.id.activity_notice_insert_popup_plus);
+            FloatingActionButton replyBtn = layout.findViewById(R.id.activity_notice_insert_popup_reply);
 
             final SpannableStringBuilder ssb = new SpannableStringBuilder(activity_notice_insert_edittext_title.getText());
             final int titleLen = activity_notice_insert_edittext_title.length();
@@ -545,5 +542,12 @@ public class NoticeActivity_Insert extends AppCompatActivity{
         public void onDestroyActionMode(ActionMode mode) {
 
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(NoticeActivity_Insert.this, NoticeActivity_Main.class);
+        startActivity(intent);
+        finish();
+        super.onBackPressed();
     }
 }

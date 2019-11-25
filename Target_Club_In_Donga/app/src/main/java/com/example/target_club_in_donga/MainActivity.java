@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                                         fcmCheck = extras.getString("fcmCheck");
                                      }
                                  }
-                                Log.e("fcm",fcmCheck);
+                                //Log.e("fcm",fcmCheck);
 
                                  if(fcmCheck.equals("Vote")){
                                      //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
@@ -102,17 +102,11 @@ public class MainActivity extends AppCompatActivity {
                                      finish();
                                  }
                                  else {
-                                     //oast.makeText(MainActivity.this, "" + recentClub, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
                                      intent.putExtra("isRecent",true);
                                      startActivity(intent);
                                      finish();
                                  }
-                                //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
-//                                intent.putExtra("isRecent",true);
-//                                startActivity(intent);
-//                                finish();
                             }
                         }
                         @Override

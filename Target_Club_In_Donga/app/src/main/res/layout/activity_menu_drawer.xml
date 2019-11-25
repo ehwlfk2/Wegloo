@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:id="@+id/menu_drawer_ver"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    class="com.example.target_club_in_donga.home_viewpager.HomeActivityView">
 
     <!--START 동아리명, 로그아웃-->
     <LinearLayout
@@ -486,6 +487,33 @@
                     android:textColor="#000000"
                     android:paddingLeft="18dp"
                     android:text="물품 관리"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/arrow_btn"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="right|center"/>
+            </LinearLayout>
+            <!-- END 물품 관리 -->
+
+            <!-- START 물품 관리 -->
+            <LinearLayout
+                android:id="@+id/go_clubDelete"
+                android:paddingTop="19dp"
+                android:paddingBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:paddingLeft="18dp"
+                    android:text="모임 삭제"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"

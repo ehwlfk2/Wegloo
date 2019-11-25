@@ -67,7 +67,7 @@
         android:layout_weight="2"
         android:layout_gravity="right"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher_foreground"
+        android:background="@color/color_WhiteGray"
         />
 
 

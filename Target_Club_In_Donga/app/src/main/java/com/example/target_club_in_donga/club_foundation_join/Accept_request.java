@@ -70,42 +70,15 @@ public class Accept_request extends AppCompatActivity {
                     final JoinData joinData = snapshot.getValue(JoinData.class);
                     final String applicationDate = timeStampToString(joinData.getApplicationDate(),simpleDateFormat);
 
-                    if(thisClubIsRealName){
-                        firebaseDatabase.getReference("AppUser").child(snapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                                Log.e("appLoginData",appLoginData.getName()+"");
-                                Accept_request_expandAdapter.Item places = new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.HEADER,
-                                        dataSnapshot.getKey(),
-                                        appLoginData.getName(),applicationDate,
-                                        appLoginData.getRealNameProPicUrl(),
-                                        null,false, joinData.getPushToken());
-                                places.invisibleChildren = new ArrayList<>();
-                                places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,
-                                        null,null,joinData.getResume(), false, joinData.getPushToken()));
-                                data.add(places);
-                                requestKey.add(dataSnapshot.getKey());
-                                adapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                    else{
-                        Accept_request_expandAdapter.Item places = new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.HEADER,
-                                snapshot.getKey(),
-                                joinData.getName(),applicationDate,
-                                joinData.getRealNameProPicUrl(),null, false, joinData.getPushToken());
-                        places.invisibleChildren = new ArrayList<>();
-                        places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,
-                                null,null,joinData.getResume(), false, joinData.getPushToken()));
-                        data.add(places);
-                        requestKey.add(dataSnapshot.getKey());
-                    }
+                    Accept_request_expandAdapter.Item places = new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.HEADER,
+                            snapshot.getKey(),
+                            joinData.getName(),applicationDate,
+                            joinData.getRealNameProPicUrl(),null, false, joinData.getPushToken());
+                    places.invisibleChildren = new ArrayList<>();
+                    places.invisibleChildren.add(new Accept_request_expandAdapter.Item(Accept_request_expandAdapter.CHILD,null,null,
+                            null,null,joinData.getResume(), false, joinData.getPushToken()));
+                    data.add(places);
+                    requestKey.add(dataSnapshot.getKey());
                 }
                 adapter.notifyDataSetChanged();
             }
