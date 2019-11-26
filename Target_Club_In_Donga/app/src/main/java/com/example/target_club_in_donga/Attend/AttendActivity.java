@@ -108,7 +108,7 @@ public class AttendActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (admin > adminNumber) {
@@ -152,7 +152,7 @@ public class AttendActivity extends AppCompatActivity {
 
                                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             if (dataSnapshot.getValue() != null) {
@@ -177,7 +177,7 @@ public class AttendActivity extends AppCompatActivity {
 
                                             if (EditCertificationNumber.getBytes().length > 0) {
                                                 getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
-                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).addValueEventListener(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                                         getCertificationNumber = dataSnapshot.child("Attend_Certification_Number").getValue().toString();
@@ -338,7 +338,7 @@ public class AttendActivity extends AppCompatActivity {
                     }
 
                     if (flag3 == 1) {
-                        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                 admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
@@ -479,12 +479,12 @@ public class AttendActivity extends AppCompatActivity {
                             // 회원 가입한 날짜와 현재 날짜를 비교해서 출석을 시작 하고 난 후에 회원가입을 하면 그 전에 했던 출석에 포함되지 않아야 한다.
 
 
-                            database.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                                         for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
-                                            database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -516,7 +516,7 @@ public class AttendActivity extends AppCompatActivity {
 
 
                                     } else {
-                                        database.getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        database.getReference().child("EveryClub").child(clubName).child("User").addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(final DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
