@@ -83,7 +83,8 @@
         <activity android:name=".Notice.NoticeActivity_Insert" />
         <activity android:name=".Notice.NoticeActivity_Main" />
         <activity android:name=".Board.Board_viewpager" />
-        <activity android:name=".Board.Board_Detail" />
+        <activity android:name=".Board.Board_Detail"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".Board.Board_Write" />
         <activity android:name=".Board.Board_Main" />
         <activity android:name=".MemberList.MemberList" />
