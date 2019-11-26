@@ -14,7 +14,10 @@ import com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertView
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
 import com.example.target_club_in_donga.databinding.ActivityCalendarDayInsertTodoBinding;
 
+import static com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertViewModel.mCurrentDataTime;
+
 import java.util.Calendar;
+
 
 public class CalendarDayInsertTodo extends AppCompatActivity {
 
@@ -24,7 +27,6 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
 
     String title;
     boolean bool;
-    long time;
 
     int calYear, calMonth, calDay, id;
 
@@ -38,12 +40,13 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
 
 
         binding.activityCalendarDayInsertTooInsertTodoFab.setOnClickListener(v -> {
+            mCurrentDataTime = DateFormat.getTimeFromString(calYear, calMonth, calDay);
+            model.updateTime(mCurrentDataTime);
             model.insert(model.getNewTodo(), model.getWorkIsChecked());
             // viewModel 에 저장해둘까..?
             // intent.putExtra("alertIsChecked", binding.activityCalendarDayInsertTodoPushAlertSwitch.isChecked());
             // intent.putExtra("toDoIsChecked", binding.activityCalendarDayInsertTodoWorkCheckBox.isChecked());
             // intent.putExtra("toDoTitleString", binding.activityCalendarDayInsertTodoWorkEditText.getText());
-            intent.putExtra("timestamp", DateFormat.getTimeFromString(calYear, calMonth, calDay));
             startActivity(intent);
             finish();
         });
@@ -60,22 +63,21 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
 
         binding.activityCalendarDayInsertTodoDatePickerTextView.setOnClickListener(v -> Dialog_DatePicker());
 
-
+        // 초기 설정
         if (model != null) {
             intent = getIntent();
             id = intent.getIntExtra("DB_id", -1);
-            if(id != -1) {
-                int []index = {id};
+            if (id != -1) {
+                int[] index = {id};
                 model.delete(index);
             }
-            try{
-                time = intent.getLongExtra("timestamp",0);
+            try {
                 bool = intent.getBooleanExtra("checked", false);
                 title = intent.getStringExtra("title");
-            } catch (Exception e){
+            } catch (Exception e) {
                 title = "";
                 bool = false;
-            }finally {
+            } finally {
                 model.setNewTodo(title);
                 model.setWorkIsChecked(bool);
             }
@@ -87,7 +89,6 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
             calYear = cal.get(Calendar.YEAR);
             calMonth = cal.get(Calendar.MONTH);
             calDay = cal.get(Calendar.DAY_OF_MONTH);
-
             intent = new Intent(CalendarDayInsertTodo.this, CalendarDay.class);
         }
     }

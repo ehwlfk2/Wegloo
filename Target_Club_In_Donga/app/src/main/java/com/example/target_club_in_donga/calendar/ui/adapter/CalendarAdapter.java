@@ -21,10 +21,12 @@ import com.example.target_club_in_donga.calendar.ui.viewmodel.EmptyViewModel;
 import com.example.target_club_in_donga.databinding.CalendarHeaderBinding;
 import com.example.target_club_in_donga.databinding.DayItemBinding;
 import com.example.target_club_in_donga.databinding.EmptyDayBinding;
+import static com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertViewModel.mCurrentDataTime;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 
 
 public class CalendarAdapter extends RecyclerView.Adapter {
@@ -110,21 +112,24 @@ public class CalendarAdapter extends RecyclerView.Adapter {
                 model.setClickCheck(false);
 
                 //click event
-                viewHolder.itemView.setOnClickListener(v -> {
-                    model.setClickCheck(!model.getClickCheck());
-                    if (model.getClickCheck()) {
-                        Log.v("develop_Log_v", "model.getCalendar" + model.getCalendar());
-                        Toast.makeText(context, "Click check: True", Toast.LENGTH_SHORT).show();
-                        //v.setBackgroundResource(R.drawable.calendar_circle);
-                    } else {
-                        Toast.makeText(context, "Click check: False", Toast.LENGTH_SHORT).show();
-                        //v.setBackground(null);
-                    }
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        model.setClickCheck(!model.getClickCheck());
+                        if (model.getClickCheck()) {
+                            Log.v("develop_Log_v", "model.getCalendar" + model.getCalendar());
+                            Toast.makeText(context, "Click check: True", Toast.LENGTH_SHORT).show();
+                            //v.setBackgroundResource(R.drawable.calendar_circle);
+                        } else {
+                            Toast.makeText(context, "Click check: False", Toast.LENGTH_SHORT).show();
+                            //v.setBackground(null);
+                        }
 
-                    // move activity screen
-                    Intent intent = new Intent(v.getContext(), CalendarDay.class);
-                    intent.putExtra("timestamp", model.getTimeStamp());
-                    context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        // move activity screen
+                        Intent intent = new Intent(v.getContext(), CalendarDay.class);
+                        mCurrentDataTime = ((Calendar) item).getTimeInMillis();
+                        context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
                 });
             }
             holder.setViewModel(model);
