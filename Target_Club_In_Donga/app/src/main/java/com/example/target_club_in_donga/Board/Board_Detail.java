@@ -155,7 +155,7 @@ public class Board_Detail extends AppCompatActivity {
                 title.setText(boardModel.title);
                 contents.setText(boardModel.contents);
                 name.setText(boardModel.name);
-                Glide.with(getApplicationContext()).load(userProfileUrl).into(userprofilepic);
+                Glide.with(getApplicationContext()).load(boardModel.userPic).into(userprofilepic);
                 if (boardModel.uid.equals(auth.getCurrentUser().getUid()) || userAdmin < 3) { // 작성자면,
                     edt_menu.setVisibility(View.VISIBLE);
                 }
