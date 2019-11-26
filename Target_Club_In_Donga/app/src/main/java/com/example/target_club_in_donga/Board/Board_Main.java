@@ -43,7 +43,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
     private RecyclerView recyclerView;
     private ArrayList<BoardModel> boardModels = new ArrayList<>();
     private ArrayList<String> uidlist = new ArrayList<>();
-    ImageButton backbtn;
+    ImageButton backbtn, refresh;
     Button write;
     private FirebaseDatabase database;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");
@@ -54,6 +54,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_main);
         backbtn = findViewById(R.id.board_back_btn);
+        refresh = findViewById(R.id.board_main_refresh);
         write = findViewById(R.id.board_write_btn);
         recyclerView = findViewById(R.id.board_recy);
         database = FirebaseDatabase.getInstance();
@@ -65,6 +66,12 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         recyclerView.setAdapter(boardRecy_adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
 
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getBoard();
+            }
+        });
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
