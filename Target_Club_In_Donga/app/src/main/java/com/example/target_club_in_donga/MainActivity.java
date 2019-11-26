@@ -69,33 +69,39 @@ public class MainActivity extends AppCompatActivity {
                                 clubName = recentClub;
                                  Bundle extras = getIntent().getExtras();
                                  String fcmCheck = "None";
+                                 //String fcmUid = "None";
                                  if(extras != null) {
                                      if (extras.containsKey("fcmCheck")) {
                                         fcmCheck = extras.getString("fcmCheck");
+                                        //fcmUid = extras.getString("fcmUid");
                                      }
                                  }
                                 //Log.e("fcm",fcmCheck);
 
                                  if(fcmCheck.equals("Vote")){
+                                     //clubName = fcmUid;
                                      //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, VoteActivity_Main.class);
                                      startActivity(intent);
                                      finish();
                                  }
                                  else if(fcmCheck.equals("Notice")){
+                                     //clubName = fcmUid;
                                      //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, NoticeActivity_Main.class);
                                      startActivity(intent);
                                      finish();
                                  }
                                  else if(fcmCheck.equals("AcceptRequest")){
+                                     //clubName = fcmUid;
                                      //Toast.makeText(MainActivity.this, "" + recentClub, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
-                                     intent.putExtra("isRecent",false);
+                                     intent.putExtra("isRecent",true);
                                      startActivity(intent);
                                      finish();
                                  }
                                  else if(fcmCheck.equals("Attend")){
+                                     //clubName = fcmUid;
                                      Intent intent = new Intent(MainActivity.this, AttendActivity.class);
                                      intent.putExtra("isRecent",true);
                                      startActivity(intent);

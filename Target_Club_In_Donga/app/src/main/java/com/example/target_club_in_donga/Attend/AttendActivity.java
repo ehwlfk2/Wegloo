@@ -543,7 +543,7 @@ public class AttendActivity extends AppCompatActivity {
                                     }
                                     //Log.e("sned",thisClubName);
                                     SendPushMessages send = new SendPushMessages();
-                                    send.multipleSendMessage(thisClubName, "출석체크 시작", "Attend");
+                                    send.multipleSendMessage(thisClubName, "출석체크가 시작되었습니다.", "Attend");
                                 }
 
                                 @Override

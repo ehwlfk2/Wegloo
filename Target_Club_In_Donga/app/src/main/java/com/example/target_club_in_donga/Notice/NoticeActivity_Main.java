@@ -52,7 +52,7 @@ public class NoticeActivity_Main extends AppCompatActivity {
         activity_notice_main_button_intent.attachToRecyclerView(activity_notice_main_recyclerview);
         activity_notice_main_button_intent.show();
 
-        if(userAdmin >= 2){
+        if(userAdmin >= 3){
             activity_notice_main_button_intent.setVisibility(View.GONE);
         }
 

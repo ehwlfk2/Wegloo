@@ -39,6 +39,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubName;
 
 public class    VoteActivity_Insert  extends AppCompatActivity {
 
@@ -187,7 +188,7 @@ public class    VoteActivity_Insert  extends AppCompatActivity {
                     else{
                         if(activityvote_insert_switch.isChecked()){ //push
                             SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage("투표가 추가되었습니다",title, "Vote");
+                            send.multipleSendMessage(thisClubName,title, "Vote");
                         }
                         //Toast.makeText(Vote_Insert.this, nowTime+" 현재시간", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(Vote_Insert.this, dbTime+" 디비시간", Toast.LENGTH_SHORT).show();
