@@ -61,7 +61,7 @@ public class NoticeActivity_Main extends AppCompatActivity {
             }
         });
 
-        if(userAdmin >= 2){
+        if(userAdmin >= 3){
             activity_notice_main_button_intent.setVisibility(View.GONE);
         }
 

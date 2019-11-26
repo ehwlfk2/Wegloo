@@ -17,6 +17,7 @@ import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.room.TodoDao;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class CalendarInsertViewModel extends AndroidViewModel {
@@ -30,7 +31,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
     private long time;
 
     public int mCenterPosition;
-
+    public static Long mCurrentDataTime;
     Context context;
 
     /* Testing Code - begin */
@@ -64,20 +65,17 @@ public class CalendarInsertViewModel extends AndroidViewModel {
     public CalendarInsertViewModel(@NonNull Application application) {
         super(application);
 
+
         db = Room.databaseBuilder(application, CalendarDayDatabase.class, "todo-db")
                 /*.allowMainThreadQueries()*/.build();
 
         mCenterPosition = 0;
         todos = getAll();
-
-        RoomDatabase.Callback object;
-
     }
 
     //
-    public String initDB(Long time) {
-        this.time = time;
-        return DateFormat.getDate(time, DateFormat.CALENDAR_DAY_FORMAT);
+    public String initDB() {
+        return DateFormat.getDate(mCurrentDataTime, DateFormat.CALENDAR_DAY_FORMAT);
     }
 
     // DB 에 있는 모든 요소들을 Observe
@@ -85,22 +83,29 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         mCenterPosition = mCenterPosition + 1;
         setNewTodo(getNewTodo());
         setWorkIsChecked(getWorkIsChecked());
-        return db.todoDao().getAll();   // 무한루프처럼 계속 돌아가고 있다. -> MainViewModel 에서 todos 으로 고정해준다.
+        return db.todoDao().loadAllByTimeStamp(mCurrentDataTime);   // 무한루프처럼 계속 돌아가고 있다. -> MainViewModel 에서 todos 으로 고정해준다.
     }
 
     public String initTime(Context context) {
         this.context = context;
-        return DateFormat.getDate(time, DateFormat.CALENDAR_DAY_FORMAT);
+        return DateFormat.getDate(mCurrentDataTime, DateFormat.CALENDAR_DAY_FORMAT);
+    }
+
+    public void updateTime(long time){
+        this.time = time;
     }
 
     // DB 에 insert
     public void insert(String todo, boolean isChecked) {
-        new InsertAsyncTask(db.todoDao()).execute(new Todo(todo, isChecked));
+        //new InsertAsyncTask(db.todoDao()).execute(new Todo(todo, isChecked, time));
+        new InsertAsyncTask(db.todoDao(), todo, isChecked, mCurrentDataTime).execute();
     }
 
     public void update(int[] index, String todo, boolean isChecked) {
+        //new InsertAsyncTask(db.todoDao()).execute(new Todo(todo, isChecked, mCurrentDataTime));
         new DeleteAsyncTask(db.todoDao(), index).execute();
-        new InsertAsyncTask(db.todoDao()).execute(new Todo(todo, isChecked));
+        new InsertAsyncTask(db.todoDao(), todo, isChecked, mCurrentDataTime).execute();
+
     }
 
     public void delete(int[] index) {
@@ -111,15 +116,30 @@ public class CalendarInsertViewModel extends AndroidViewModel {
     //Background 로 DB 에 insert! parameter ( Params, Progress, Result ), Update, Delete 도 동일한 방법으로 진행하면 된다.
     private static class InsertAsyncTask extends AsyncTask<Todo, Void, Void> {
         private TodoDao mTodoDao;
+        private String todo;
+        private boolean isChecked;
+        private long time;
+        private long updateTime;
 
         InsertAsyncTask(TodoDao mTodoDao) {  // Tip... Alt + Insert
             this.mTodoDao = mTodoDao;
         }
 
+        InsertAsyncTask(TodoDao todoDao, String todo, boolean isChecked, long time){
+            updateTime = Calendar.getInstance().getTimeInMillis()/86400000;
+            this.mTodoDao = todoDao;
+            this.todo = todo;
+            this.isChecked = isChecked;
+            this.time = time;
+        }
+
         // 소스를 보면 비동기 처리를 해주는 애는 바로 Dao 이다. -> 생성자를 만들어서 Dao 를 받아야 한다.
         @Override   // 꼭 필요한 Method, 여기서 비동기 처리를 해줍니다.
         protected Void doInBackground(Todo... todos) {  // spread 연산자 ... 배열로 담겨서 넘어온다.
-            mTodoDao.insert(todos[0]);  // 배열에서 하나만 넘겨주니까
+            //mTodoDao.insert(todos[0]);  // 배열에서 하나만 넘겨주니까
+            Todo singleTodo = new Todo(todo,isChecked,time);
+            mTodoDao.insert(singleTodo);
+
             return null;
         }
     }
