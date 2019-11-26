@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userProfileUrl;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
 import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userNicName;
 
@@ -130,6 +131,7 @@ public class Board_Write extends AppCompatActivity {
 
                     boardModel.uid = auth.getCurrentUser().getUid();
                     boardModel.name = userNicName;
+                    boardModel.userPic = userProfileUrl;
 
                     if (edt_key == 1) { // 수정 시
                         if (IMAGEs.size() != 0) { // 사진 있음

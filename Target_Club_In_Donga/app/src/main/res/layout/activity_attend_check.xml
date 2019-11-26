@@ -36,6 +36,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
+=======
+        android:layout_marginTop="30dp"
+>>>>>>> JHS
         android:weightSum="1">
         <Button
             android:id="@+id/activity_attend_check_button_cancel"

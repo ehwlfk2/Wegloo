@@ -10,6 +10,7 @@ public class BoardModel implements Serializable {
     public String contents;
     public String uid;
     public String name;
+    public String userPic;
     public String Thumbnail;
     public Object timestamp;
     public int idx = 0;
