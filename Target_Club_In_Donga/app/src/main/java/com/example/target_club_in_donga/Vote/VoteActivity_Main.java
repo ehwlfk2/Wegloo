@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class VoteActivity_Main extends AppCompatActivity {
     private FloatingActionButton activityvote_main_button_intent;
     private FirebaseDatabase database;
     private FirebaseAuth auth;
+    ImageButton back;
     private SimpleDateFormat simpleDateFormat;
     //public boolean adminCheck;
     public static final int insertPageNumber = 1001;
@@ -62,7 +64,14 @@ public class VoteActivity_Main extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+        back = findViewById(R.id.votemain_back_btn);
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //Intent intent = getIntent();
         //adminCheck = intent.getExtras().getBoolean("adminCheck");
         //adminCheck = true;

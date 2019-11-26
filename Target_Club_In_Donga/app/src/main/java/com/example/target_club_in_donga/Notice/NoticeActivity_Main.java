@@ -8,6 +8,7 @@ import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ public class NoticeActivity_Main extends AppCompatActivity {
     public static List<String> noticeDbKey = new ArrayList<>();
     private ExpandableListAdapter adapter;
     private FirebaseDatabase database;
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,13 @@ public class NoticeActivity_Main extends AppCompatActivity {
 
         activity_notice_main_button_intent.attachToRecyclerView(activity_notice_main_recyclerview);
         activity_notice_main_button_intent.show();
+        back = findViewById(R.id.noticemain_back_btn);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         if(userAdmin >= 3){
             activity_notice_main_button_intent.setVisibility(View.GONE);

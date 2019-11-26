@@ -67,7 +67,7 @@ public class Board_Detail extends AppCompatActivity {
     BoardModel boardModel = new BoardModel();
     String getkey;
     InputMethodManager imm;
-    LinearLayout detail_view;
+    ConstraintLayout detail_view;
     int delete_comment_admin = 0;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd HH:mm");
