@@ -93,7 +93,6 @@
 
         <activity android:name=".calendar.Calendar"/>
         <activity android:name=".calendar.CalendarDay"/>
-        <activity android:name=".calendar.CalendarInsert"/>
         <activity android:name=".calendar.CalendarDayInsertTodo"/>
 
         <meta-data
