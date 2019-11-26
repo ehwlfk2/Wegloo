@@ -133,7 +133,7 @@
 
     <EditText
         android:id="@+id/foundation_02_edittext_content"
-        android:hint="모임 소개글 (70자 이내)\n[나중에 해쉬태그기능 추가하자 #]"
+        android:hint="모임 소개글 (70자 이내)"
         android:gravity="start"
         android:textSize="14dp"
         android:inputType="textMultiLine"
@@ -151,6 +151,7 @@
         app:layout_constraintStart_toStartOf="@+id/foundation_02_edittext_name"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/foundation_02_button_picture"
@@ -158,24 +159,34 @@
         app:civ_border_color="#FF000000"
         android:layout_width="130dp"
         android:background="@drawable/picture_que_ver0"
-
-        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintHorizontal_bias="0.15"
         android:layout_height="130dp"
-
         app:layout_constraintVertical_bias="0.45"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:padding="5dp"
+        android:background="@drawable/logoin_button00_ver0"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_photo_camera_orange"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintVertical_bias="0.54"
+        />
     <RadioGroup
         android:id="@+id/foundation_02_radioGroup_01"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        app:layout_constraintHorizontal_bias="0.84"
+        app:layout_constraintHorizontal_bias="0.85"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.43"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

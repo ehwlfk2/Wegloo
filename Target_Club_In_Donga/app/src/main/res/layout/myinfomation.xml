@@ -44,16 +44,30 @@
         android:orientation="vertical"
         android:background="#FFFFFF"
         xmlns:app="http://schemas.android.com/apk/res-auto">
-        <de.hdodenhof.circleimageview.CircleImageView
-            app:civ_border_width="0.5dp"
-            app:civ_border_color="#FF000000"
-            android:id="@+id/myinfo_profile_Thumbnail"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="25dp"
-            android:background="@drawable/face"/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                app:civ_border_width="1dp"
+                app:civ_border_color="#FF000000"
+                android:id="@+id/myinfo_profile_Thumbnail"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/face"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:padding="4dp"
+                android:background="@drawable/logoin_button00_ver0"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="end|bottom"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_photo_camera_24px" />
+        </FrameLayout>
     </LinearLayout>
     <!-- END 프로필사진, 이름 -->
     <!-- START 기본정보 -->
@@ -94,6 +108,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp">
             <TextView
+                android:id="@+id/myinfo_user_name_title"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:text="닉네임"
@@ -109,6 +124,17 @@
                 android:textSize="17dp"
                 android:textColor="#000000"/>
         </LinearLayout>
+        <TextView
+            android:visibility="gone"
+            android:gravity="right"
+            android:id="@+id/myinfo_user_name_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이름은 변경이 불가능합니다."
+            android:textColor="@color/color_Red"
+            android:textSize="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="25dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
