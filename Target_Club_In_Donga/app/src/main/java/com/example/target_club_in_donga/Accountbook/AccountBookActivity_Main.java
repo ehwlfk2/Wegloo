@@ -509,7 +509,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull final Exception e) {
-                    Toast.makeText(AccountBookActivity_Main.this, "스토리지 삭제실패", Toast.LENGTH_SHORT).show();
+
                 }
             });
             database.getReference().child("EveryClub").child(clubName).child("AccountBook").child(valueKey).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -520,7 +520,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull final Exception e) {
-                    Toast.makeText(AccountBookActivity_Main.this, "DB 삭제실패", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
@@ -543,7 +543,6 @@ public class AccountBookActivity_Main extends AppCompatActivity {
         else{
             Glide.with(view2).load(imageUrl).into(imageView);
         }
-        //Toast.makeText(this, ""+imageUrl, Toast.LENGTH_SHORT).show();
         final AlertDialog dialog2 = builder2.create();
 
         exportBtn.setOnClickListener(new View.OnClickListener() {
@@ -559,8 +558,7 @@ public class AccountBookActivity_Main extends AppCompatActivity {
                     storageRef.child("EveryClub").child(clubName).child("AccountBookImages/"+list.get(positon).getImageDeleteName()).getFile(xlsFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            //Toast.makeText(History_Main.this, ""+localFile.toString(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getApplicationContext(),xlsFile.getAbsolutePath()+"에 저장되었습니다",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),xlsFile.getAbsolutePath()+"에 저장되었습니다.",Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(Intent.ACTION_SEND);
                             intent.setType("image/*");
