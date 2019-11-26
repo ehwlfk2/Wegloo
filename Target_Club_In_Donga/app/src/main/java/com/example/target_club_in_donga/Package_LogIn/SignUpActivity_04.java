@@ -20,11 +20,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.calendar.room.Todo;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -75,18 +79,40 @@ public class SignUpActivity_04 extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.signup_04_button_next:
-                String name = activity_signup_04_name.getText().toString();
-                String phoneNumber = activity_signup_04_phoneNumber.getText().toString();
-                if(!Pattern.matches("^[가-힣]{2,4}|[a-zA-Z]{2,20}$", name)){ //이름거르기
-                    Toast.makeText(this, "이름 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else if(!Pattern.matches("(010|011|016|017|018|019)(.+)(.{4})", phoneNumber)) { //번호거르기
-                    Toast.makeText(this, "전화번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                firebaseDatabase.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = activity_signup_04_name.getText().toString();
+                        String phoneNumber = activity_signup_04_phoneNumber.getText().toString();
+                        boolean phoneCheck = false;
+                        for(DataSnapshot ds : dataSnapshot.getChildren()){
+                            String tempName = ds.child("phone").getValue(String.class);
+                            if(tempName.equals(phoneNumber)){
+                                phoneCheck = true;
+                                break;
+                            }
+                        }
+                        if(!Pattern.matches("^[가-힣]{2,4}|[a-zA-Z]{2,20}$", name)){ //이름거르기
+                            Toast.makeText(SignUpActivity_04.this, "이름 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(!Pattern.matches("(010|011|016|017|018|019)(.+)(.{4})", phoneNumber)) { //번호거르기
+                            Toast.makeText(SignUpActivity_04.this, "전화번호 형식이 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(phoneCheck){
+                            Toast.makeText(SignUpActivity_04.this, "이미 존재하는 번호입니다.", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            insertDB(realNameProfileIamgePath, name, phoneNumber);
+                        }
+                    }
 
-                    insertDB(realNameProfileIamgePath, name, phoneNumber);
-                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
                 break;
             case R.id.signup_04_button_picture:
                 /**
