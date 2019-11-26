@@ -86,9 +86,11 @@ public class CalendarInsertAdapter extends RecyclerView.Adapter {
             if (item instanceof Todo) {
                 boolean bool = item.getIsChecked();
                 String title = item.getTitle();
+                long time = item.getTimeStamp();
 
                 model.setTodoTitleData(title);
                 model.setIsWorkChecked(bool);
+                model.setTimeStampString(time);
 
                 // OnClick
                 DayToDoBinding binding = ((ToDoViewHolder) viewHolder).binding;

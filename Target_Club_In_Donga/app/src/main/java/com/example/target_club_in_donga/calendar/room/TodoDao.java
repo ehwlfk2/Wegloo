@@ -20,6 +20,9 @@ public interface TodoDao {
     @Query("SELECT * FROM Todo WHERE id IN (:index)")
     List<Todo> loadAllByIds(int[] index);
 
+    @Query("SELECT * FROM Todo WHERE timeStamp IN (:time)")
+    LiveData<List<Todo>> loadAllByTimeStamp(long time);
+
     @Query("SELECT * FROM Todo WHERE title LIKE :context")
     Todo findByName(String context);
 

@@ -1,4 +1,5 @@
 package com.example.target_club_in_donga.calendar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,12 +18,13 @@ import com.example.target_club_in_donga.calendar.ui.adapter.CalendarInsertAdapte
 import com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertViewModel;
 import com.example.target_club_in_donga.databinding.ActivityCalendarDayBinding;
 
+import static com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertViewModel.mCurrentDataTime;
+
+
 public class CalendarDay extends AppCompatActivity implements View.OnClickListener {
 
     ActivityCalendarDayBinding binding;
     CalendarInsertViewModel model;
-    Intent intent;
-    long time;
     private Animation fab_open, fab_close, fab_rotate, fab_rotate_close;
     private Boolean isFabOpen = false;
 
@@ -48,10 +50,8 @@ public class CalendarDay extends AppCompatActivity implements View.OnClickListen
         observe();
 
         if (model != null) {
-            intent = getIntent();
-            time = intent.getLongExtra("timestamp", 0);
-            binding.activityCalendarDayCheckDataTextView.setText(
-                    model.initDB(time));
+            // intent = getIntent();
+            binding.activityCalendarDayCheckDataTextView.setText(model.initDB());
         }
 
         binding.activityCalendarDayInsertDayDataFab.setOnClickListener(this);
@@ -114,7 +114,7 @@ public class CalendarDay extends AppCompatActivity implements View.OnClickListen
             } else {
                 //LinearLayoutManager
                 LinearLayoutManager manager = new LinearLayoutManager(this);
-                adapter = new CalendarInsertAdapter(objects, getApplicationContext(), this, time);
+                adapter = new CalendarInsertAdapter(objects, getApplicationContext(), this, mCurrentDataTime);
                 view.setLayoutManager(manager);
                 view.setAdapter(adapter);
                 if (model.mCenterPosition >= 0) {
