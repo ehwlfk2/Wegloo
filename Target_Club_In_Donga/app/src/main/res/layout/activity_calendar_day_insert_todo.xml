@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/activity_calendar_day_insert_todo_topLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:weightSum="10"
+            app:layout_constraintHeight_default="percent"
+
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/activity_calendar_day_insert_todo_midLinearLayout"
+
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <CheckBox
+                android:id="@+id/activity_calendar_day_insert_todo_work_CheckBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="2"
+                android:button="@null"
+                android:checked="@={model.workIsChecked}"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+                android:drawableEnd="?android:attr/listChoiceIndicatorMultiple" />
+
+            <EditText
+                android:id="@+id/activity_calendar_day_insert_todo_work_EditText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="8"
+                android:autofillHints="Error"
+                android:background="@null"
+                android:hint="@string/TODO"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+                android:text="@={model.newTodo}"
+                android:inputType="text" />
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_calendar_day_insert_todo_midLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.2"
+
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_calendar_day_insert_todo_topLinearLayout"
+            app:layout_constraintBottom_toTopOf="@id/activity_calendar_day_insert_todo_bottomLinearLayout"
+            >
+
+            <TextView
+                android:id="@+id/activity_calendar_day_insert_todo_when_TextView"
+                android:layout_width="wrap_content"
+                app:layout_constraintHorizontal_bias="0.2"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+
+                android:layout_marginEnd="10dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/untilWhen"
+                android:textSize="16sp"
+
+                app:layout_constraintVertical_chainStyle="packed"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/activity_calendar_day_insert_todo_datePicker_TextView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <TextView
+                android:id="@+id/activity_calendar_day_insert_todo_datePicker_TextView"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.5"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_default="percent"
+                app:layout_constraintHeight_percent="0.5"
+                tools:text="datePicker_position"
+
+
+                android:gravity="center"
+
+                app:layout_constraintTop_toBottomOf="@id/activity_calendar_day_insert_todo_when_TextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_calendar_day_insert_todo_bottomLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.1"
+
+            app:layout_constraintHorizontal_chainStyle="spread"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_calendar_day_insert_todo_midLinearLayout"
+            app:layout_constraintBottom_toTopOf="@id/activity_calendar_day_insert_todo_floorLinearLayout"
+            >
+
+            <TextView
+                android:id="@+id/activity_calendar_day_insert_todo_pushAlert_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/pushAlert"
+
+                android:textSize="16sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/activity_calendar_day_insert_todo_pushAlert_Switch"
+                />
+            <Switch
+                android:id="@+id/activity_calendar_day_insert_todo_pushAlert_Switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:checked="true"
+                android:gravity="center"
+
+                app:layout_constraintLeft_toRightOf="@id/activity_calendar_day_insert_todo_pushAlert_TextView"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_calendar_day_insert_todo_floorLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.2"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_calendar_day_insert_todo_bottomLinearLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <!--
+            android:onClick="@{() -> model.insert(model.newTodo, model.workIsChecked)}"
+            -->
+
+            <com.melnykov.fab.FloatingActionButton
+                android:id="@+id/activity_calendar_day_insert_too_insertTodo_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginEnd="16dp"
+
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent"
+                fab:fab_colorNormal="@color/colorYellow"
+                fab:fab_colorPressed="@color/colorApricot"
+                fab:fab_colorRipple="@color/colorRed" />
+
+            <com.melnykov.fab.FloatingActionButton
+                android:id="@+id/activity_calendar_day_insert_too_deleteTodo_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginStart="16dp"
+
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent"
+                fab:fab_colorNormal="@color/colorRed"
+                fab:fab_colorPressed="@color/colorApricot"
+                fab:fab_colorRipple="@color/colorYellow" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

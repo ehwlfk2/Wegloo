@@ -1,4 +1,15 @@
 package com.example.target_club_in_donga.calendar.room;
 
-public class ScheduleDao {
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Query;
+
+import java.util.List;
+
+@Dao
+public interface ScheduleDao {
+
+    @Query("SELECT * FROM Schedule")
+    LiveData<List<Schedule>> getAll();
+
 }

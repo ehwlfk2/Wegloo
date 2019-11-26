@@ -16,6 +16,12 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
+    <string name="TODO">To Do</string>
+    <string name="ADD">추가</string>
+    <string name="TEXT_VIEW">TextView</string>
+    <string name="pushAlert">Push 알림</string>
+    <string name="untilWhen">When 기한</string>
+    <string name="delete">Checked 삭제</string>
 
     <string name="facebook_app_id">750941012004334</string>
     <string name="fb_login_protocol_scheme">fb750941012004334</string>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context=".MainActivity">
+
+        <CheckBox
+            android:id="@+id/insert_calendar_work_CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+
+            android:checked="@={model.todos[1].isChecked}"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/activity_main_todo_EditText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/activity_main_todo_EditText"
+            />
+
+        <EditText
+            android:id="@+id/activity_main_todo_EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:hint="@string/TODO"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:text="@={model.newTodo}"
+
+            app:layout_constraintLeft_toRightOf="@id/insert_calendar_work_CheckBox"
+            app:layout_constraintRight_toLeftOf="@id/activity_main_todo_button"
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="Error"
+            android:inputType="text" />
+
+        <!-- android:onClick="@{() -> model.insert(model.newTodo)}" -->
+        <Button
+            android:id="@+id/activity_main_todo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+
+            android:onClick="@{() -> model.insert(model.newTodo, model.workIsChecked)}"
+            android:text="@string/ADD"
+
+            app:layout_constraintBottom_toBottomOf="@id/activity_main_todo_EditText"
+            app:layout_constraintLeft_toRightOf="@id/activity_main_todo_EditText"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
