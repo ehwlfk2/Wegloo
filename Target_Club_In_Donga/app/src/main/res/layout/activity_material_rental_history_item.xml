@@ -16,20 +16,16 @@
             android:id="@+id/activity_material_rental_history_item_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:singleLine="false"
+            android:text="날짜" />
 
         <TextView
             android:id="@+id/activity_material_rental_history_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/arrow_btn"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="right|center"/>
+            android:layout_weight="1"
+            android:text="이름" />
 
     </LinearLayout>
 </LinearLayout>

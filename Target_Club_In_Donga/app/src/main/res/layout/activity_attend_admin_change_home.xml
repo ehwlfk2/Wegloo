@@ -22,7 +22,7 @@
 
         <TextView
             style="@style/Top_Content_Text_Style"
-            android:text="출결변경" />
+            android:text="출결 변경" />
 
         <View
             style="@style/Line_Style" />
@@ -37,7 +37,7 @@
             <Button
                 style="@style/Content_Classification_Text_Style"
                 android:text="출석추가하기"
-                android:background="@drawable/button_background"
+                android:background="@drawable/layout_rounded"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="0dp"
                 android:visibility="gone" />

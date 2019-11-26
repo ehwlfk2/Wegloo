@@ -31,6 +31,7 @@ import com.example.target_club_in_donga.Board.Board_Main;
 import com.example.target_club_in_donga.History.HistoryActivity_Main;
 import com.example.target_club_in_donga.Material_Rental.MaterialRentalActivity_Home;
 import com.example.target_club_in_donga.MemberList.MemberList;
+import com.example.target_club_in_donga.calendar.Calendar;
 import com.example.target_club_in_donga.club_foundation_join.Accept_request;
 import com.example.target_club_in_donga.menu.AttendActivity_MyInformation;
 import com.example.target_club_in_donga.menu.MyInformation;
@@ -317,10 +318,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                 startActivity(intent4);
                 break;
             case R.id.home_frame_calender: //홈화면 일정
-
-
-
-
+                Intent calendar_intent = new Intent(getActivity(), Calendar.class);
+                startActivity(calendar_intent);
                 break;
             case R.id.home_frame_board: //홈화면 자유게시판
                 Intent board_intent = new Intent(getActivity(), Board_Main.class);

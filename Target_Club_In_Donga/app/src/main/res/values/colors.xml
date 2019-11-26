@@ -36,6 +36,14 @@
     <color name="fbutton_color_asbestos">#7f8c8d</color>
 
 
+    <color name="lineColor">#f2f1f1</color>
+    <color name="colorYellow">#FFD88E</color>
+    <color name="colorApricot">#F5A281</color>
+    <color name="colorRed">#FF2222</color>
+    <color name="colorBlue">#E62929EE</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorGray">#888888</color>
+
     <!-- 위글루 -->
     <color name="default_color">#F5A281</color> <!-- 툴바색 -->
     <color name="colorPrimary">#008577</color>
