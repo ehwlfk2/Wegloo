@@ -83,10 +83,10 @@
                 android:visibility="invisible">
 
                 <Button
+                    android:id="@+id/activity_attend_home_button_number"
                     style="@style/Content_Classification_Text_Style"
                     android:background="@drawable/logoin_button_ver0"
                     android:textColor="@color/color_White"
-                    android:id="@+id/activity_attend_home_button_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="인증번호"
@@ -99,10 +99,10 @@
                     android:text="      " />
 
                 <Button
+                    android:id="@+id/activity_attend_home_button_cancel"
                     style="@style/Content_Classification_Text_Style"
                     android:background="@drawable/logoin_button_ver0"
                     android:textColor="@color/color_White"
-                    android:id="@+id/activity_attend_home_button_cancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="삭제하기"
