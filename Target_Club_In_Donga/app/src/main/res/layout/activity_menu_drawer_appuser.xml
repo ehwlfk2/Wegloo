@@ -10,7 +10,8 @@
     <!--START 동아리명, 로그아웃-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#A3F5A281">
         <TextView
             android:id="@+id/Group_Name"
             android:layout_width="wrap_content"
@@ -18,7 +19,7 @@
             android:text="Wegloo에 가입된 정보"
             android:textStyle="bold"
             android:textSize="15dp"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:layout_margin="15dp" />
         <View
             android:layout_width="0dp"
@@ -97,7 +98,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DDE9E7E7">
+        android:background="#A3F5A281">
         <TextView
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
@@ -106,7 +107,7 @@
             android:text="기타"
             android:textSize="13dp"
             android:paddingLeft="18dp"
-            android:textColor="#333232"/>
+            android:textColor="#FFFFFF"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

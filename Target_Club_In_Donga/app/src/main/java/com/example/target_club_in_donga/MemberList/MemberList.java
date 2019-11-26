@@ -102,7 +102,7 @@ public class MemberList extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(memberList_recy);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
     }
 
     class MemberList_Recy extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -147,14 +147,12 @@ public class MemberList extends AppCompatActivity {
             Button postion;
             ImageView imageView;
             ImageButton posi_btn;
-            LinearLayout layout;
             public CustomViewHolder(View view){
                 super(view);
                 name = view.findViewById(R.id.memberlist_name);
                 postion = view.findViewById(R.id.memberlist_position);
                 phone = view.findViewById(R.id.memberlist_phone);
                 imageView = view.findViewById(R.id.memberlist_imgview);
-                layout = view.findViewById(R.id.memberlist_layout);
                 posi_btn = view.findViewById(R.id.posi_btn);
             }
         }

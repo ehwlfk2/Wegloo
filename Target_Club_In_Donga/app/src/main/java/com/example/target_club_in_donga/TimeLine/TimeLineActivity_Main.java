@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,11 +41,19 @@ public class TimeLineActivity_Main extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TimeLineActivity_Main_RecyclerviewAdapter adapter;
     private ArrayList<TimeLine_Item> list = new ArrayList<>();//ItemFrom을 통해 받게되는 데이터를 어레이 리스트화 시킨다.
+    ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_main);
 
+        back=findViewById(R.id.timelinemain_back_btn);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         database = FirebaseDatabase.getInstance();
         recyclerView = findViewById(R.id.activity_timeline_main_recyclerview);
         recyclerView.setHasFixedSize(true);//각 아이템이 보여지는 것을 일정하게

@@ -10,22 +10,22 @@
         android:background="#FFFFFF">
         <ImageButton
             android:id="@+id/myinfo_back"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="15dp"
-            android:background="@drawable/arrow_back"
+            android:background="@drawable/ic_keyboard_arrow_left_24px"
             android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="모임내 정보 수정"
-            android:textColor="#000000"
+            android:textColor="#0C0B0B"
             android:textSize="20dp" />
         <ImageButton
             android:id="@+id/myinfo_confirm"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_margin="15dp"
             android:background="@drawable/done_icon_black"
             android:layout_alignParentRight="true"/>

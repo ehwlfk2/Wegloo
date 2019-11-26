@@ -126,40 +126,47 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/board_comment_recy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="267dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"/>
+        android:layout_marginEnd="15dp" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"/>
     <LinearLayout
-        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:weightSum="1"
-        android:background="@drawable/board_comment">
+        android:layout_height="wrap_content"
+        android:background="#F5F2F2"
+        android:paddingTop="15dp">
+        <LinearLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:weightSum="1"
+            android:background="@drawable/board_comment">
 
-        <EditText
-            android:id="@+id/board_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:background="@null"
-            android:hint="    댓글을 입력하세요." />
+            <EditText
+                android:id="@+id/board_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:background="@null"
+                android:hint="    댓글을 입력하세요."
+                android:textColorHint="#918C8C"/>
 
-        <ImageView
-            android:id="@+id/board_comment_upload"
-            android:layout_weight="0.1"
-            android:layout_gravity="center"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/comment_input" />
+            <ImageView
+                android:id="@+id/board_comment_upload"
+                android:layout_weight="0.1"
+                android:layout_gravity="center"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/done_icon_black" />
+        </LinearLayout>
     </LinearLayout>
 
 
