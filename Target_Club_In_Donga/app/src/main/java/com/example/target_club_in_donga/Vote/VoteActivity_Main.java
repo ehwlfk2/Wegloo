@@ -78,7 +78,7 @@ public class VoteActivity_Main extends AppCompatActivity {
 
         activityvote_main_button_intent = findViewById(R.id.activityvote_main_button_intent);
 
-        if(userAdmin >= 2){
+        if(userAdmin >= 3){
             activityvote_main_button_intent.setVisibility(View.INVISIBLE);
         }
 

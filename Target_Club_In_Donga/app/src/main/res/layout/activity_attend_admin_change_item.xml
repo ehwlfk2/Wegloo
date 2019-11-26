@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/activity_attend_admin_change_item_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,16 +32,14 @@
 
                     <TextView
                         android:id="@+id/activity_attend_admin_change_item_textview_phone_number"
-                        style="@style/Content_Classification_Text_Style"
+                        style="@style/Content_Text_Style"
                         android:text="전화번호"
-                        android:textColor="@color/colorWhite"
                         android:layout_weight="2" />
 
                     <TextView
                         android:id="@+id/activity_attend_admin_change_item_textview_tardy_time"
-                        style="@style/Content_Classification_Text_Style"
+                        style="@style/Content_Text_Style"
                         android:text=""
-                        android:textColor="@color/colorWhite"
                         android:layout_weight="3" />
 
                     <ImageView

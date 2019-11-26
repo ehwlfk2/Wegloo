@@ -407,20 +407,12 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
             LinearLayout activity_attend_home_item_linearlayout;
             TextView activity_attend_home_item_textview_recyclerview_start_time;
-            TextView activity_attend_home_item_recyclerview_attend_time_limit_tilte;
-            TextView activity_attend_home_item_recyclerview_attend_time_limit;
-            TextView activity_attend_home_item_textview_recyclerview_tardy_time_limit_title;
-            TextView activity_attend_home_item_textview_recyclerview_tardy_time_limit;
 
             public CustomViewHolder2(View view) {
                 super(view);
 
                 activity_attend_home_item_linearlayout = (LinearLayout) view.findViewById(R.id.activity_attend_home_item_linearlayout);
                 activity_attend_home_item_textview_recyclerview_start_time = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_start_time);
-                activity_attend_home_item_recyclerview_attend_time_limit_tilte = (TextView) view.findViewById(R.id.activity_attend_home_item_recyclerview_attend_time_limit_tilte);
-                activity_attend_home_item_recyclerview_attend_time_limit = (TextView) view.findViewById(R.id.activity_attend_home_item_recyclerview_attend_time_limit);
-                activity_attend_home_item_textview_recyclerview_tardy_time_limit = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_tardy_time_limit);
-                activity_attend_home_item_textview_recyclerview_tardy_time_limit_title = (TextView) view.findViewById(R.id.activity_attend_home_item_textview_recyclerview_tardy_time_limit_title);
 
             }
 
@@ -553,33 +545,12 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                 case 1:
                     final AttendActivity_Admin_Home.AttendAdminHomeActivity_RecyclerViewAdapter.CustomViewHolder2 customViewHolder2 = ((AttendActivity_Admin_Home.AttendAdminHomeActivity_RecyclerViewAdapter.CustomViewHolder2) viewholder);
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_start_time.setGravity(Gravity.LEFT);
-                    customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit.setGravity(Gravity.LEFT);
-                    customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setGravity(Gravity.LEFT);
 
                     customViewHolder2.activity_attend_home_item_textview_recyclerview_start_time.setText(attendItems.get(position).startTime);
-                    customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit.setText(attendItems.get(position).attendTimeLimit);
-                    customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setText(attendItems.get(position).tardyTimeLimit);
 
                     PopupMenu(customViewHolder2, position);
 
-                    Log.e("값", uidLists.get(position));
-
-                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("Attend_Certification_Number").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(final DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getValue() == null) {
-                                customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit.setVisibility(View.GONE);
-                                customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit.setVisibility(View.GONE);
-                                customViewHolder2.activity_attend_home_item_recyclerview_attend_time_limit_tilte.setVisibility(View.GONE);
-                                customViewHolder2.activity_attend_home_item_textview_recyclerview_tardy_time_limit_title.setVisibility(View.GONE);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(final DatabaseError databaseError) {
-
-                        }
-                    });
+//                    Log.e("값", uidLists.get(position));
 
                     break;
             }
