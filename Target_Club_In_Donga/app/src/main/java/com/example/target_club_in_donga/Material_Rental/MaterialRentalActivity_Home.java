@@ -7,6 +7,8 @@ import android.app.TimePickerDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -77,6 +79,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         private ArrayAdapter<String> adapter;
         private AutoCompleteTextView material_rental_home_edittext_search;*/
     private EditText material_rental_home_edittext_search;
+    private TextView activity_material_rental_home_textview;
 
     private FirebaseAuth auth;
     private FirebaseStorage storage;
@@ -114,9 +117,12 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         progressDialog.show();
 
         activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
+        activity_material_rental_home_textview = (TextView) findViewById(R.id.activity_material_rental_home_textview);
 
         if (differFlag == 0) {
             activity_material_rental_home_button_insert.setVisibility(View.GONE);
+        } else {
+            activity_material_rental_home_textview.setText("물품 관리");
         }
 
         this.activity_material_rental_admin_item_imageview_recyclerview_image = (ImageView) findViewById(R.id.activity_material_rental_admin_item_imageview_recyclerview_image);
@@ -135,7 +141,6 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                Log.e("값", dataSnapshot.child("realNameSystem").getValue().toString());
                 if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                     admin = Integer.parseInt(dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("admin").getValue().toString());
                     if (admin > adminNumber) {
@@ -481,7 +486,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                         dateFlag = 0;
 
                                                     } else {
-                                                        Toast.makeText(v.getContext(), "이미 지난 시간은 선택할 수 없습니다", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(v.getContext(), "이미 지난 시간은 선택할 수 없습니다.", Toast.LENGTH_SHORT).show();
                                                         dateFlag = 1;
                                                     }
                                                 }
@@ -496,7 +501,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                         public void onClick(View v) {
 
                                             if (dateFlag == 0) {
-                                                Toast.makeText(v.getContext(), "대여가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(v.getContext(), "대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
                                                 ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText(uidName);
                                                 if (flag2 == 1) {
@@ -543,7 +548,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                 flag = 0;
 
                                             } else if (dateFlag == 1) {
-                                                Toast.makeText(v.getContext(), "시간을 다시 선택해주세요", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(v.getContext(), "시간을 다시 선택해주세요.", Toast.LENGTH_SHORT).show();
                                             }
 
                                         }
@@ -554,7 +559,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                 case R.id.material_turn_in:
 
-                                    Toast.makeText(MaterialRentalActivity_Home.this, "반납이 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MaterialRentalActivity_Home.this, "반납이 완료되었습니다.", Toast.LENGTH_SHORT).show();
                                     ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText("없음");
                                     if (flag2 == 1 || flag3 == 1) {
                                         database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
@@ -643,6 +648,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                     final AlertDialog dialog = builder.create();
 
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                                     confirmButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(final View v) {
@@ -654,7 +661,6 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                 flag = 0;
                                                 removeFlag = 0;
                                                 removeList = position;
-                                                Toast.makeText(MaterialRentalActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                             } else if (flag2 == 0) {
                                                 delete_content(listNumber);
                                                 listItem.remove(listNumber);
@@ -663,9 +669,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                 flag = 0;
                                                 removeFlag2 = 0;
                                                 removeList2 = listNumber;
-                                                Toast.makeText(MaterialRentalActivity_Home.this, "상품이 삭제되었습니다", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Toast.makeText(MaterialRentalActivity_Home.this, "상품 삭제 실패", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MaterialRentalActivity_Home.this, "물품 삭제 실패", Toast.LENGTH_SHORT).show();
                                             }
                                             dialog.dismiss();
                                         }
@@ -803,7 +808,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                         database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(final Void aVoid) {
-                                Toast.makeText(MaterialRentalActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MaterialRentalActivity_Home.this, "물품이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -829,7 +834,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                         database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(final Void aVoid) {
-                                Toast.makeText(MaterialRentalActivity_Home.this, "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MaterialRentalActivity_Home.this, "물품이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override

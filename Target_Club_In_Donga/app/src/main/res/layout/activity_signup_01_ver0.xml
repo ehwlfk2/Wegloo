@@ -295,7 +295,7 @@
             android:layout_height="0dp"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintVertical_bias="0.5"
-            android:textSize="13sp"
+            android:textSize="10sp"
             android:autoSizeMinTextSize="1sp"
             android:autoSizeMaxTextSize="20sp"
             android:autoSizeTextType="uniform"

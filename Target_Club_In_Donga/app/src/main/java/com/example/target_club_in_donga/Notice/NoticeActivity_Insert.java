@@ -39,8 +39,6 @@ import java.util.List;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
-import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubIsRealName;
-import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.userRealName;
 
 public class NoticeActivity_Insert extends AppCompatActivity{
 
