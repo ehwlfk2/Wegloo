@@ -212,6 +212,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
             TextView activity_attend_information_item_textview_date;
             TextView activity_attend_information_item_textview_attend_state;
             ImageView activity_attend_information_item_imageview;
+            TextView activity_attend_information_item_textview_tardy_time;
 
             public CustomViewHolder(View view) {
                 super(view);
@@ -220,6 +221,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                 activity_attend_information_item_textview_date = (TextView) view.findViewById(R.id.activity_attend_information_item_textview_date);
                 activity_attend_information_item_textview_attend_state = (TextView) view.findViewById(R.id.activity_attend_information_item_textview_attend_state);
                 activity_attend_information_item_imageview = (ImageView) view.findViewById(R.id.activity_attend_information_item_imageview);
+                activity_attend_information_item_textview_tardy_time = (TextView) view.findViewById(R.id.activity_attend_information_item_textview_tardy_time);
 
             }
 
@@ -241,6 +243,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
 
             customViewHolder.activity_attend_information_item_textview_attend_state.setText(attendAdminItems.get(position).attend_state);
             customViewHolder.activity_attend_information_item_textview_date.setText(attendAdminItems.get(position).attendTimeLimit);
+            customViewHolder.activity_attend_information_item_textview_tardy_time.setText(attendAdminItems.get(position).late_time);
             customViewHolder.activity_attend_information_item_imageview.setVisibility(View.INVISIBLE);
 
         }
