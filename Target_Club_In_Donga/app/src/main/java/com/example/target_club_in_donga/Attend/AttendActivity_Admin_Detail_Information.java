@@ -427,7 +427,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                             case R.id.attend_state_information_attend:
 
-                                activity_attend_detail_textview_attend.setText("출석현황");
+                                activity_attend_detail_textview_attend.setText("출석 현황");
 
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
@@ -469,7 +469,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                             case R.id.attend_state_information_tardy:
 
-                                activity_attend_detail_textview_attend.setText("지각현황");
+                                activity_attend_detail_textview_attend.setText("지각 현황");
 
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
@@ -514,7 +514,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
                             case R.id.attend_state_information_absent:
 
-                                activity_attend_detail_textview_attend.setText("결석현황");
+                                activity_attend_detail_textview_attend.setText("결석 현황");
 
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
@@ -627,7 +627,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                 case R.id.attend_state_information_attend:
 
                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("출석");
-                                    if (activity_attend_detail_textview_attend.getText().toString().equals("지각현황")) {
+                                    if (activity_attend_detail_textview_attend.getText().toString().equals("지각 현황")) {
                                         database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("late_time").removeValue();
                                     }
                                     popup.dismiss();
@@ -681,7 +681,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
                                 case R.id.attend_state_information_absent:
 
                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("attend_state").setValue("결석");
-                                    if (activity_attend_detail_textview_attend.getText().toString().equals("지각현황")) {
+                                    if (activity_attend_detail_textview_attend.getText().toString().equals("지각 현황")) {
                                         database.getReference().child("EveryClub").child(clubName).child("Attend").child(uidLists.get(position)).child("User_State").child(userId).child("late_time").removeValue();
                                     }
                                     popup.dismiss();

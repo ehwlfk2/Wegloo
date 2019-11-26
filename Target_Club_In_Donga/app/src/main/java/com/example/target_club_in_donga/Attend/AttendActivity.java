@@ -281,7 +281,7 @@ public class AttendActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                    activity_attend_home_textview.setText("출석 중이 아닙니다");
+                                    activity_attend_home_textview.setText("출석 중이 아니에요");
                                     activity_attend_home_linearlayout_user.setVisibility(View.GONE);
                                     activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
                                     database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -334,7 +334,7 @@ public class AttendActivity extends AppCompatActivity {
                                         public void onClick(final View v) {
                                             delete_content(snapshot2.getKey());
                                             flag4 = 1;
-                                            activity_attend_home_textview.setText("출석 중이 아닙니다");
+                                            activity_attend_home_textview.setText("출석 중이 아니에요");
                                             activity_attend_home_linearlayout_user.setVisibility(View.GONE);
                                             activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
                                             database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -389,16 +389,16 @@ public class AttendActivity extends AppCompatActivity {
                         });
                     }
 
-                    if (flag4 == 1) {
-                        activity_attend_home_textview.setText("출석 중이 아닙니다");
+/*                    if (flag4 == 1) {
+                        activity_attend_home_textview.setText("출석 중이 아니에요");
                         activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
                         activity_attend_home_linearlayout_user.setVisibility(View.GONE);
                         activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
-                    }
+                    }*/
 
                     flag3 = 0;
                 } else {
-                    activity_attend_home_textview.setText("출석 중이 아닙니다");
+                    activity_attend_home_textview.setText("출석 중이 아니에요");
                     activity_attend_home_linearlayout_user.setVisibility(View.GONE);
                     activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
                     database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
