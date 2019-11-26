@@ -155,7 +155,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
             }
         });
 
-        if (flag == 0) {
+//        if (flag == 0) {
             database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -211,7 +211,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
                 }
             });
-        }
+//        }
 
         activity_attend_admin_information_home_category.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -377,6 +377,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
         AutoCompleteTextView attend_admin_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.attend_admin_information_home_edittext_search);
         attend_admin_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, memberList));
+
     }
 
     // AttendAdminHomeActivity 어댑터
