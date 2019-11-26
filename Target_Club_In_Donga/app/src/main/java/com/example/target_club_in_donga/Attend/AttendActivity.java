@@ -108,9 +108,10 @@ public class AttendActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
+                admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
                 if (admin > adminNumber) {
                     activity_attend_home_admin_button_insert.setVisibility(View.GONE);
                 }
@@ -152,7 +153,7 @@ public class AttendActivity extends AppCompatActivity {
 
                                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addValueEventListener(new ValueEventListener() {
+                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).child("User_State").child(auth.getCurrentUser().getUid()).child("attend_state").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(final DataSnapshot dataSnapshot) {
                                             if (dataSnapshot.getValue() != null) {
@@ -177,7 +178,7 @@ public class AttendActivity extends AppCompatActivity {
 
                                             if (EditCertificationNumber.getBytes().length > 0) {
                                                 getEditCertificationNumber = Integer.parseInt(activity_attend_check_edittext_certification_number.getText().toString());
-                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).addValueEventListener(new ValueEventListener() {
+                                                database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                                         getCertificationNumber = dataSnapshot.child("Attend_Certification_Number").getValue().toString();
@@ -244,56 +245,6 @@ public class AttendActivity extends AppCompatActivity {
                                 }
                             });
 
-                            activity_attend_home_button_datail.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(final View v) {
-                                    Intent intent = new Intent(AttendActivity.this, AttendActivity_Detail_Information.class);
-                                    uidPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).getKey();
-                                    intent.putExtra("uidPath", uidPath);
-                                    intent.putExtra("checkPage", 1);
-
-                                    startActivity(intent);
-                                }
-                            });
-
-                            activity_attend_home_button_cancel.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(final View v) {
-                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(AttendActivity.this);
-
-                                    View view2 = LayoutInflater.from(AttendActivity.this)
-                                            .inflate(R.layout.activity_attend_admin_delete, null, false);
-                                    builder2.setView(view2);
-
-                                    final Button confirmButton = (Button) view2.findViewById(R.id.activity_attend_admin_delete_item_button_confirm);
-                                    final Button cancelButton = (Button) view2.findViewById(R.id.activity_attend_admin_delete_item_button_cancel);
-
-                                    final AlertDialog dialog2 = builder2.create();
-
-                                    dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                                    confirmButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(final View v) {
-                                            delete_content(snapshot2.getKey());
-                                            flag4 = 1;
-                                            dialog2.dismiss();
-                                        }
-                                    });
-
-                                    cancelButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(final View v) {
-                                            dialog2.dismiss();
-                                        }
-                                    });
-
-                                    dialog2.show();
-
-                                }
-
-                            });
-
                             getTardyTimeLimit = snapshot2.child("tardyTimeLimit").getValue(String.class);
                             if (getTardyTimeLimit != null) {
                                 now = System.currentTimeMillis();
@@ -330,8 +281,92 @@ public class AttendActivity extends AppCompatActivity {
 
                                         }
                                     });
+                                    activity_attend_home_textview.setText("출석 중이 아닙니다");
+                                    activity_attend_home_linearlayout_user.setVisibility(View.GONE);
+                                    activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
+                                    database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                                            if (admin <= adminNumber) {
+                                                activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(final DatabaseError databaseError) {
+
+                                        }
+                                    });
                                 }
                             }
+
+                            activity_attend_home_button_datail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(final View v) {
+                                    Intent intent = new Intent(AttendActivity.this, AttendActivity_Detail_Information.class);
+                                    uidPath = database.getReference().child("EveryClub").child(clubName).child("Attend").child(snapshot2.getKey()).getKey();
+                                    intent.putExtra("uidPath", uidPath);
+                                    intent.putExtra("checkPage", 1);
+
+                                    startActivity(intent);
+                                }
+                            });
+
+                            activity_attend_home_button_cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(final View v) {
+                                    AlertDialog.Builder builder2 = new AlertDialog.Builder(AttendActivity.this);
+
+                                    View view2 = LayoutInflater.from(AttendActivity.this)
+                                            .inflate(R.layout.activity_attend_admin_delete, null, false);
+                                    builder2.setView(view2);
+
+                                    final Button confirmButton = (Button) view2.findViewById(R.id.activity_attend_admin_delete_item_button_confirm);
+                                    final Button cancelButton = (Button) view2.findViewById(R.id.activity_attend_admin_delete_item_button_cancel);
+
+                                    final AlertDialog dialog2 = builder2.create();
+
+                                    dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                                    confirmButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            delete_content(snapshot2.getKey());
+                                            flag4 = 1;
+                                            activity_attend_home_textview.setText("출석 중이 아닙니다");
+                                            activity_attend_home_linearlayout_user.setVisibility(View.GONE);
+                                            activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
+                                            database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                    admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                                                    if (admin <= adminNumber) {
+                                                        activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(final DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                            dialog2.dismiss();
+                                        }
+                                    });
+
+                                    cancelButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            dialog2.dismiss();
+                                        }
+                                    });
+
+                                    dialog2.show();
+
+                                }
+
+                            });
 
                         }
 
@@ -355,13 +390,32 @@ public class AttendActivity extends AppCompatActivity {
                     }
 
                     if (flag4 == 1) {
-                        activity_attend_home_textview.setText("출석중이 아닙니다");
+                        activity_attend_home_textview.setText("출석 중이 아닙니다");
                         activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
                         activity_attend_home_linearlayout_user.setVisibility(View.GONE);
                         activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
                     }
 
                     flag3 = 0;
+                } else {
+                    activity_attend_home_textview.setText("출석 중이 아닙니다");
+                    activity_attend_home_linearlayout_user.setVisibility(View.GONE);
+                    activity_attend_home_linearlayout_admin.setVisibility(View.GONE);
+                    database.getReference().child("EveryClub").child(clubName).child("User").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(final DataSnapshot dataSnapshot) {
+                            admin = Integer.parseInt(dataSnapshot.child("admin").getValue().toString());
+                            if (admin <= adminNumber) {
+                                activity_attend_home_admin_button_insert.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(final DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
 
             }
@@ -479,12 +533,12 @@ public class AttendActivity extends AppCompatActivity {
                             // 회원 가입한 날짜와 현재 날짜를 비교해서 출석을 시작 하고 난 후에 회원가입을 하면 그 전에 했던 출석에 포함되지 않아야 한다.
 
 
-                            database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
+                            database.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                                         for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
-                                            database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
+                                            database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(final DataSnapshot dataSnapshot) {
                                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
