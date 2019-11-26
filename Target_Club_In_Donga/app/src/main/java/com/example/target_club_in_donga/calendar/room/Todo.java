@@ -15,17 +15,7 @@ public class Todo {
     private long timeStamp;
 
     // Constructor
-<<<<<<< HEAD
     public Todo(String title, boolean isChecked, long timeStamp) { this.title = title; this.isChecked = isChecked; this.timeStamp = timeStamp; }
-=======
-    public Todo(){
-
-    }
-    public Todo(String title, boolean isChecked) {
-        this.title = title;
-        this.isChecked = isChecked;
-    }
->>>>>>> b7aae3d7f26bc483964c37dc8ba07d4b33c5b205
 
     // 내용을 확인할 수 있도록 재정의
     @Override
