@@ -62,7 +62,8 @@
             </intent-filter>
         </activity> <!-- <activity android:name=".AttendActivity.AttendActivity_Admin" /> -->
         <activity android:name=".Attend.AttendActivity_Detail_Information" />
-        <activity android:name=".Attend.AttendActivity_Admin_Home" />
+        <activity android:name=".Attend.AttendActivity_Admin_Home"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".Attend.AttendActivity_Admin_Detail_Information" />
         <activity android:name=".Attend.AttendActivity" />
         <activity android:name=".menu.AttendActivity_MyInformation" />

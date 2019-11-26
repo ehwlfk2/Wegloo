@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -80,6 +81,7 @@ public class AttendActivity extends AppCompatActivity {
     private TextView activity_attend_home_textview;
     private Button activity_attend_home_button_attend, activity_attend_home_button_datail, activity_attend_home_button_number, activity_attend_home_button_cancel;
     private LinearLayout activity_attend_home_linearlayout_user, activity_attend_home_linearlayout_admin;
+    private ImageButton activity_attend_home_imagebutton_back;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -101,6 +103,15 @@ public class AttendActivity extends AppCompatActivity {
 
         activity_attend_home_linearlayout_user = (LinearLayout) findViewById(R.id.activity_attend_home_linearlayout_user);
         activity_attend_home_linearlayout_admin = (LinearLayout) findViewById(R.id.activity_attend_home_linearlayout_admin);
+
+        activity_attend_home_imagebutton_back = (ImageButton) findViewById(R.id.activity_attend_home_imagebutton_back);
+
+        activity_attend_home_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         progressDialog = new ProgressDialog(AttendActivity.this);
 
@@ -446,6 +457,8 @@ public class AttendActivity extends AppCompatActivity {
                 final Button activity_attend_admin_button_attendance_start = (Button) view.findViewById(R.id.activity_attend_admin_button_attendance_start);
 
                 final AlertDialog dialog = builder.create();
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 now = System.currentTimeMillis();
                 // 현재시간을 date 변수에 저장한다.
