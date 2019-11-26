@@ -152,6 +152,7 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
                 });
                 if(item.visCheck){
                     itemController.item_request_layout.setVisibility(View.GONE);
+                    notifyDataSetChanged();
                 }
 
                 break;

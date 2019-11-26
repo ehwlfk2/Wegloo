@@ -115,21 +115,25 @@ public class ClubSelectedFragment0 extends Fragment implements View.OnClickListe
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppLoginData appLoginData = dataSnapshot.getValue(AppLoginData.class);
-                profile_username_App.setText(appLoginData.getName());
-                profile_phoneNumber_App.setText(appLoginData.getPhone());
-                if (getActivity() != null) {
-                    Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail_App);
-                }
-                /*
-                try{
+//                profile_username_App.setText(appLoginData.getName());
+//                profile_phoneNumber_App.setText(appLoginData.getPhone());
+//                if (getActivity() != null) {
+//                    Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail_App);
+//                }
 
+                try{
+                    profile_username_App.setText(appLoginData.getName());
+                    profile_phoneNumber_App.setText(appLoginData.getPhone());
+                    if (getActivity() != null) {
+                    Glide.with(getActivity()).load(appLoginData.getRealNameProPicUrl()).into(profile_thumbnail_App);
+                    }
 
                 }
                 catch (NullPointerException e){
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
                     getActivity().finish();
-                }*/
+                }
 
             }
 
