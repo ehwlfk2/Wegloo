@@ -69,6 +69,13 @@ public class VoteActivity_Main extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(isTaskRoot()){
+                    Intent intent = new Intent(VoteActivity_Main.this, HomeActivityView.class);
+                    intent.putExtra("isRecent",true);
+                    startActivity(intent);
+                    finish();
+                    //// This is last activity
+                }
                 finish();
             }
         });
