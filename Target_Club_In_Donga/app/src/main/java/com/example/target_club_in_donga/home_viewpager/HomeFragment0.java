@@ -340,9 +340,9 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
                     @Override
                     public void onCompleteLogout() {
                         FirebaseAuth.getInstance().signOut();
-                        LoginManager.getInstance().logOut();
                     }
                 });
+                LoginManager.getInstance().logOut();
                 Intent intent3 = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent3);
                 getActivity().finish();

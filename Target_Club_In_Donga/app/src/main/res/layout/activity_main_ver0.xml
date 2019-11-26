@@ -378,19 +378,19 @@
 
         <ImageView
             android:id="@+id/home_button_quick"
-            android:layout_width="0dp"
+            android:layout_width="40dp"
 
-            android:layout_height="0dp"
-            android:background="@drawable/ic_icon_backbutton_ver0"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_keyboard_arrow_right_24px_orange"
             app:layout_constraintBottom_toBottomOf="@+id/home_textview_new_notice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintHorizontal_bias="0.872"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="@+id/home_textview_new_notice"
-            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="0.1" />
 
