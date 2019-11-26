@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true">
+
+    <!--
+    duration: 지속시간
+    interpolator: 애니메이션 속성, <linearInterpolator>: 변화율이 일정하고 속성은 없습니다.
+
+    -->
+    <scale
+        android:duration="300"
+        android:fromXScale="0.0"
+        android:fromYScale="0.0"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="0.8"
+        android:toYScale="0.8"
+        />
+
+    <!--
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        변화율은 느리게 시작하고 끝나지만 중간에 가속됩니다.
+        속성이 없습니다.
+    -->
+    <alpha
+        android:duration="300"
+        android:fromAlpha="0.0"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:toAlpha="1.0"
+        />
+</set>

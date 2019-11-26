@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="model"
+            type="com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarInsertViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/activity_calendar_day_recyclerViewFrameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/calendar_rounding"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent="0.65"
+
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent="0.9">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dayData_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/activity_calendar_day_insertDayData_fab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="195dp"
+                android:layout_marginEnd="15sp"
+                android:src="@drawable/ic_add"
+                android:visibility="invisible"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+
+                fab:fab_colorNormal="@color/colorYellow"
+                fab:fab_colorPressed="@color/colorApricot"
+                fab:fab_colorRipple="@color/colorRed" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/activity_calendar_day_insertDayData_fab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="135dp"
+                android:layout_marginEnd="15sp"
+                android:src="@drawable/ic_add"
+                android:visibility="invisible"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+
+                fab:fab_colorNormal="@color/colorYellow"
+                fab:fab_colorPressed="@color/colorApricot"
+                fab:fab_colorRipple="@color/colorRed" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/activity_calendar_day_insertDayData_fab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="75dp"
+                android:layout_marginEnd="15sp"
+                android:src="@drawable/ic_add"
+                android:visibility="invisible"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"
+
+                fab:fab_colorNormal="@color/colorYellow"
+                fab:fab_colorPressed="@color/colorApricot"
+                fab:fab_colorRipple="@color/colorRed" />
+
+            <!--
+            android:backgroundTint: 버튼 색을 변경
+            android:pressedTranslationZ: 버튼 클릭시 그림자 범위
+            android:elevation: 액티비티 바탁부터 버튼까지의 높이
+            -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/activity_calendar_day_insertDayData_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="15sp"
+                android:src="@drawable/ic_add"
+
+                fab:fab_colorNormal="@color/colorYellow"
+                fab:fab_colorPressed="@color/colorApricot"
+                fab:fab_colorRipple="@color/colorRed" />
+
+        </FrameLayout>
+        <!-- testing code - begin
+        <TextView
+            android:id="@+id/activity_calendar_day_checkData_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{model.todos.toString()}"
+            tools:text="CheckData_position"
+            android:scrollbars="vertical"
+
+            android:layout_gravity="center"
+            android:textColor="@color/colorRed"
+
+            app:layout_constraintTop_toBottomOf="@id/activity_calendar_day_recyclerViewFrameLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        -->
+
+        <TextView
+            android:id="@+id/activity_calendar_day_checkData_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="CheckData_position"
+            android:scrollbars="vertical"
+
+            android:layout_gravity="center"
+            android:textColor="@color/colorRed"
+
+            app:layout_constraintBottom_toTopOf="@id/activity_calendar_day_recyclerViewFrameLayout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+        <!--
+        <Button
+            android:id="@+id/activity_calendar_day_CheckedDelete_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/activity_calendar_day_checkData_TextView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/activity_calendar_day_checkData_TextView"
+            />
+            -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

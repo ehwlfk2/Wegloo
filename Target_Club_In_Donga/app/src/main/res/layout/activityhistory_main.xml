@@ -2,16 +2,28 @@
 <LinearLayout android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+    <ImageButton
+        android:id="@+id/historymain_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/ic_keyboard_arrow_left_24px"
+        android:layout_alignParentLeft="true"/>
     <TextView
-        android:text="우리 동아리 연혁"
-        android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:layout_height="60dp"
-        android:gravity="center_horizontal" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="연혁"
+        android:textColor="#0C0B0B"
+        android:textSize="20dp" />
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -39,7 +51,9 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
         <ListView
             android:id="@+id/activityhistory_main_listview"
             android:layout_width="match_parent"
@@ -50,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/ic_add"
             android:id="@+id/activityhistory_main_button_intent"
             fab:fab_colorNormal="@color/default_color"

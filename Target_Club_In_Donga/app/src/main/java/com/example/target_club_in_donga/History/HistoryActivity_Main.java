@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -77,6 +78,13 @@ public class HistoryActivity_Main extends AppCompatActivity {
 
         //requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
 
+        ImageButton back = findViewById(R.id.historymain_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         activityhistory_main_imageview_export = (ImageView)findViewById(R.id.activityhistory_main_imageview_export);
         activityhistory_main_linearlayout = (LinearLayout)findViewById(R.id.activityhistory_main_linearlayout);
 

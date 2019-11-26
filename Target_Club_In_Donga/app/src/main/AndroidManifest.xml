@@ -83,13 +83,18 @@
         <activity android:name=".Notice.NoticeActivity_Insert" />
         <activity android:name=".Notice.NoticeActivity_Main" />
         <activity android:name=".Board.Board_viewpager" />
-        <activity android:name=".Board.Board_Detail" />
+        <activity android:name=".Board.Board_Detail"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".Board.Board_Write" />
         <activity android:name=".Board.Board_Main" />
         <activity android:name=".MemberList.MemberList" />
         <activity android:name=".TimeLine.TimeLineActivity_Main" />
         <activity android:name=".menu.MyInformation" />
         <activity android:name=".menu.MyInformationApp" />
+
+        <activity android:name=".calendar.Calendar"/>
+        <activity android:name=".calendar.CalendarDay"/>
+        <activity android:name=".calendar.CalendarDayInsertTodo"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

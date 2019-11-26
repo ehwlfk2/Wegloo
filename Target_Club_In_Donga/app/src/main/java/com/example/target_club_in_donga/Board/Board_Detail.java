@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +77,6 @@ public class Board_Detail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_detail);
-        detail_back = findViewById(R.id.board_detail_back_btn);
         edt_menu = findViewById(R.id.board_detail_3dotmenu);
         name = findViewById(R.id.board_detail_name);
         timestamp = findViewById(R.id.board_detail_timestamp);
@@ -106,12 +106,6 @@ public class Board_Detail extends AppCompatActivity {
 
         Intent intent = getIntent();
         getkey = intent.getStringExtra("key");
-        detail_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         upload_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

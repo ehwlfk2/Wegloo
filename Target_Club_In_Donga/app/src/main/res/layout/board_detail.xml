@@ -27,16 +27,16 @@
 
     <ImageButton
         android:id="@+id/board_detail_3dotmenu"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
         android:visibility="gone"
         android:background="@drawable/ic_menu_3dot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.963"
+        app:layout_constraintHorizontal_bias="0.958"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintVertical_bias="0.059" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/board_detail_user_imageView"
@@ -106,7 +106,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/board_detail_timestamp"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintVertical_bias="0.028" />
+
     <EditText
         android:id="@+id/board_edit_title"
         android:layout_width="0dp"
@@ -194,20 +195,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/board_comment_recy"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_detail_recy" />
+        app:layout_constraintTop_toBottomOf="@+id/board_detail_recy"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/board_comment"
@@ -215,17 +218,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/board_comment_recy"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
         <EditText
             android:id="@+id/board_comment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="30dp"
             android:background="@null"
-            android:hint="댓글을 입력하세요."
+            android:hint="  댓글을 입력하세요."
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/board_comment_upload"
             app:layout_constraintHorizontal_bias="0.066"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -233,13 +236,11 @@
 
         <ImageView
             android:id="@+id/board_comment_upload"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
-            android:src="@drawable/comment_input"
+            android:src="@drawable/done_icon_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.954"
-            app:layout_constraintStart_toEndOf="@+id/board_comment"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.466" />
     </androidx.constraintlayout.widget.ConstraintLayout>
