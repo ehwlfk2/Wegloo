@@ -39,6 +39,7 @@ import java.util.List;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeFragment0.thisClubName;
 
 public class NoticeActivity_Insert extends AppCompatActivity{
 
@@ -180,7 +181,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
 
                                 if(activity_notice_insert_switch.isChecked()){
                                     SendPushMessages send = new SendPushMessages();
-                                    send.multipleSendMessage("공지사항이 추가되었습니다.",title, "Notice");
+                                    send.multipleSendMessage(thisClubName,"공지사항이 추가되었습니다.", "Notice");
                                 }
                                 Toast.makeText(NoticeActivity_Insert.this, "공지사항이 추가되었습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -203,7 +204,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         database.getReference().child("EveryClub").child(clubName).child("Notice").child(dbKey).setValue(notice_item);
                         if(activity_notice_insert_switch.isChecked()){
                             SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage("공지사항이 수정되었습니다.",title, "Notice");
+                            send.multipleSendMessage(thisClubName,"공지사항이 추가되었습니다.", "Notice");
                         }
                         Toast.makeText(NoticeActivity_Insert.this, "공지사항이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(NoticeActivity_Insert.this, NoticeActivity_Main.class);

@@ -14,6 +14,9 @@ public class Todo {
     private String title;
 
     // Constructor
+    public Todo(){
+
+    }
     public Todo(String title, boolean isChecked) {
         this.title = title;
         this.isChecked = isChecked;
