@@ -3,13 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:background="@drawable/layout_rounded"
+    android:layout_margin="15dp">
 
     <TextView
-        style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/logoin_button_ver0"
-        android:textColor="@color/color_White"
-        android:text="출석시간" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#0C0B0B"
+        android:gravity="center"
+        android:text="출석 체크를 할 시간"
+        android:layout_marginBottom="15dp"/>
 
     <RadioGroup
         android:id="@+id/activity_attend_admin_radiogroup_attend"
@@ -20,33 +24,38 @@
         <RadioButton
             android:id="@+id/activity_attend_admin_radiobutton_attend_5_min"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5분"
+            android:layout_height="50dp"
+            android:text="5분 동안"
+            android:textSize="18dp"
             android:layout_weight="1"/>
 
         <RadioButton
             android:id="@+id/activity_attend_admin_radiobutton_attend_10_min"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10분"
+            android:layout_height="50dp"
+            android:text="10분 동안"
+            android:textSize="18dp"
             android:layout_weight="1"/>
 
         <RadioButton
             android:id="@+id/activity_attend_admin_radiobutton_attend_15_min"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15분"
+            android:layout_height="50dp"
+            android:text="15분 동안"
+            android:textSize="18dp"
             android:layout_weight="1"/>
     </RadioGroup>
 
-    <View
-        style="@style/Line_Style" />
 
     <TextView
-        style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/logoin_button_ver0"
-        android:textColor="@color/color_White"
-        android:text="지각시간 (+ 출석시간)" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="#0C0B0B"
+        android:gravity="center"
+        android:text="출석 후, 지각 시간"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp" />
 
     <RadioGroup
         android:id="@+id/activity_attend_admin_radiogroup_tardy"
@@ -54,35 +63,57 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/activity_attend_admin_radiobutton_tardy_10_min"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10분"
-                android:layout_weight="1"/>
+        <RadioButton
+            android:id="@+id/activity_attend_admin_radiobutton_tardy_10_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10분 내"
+            android:textSize="16dp"
+            android:layout_weight="1"/>
 
-            <RadioButton
-                android:id="@+id/activity_attend_admin_radiobutton_tardy_20_min"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20분"
-                android:layout_weight="1"/>
+        <RadioButton
+            android:id="@+id/activity_attend_admin_radiobutton_tardy_20_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20분 내"
+            android:textSize="16dp"
+            android:layout_weight="1"/>
 
-            <RadioButton
-                android:id="@+id/activity_attend_admin_radiobutton_tardy_30_min"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="30분"
-                android:layout_weight="1"/>
+        <RadioButton
+            android:id="@+id/activity_attend_admin_radiobutton_tardy_30_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30분 내"
+            android:textSize="16dp"
+            android:layout_weight="1"/>
     </RadioGroup>
 
-    <View style="@style/Line_Style" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="18dp"
+            android:paddingTop="15dp"
+            android:textStyle="bold"
+            android:background="#00000000"
+            android:textColor="@color/color_MainColor"/>
+        <Button
+            android:id="@+id/activity_attend_admin_button_attendance_start"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:text="확인"
+            android:textStyle="bold"
+            android:paddingTop="15dp"
+            android:textSize="18dp"
+            android:background="#00000000"
+            android:textColor="@color/color_MainColor"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/activity_attend_admin_button_attendance_start"
-        style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/logoin_button_ver0"
-        android:textColor="@color/color_White"
-        android:text="출석 시작" />
 
 </LinearLayout>

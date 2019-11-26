@@ -10,37 +10,36 @@
         style="@style/Content_Text_Style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="출석을 제거하시겠습니까?" />
+        android:layout_marginBottom="25dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:text="출석을 끝낼까요?" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
+        android:weightSum="1">
         <Button
             android:id="@+id/activity_attend_admin_delete_item_button_cancel"
-            style="@style/Content_Classification_Text_Style"
-            android:background="@drawable/logoin_button_ver0"
-            android:textColor="@color/color_White"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:text="취소"
-            android:layout_centerHorizontal="true"/>
-
+            android:textSize="18dp"
+            android:paddingTop="15dp"
+            android:textStyle="bold"
+            android:background="#00000000"
+            android:textColor="@color/color_MainColor"/>
         <Button
             android:id="@+id/activity_attend_admin_delete_item_button_confirm"
-            style="@style/Content_Classification_Text_Style"
-            android:background="@drawable/logoin_button_ver0"
-            android:textColor="@color/color_White"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:text="확인"
-            android:layout_toRightOf="@+id/activity_attend_admin_delete_item_button_cancel"/>
-
-
-    </RelativeLayout>
+            android:textStyle="bold"
+            android:paddingTop="15dp"
+            android:textSize="18dp"
+            android:background="#00000000"
+            android:textColor="@color/color_MainColor"/>
+    </LinearLayout>
 </LinearLayout>

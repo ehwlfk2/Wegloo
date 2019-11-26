@@ -1,10 +1,10 @@
 package com.example.target_club_in_donga.Attend;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -65,6 +65,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     private long now;
 
     public static String uidAdminPath;
+    public static Activity activity;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -86,6 +87,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
         activity_attend_admin_information_home_recyclerview_main_list.setAdapter(attendAdminHomeActivity_recyclerViewAdapter);
         attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
+
+        activity = AttendActivity_Admin_Home.this;
 
         database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
             @Override

@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.target_club_in_donga.MainActivity;
 import com.example.target_club_in_donga.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -543,10 +544,12 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         if (menu_count > 0) {
-            activity_attend_detail_slidingdrawer.animateClose();
-        } else {
-            finish();
+            AttendActivity_Admin_Home attendActivityAdminHome = (AttendActivity_Admin_Home) AttendActivity_Admin_Home.activity;
+            attendActivityAdminHome.finish();
+            Intent intent = new Intent(AttendActivity_Detail_Information.this,AttendActivity_Admin_Home.class);
+            startActivity(intent);
         }
     }
 
