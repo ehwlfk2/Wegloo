@@ -91,6 +91,11 @@
         <activity android:name=".menu.MyInformation" />
         <activity android:name=".menu.MyInformationApp" />
 
+        <activity android:name=".calendar.Calendar"/>
+        <activity android:name=".calendar.CalendarDay"/>
+        <activity android:name=".calendar.CalendarInsert"/>
+        <activity android:name=".calendar.CalendarDayInsertTodo"/>
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
