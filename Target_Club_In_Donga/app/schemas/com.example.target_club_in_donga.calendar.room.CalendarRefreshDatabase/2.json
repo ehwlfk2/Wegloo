@@ -1,0 +1,40 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "48fdc8d1d3f9cc9cc06d0537a5eb3b17",
+    "entities": [
+      {
+        "tableName": "RefreshKey",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idString` TEXT, `refreshKey` INTEGER NOT NULL, PRIMARY KEY(`idString`))",
+        "fields": [
+          {
+            "fieldPath": "idString",
+            "columnName": "idString",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "refreshKey",
+            "columnName": "refreshKey",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idString"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '48fdc8d1d3f9cc9cc06d0537a5eb3b17')"
+    ]
+  }
+}
