@@ -25,13 +25,6 @@
             android:text="출석하기"
             android:textColor="#0C0B0B"
             android:textSize="20dp" />
-        <ImageButton
-            android:id="@+id/myinfo_confirm"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="15dp"
-            android:background="@drawable/done_icon_black"
-            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

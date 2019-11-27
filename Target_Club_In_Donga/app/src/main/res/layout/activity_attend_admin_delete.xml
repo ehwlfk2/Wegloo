@@ -18,6 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:weightSum="1">
         <Button
             android:id="@+id/activity_attend_admin_delete_item_button_cancel"

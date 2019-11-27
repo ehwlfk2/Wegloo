@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
+import static com.example.target_club_in_donga.home_viewpager.HomeActivityView.viewAdapter;
 
 
 public class TimeLineFragment0 extends Fragment {
@@ -52,7 +54,13 @@ public class TimeLineFragment0 extends Fragment {
         recyclerView = view.findViewById(R.id.activity_timeline_main_recyclerview);
         recyclerView.setHasFixedSize(true);//각 아이템이 보여지는 것을 일정하게
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));//앞서 선언한 리싸이클러뷰를 레이아웃메니저에 붙힌다
-
+        ImageButton back = view.findViewById(R.id.timelinemain_back_btn);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAdapter.homeCurrent();
+            }
+        });
         adapter = new TimeLineFragment0_RecyclerviewAdapter(getContext(), list);//앞서 만든 리스트를 어뎁터에 적용시켜 객체를 만든다.
         recyclerView.setAdapter(adapter);// 그리고 만든 겍체를 리싸이클러뷰에 적용시킨다.
 
