@@ -1,5 +1,6 @@
 package com.example.target_club_in_donga.calendar;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.target_club_in_donga.R;
+import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.ui.adapter.CalendarAdapter;
 import com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarListViewModel;
 import com.example.target_club_in_donga.databinding.CalendarListBinding;
+
+import java.util.List;
 
 public class Calendar extends AppCompatActivity implements View.OnClickListener{
     private CalendarListBinding binding;
@@ -33,7 +37,7 @@ public class Calendar extends AppCompatActivity implements View.OnClickListener{
 
         observe();
         if (model != null) {
-            model.initCalendarList();
+            model.initCalendarList(this);
         }
     }
 
@@ -46,6 +50,7 @@ public class Calendar extends AppCompatActivity implements View.OnClickListener{
                 /*
                  * TODO insert refresh action
                  */
+                model.refreshDB();
                 break;
         }
     }
