@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey;
 
 
 @Entity
+public
 class RefreshKey {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -12,7 +13,7 @@ class RefreshKey {
     private String clubName;
 
     // 생성자
-    RefreshKey(int refreshKey, String clubName) {
+    public RefreshKey(int refreshKey, String clubName) {
         this.refreshKey = refreshKey;
         this.clubName = clubName;
     }

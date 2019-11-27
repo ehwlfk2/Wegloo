@@ -16,7 +16,10 @@ public interface RefreshKeyDao {
     List<RefreshKey> getAll();
 
     @Query("SELECT refreshKey FROM RefreshKey WHERE clubName LIKE :clubName")
-    int findByIdString(String clubName);
+    int[] findKeyByClubName(String clubName);
+
+    @Query("SELECT * FROM RefreshKey WHERE clubName LIKE :clubName")
+    RefreshKey loadByClubName(String clubName);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(RefreshKey refreshKey);
