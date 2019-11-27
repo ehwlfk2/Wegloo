@@ -455,10 +455,18 @@ public class AttendActivity extends AppCompatActivity {
                 final RadioGroup activity_attend_admin_radiogroup_attend = (RadioGroup) view.findViewById(R.id.activity_attend_admin_radiogroup_attend);
                 final RadioGroup activity_attend_admin_radiogroup_tardy = (RadioGroup) view.findViewById(R.id.activity_attend_admin_radiogroup_tardy);
                 final Button activity_attend_admin_button_attendance_start = (Button) view.findViewById(R.id.activity_attend_admin_button_attendance_start);
+                final Button activity_attend_admin_button_attendance_cancel = (Button) view.findViewById(R.id.activity_attend_admin_button_attendance_cancel);
 
                 final AlertDialog dialog = builder.create();
 
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                activity_attend_admin_button_attendance_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        dialog.dismiss();
+                    }
+                });
 
                 now = System.currentTimeMillis();
                 // 현재시간을 date 변수에 저장한다.

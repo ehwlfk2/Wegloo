@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
@@ -91,12 +92,12 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
     private ImageButton activity_material_rental_home_imagebutton_back;
 
     private long now;
-    private String formatDate, formatHour, formatMin, startDate;
+    private String formatDate, formatHour, formatMin, startDate, nowDate;
     private String dateStr, timeStr, date_Now, date_End, date_Return;
 
     private String findkey, uidName, uidAdminPath;
 
-    private int admin, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0, differFlag/*, listSize, materialListSize, listSizeFlag = 0*/, removeFlag = 1, removeFlag2 = 1, removeList, removeList2;
+    private int admin, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0, differFlag, removeFlag = 1, removeFlag2 = 1, removeList, removeList2, timeLimitFlag = 0;
     private static int adminNumber = 2;
 
     private ProgressDialog progressDialog;
@@ -410,14 +411,6 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_rental_item_name);
                                     final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_rental_renter);
                                     final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_rental_imageview_image);
-                                    final ImageButton activity_material_rental_imagebutton_back = (ImageButton) view2.findViewById(R.id.activity_material_rental_imagebutton_back);
-
-                                    activity_material_rental_imagebutton_back.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(final View v) {
-                                            finish();
-                                        }
-                                    });
 
                                     detailTextID.setText(materialRentalItems.get(position).title);
                                     detailTextName.setText(uidName);
@@ -457,18 +450,28 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                     d = dayOfMonth;
                                                     monthInt = month;
                                                     dayOfMonthInt = dayOfMonth;
+                                                    Date now = new Date();
 
-                                                    if (month < 9)
-                                                        dateStr = year + "-0" + (month + 1) + "-";
-                                                    else
-                                                        dateStr = year + "-" + (month + 1) + "-";
+                                                    Date currentTime = Calendar.getInstance().getTime();
+                                                    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+                                                    String currentYear = yearFormat.format(currentTime);
 
-                                                    if (dayOfMonth < 10)
-                                                        dateStr += ("0" + dayOfMonth);
-                                                    else
-                                                        dateStr += dayOfMonth;
+                                                    if ((year > Integer.parseInt(currentYear) || month > now.getMonth() || dayOfMonth > now.getDate()) || (year == Integer.parseInt(currentYear) && month == now.getMonth() && dayOfMonth == now.getDate() && (h > now.getHours() || (h == now.getHours() && mi > now.getMinutes())) ) ) {
+                                                        if (month < 9)
+                                                            dateStr = year + "-0" + (month + 1) + "-";
+                                                        else
+                                                            dateStr = year + "-" + (month + 1) + "-";
 
-                                                    detailButtonPeriodCalendar.setText(dateStr);
+                                                        if (dayOfMonth < 10)
+                                                            dateStr += ("0" + dayOfMonth);
+                                                        else
+                                                            dateStr += dayOfMonth;
+
+                                                        detailButtonPeriodCalendar.setText(dateStr);
+                                                    } else {
+                                                        Toast.makeText(v.getContext(), "이미 지난 시간은 선택할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                                        dateFlag = 1;
+                                                    }
 
                                                 }
                                             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -489,7 +492,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                     mi = minute;
                                                     Date now = new Date();
 
-                                                    if ((monthInt > now.getMonth() || dayOfMonthInt > now.getDay()) || (hourOfDay > now.getHours() || hourOfDay >= now.getHours() && minute > now.getMinutes())) {
+                                                    if ((monthInt > now.getMonth() || dayOfMonthInt > now.getDate()) || (hourOfDay > now.getHours() || (hourOfDay == now.getHours() && minute > now.getMinutes()))) {
                                                         if (hourOfDay < 10)
                                                             timeStr = "0" + hourOfDay;
                                                         else
@@ -517,6 +520,21 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                     detailButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
+
+                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                            // "yyyy-MM-dd HH:mm"
+                                            nowDate = simpleDateFormat.format(date);
+                                            Date d_nowDate = simpleDateFormat.parse(nowDate, new ParsePosition(0));
+                                            Date d_dateStr = simpleDateFormat.parse(dateStr, new ParsePosition(0));
+
+                                            long calDate = d_dateStr.getTime() - d_nowDate.getTime();
+                                            long calDateDays = calDate / (24 * 60 * 60 * 1000);
+
+                                            calDateDays = Math.abs(calDateDays);
+
+                                            if (calDateDays > 30) {
+                                                Toast.makeText(v.getContext(), "한달을 초과하여 빌릴 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                            }
 
                                             if (dateFlag == 0) {
                                                 Toast.makeText(v.getContext(), "대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();

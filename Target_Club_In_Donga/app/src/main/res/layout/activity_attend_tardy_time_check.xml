@@ -50,5 +50,4 @@
             android:background="#00000000"
             android:textColor="@color/color_MainColor"/>
     </LinearLayout>
-
 </LinearLayout>

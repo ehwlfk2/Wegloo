@@ -17,7 +17,8 @@
             android:layout_height="40dp"
             android:layout_margin="15dp"
             android:background="@drawable/ic_keyboard_arrow_left_24px"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:visibility="invisible"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,10 +119,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/activity_material_rental_button"

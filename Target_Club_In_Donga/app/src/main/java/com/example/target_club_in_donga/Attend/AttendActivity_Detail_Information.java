@@ -3,6 +3,7 @@ package com.example.target_club_in_donga.Attend;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -51,7 +52,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
     private String getAttendState;
 
-    private int attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0;
+    private int attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0, flag = 0, RealNameFlag = 0;
 
     private PieChart activity_attend_piechart;
     private String findkey, EditTardyTime, RealNameSystem;
@@ -74,6 +75,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
         findkey = intent.getExtras().getString("uidPath");
         if (findkey == null) {
             findkey = intent.getExtras().getString("uidAdminPath");
+            flag = 1;
         }
 
         activity_attend_detail_textview_attend = (TextView) findViewById(R.id.activity_attend_detail_textview_attend);
@@ -108,6 +110,8 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
         activity_attend_detail_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
 
         activity_attend_detail_recyclerview_main_list.setAdapter(attendDetailInformationActivity_recyclerViewAdapter);
+
+
 
         database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").addValueEventListener(new ValueEventListener() {
             @Override
@@ -379,18 +383,6 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
             });
         }
 
-        database.getReference().child("EveryClub").child(clubName).child("realNameSystem").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                RealNameSystem = dataSnapshot.getValue().toString();
-            }
-
-            @Override
-            public void onCancelled(final DatabaseError databaseError) {
-
-            }
-        });
-
     }
 
     class AttendDetailInformationActivity_RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -434,12 +426,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
             customViewHolder.activity_attend_admin_change_item_textview_name.setText(attendItems.get(position).name);
             customViewHolder.activity_attend_admin_change_item_textview_tardy_time.setText(attendItems.get(position).late_time);
-
-            if (RealNameSystem.equals("true")) {
-                customViewHolder.activity_attend_admin_change_item_textview_phone_number.setText(attendItems.get(position).phone);
-            } else {
-                customViewHolder.activity_attend_admin_change_item_textview_phone_number.setVisibility(View.GONE);
-            }
+            customViewHolder.activity_attend_admin_change_item_textview_phone_number.setText(attendItems.get(position).phone);
 
             if (checkPage == 0) {
                 customViewHolder.activity_attend_admin_change_item_linearlayout.setOnClickListener(new View.OnClickListener() {
@@ -545,12 +532,18 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
         if (menu_count > 0) {
-            AttendActivity_Admin_Home attendActivityAdminHome = (AttendActivity_Admin_Home) AttendActivity_Admin_Home.activity;
-            attendActivityAdminHome.finish();
-            Intent intent = new Intent(AttendActivity_Detail_Information.this,AttendActivity_Admin_Home.class);
-            startActivity(intent);
+            if (flag == 1) {
+                finish();
+                AttendActivity_Admin_Home attendActivityAdminHome = (AttendActivity_Admin_Home) AttendActivity_Admin_Home.activity;
+                attendActivityAdminHome.finish();
+                Intent intent = new Intent(AttendActivity_Detail_Information.this,AttendActivity_Admin_Home.class);
+                startActivity(intent);
+            } else {
+                activity_attend_detail_slidingdrawer.animateClose();
+            }
+        } else {
+            finish();
         }
     }
 

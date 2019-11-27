@@ -8,7 +8,6 @@
     android:padding="10dp">
 
     <RelativeLayout
-        android:id="@+id/activity_material_rental_admin_insert_relativelayoyt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF">
@@ -18,7 +17,7 @@
             android:layout_height="40dp"
             android:layout_margin="15dp"
             android:background="@drawable/ic_keyboard_arrow_left_24px"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,10 +74,10 @@
 
         <Button
             android:id="@+id/activity_material_rental_admin_insert_button_insert"
-            android:background="@drawable/button_round_corner"
-            android:textColor="@color/color_White"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_round_corner"
+            android:textColor="@color/color_White"
             android:layout_alignParentBottom="true"
             android:text="등록하기"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -86,6 +85,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.942" />
+            app:layout_constraintVertical_bias="0.942"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
