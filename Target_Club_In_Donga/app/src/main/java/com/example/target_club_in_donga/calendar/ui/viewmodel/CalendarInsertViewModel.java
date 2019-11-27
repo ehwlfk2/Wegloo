@@ -76,12 +76,12 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         super(application);
 
 
-        db = Room.databaseBuilder(application, CalendarDayDatabase.class, "todo-db")
-                /*.allowMainThreadQueries()*/.build();
+    db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
+            /*.allowMainThreadQueries()*/.build();
 
-        mCenterPosition = 0;
-        todos = getAll();
-    }
+    mCenterPosition = 0;
+    todos = getAll();
+}
 
     //
     public String initDB() {
