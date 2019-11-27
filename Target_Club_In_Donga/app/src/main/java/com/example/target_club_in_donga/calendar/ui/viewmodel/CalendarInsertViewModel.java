@@ -158,7 +158,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
             insertData.title = todo;
             insertData.time = time;
             insertData.isChecked = isChecked;
-            firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(updateTime+"").push().setValue(insertData);
+            firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(-1*updateTime+"").push().setValue(insertData);
 
             mTodoDao.insert(singleTodo);
             return null;
