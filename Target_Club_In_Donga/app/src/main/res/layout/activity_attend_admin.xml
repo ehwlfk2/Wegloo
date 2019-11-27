@@ -94,6 +94,7 @@
         android:layout_marginTop="30dp"
         android:weightSum="1">
         <Button
+            android:id="@+id/activity_attend_admin_button_attendance_cancel"
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"

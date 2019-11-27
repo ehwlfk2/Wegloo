@@ -7,9 +7,12 @@
     android:padding="20dp">
 
     <TextView
-        style="@style/Content_Classification_Text_Style"
-        android:background="@drawable/logoin_button_ver0"
-        android:textColor="@color/color_White"
+        style="@style/Content_Text_Style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:textSize="20dp"
+        android:gravity="center"
         android:text="지각시간을 입력해주세요" />
 
     <EditText
@@ -19,35 +22,32 @@
         android:inputType="number"
         android:digits="0123456789"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-    <Button
-        android:id="@+id/activity_attend_tardy_time_check_button_cancel"
-        android:background="@drawable/logoin_button_ver0"
-        android:textColor="@color/color_White"
-        style="@style/Content_Classification_Text_Style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="취소"
-        android:layout_centerHorizontal="true"/>
-
+        android:layout_marginTop="30dp"
+        android:weightSum="1">
+        <Button
+            android:id="@+id/activity_attend_tardy_time_check_button_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="18dp"
+            android:paddingTop="15dp"
+            android:textStyle="bold"
+            android:background="#00000000"
+            android:textColor="@color/color_MainColor"/>
         <Button
             android:id="@+id/activity_attend_tardy_time_check_button_confirm"
-            android:background="@drawable/logoin_button_ver0"
-            android:textColor="@color/color_White"
-            style="@style/Content_Classification_Text_Style"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:text="확인"
-            android:layout_toRightOf="@+id/activity_attend_tardy_time_check_button_cancel"/>
-
-
-    </RelativeLayout>
+            android:textStyle="bold"
+            android:paddingTop="15dp"
+            android:textSize="18dp"
+            android:background="#00000000"
+            android:textColor="@color/color_MainColor"/>
+    </LinearLayout>
 </LinearLayout>

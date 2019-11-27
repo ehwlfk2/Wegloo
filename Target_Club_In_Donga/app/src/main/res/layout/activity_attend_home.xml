@@ -48,37 +48,41 @@
                 android:id="@+id/activity_attend_home_linearlayout_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
                 android:padding="10dp"
                 android:visibility="invisible">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/activity_attend_home_button_attend"
                     style="@style/Content_Classification_Text_Style"
-                    android:background="@drawable/logoin_button_ver0"
+                    android:background="@drawable/button_round_corner"
                     android:textColor="@color/color_White"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="출석하기"
+                    android:text="    출석하기    "
                     android:layout_gravity="center"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="      " />
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/activity_attend_home_button_datail"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/activity_attend_home_button_datail"
                     style="@style/Content_Classification_Text_Style"
-                    android:background="@drawable/logoin_button_ver0"
+                    android:background="@drawable/button_round_corner"
                     android:textColor="@color/color_White"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="상세보기"
+                    android:text="    상세보기    "
                     android:layout_gravity="center"
-                    android:layout_weight="1" />
+                    app:layout_constraintLeft_toRightOf="@+id/activity_attend_home_button_attend"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
@@ -86,45 +90,49 @@
                 android:id="@+id/activity_attend_home_linearlayout_admin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
                 android:padding="10dp"
                 android:visibility="invisible">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/activity_attend_home_button_number"
                     style="@style/Content_Classification_Text_Style"
-                    android:background="@drawable/logoin_button_ver0"
+                    android:background="@drawable/button_round_corner"
                     android:textColor="@color/color_White"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="인증번호"
-                    android:layout_gravity="center"
-                    android:layout_weight="1" />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="      " />
+                    android:text="    인증번호    "
+                    android:layout_gravity="center"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/activity_attend_home_button_cancel"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/activity_attend_home_button_cancel"
                     style="@style/Content_Classification_Text_Style"
-                    android:background="@drawable/logoin_button_ver0"
+                    android:background="@drawable/button_round_corner"
                     android:textColor="@color/color_White"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="삭제하기"
+                    android:text="    삭제하기    "
                     android:layout_gravity="center"
-                    android:layout_weight="1" />
+                    app:layout_constraintLeft_toRightOf="@+id/activity_attend_home_button_number"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
         </LinearLayout>
 
         <Button
             android:id="@+id/activity_attend_home_button_insert"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/button_round_corner"
             android:text="출석 시작"
             android:textColor="#ffffff"
