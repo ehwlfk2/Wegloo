@@ -61,7 +61,7 @@ public class AttendActivity_Admin_Detail_Information extends AppCompatActivity {
 
     private SlidingDrawer activity_attend_detail_slidingdrawer;
 
-    final int[] MY_COLORS = {Color.rgb(152, 247, 145), Color.rgb(255, 187, 0), Color.rgb(189, 189, 189), Color.rgb(255, 0, 0)};
+    final int[] MY_COLORS = {Color.rgb(89, 218, 80), Color.rgb(255, 187, 0), Color.rgb(189, 189, 189), Color.rgb(200, 0, 0)};
     ArrayList<Integer> colors = new ArrayList<Integer>();
 
     @Override
