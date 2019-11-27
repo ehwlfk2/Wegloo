@@ -89,7 +89,7 @@
         <activity android:name=".Board.Board_Write" />
         <activity android:name=".Board.Board_Main" />
         <activity android:name=".MemberList.MemberList" />
-        <activity android:name=".TimeLine.TimeLineActivity_Main" />
+        <!--<activity android:name=".TimeLine.TimeLineActivity_Main" />-->
         <activity android:name=".menu.MyInformation" />
         <activity android:name=".menu.MyInformationApp" />
 

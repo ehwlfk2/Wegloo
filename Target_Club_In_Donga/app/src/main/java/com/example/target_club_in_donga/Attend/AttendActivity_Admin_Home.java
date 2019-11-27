@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -60,8 +62,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     private String startTime, getTardyTimeLimit, nowtardyTimeLimit, getState;
     private int flag = 0, admin, flag2 = 0, searchFlag = 0;
 
-    private TextView activity_attend_admin_information_item_textview_phone_number;
     private EditText attend_admin_information_home_edittext_search;
+    private ImageButton activity_attend_admin_information_home_imagebutton_back;
     private long now;
 
     public static String uidAdminPath;
@@ -76,7 +78,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         activity_attend_admin_information_home_category = (Button) findViewById(R.id.activity_attend_admin_information_home_category);
-        activity_attend_admin_information_item_textview_phone_number = (TextView) findViewById(R.id.activity_attend_admin_information_item_textview_phone_number);
+        activity_attend_admin_information_home_imagebutton_back = (ImageButton) findViewById(R.id.activity_attend_admin_information_home_imagebutton_back);
 
         activity_attend_admin_information_home_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_admin_information_home_recyclerview_main_list);
         activity_attend_admin_information_home_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
@@ -89,6 +91,13 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
         attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
 
         activity = AttendActivity_Admin_Home.this;
+
+        activity_attend_admin_information_home_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
             @Override
@@ -158,63 +167,63 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
             }
         });
 
-//        if (flag == 0) {
-            database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(final DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.getValue() != null && dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
-                        for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
-                            if (snapshot2.getValue() != null) {
-                                database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.getValue() != null) {
-                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                if (snapshot2.getKey().equals(snapshot.getKey())) {
-                                                    userList.clear();
-                                                    uidLists.clear();
-                                                    Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
-                                                    String uidKey = snapshot.getKey();
-                                                    userList.add(0, attendItem);
-                                                    uidLists.add(0, uidKey);
-                                                    attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
-                                                }
+        database.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null && dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
+                    userList.clear();
+                    uidLists.clear();
+                    for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
+//                            Log.e("값", snapshot2.getKey());
+                        if (snapshot2.getKey() != null) {
+                            database.getReference().child("AppUser").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(final DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getValue() != null) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            if (snapshot2.getKey().equals(snapshot.getKey())) {
+                                                Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
+                                                String uidKey = snapshot.getKey();
+                                                userList.add(0, attendItem);
+                                                uidLists.add(0, uidKey);
+                                                attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
                                             }
                                         }
                                     }
+                                }
 
-                                    @Override
-                                    public void onCancelled(final DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(final DatabaseError databaseError) {
 
-                                    }
-                                });
-                            }
+                                }
+                            });
                         }
-                    } else {
-                        userList.clear();
-                        uidLists.clear();
-//                        memberList = new ArrayList<>();
-                        for (DataSnapshot snapshot : dataSnapshot.child("User").getChildren()) {
-                            Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
-                            String uidKey = snapshot.getKey();
-                            if (snapshot.child("phone").getValue() == null) {
-//                                attendItem.phone = "전화번호 없음";
-                                flag2 = 1;
-                            }
-//                            memberList.add(attendItem.name);
-                            userList.add(0, attendItem);
-                            uidLists.add(0, uidKey);
-                        }
-                        attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
                     }
+                } else {
+                    userList.clear();
+                    uidLists.clear();
+//                        memberList = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.child("User").getChildren()) {
+                        Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
+                        String uidKey = snapshot.getKey();
+                        if (snapshot.child("phone").getValue() == null) {
+//                                attendItem.phone = "전화번호 없음";
+                            flag2 = 1;
+                        }
+//                            memberList.add(attendItem.name);
+                        userList.add(0, attendItem);
+                        uidLists.add(0, uidKey);
+                    }
+                    attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
                 }
+            }
 
-                @Override
-                public void onCancelled(final DatabaseError databaseError) {
+            @Override
+            public void onCancelled(final DatabaseError databaseError) {
 
-                }
-            });
-//        }
+            }
+        });
+
 
         activity_attend_admin_information_home_category.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,14 +246,14 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
+                                            userList.clear();
+                                            uidLists.clear();
                                             for (final DataSnapshot snapshot2 : dataSnapshot.child("User").getChildren()) {
                                                 database.getReference().child("AppUser").addValueEventListener(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
                                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                             if (snapshot2.getKey().equals(snapshot.getKey())) {
-                                                                userList.clear();
-                                                                uidLists.clear();
                                                                 Attend_Admin_Information_Item attendItem = snapshot.getValue(Attend_Admin_Information_Item.class);
                                                                 String uidKey = snapshot.getKey();
                                                                 userList.add(0, attendItem);

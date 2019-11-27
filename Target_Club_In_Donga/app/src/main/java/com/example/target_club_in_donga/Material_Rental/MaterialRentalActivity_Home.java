@@ -26,6 +26,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -60,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
@@ -87,13 +89,15 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
     protected ImageView activity_material_rental_admin_item_imageview_recyclerview_image;
     private Button activity_material_rental_home_button_insert;
+    private ImageButton activity_material_rental_home_imagebutton_back;
+
     private long now;
-    private String formatDate, formatHour, formatMin, startDate;
+    private String formatDate, formatHour, formatMin, startDate, nowDate;
     private String dateStr, timeStr, date_Now, date_End, date_Return;
 
     private String findkey, uidName, uidAdminPath;
 
-    private int admin, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0, differFlag/*, listSize, materialListSize, listSizeFlag = 0*/, removeFlag = 1, removeFlag2 = 1, removeList, removeList2;
+    private int admin, monthInt, dayOfMonthInt, flag = 0, flag2 = 1, listNumber, lastNumber, dateFlag = 1, flag3 = 0, differFlag, removeFlag = 1, removeFlag2 = 1, removeList, removeList2, timeLimitFlag = 0;
     private static int adminNumber = 2;
 
     private ProgressDialog progressDialog;
@@ -118,6 +122,14 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
         activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
         activity_material_rental_home_textview = (TextView) findViewById(R.id.activity_material_rental_home_textview);
+        activity_material_rental_home_imagebutton_back = (ImageButton) findViewById(R.id.activity_material_rental_home_imagebutton_back);
+
+        activity_material_rental_home_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         if (differFlag == 0) {
             activity_material_rental_home_button_insert.setVisibility(View.GONE);
@@ -135,8 +147,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         activity_material_rental_home_recyclerview_main_list.setAdapter(materialRentalActivity_adminRecyclerViewAdapter);
         materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
-//        material_rental_home_edittext_search = (EditText) findViewById(R.id.material_rental_home_edtitext_search);
+        material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.activity_material_rental_home_edtitext_search);
 
         database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
             @Override
@@ -279,7 +290,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             }
         });
 
-        AutoCompleteTextView material_rental_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
+        AutoCompleteTextView material_rental_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.activity_material_rental_home_edtitext_search);
         material_rental_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, materialRentalItems));
 
     }
@@ -427,6 +438,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                     final AlertDialog dialog2 = builder2.create();
 
+                                    dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                                     detailButtonPeriodCalendar.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(final View v) {
@@ -439,18 +452,28 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                     d = dayOfMonth;
                                                     monthInt = month;
                                                     dayOfMonthInt = dayOfMonth;
+                                                    Date now = new Date();
 
-                                                    if (month < 9)
-                                                        dateStr = year + "-0" + (month + 1) + "-";
-                                                    else
-                                                        dateStr = year + "-" + (month + 1) + "-";
+                                                    Date currentTime = Calendar.getInstance().getTime();
+                                                    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+                                                    String currentYear = yearFormat.format(currentTime);
 
-                                                    if (dayOfMonth < 10)
-                                                        dateStr += ("0" + dayOfMonth);
-                                                    else
-                                                        dateStr += dayOfMonth;
+                                                    if ((year > Integer.parseInt(currentYear) || month > now.getMonth() || dayOfMonth > now.getDate()) || (year == Integer.parseInt(currentYear) && month == now.getMonth() && dayOfMonth == now.getDate() && (h > now.getHours() || (h == now.getHours() && mi > now.getMinutes())) ) ) {
+                                                        if (month < 9)
+                                                            dateStr = year + "-0" + (month + 1) + "-";
+                                                        else
+                                                            dateStr = year + "-" + (month + 1) + "-";
 
-                                                    detailButtonPeriodCalendar.setText(dateStr);
+                                                        if (dayOfMonth < 10)
+                                                            dateStr += ("0" + dayOfMonth);
+                                                        else
+                                                            dateStr += dayOfMonth;
+
+                                                        detailButtonPeriodCalendar.setText(dateStr);
+                                                    } else {
+                                                        Toast.makeText(v.getContext(), "이미 지난 시간은 선택할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                                        dateFlag = 1;
+                                                    }
 
                                                 }
                                             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -471,7 +494,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                                     mi = minute;
                                                     Date now = new Date();
 
-                                                    if ((monthInt > now.getMonth() || dayOfMonthInt > now.getDay()) || (hourOfDay > now.getHours() || hourOfDay >= now.getHours() && minute > now.getMinutes())) {
+                                                    if ((monthInt > now.getMonth() || dayOfMonthInt > now.getDate()) || (hourOfDay > now.getHours() || (hourOfDay == now.getHours() && minute > now.getMinutes()))) {
                                                         if (hourOfDay < 10)
                                                             timeStr = "0" + hourOfDay;
                                                         else
@@ -499,6 +522,21 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                     detailButton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
+
+                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                            // "yyyy-MM-dd HH:mm"
+                                            nowDate = simpleDateFormat.format(date);
+                                            Date d_nowDate = simpleDateFormat.parse(nowDate, new ParsePosition(0));
+                                            Date d_dateStr = simpleDateFormat.parse(dateStr, new ParsePosition(0));
+
+                                            long calDate = d_dateStr.getTime() - d_nowDate.getTime();
+                                            long calDateDays = calDate / (24 * 60 * 60 * 1000);
+
+                                            calDateDays = Math.abs(calDateDays);
+
+                                            if (calDateDays > 30) {
+                                                Toast.makeText(v.getContext(), "한달을 초과하여 빌릴 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                            }
 
                                             if (dateFlag == 0) {
                                                 Toast.makeText(v.getContext(), "대여가 완료되었습니다.", Toast.LENGTH_SHORT).show();
@@ -559,80 +597,107 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                                 case R.id.material_turn_in:
 
-                                    Toast.makeText(MaterialRentalActivity_Home.this, "반납이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-                                    ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText("없음");
-                                    if (flag2 == 1 || flag3 == 1) {
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
-                                    } else if (flag2 == 0) {
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
-                                    }
-                                    ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.setText("없음");
-                                    if (flag2 == 1 || flag3 == 1) {
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
-                                    } else if (flag2 == 0) {
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
-                                    }
+                                    AlertDialog.Builder builder3 = new AlertDialog.Builder(MaterialRentalActivity_Home.this);
 
-                                    // 반납을 했을시 물품기록사항에서 대여의 끝나는 날짜가 반납일로 바뀐다
-                                    now = System.currentTimeMillis();
-                                    // 현재시간을 date 변수에 저장한다.
-                                    Date returnDate = new Date(now);
-                                    SimpleDateFormat returnSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                    //"yyyy-MM-dd HH:mm"
-                                    date_Return = returnSimpleDateFormat.format(returnDate);
+                                    View view3 = LayoutInflater.from(MaterialRentalActivity_Home.this)
+                                            .inflate(R.layout.activity_material_rental_return, null, false);
+                                    builder3.setView(view3);
 
-                                    if (flag2 == 1 || flag3 == 1) {
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                lastNumber = 0;
-                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                    lastNumber++;
-                                                }
-                                                int i = 0;
-                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                    if (i == lastNumber - 1) {
-                                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
+                                    final Button activity_material_rental_return_button_cancel = (Button) view3.findViewById(R.id.activity_material_rental_return_button_cancel);
+                                    final Button activity_material_rental_return_button_confirm = (Button) view3.findViewById(R.id.activity_material_rental_return_button_confirm);
+
+                                    final AlertDialog dialog3 = builder3.create();
+
+                                    dialog3.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                                    activity_material_rental_return_button_cancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            dialog3.dismiss();
+                                        }
+                                    });
+
+                                    activity_material_rental_return_button_confirm.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            Toast.makeText(MaterialRentalActivity_Home.this, "반납이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                                            ((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.setText("없음");
+                                            if (flag2 == 1 || flag3 == 1) {
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                            } else if (flag2 == 0) {
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lender").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_textview_recyclerview_lender.getText().toString());
+                                            }
+                                            ((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.setText("없음");
+                                            if (flag2 == 1 || flag3 == 1) {
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                            } else if (flag2 == 0) {
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue(((CustomViewHolder) viewholder).activity_material_rental_admin_item_recyclerview_timestamp.getText().toString());
+                                            }
+
+                                            // 반납을 했을시 물품기록사항에서 대여의 끝나는 날짜가 반납일로 바뀐다
+                                            now = System.currentTimeMillis();
+                                            // 현재시간을 date 변수에 저장한다.
+                                            Date returnDate = new Date(now);
+                                            SimpleDateFormat returnSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                            //"yyyy-MM-dd HH:mm"
+                                            date_Return = returnSimpleDateFormat.format(returnDate);
+
+                                            if (flag2 == 1 || flag3 == 1) {
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                        lastNumber = 0;
+                                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                            lastNumber++;
+                                                        }
+                                                        int i = 0;
+                                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                            if (i == lastNumber - 1) {
+                                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
+                                                            }
+                                                            i++;
+                                                        }
                                                     }
-                                                    i++;
-                                                }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(final DatabaseError databaseError) {
+                                                    @Override
+                                                    public void onCancelled(final DatabaseError databaseError) {
 
-                                            }
-                                        });
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(0);
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue("없음");
-                                    } else if (flag2 == 0) {
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                lastNumber = 0;
-                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                    lastNumber++;
-                                                }
-                                                int i = 0;
-                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                                    if (i == lastNumber - 1) {
-                                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
                                                     }
-                                                    i++;
-                                                }
+                                                });
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("state").setValue(0);
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(position)).child("timestamp").setValue("없음");
+                                            } else if (flag2 == 0) {
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                                        lastNumber = 0;
+                                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                            lastNumber++;
+                                                        }
+                                                        int i = 0;
+                                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                            if (i == lastNumber - 1) {
+                                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("lend_history").child(snapshot.getKey()).child("history_lend_end_date").setValue(date_Return);
+                                                            }
+                                                            i++;
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(final DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("state").setValue(0);
+                                                database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue("없음");
                                             }
 
-                                            @Override
-                                            public void onCancelled(final DatabaseError databaseError) {
+                                            flag = 0;
+                                            dialog3.dismiss();
+                                        }
+                                    });
 
-                                            }
-                                        });
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("state").setValue(0);
-                                        database.getReference().child("EveryClub").child(clubName).child("Material_Rental").child(uidLists.get(listNumber)).child("timestamp").setValue("없음");
-                                    }
-
-                                    flag = 0;
-
+                                    dialog3.show();
                                     return true;
 
                                 case R.id.material_delete:
@@ -640,11 +705,11 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MaterialRentalActivity_Home.this);
 
                                     View view = LayoutInflater.from(MaterialRentalActivity_Home.this)
-                                            .inflate(R.layout.activity_material_rental_admin_delete_item, null, false);
+                                            .inflate(R.layout.activity_material_rental_admin_delete, null, false);
                                     builder.setView(view);
 
-                                    final Button confirmButton = (Button) view.findViewById(R.id.activity_material_rental_admin_delete_item_button_confirm);
-                                    final Button cancelButton = (Button) view.findViewById(R.id.activity_material_rental_admin_delete_item_button_cancel);
+                                    final Button confirmButton = (Button) view.findViewById(R.id.activity_material_rental_admin_delete_button_confirm);
+                                    final Button cancelButton = (Button) view.findViewById(R.id.activity_material_rental_admin_delete_button_cancel);
 
                                     final AlertDialog dialog = builder.create();
 

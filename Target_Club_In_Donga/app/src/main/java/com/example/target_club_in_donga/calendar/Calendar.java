@@ -37,7 +37,7 @@ public class Calendar extends AppCompatActivity implements View.OnClickListener{
 
         observe();
         if (model != null) {
-            model.initCalendarList(this);
+            model.initCalendarList(getApplication());
         }
     }
 

@@ -2,10 +2,12 @@ package com.example.target_club_in_donga.menu;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,11 +50,12 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
     private int listSize = 0;
     private String startTime;
 
-    private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0;
+    private int admin, attendCount = 0, tardyCount = 0, unsentCount = 0, absentCount = 0, checkPage, menu_count = 0, countFlag = 0;
 
     private PieChart activity_attend_my_information_piechart;
+    private ImageButton activity_attend_my_information_imagebutton_back;
 
-    final int[] MY_COLORS = {Color.rgb(152, 247, 145), Color.rgb(255, 187, 0), Color.rgb(189, 189, 189), Color.rgb(255, 0, 0)};
+    final int[] MY_COLORS = {Color.rgb(89, 218, 80), Color.rgb(255, 187, 0), Color.rgb(189, 189, 189), Color.rgb(200, 0, 0)};
     ArrayList<Integer> colors = new ArrayList<Integer>();
 
     @Override
@@ -64,6 +67,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         activity_attend_my_information_piechart = (PieChart) findViewById(R.id.activity_attend_my_information_piechart);
+        activity_attend_my_information_imagebutton_back = (ImageButton) findViewById(R.id.activity_attend_my_information_imagebutton_back);
 
         activity_attend_my_information_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_my_information_recyclerview_main_list);
         activity_attend_my_information_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(AttendActivity_MyInformation.this));
@@ -72,6 +76,13 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
 
         activity_attend_my_information_recyclerview_main_list.setAdapter(MyInformationActivity_adminRecyclerViewAdapter);
         MyInformationActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
+
+        activity_attend_my_information_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         activity_attend_my_information_piechart.setUsePercentValues(true);
         activity_attend_my_information_piechart.getDescription().setEnabled(true);
@@ -85,7 +96,7 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
 
         final ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
-        database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Attend").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -124,12 +135,18 @@ public class AttendActivity_MyInformation extends AppCompatActivity {
                         colors.add(MY_COLORS[3]);
                     }
 
+                    if (attendCount + tardyCount + unsentCount + absentCount == 0) {
+                        Toast.makeText(AttendActivity_MyInformation.this, "출결 현황이 없습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
                     Description description = new Description();
                     description.setText("출석률");
                     description.setTextSize(15);
                     activity_attend_my_information_piechart.setDescription(description);
 
                     activity_attend_my_information_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+                    activity_attend_my_information_piechart.setRotationEnabled(false);
 
                     PieDataSet pieDataSet = new PieDataSet(pieEntries, "%");
                     pieDataSet.setSliceSpace(3f);

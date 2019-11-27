@@ -1,16 +1,16 @@
 package com.example.target_club_in_donga.calendar.ui.viewmodel;
 
 import android.app.Application;
+import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
-import com.example.target_club_in_donga.calendar.CalendarDay;
 import com.example.target_club_in_donga.calendar.data.TSLiveData;
-import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
-import com.example.target_club_in_donga.calendar.room.Todo;
+import com.example.target_club_in_donga.calendar.room.CalendarRefreshDatabase;
+import com.example.target_club_in_donga.calendar.room.RefreshKey;
+import com.example.target_club_in_donga.calendar.room.RefreshKeyDao;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
 import com.example.target_club_in_donga.calendar.utils.Keys;
 import com.google.firebase.database.DataSnapshot;
@@ -30,9 +30,11 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 public class CalendarListViewModel extends ViewModel {
     public static Long mCurrentTime;
     public static String mCurrentMonth;
-    private int refreshKey;
+    private static int refreshKey;
     final private int mBegin_Month = -2, mEnd_Month = 2;
 
+    CalendarRefreshDatabase db;
+    Application application;
 
     public TSLiveData<String> mTitle = new TSLiveData<>();
     public TSLiveData<ArrayList<Object>> mCalendarList = new TSLiveData<>(new ArrayList<>());
@@ -40,22 +42,66 @@ public class CalendarListViewModel extends ViewModel {
     public int mCenterPosition;
 
     public void setTitle(long time) {
-        mCurrentTime = time/86400000;
         mTitle.setValue(DateFormat.getDate(time, DateFormat.CALENDAR_HEADER_FORMAT));
+        mCurrentTime = time / 86400000;
     }
 
-    public void initCalendarList(com.example.target_club_in_donga.calendar.Calendar application) {
+    public void initCalendarList(Application application) {
         GregorianCalendar cal = new GregorianCalendar();
         setCalendarList(cal);
 
-        CalendarDayDatabase db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
+        this.application = application;
+        db = Room.databaseBuilder(application, CalendarRefreshDatabase.class, "refreshDB")
                 /*.allowMainThreadQueries()*/.build();
 
-        refreshKey = getKey(db);
+        getKey(db);
+        Log.v("develop_Log_v", "refreshKey: "+ refreshKey);
     }
 
-    private int getKey(CalendarDayDatabase db) {
-        return 18226;
+    private void getKey(CalendarRefreshDatabase db) {
+        new findRefreshKeyAsyncTask(db.refreshKeyDao()).execute();
+    }
+
+    private static class findRefreshKeyAsyncTask extends AsyncTask<Void, Void, Void> {
+        private RefreshKeyDao mRefreshKeyDao;
+
+        findRefreshKeyAsyncTask(RefreshKeyDao mRefreshKeyDao) {  // Tip... Alt + Insert
+            this.mRefreshKeyDao = mRefreshKeyDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                refreshKey = mRefreshKeyDao.findKeyByClubName(clubName)[0];
+            }
+            catch (Exception e){
+                Log.v("develop_Log_v", "refreshKey: " + refreshKey);
+                RefreshKey singleRefreshKey = new RefreshKey(0,clubName);
+                mRefreshKeyDao.insert(singleRefreshKey);
+                refreshKey = 0;
+            }
+            return null;
+        }
+    }
+
+    private static class UpdateAsyncTask extends AsyncTask<Void, Void, Void> {
+        private RefreshKeyDao mRefreshKeyDao;
+        int dateNumKey;
+
+        UpdateAsyncTask(RefreshKeyDao mRefreshKeyDao, int dateNumKey) {  // Tip... Alt + Insert
+            this.mRefreshKeyDao = mRefreshKeyDao;
+            this.dateNumKey = dateNumKey;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            RefreshKey SingleRefreshKey = mRefreshKeyDao.loadByClubName(clubName);
+            SingleRefreshKey.setRefreshKey(dateNumKey);
+            SingleRefreshKey.setRefreshKey(dateNumKey);
+            refreshKey = dateNumKey;
+            mRefreshKeyDao.update(SingleRefreshKey);
+            return null;
+        }
     }
 
     public void setCalendarList(GregorianCalendar cal) {
@@ -98,27 +144,36 @@ public class CalendarListViewModel extends ViewModel {
     }//setCalendarList
 
     public void refreshDB() {
+        CalendarInsertViewModel calendarInsertViewModel = new CalendarInsertViewModel(application);
         FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").addListenerForSingleValueEvent(new ValueEventListener() {
+            int dateNumKey;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Log.e("refresh",refreshKey+"");
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    List<CalendarDBItem> list = new ArrayList<>();
-                    String dateKey = snapshot.getKey();
-                    int dateNumKey = -1*Integer.parseInt(dateKey);
-                    for(DataSnapshot snap : snapshot.getChildren()){
-                        CalendarDBItem calendarDBItem = snap.getValue(CalendarDBItem.class);
-                        list.add(calendarDBItem);
-                    }
+                //Toast.makeText(application.getApplicationContext(),"RefreshKey:" + refreshKey,Toast.LENGTH_SHORT).show();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                    // TODO : 도경 여기서 처리하면댐
-                    // list 에 각 날짜별 투두 내용들이 담길꺼임
+                    List<CalendarDBItem> listFB = new ArrayList<>();    // listFB 하루 데이터 몽땅
+
+                    // refresh action from FB
+                    String dateKey = snapshot.getKey();
+                    dateNumKey = -1 * Integer.parseInt(dateKey);
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        CalendarDBItem calendarDBItem = snap.getValue(CalendarDBItem.class);
+                        listFB.add(calendarDBItem);
+                    }   // 데이터 하나
+
+                    // refresh action to DB
+                    for (int i = 0; i < listFB.size(); i++) {
+                        calendarInsertViewModel.insert(listFB.get(i).title,listFB.get(i).isChecked, listFB.get(i).time, false);
+                    }
 
                     //refreshKey랑 같으면 그날까지만 받고 break refreshKey == 0 이면 아무것도 없기때문에 데이터전부 받아옴
-                    if(dateNumKey == refreshKey && refreshKey != 0){
+                    if (dateNumKey == refreshKey && refreshKey != 0) {
                         break;
                     }
-                }
+                }   // 날짜
+                new UpdateAsyncTask(db.refreshKeyDao(),dateNumKey).execute();
             }
 
             @Override
@@ -126,8 +181,6 @@ public class CalendarListViewModel extends ViewModel {
 
             }
         });
-        // TODO : refresh action from FB
 
-        // TODO : refresh action to DB
     }
 }

@@ -41,8 +41,7 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
 
         binding.activityCalendarDayInsertTooInsertTodoFab.setOnClickListener(v -> {
             mCurrentDataTime = DateFormat.getTimeFromString(calYear, calMonth, calDay);
-            model.updateTime(mCurrentDataTime);
-            model.insert(model.getNewTodo(), model.getWorkIsChecked());
+            model.insert(model.getNewTodo(), model.getWorkIsChecked(), mCurrentDataTime/86400000, true);
             // viewModel 에 저장해둘까..?
             // intent.putExtra("alertIsChecked", binding.activityCalendarDayInsertTodoPushAlertSwitch.isChecked());
             // intent.putExtra("toDoIsChecked", binding.activityCalendarDayInsertTodoWorkCheckBox.isChecked());
@@ -86,6 +85,7 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
                     model.initTime(getApplicationContext()));
 
             Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(mCurrentDataTime);
             calYear = cal.get(Calendar.YEAR);
             calMonth = cal.get(Calendar.MONTH);
             calDay = cal.get(Calendar.DAY_OF_MONTH);
@@ -105,8 +105,6 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
         DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod, calYear, calMonth, calDay);
         dialog.show();
     }
-
-
 }
 
     /*
