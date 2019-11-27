@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.calendar.ui.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,6 +13,10 @@ import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
 import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
 import com.example.target_club_in_donga.calendar.utils.Keys;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,7 +30,7 @@ import static com.example.target_club_in_donga.MainActivity.clubName;
 public class CalendarListViewModel extends ViewModel {
     public static Long mCurrentTime;
     public static String mCurrentMonth;
-    private int updateRefreshKey;
+    private int refreshKey;
     final private int mBegin_Month = -2, mEnd_Month = 2;
 
 
@@ -46,11 +51,11 @@ public class CalendarListViewModel extends ViewModel {
         CalendarDayDatabase db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
                 /*.allowMainThreadQueries()*/.build();
 
-        updateRefreshKey = getKey(db);
+        refreshKey = getKey(db);
     }
 
     private int getKey(CalendarDayDatabase db) {
-        return 0;
+        return 18226;
     }
 
     public void setCalendarList(GregorianCalendar cal) {
@@ -93,6 +98,34 @@ public class CalendarListViewModel extends ViewModel {
     }//setCalendarList
 
     public void refreshDB() {
+        FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Log.e("refresh",refreshKey+"");
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    List<CalendarDBItem> list = new ArrayList<>();
+                    String dateKey = snapshot.getKey();
+                    int dateNumKey = -1*Integer.parseInt(dateKey);
+                    for(DataSnapshot snap : snapshot.getChildren()){
+                        CalendarDBItem calendarDBItem = snap.getValue(CalendarDBItem.class);
+                        list.add(calendarDBItem);
+                    }
+
+                    // TODO : 도경 여기서 처리하면댐
+                    // list 에 각 날짜별 투두 내용들이 담길꺼임
+
+                    //refreshKey랑 같으면 그날까지만 받고 break refreshKey == 0 이면 아무것도 없기때문에 데이터전부 받아옴
+                    if(dateNumKey == refreshKey && refreshKey != 0){
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         // TODO : refresh action from FB
 
         // TODO : refresh action to DB
