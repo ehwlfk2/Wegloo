@@ -85,6 +85,7 @@ public class CalendarDayInsertTodo extends AppCompatActivity {
                     model.initTime(getApplicationContext()));
 
             Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(mCurrentDataTime);
             calYear = cal.get(Calendar.YEAR);
             calMonth = cal.get(Calendar.MONTH);
             calDay = cal.get(Calendar.DAY_OF_MONTH);
