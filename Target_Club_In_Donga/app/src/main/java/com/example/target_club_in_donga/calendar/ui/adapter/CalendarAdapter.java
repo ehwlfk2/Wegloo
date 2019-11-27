@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -116,14 +115,6 @@ public class CalendarAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         model.setClickCheck(!model.getClickCheck());
-                        if (model.getClickCheck()) {
-                            Log.v("develop_Log_v", "model.getCalendar" + model.getCalendar());
-                            Toast.makeText(context, "Click check: True", Toast.LENGTH_SHORT).show();
-                            //v.setBackgroundResource(R.drawable.calendar_circle);
-                        } else {
-                            Toast.makeText(context, "Click check: False", Toast.LENGTH_SHORT).show();
-                            //v.setBackground(null);
-                        }
 
                         // move activity screen
                         Intent intent = new Intent(v.getContext(), CalendarDay.class);

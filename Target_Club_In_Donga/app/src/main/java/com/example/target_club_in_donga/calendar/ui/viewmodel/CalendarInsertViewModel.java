@@ -1,32 +1,26 @@
 package com.example.target_club_in_donga.calendar.ui.viewmodel;
 
 import android.app.Application;
+import android.app.SearchManager;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.room.Delete;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
 import com.example.target_club_in_donga.calendar.data.TSLiveData;
 import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
 import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.room.TodoDao;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
@@ -38,7 +32,6 @@ public class CalendarInsertViewModel extends AndroidViewModel {
     public LiveData<List<Todo>> todos;
     private String newTodo;
     private boolean workIsChecked;
-    private long time;
 
     public int mCenterPosition;
     public static Long mCurrentDataTime;
@@ -75,13 +68,12 @@ public class CalendarInsertViewModel extends AndroidViewModel {
     public CalendarInsertViewModel(@NonNull Application application) {
         super(application);
 
+        db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
+                /*.allowMainThreadQueries()*/.build();
 
-    db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
-            /*.allowMainThreadQueries()*/.build();
-
-    mCenterPosition = 0;
-    todos = getAll();
-}
+        mCenterPosition = 0;
+        todos = getAll();
+    }
 
     //
     public String initDB() {
@@ -93,29 +85,23 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         mCenterPosition = mCenterPosition + 1;
         setNewTodo(getNewTodo());
         setWorkIsChecked(getWorkIsChecked());
-        return db.todoDao().loadAllByTimeStamp(mCurrentDataTime);   // 무한루프처럼 계속 돌아가고 있다. -> MainViewModel 에서 todos 으로 고정해준다.
+        return db.todoDao().loadAllByTimeStamp(mCurrentDataTime/86400000);   // 무한루프처럼 계속 돌아가고 있다. -> MainViewModel 에서 todos 으로 고정해준다.
     }
 
     public String initTime(Context context) {
         this.context = context;
         return DateFormat.getDate(mCurrentDataTime, DateFormat.CALENDAR_DAY_FORMAT);
     }
-
-    public void updateTime(long time){
-        this.time = time;
-    }
-
     // DB 에 insert
-    public void insert(String todo, boolean isChecked) {
+    public void insert(String todo, boolean isChecked, long time, boolean flag) {
         //new InsertAsyncTask(db.todoDao()).execute(new Todo(todo, isChecked, time));
-        new InsertAsyncTask(db.todoDao(), todo, isChecked, mCurrentDataTime).execute();
+        new InsertAsyncTask(db.todoDao(), todo, isChecked, time, flag).execute();
     }
 
     public void update(int[] index, String todo, boolean isChecked) {
         //new InsertAsyncTask(db.todoDao()).execute(new Todo(todo, isChecked, mCurrentDataTime));
         new DeleteAsyncTask(db.todoDao(), index).execute();
-        new InsertAsyncTask(db.todoDao(), todo, isChecked, mCurrentDataTime).execute();
-
+        new InsertAsyncTask(db.todoDao(), todo, isChecked, mCurrentDataTime, true).execute();
     }
 
     public void delete(int[] index) {
@@ -131,35 +117,40 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         private long time;
         private long updateTime;
         private FirebaseDatabase firebaseDatabase;
+        private boolean flag;
 
         InsertAsyncTask(TodoDao mTodoDao) {  // Tip... Alt + Insert
             this.mTodoDao = mTodoDao;
         }
 
-        InsertAsyncTask(TodoDao todoDao, String todo, boolean isChecked, long time){
+        InsertAsyncTask(TodoDao todoDao, String todo, boolean isChecked, long time, boolean flag) {
             updateTime = Calendar.getInstance().getTimeInMillis()/86400000;
             this.mTodoDao = todoDao;
             this.todo = todo;
             this.isChecked = isChecked;
             this.time = time;
-            firebaseDatabase = FirebaseDatabase.getInstance();
+            this.flag = flag;
+            if(flag) firebaseDatabase = FirebaseDatabase.getInstance();
         }
 
         // 소스를 보면 비동기 처리를 해주는 애는 바로 Dao 이다. -> 생성자를 만들어서 Dao 를 받아야 한다.
         @Override   // 꼭 필요한 Method, 여기서 비동기 처리를 해줍니다.
         protected Void doInBackground(Todo... todos) {  // spread 연산자 ... 배열로 담겨서 넘어온다.
             //mTodoDao.insert(todos[0]);  // 배열에서 하나만 넘겨주니까
-            Todo singleTodo = new Todo(todo,isChecked,time);
+            if(mTodoDao.findByName(todo) != null) return null;
+
+            Todo singleTodo = new Todo(todo, isChecked, time);
 //            Map<String, Object> insertData = new HashMap<>();
 //            insertData.put("title",todo);
 //            insertData.put("isChecked",isChecked);
 //            insertData.put("time",time);
-            CalendarDBItem insertData = new CalendarDBItem();
-            insertData.title = todo;
-            insertData.time = time;
-            insertData.isChecked = isChecked;
-            firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(-1*updateTime+"").push().setValue(insertData);
-
+            if (flag) {
+                CalendarDBItem insertData = new CalendarDBItem();
+                insertData.title = todo;
+                insertData.time = time;
+                insertData.isChecked = isChecked;
+                firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(-1 * updateTime + "").push().setValue(insertData);
+            }
             mTodoDao.insert(singleTodo);
             return null;
         }

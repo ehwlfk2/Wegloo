@@ -5,17 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.target_club_in_donga.R;
@@ -108,7 +104,6 @@ public class CalendarInsertAdapter extends RecyclerView.Adapter {
                     intent.putExtra("title",title);
                     intent.putExtra("checked", bool);
                     intent.putExtra("timestamp", time);
-                    Toast.makeText(context, "EditText Click Check: " + item.getId(), Toast.LENGTH_SHORT).show();
                     activity.startActivity(intent);
                     activity.finish();
                 });
