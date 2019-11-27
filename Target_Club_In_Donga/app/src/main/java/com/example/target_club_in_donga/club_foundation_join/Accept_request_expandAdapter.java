@@ -135,7 +135,7 @@ public class Accept_request_expandAdapter extends RecyclerView.Adapter<RecyclerV
                          * FCM 보내줘야해
                          */
                         SendPushMessages send = new SendPushMessages();
-                        send.sendFcm(item.pushToken, thisClubName, "가입요청이 승인되었습니다.","AcceptRequest");
+                        send.sendFcm(item.pushToken, thisClubName, "가입요청이 승인되었습니다.","AcceptRequest", clubName);
                         //notifyDataSetChanged();
                         //Log.e("uid",item.uid);
                     }

@@ -13,6 +13,7 @@ public class NotificationModel {
     public static class Data{
         public String title;
         public String text;
+        public String click_action;
         public String clickAction;
     }
 }

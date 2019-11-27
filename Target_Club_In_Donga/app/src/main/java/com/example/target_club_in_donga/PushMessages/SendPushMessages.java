@@ -23,7 +23,7 @@ import okhttp3.Response;
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class SendPushMessages {
-    public void multipleSendMessage(final String title, final String text, final String clickAction){
+    public void multipleSendMessage(final String title, final String text, final String clickAction, final String click_action){
         FirebaseDatabase.getInstance().getReference().child("EveryClub").child(clubName).child("User").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -32,7 +32,7 @@ public class SendPushMessages {
                     if(data.isPushAlarmOnOff() && !(snapshot.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))){ //자기한텐 안보내기 추가
                         try{
                             //SendPushMessages send = new SendPushMessages();
-                            sendFcm(data.getPushToken(), title,text, clickAction);
+                            sendFcm(data.getPushToken(), title,text, clickAction, click_action);
                         }catch (NullPointerException e){
 
                         }
@@ -47,7 +47,7 @@ public class SendPushMessages {
         });
     }
 
-    public void sendFcm(String toToken, String title, String text, String clickAction){
+    public void sendFcm(String toToken, String title, String text, String clickAction, String click_action){
         Gson gson = new Gson();
 
         NotificationModel notificationModel = new NotificationModel();
@@ -57,6 +57,7 @@ public class SendPushMessages {
         //notificationModel.notification.clickAction = clickAction;
         notificationModel.data.title = title; //포그라운드
         notificationModel.data.text = text;
+        notificationModel.data.click_action = click_action;
         notificationModel.data.clickAction = clickAction;
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"),gson.toJson(notificationModel));

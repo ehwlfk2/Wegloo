@@ -19,6 +19,8 @@ import com.example.target_club_in_donga.Notice.NoticeActivity_Main;
 import com.example.target_club_in_donga.R;
 import com.example.target_club_in_donga.Vote.VoteActivity_Main;
 import com.example.target_club_in_donga.home_viewpager.HomeActivityView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -34,8 +36,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String title = remoteMessage.getData().get("title").toString();
             String text = remoteMessage.getData().get("text").toString();
             String clickAction = remoteMessage.getData().get("clickAction").toString();
+            String click_action = remoteMessage.getData().get("click_action").toString();
             Log.e("click",clickAction);
-            sendNotification(title,text,clickAction);
+            sendNotification(title,text,clickAction, click_action);
         }
 
 
@@ -43,7 +46,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private void sendNotification(String title, String text, String clickAction) {
+    private void sendNotification(String title, String text, String clickAction, String click_action) {
         /*Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
@@ -52,21 +55,33 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if(clubName != null){
             Intent intent;
             if(clickAction.equals("Notice")){
+                clubName = click_action;
+                FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("recentClub").setValue(clubName);
                 //Log.e("backCheck",backCheck);
                 intent = new Intent(this, NoticeActivity_Main.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             else if(clickAction.equals("Vote")){
+                clubName = click_action;
+                FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("recentClub").setValue(clubName);
                 //Log.e("backCheck",backCheck);
                 intent = new Intent(this, VoteActivity_Main.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             else if(clickAction.equals("AcceptRequest")){
+                clubName = click_action;
+                FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("recentClub").setValue(clubName);
                 intent = new Intent(this, HomeActivityView.class);
                 intent.putExtra("isRecent",true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             else if(clickAction.equals("Attend")){
+                clubName = click_action;
+                FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("recentClub").setValue(clubName);
                 intent = new Intent(this, AttendActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
@@ -85,6 +100,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("fcmCheck",clickAction);
+            intent.putExtra("fcmUid",click_action);
             pendingIntent = PendingIntent.getActivity(this, 0 , intent,
                     PendingIntent.FLAG_ONE_SHOT);
         }
