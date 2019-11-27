@@ -3,6 +3,7 @@ package com.example.target_club_in_donga.calendar.ui.viewmodel;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,9 +17,18 @@ import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
 import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.room.TodoDao;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class CalendarInsertViewModel extends AndroidViewModel {
     //DataBase 생성, 전역으로 뽑아내서 이용
@@ -66,12 +76,12 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         super(application);
 
 
-        db = Room.databaseBuilder(application, CalendarDayDatabase.class, "todo-db")
-                /*.allowMainThreadQueries()*/.build();
+    db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
+            /*.allowMainThreadQueries()*/.build();
 
-        mCenterPosition = 0;
-        todos = getAll();
-    }
+    mCenterPosition = 0;
+    todos = getAll();
+}
 
     //
     public String initDB() {
@@ -120,6 +130,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         private boolean isChecked;
         private long time;
         private long updateTime;
+        private FirebaseDatabase firebaseDatabase;
 
         InsertAsyncTask(TodoDao mTodoDao) {  // Tip... Alt + Insert
             this.mTodoDao = mTodoDao;
@@ -131,6 +142,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
             this.todo = todo;
             this.isChecked = isChecked;
             this.time = time;
+            firebaseDatabase = FirebaseDatabase.getInstance();
         }
 
         // 소스를 보면 비동기 처리를 해주는 애는 바로 Dao 이다. -> 생성자를 만들어서 Dao 를 받아야 한다.
@@ -138,8 +150,17 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         protected Void doInBackground(Todo... todos) {  // spread 연산자 ... 배열로 담겨서 넘어온다.
             //mTodoDao.insert(todos[0]);  // 배열에서 하나만 넘겨주니까
             Todo singleTodo = new Todo(todo,isChecked,time);
-            mTodoDao.insert(singleTodo);
+//            Map<String, Object> insertData = new HashMap<>();
+//            insertData.put("title",todo);
+//            insertData.put("isChecked",isChecked);
+//            insertData.put("time",time);
+            CalendarDBItem insertData = new CalendarDBItem();
+            insertData.title = todo;
+            insertData.time = time;
+            insertData.isChecked = isChecked;
+            firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(-1*updateTime+"").push().setValue(insertData);
 
+            mTodoDao.insert(singleTodo);
             return null;
         }
     }

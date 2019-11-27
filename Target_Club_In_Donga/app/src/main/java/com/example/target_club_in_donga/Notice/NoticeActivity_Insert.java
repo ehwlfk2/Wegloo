@@ -181,7 +181,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
 
                                 if(activity_notice_insert_switch.isChecked()){
                                     SendPushMessages send = new SendPushMessages();
-                                    send.multipleSendMessage(thisClubName,"공지사항이 추가되었습니다.", "Notice");
+                                    send.multipleSendMessage(thisClubName,"공지사항이 추가되었습니다.", "Notice", clubName);
                                 }
                                 Toast.makeText(NoticeActivity_Insert.this, "공지사항이 추가되었습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -204,7 +204,7 @@ public class NoticeActivity_Insert extends AppCompatActivity{
                         database.getReference().child("EveryClub").child(clubName).child("Notice").child(dbKey).setValue(notice_item);
                         if(activity_notice_insert_switch.isChecked()){
                             SendPushMessages send = new SendPushMessages();
-                            send.multipleSendMessage(thisClubName,"공지사항이 추가되었습니다.", "Notice");
+                            send.multipleSendMessage(thisClubName,"공지사항이 수정되었습니다.", "Notice", clubName);
                         }
                         Toast.makeText(NoticeActivity_Insert.this, "공지사항이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(NoticeActivity_Insert.this, NoticeActivity_Main.class);
