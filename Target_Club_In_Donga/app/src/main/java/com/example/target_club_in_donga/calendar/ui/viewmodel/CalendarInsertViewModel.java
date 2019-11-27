@@ -7,18 +7,19 @@ import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.room.Delete;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
 import com.example.target_club_in_donga.calendar.data.TSLiveData;
 import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
 import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.room.TodoDao;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.List;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 public class CalendarInsertViewModel extends AndroidViewModel {
     //DataBase 생성, 전역으로 뽑아내서 이용
@@ -66,7 +67,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         super(application);
 
 
-        db = Room.databaseBuilder(application, CalendarDayDatabase.class, "todo-db")
+        db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
                 /*.allowMainThreadQueries()*/.build();
 
         mCenterPosition = 0;
@@ -91,7 +92,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         return DateFormat.getDate(mCurrentDataTime, DateFormat.CALENDAR_DAY_FORMAT);
     }
 
-    public void updateTime(long time){
+    public void updateTime(long time) {
         this.time = time;
     }
 
@@ -120,26 +121,36 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         private boolean isChecked;
         private long time;
         private long updateTime;
+        private FirebaseDatabase firebaseDatabase;
 
         InsertAsyncTask(TodoDao mTodoDao) {  // Tip... Alt + Insert
             this.mTodoDao = mTodoDao;
         }
 
-        InsertAsyncTask(TodoDao todoDao, String todo, boolean isChecked, long time){
-            updateTime = Calendar.getInstance().getTimeInMillis()/86400000;
+        InsertAsyncTask(TodoDao todoDao, String todo, boolean isChecked, long time) {
+            updateTime = Calendar.getInstance().getTimeInMillis() / 86400000;
             this.mTodoDao = todoDao;
             this.todo = todo;
             this.isChecked = isChecked;
             this.time = time;
+            firebaseDatabase = FirebaseDatabase.getInstance();
         }
 
         // 소스를 보면 비동기 처리를 해주는 애는 바로 Dao 이다. -> 생성자를 만들어서 Dao 를 받아야 한다.
         @Override   // 꼭 필요한 Method, 여기서 비동기 처리를 해줍니다.
         protected Void doInBackground(Todo... todos) {  // spread 연산자 ... 배열로 담겨서 넘어온다.
             //mTodoDao.insert(todos[0]);  // 배열에서 하나만 넘겨주니까
-            Todo singleTodo = new Todo(todo,isChecked,time);
+            Todo singleTodo = new Todo(todo, isChecked, time);
+//            Map<String, Object> insertData = new HashMap<>();
+//            insertData.put("title",todo);
+//            insertData.put("isChecked",isChecked);
+//            insertData.put("time",time);
+            CalendarDBItem insertData = new CalendarDBItem();
+            insertData.title = todo;
+            insertData.time = time;
+            insertData.isChecked = isChecked;
+            firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(-1 * updateTime + "").push().setValue(insertData);
             mTodoDao.insert(singleTodo);
-
             return null;
         }
     }
