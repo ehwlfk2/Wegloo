@@ -69,10 +69,10 @@ public class CalendarDay extends AppCompatActivity implements View.OnClickListen
                 anim();
                 break;
             case R.id.activity_calendar_day_insertDayData_fab1:
-                Toast.makeText(this, "일정 추가는 구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "기간 추가는 구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.activity_calendar_day_insertDayData_fab2:
-                Toast.makeText(this, "기간 추가는 구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "일정 추가는 구현중인 기능입니다.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.activity_calendar_day_insertDayData_fab3:
                 Intent intent = new Intent(CalendarDay.this, CalendarDayInsertTodo.class);
