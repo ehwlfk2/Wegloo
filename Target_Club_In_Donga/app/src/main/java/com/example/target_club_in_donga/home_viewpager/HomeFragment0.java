@@ -91,6 +91,7 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
     private LinearLayout user_infomation,go_Manage_Attend, go_AttendInfo, go_Material_Rental, go_Manage_Material_Rent;
     private LinearLayout go_Member_List,go_Gallery, go_History, go_Group_Info, go_Withdraw, go_Wegloo_Info;
     private LinearLayout go_Manage_Accept_Request, go_Manage_Group, manage_layout1, manage_layout2, go_clubDelete;
+    private LinearLayout home_notice_layout1, home_notice_layout2;
     public HomeFragment0() {
         // Required empty public constructor
     }
@@ -136,7 +137,8 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
         home_notice_writer2 = view.findViewById(R.id.home_notice_writer2);
         home_notice_date1 = view.findViewById(R.id.home_notice_date1);
         home_notice_date2 = view.findViewById(R.id.home_notice_date2);
-
+        home_notice_layout1 = view.findViewById(R.id.home_notice_layout1);
+        home_notice_layout2 = view.findViewById(R.id.home_notice_layout2);
 
         //메뉴 아이템
         Group_Name = view.findViewById(R.id.Group_Name);
@@ -195,6 +197,22 @@ public class HomeFragment0 extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MyInformation.class);
                 intent.putExtra("thisClubIsRealName",thisClubIsRealName);
+                startActivity(intent);
+            }
+        });
+
+        home_notice_layout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NoticeActivity_Main.class);
+                startActivity(intent);
+            }
+        });
+
+        home_notice_layout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NoticeActivity_Main.class);
                 startActivity(intent);
             }
         });

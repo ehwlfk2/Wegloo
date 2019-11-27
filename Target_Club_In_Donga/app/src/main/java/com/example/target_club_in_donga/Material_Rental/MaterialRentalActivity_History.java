@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,7 +40,9 @@ public class MaterialRentalActivity_History extends AppCompatActivity {
     private FirebaseDatabase database;
     private FirebaseStorage storage;
 
-    Button activity_material_rental_history_button_insert;
+
+    private Button activity_material_rental_history_button_insert;
+    private ImageButton activity_material_rental_history_imagebutton_back;
 
     String uidHistoryPath;
 
@@ -51,6 +54,8 @@ public class MaterialRentalActivity_History extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
 
+        activity_material_rental_history_imagebutton_back = (ImageButton) findViewById(R.id.activity_material_rental_history_imagebutton_back);
+
         activity_material_rental_history_recyclerview_list = (RecyclerView) findViewById(R.id.activity_material_rental_history_recyclerview_list);
         activity_material_rental_history_recyclerview_list.setLayoutManager(new LinearLayoutManager(this));
 
@@ -58,6 +63,13 @@ public class MaterialRentalActivity_History extends AppCompatActivity {
 
         activity_material_rental_history_recyclerview_list.setAdapter(boardRecyclerViewAdapter);
         boardRecyclerViewAdapter.notifyDataSetChanged();
+
+        activity_material_rental_history_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         // 기록보기에서 해당 키값을 찾아와서 물품기록사항들을 보여줌
          Intent intent = getIntent();

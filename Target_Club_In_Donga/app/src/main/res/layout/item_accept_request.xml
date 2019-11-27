@@ -8,7 +8,8 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
     android:background="#FFFFFF"
-    android:id="@+id/item_request_layout">
+    android:id="@+id/item_request_layout"
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/item_request_toggle"
