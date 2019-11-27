@@ -13,7 +13,7 @@
         android:layout_marginBottom="25dp"
         android:textSize="20dp"
         android:gravity="center"
-        android:text="이 물품을 제거할까요?" />
+        android:text="이 물품을 반납할까요?" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:layout_marginTop="30dp"
         android:weightSum="1">
         <Button
-            android:id="@+id/activity_material_rental_admin_delete_item_button_cancel"
+            android:id="@+id/activity_material_rental_return_button_cancel"
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:background="#00000000"
             android:textColor="@color/color_MainColor"/>
         <Button
-            android:id="@+id/activity_material_rental_admin_delete_item_button_confirm"
+            android:id="@+id/activity_material_rental_return_button_confirm"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="0.5"

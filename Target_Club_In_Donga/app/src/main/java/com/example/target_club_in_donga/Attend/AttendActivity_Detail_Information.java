@@ -63,7 +63,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
     private List<Attend_Admin_Change_Item> attendItems = new ArrayList<>();
     private List<String> uidLists = new ArrayList<>();
 
-    final int[] MY_COLORS = {Color.rgb(152, 247, 145), Color.rgb(255, 187, 0), Color.rgb(189, 189, 189), Color.rgb(255, 0, 0)};
+    final int[] MY_COLORS = {Color.rgb(89, 218, 80), Color.rgb(255, 187, 0), Color.rgb(189, 189, 189), Color.rgb(200, 0, 0)};
     ArrayList<Integer> colors = new ArrayList<Integer>();
 
     @Override
