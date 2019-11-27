@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
     private EditText activity_material_rental_admin_insert_edittext_item_name;
     private Button activity_material_rental_admin_insert_button_insert;
     private String imagePath, material_path, getEditName;
+    private ImageButton activity_material_rental_admin_insert_imagebutton_back;
 
     private long now;
 
@@ -65,6 +67,14 @@ public class MaterialRentalActivity_Admin_Insert extends AppCompatActivity {
         activity_material_rental_admin_insert_imageview_image = (ImageView) findViewById(R.id.activity_material_rental_admin_insert_imageview_image);
         activity_material_rental_admin_insert_edittext_item_name = (EditText) findViewById(R.id.activity_material_rental_admin_insert_edittext_item_name);
         activity_material_rental_admin_insert_button_insert = (Button) findViewById(R.id.activity_material_rental_admin_insert_button_insert);
+        activity_material_rental_admin_insert_imagebutton_back = (ImageButton) findViewById(R.id.activity_material_rental_admin_insert_imagebutton_back);
+
+        activity_material_rental_admin_insert_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         activity_material_rental_admin_insert_imageview_image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
