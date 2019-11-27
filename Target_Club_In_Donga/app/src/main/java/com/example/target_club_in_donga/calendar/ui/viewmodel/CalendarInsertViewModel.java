@@ -3,6 +3,7 @@ package com.example.target_club_in_donga.calendar.ui.viewmodel;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,7 +17,11 @@ import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
 import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.room.TodoDao;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -145,11 +150,16 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         protected Void doInBackground(Todo... todos) {  // spread 연산자 ... 배열로 담겨서 넘어온다.
             //mTodoDao.insert(todos[0]);  // 배열에서 하나만 넘겨주니까
             Todo singleTodo = new Todo(todo,isChecked,time);
-            Map<String, Object> insertData = new HashMap<>();
-            insertData.put("title",todo);
-            insertData.put("isChecked",isChecked);
-            insertData.put("time",time);
+//            Map<String, Object> insertData = new HashMap<>();
+//            insertData.put("title",todo);
+//            insertData.put("isChecked",isChecked);
+//            insertData.put("time",time);
+            CalendarDBItem insertData = new CalendarDBItem();
+            insertData.title = todo;
+            insertData.time = time;
+            insertData.isChecked = isChecked;
             firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(updateTime+"").push().setValue(insertData);
+
             mTodoDao.insert(singleTodo);
             return null;
         }
