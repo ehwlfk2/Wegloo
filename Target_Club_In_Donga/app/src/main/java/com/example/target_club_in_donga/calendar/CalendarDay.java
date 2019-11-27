@@ -58,6 +58,7 @@ public class CalendarDay extends AppCompatActivity implements View.OnClickListen
         binding.activityCalendarDayInsertDayDataFab1.setOnClickListener(this);
         binding.activityCalendarDayInsertDayDataFab2.setOnClickListener(this);
         binding.activityCalendarDayInsertDayDataFab3.setOnClickListener(this);
+
     }
 
     @Override
