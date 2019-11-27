@@ -2,6 +2,7 @@ package com.example.target_club_in_donga.calendar;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -14,7 +15,7 @@ import com.example.target_club_in_donga.calendar.ui.adapter.CalendarAdapter;
 import com.example.target_club_in_donga.calendar.ui.viewmodel.CalendarListViewModel;
 import com.example.target_club_in_donga.databinding.CalendarListBinding;
 
-public class Calendar extends AppCompatActivity {
+public class Calendar extends AppCompatActivity implements View.OnClickListener{
     private CalendarListBinding binding;
     private CalendarListViewModel model;    // MainActivity - CalendarListViewModel
     Context context = this;
@@ -28,9 +29,24 @@ public class Calendar extends AppCompatActivity {
         binding.setModel(model);
         binding.setLifecycleOwner(this);
 
+        binding.activityCalendarRefreshFab.setOnClickListener(this);
+
         observe();
         if (model != null) {
             model.initCalendarList();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+
+        switch (i){
+            case R.id.activity_calendar_refresh_fab:
+                /*
+                 * TODO insert refresh action
+                 */
+                break;
         }
     }
 
@@ -52,4 +68,5 @@ public class Calendar extends AppCompatActivity {
             }
         });
     }
+
 }
