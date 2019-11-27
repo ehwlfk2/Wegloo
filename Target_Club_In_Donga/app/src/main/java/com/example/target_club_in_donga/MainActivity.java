@@ -69,31 +69,43 @@ public class MainActivity extends AppCompatActivity {
                                 clubName = recentClub;
                                  Bundle extras = getIntent().getExtras();
                                  String fcmCheck = "None";
+                                 String fcmUid = "None";
                                  //String fcmUid = "None";
                                  if(extras != null) {
                                      if (extras.containsKey("fcmCheck")) {
                                         fcmCheck = extras.getString("fcmCheck");
-                                        //fcmUid = extras.getString("fcmUid");
+                                     }
+                                     if(extras.containsKey("fcmUid")){
+                                         fcmUid = extras.getString("fcmUid");
                                      }
                                  }
                                 //Log.e("fcm",fcmCheck);
 
                                  if(fcmCheck.equals("Vote")){
-                                     //clubName = fcmUid;
+                                     clubName = fcmUid;
+                                     FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                             .child("recentClub").setValue(clubName);
+                                     Log.e("vote",clubName);
                                      //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, VoteActivity_Main.class);
                                      startActivity(intent);
                                      finish();
                                  }
                                  else if(fcmCheck.equals("Notice")){
-                                     //clubName = fcmUid;
-                                     //Toast.makeText(MainActivity.this, ""+recentClub, Toast.LENGTH_SHORT).show();
+                                     clubName = fcmUid;
+                                     FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                             .child("recentClub").setValue(clubName);
+                                     //Log.e("notice",clubName);
+                                     Toast.makeText(MainActivity.this, ""+clubName, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, NoticeActivity_Main.class);
                                      startActivity(intent);
                                      finish();
                                  }
                                  else if(fcmCheck.equals("AcceptRequest")){
-                                     //clubName = fcmUid;
+                                     clubName = fcmUid;
+                                     FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                             .child("recentClub").setValue(clubName);
+                                     //Log.e("acc",clubName);
                                      //Toast.makeText(MainActivity.this, "" + recentClub, Toast.LENGTH_SHORT).show();
                                      Intent intent = new Intent(MainActivity.this, HomeActivityView.class);
                                      intent.putExtra("isRecent",true);
@@ -101,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
                                      finish();
                                  }
                                  else if(fcmCheck.equals("Attend")){
-                                     //clubName = fcmUid;
+                                     clubName = fcmUid;
+                                     FirebaseDatabase.getInstance().getReference().child("AppUser").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                             .child("recentClub").setValue(clubName);
+                                     Log.e("att",clubName);
                                      Intent intent = new Intent(MainActivity.this, AttendActivity.class);
                                      intent.putExtra("isRecent",true);
                                      startActivity(intent);
