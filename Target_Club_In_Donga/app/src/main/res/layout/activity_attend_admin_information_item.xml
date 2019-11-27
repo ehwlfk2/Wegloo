@@ -2,19 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/activity_attend_admin_information_item_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp">
 
         <TextView
             android:id="@+id/activity_attend_admin_information_item_textview_name"
             style="@style/Content_Text_Style"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="이름" />
 
         <TextView
@@ -33,6 +35,6 @@
 
     </LinearLayout>
 
-    <View style="@style/Line_Style"/>
+    <View style="@style/Line_Style" />
 
 </LinearLayout>

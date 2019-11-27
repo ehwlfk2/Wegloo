@@ -209,6 +209,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                     activity_attend_piechart.setDescription(description);
 
                     activity_attend_piechart.animateY(1000, Easing.EasingOption.EaseInOutCubic);
+                    activity_attend_piechart.setRotationEnabled(false);
 
                     PieDataSet pieDataSet = new PieDataSet(pieEntries, "인원 수");
                     pieDataSet.setSliceSpace(3f);
@@ -484,7 +485,7 @@ public class AttendActivity_Detail_Information extends AppCompatActivity {
                                                 EditTardyTime.trim();
                                                 if (EditTardyTime.getBytes().length > 0) {
                                                     database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("attend_state").setValue("지각");
-                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").setValue("+" + EditTardyTime);
+                                                    database.getReference().child("EveryClub").child(clubName).child("Attend").child(findkey).child("User_State").child(uidLists.get(position)).child("late_time").setValue("+" + EditTardyTime + "분");
                                                     dialog.dismiss();
                                                 } else {
                                                     Toast.makeText(AttendActivity_Detail_Information.this, "지각시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show();

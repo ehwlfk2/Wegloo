@@ -1,61 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="2">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_weight="1"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/activity_attend_home_item_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+         <TextView
+            style="@style/Content_Classification_Text_Style"
+            android:text="출석일"
+            android:textColor="@color/colorWhite"
+            android:layout_weight="2" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="5">
+         <TextView
+             android:id="@+id/activity_attend_home_item_textview_recyclerview_start_time"
+             style="@style/Content_Text_Style"
+             android:text="없음"
+             android:layout_weight="1" />
 
-                <TextView
-                    style="@style/Content_Classification_Text_Style"
-                    android:text="출석일"
-                    android:textColor="@color/colorWhite"
-                    android:layout_weight="3" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/arrow_btn"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="right|center" />
 
-                <TextView
-                    android:id="@+id/activity_attend_home_item_textview_recyclerview_start_time"
-                    style="@style/Content_Text_Style"
-                    android:text="없음"
-                    android:layout_weight="2" />
-
-            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
     <View style="@style/Line_Style" />
-
-</LinearLayout>
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/arrow_btn"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="right|center" />
 
 </LinearLayout>

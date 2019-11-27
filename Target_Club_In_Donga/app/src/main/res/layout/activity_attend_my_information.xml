@@ -5,13 +5,26 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <TextView
-        style="@style/Top_Content_Text_Style"
-        android:background="@drawable/logoin_button_ver0"
-        android:textColor="@color/color_White"
+    <RelativeLayout
+        android:id="@+id/activity_attend_my_information_relativelayoyt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="출석 정보"/>
+        android:background="#FFFFFF">
+        <ImageButton
+            android:id="@+id/activity_attend_my_information_imagebutton_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/ic_keyboard_arrow_left_24px"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="출석 정보"
+            android:textColor="#0C0B0B"
+            android:textSize="20dp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

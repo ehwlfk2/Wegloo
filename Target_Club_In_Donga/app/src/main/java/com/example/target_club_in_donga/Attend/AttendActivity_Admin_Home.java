@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -60,8 +61,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     private String startTime, getTardyTimeLimit, nowtardyTimeLimit, getState;
     private int flag = 0, admin, flag2 = 0, searchFlag = 0;
 
-    private TextView activity_attend_admin_information_item_textview_phone_number;
     private EditText attend_admin_information_home_edittext_search;
+    private ImageButton activity_attend_admin_information_home_imagebutton_back;
     private long now;
 
     public static String uidAdminPath;
@@ -76,7 +77,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         activity_attend_admin_information_home_category = (Button) findViewById(R.id.activity_attend_admin_information_home_category);
-        activity_attend_admin_information_item_textview_phone_number = (TextView) findViewById(R.id.activity_attend_admin_information_item_textview_phone_number);
+        activity_attend_admin_information_home_imagebutton_back = (ImageButton) findViewById(R.id.activity_attend_admin_information_home_imagebutton_back);
 
         activity_attend_admin_information_home_recyclerview_main_list = (RecyclerView) findViewById(R.id.activity_attend_admin_information_home_recyclerview_main_list);
         activity_attend_admin_information_home_recyclerview_main_list.setLayoutManager(new LinearLayoutManager(this));
@@ -89,6 +90,13 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
         attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
 
         activity = AttendActivity_Admin_Home.this;
+
+        activity_attend_admin_information_home_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
             @Override

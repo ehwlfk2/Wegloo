@@ -26,6 +26,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -87,6 +88,8 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
     protected ImageView activity_material_rental_admin_item_imageview_recyclerview_image;
     private Button activity_material_rental_home_button_insert;
+    private ImageButton activity_material_rental_home_imagebutton_back;
+
     private long now;
     private String formatDate, formatHour, formatMin, startDate;
     private String dateStr, timeStr, date_Now, date_End, date_Return;
@@ -118,6 +121,14 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
         activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
         activity_material_rental_home_textview = (TextView) findViewById(R.id.activity_material_rental_home_textview);
+        activity_material_rental_home_imagebutton_back = (ImageButton) findViewById(R.id.activity_material_rental_home_imagebutton_back);
+
+        activity_material_rental_home_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                finish();
+            }
+        });
 
         if (differFlag == 0) {
             activity_material_rental_home_button_insert.setVisibility(View.GONE);
@@ -135,8 +146,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
         activity_material_rental_home_recyclerview_main_list.setAdapter(materialRentalActivity_adminRecyclerViewAdapter);
         materialRentalActivity_adminRecyclerViewAdapter.notifyDataSetChanged();
 
-        material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
-//        material_rental_home_edittext_search = (EditText) findViewById(R.id.material_rental_home_edtitext_search);
+        material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.activity_material_rental_home_edtitext_search);
 
         database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
             @Override
@@ -279,7 +289,7 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
             }
         });
 
-        AutoCompleteTextView material_rental_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.material_rental_home_edtitext_search);
+        AutoCompleteTextView material_rental_home_autocompletetextview = (AutoCompleteTextView) findViewById(R.id.activity_material_rental_home_edtitext_search);
         material_rental_home_autocompletetextview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, materialRentalItems));
 
     }
@@ -400,6 +410,14 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
                                     final TextView detailTextID = (TextView) view2.findViewById(R.id.activity_material_rental_item_name);
                                     final TextView detailTextName = (TextView) view2.findViewById(R.id.activity_material_rental_renter);
                                     final ImageView detailImageView = (ImageView) view2.findViewById(R.id.activity_material_rental_imageview_image);
+                                    final ImageButton activity_material_rental_imagebutton_back = (ImageButton) view2.findViewById(R.id.activity_material_rental_imagebutton_back);
+
+                                    activity_material_rental_imagebutton_back.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View v) {
+                                            finish();
+                                        }
+                                    });
 
                                     detailTextID.setText(materialRentalItems.get(position).title);
                                     detailTextName.setText(uidName);
