@@ -65,12 +65,7 @@ public class CalendarListViewModel extends ViewModel {
     }
 
     private void getKey(CalendarRefreshDatabase db) {
-        try {
-            new findRefreshKeyAsyncTask(db.refreshKeyDao()).execute();
-        } catch (Exception e) {
-            new InsertAsyncTask(db.refreshKeyDao()).execute();
-            refreshKey = 0;
-        }
+        new findRefreshKeyAsyncTask(db.refreshKeyDao()).execute();
     }
 
     private static class findRefreshKeyAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -82,8 +77,13 @@ public class CalendarListViewModel extends ViewModel {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            int[] keys = mRefreshKeyDao.findKeyByClubName(clubName);
-            refreshKey = keys[0];
+            try {
+                refreshKey = mRefreshKeyDao.findKeyByClubName(clubName)[0];
+            }
+            catch (Exception e){
+                Log.v("develop_Log_v", "refreshKey: " + refreshKey);
+                refreshKey = 0;
+            }
             return null;
         }
     }
