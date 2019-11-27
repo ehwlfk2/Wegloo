@@ -3,30 +3,21 @@ package com.example.target_club_in_donga.calendar.ui.viewmodel;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.room.Delete;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
 import com.example.target_club_in_donga.calendar.data.TSLiveData;
 import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
 import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.room.TodoDao;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.example.target_club_in_donga.MainActivity.clubName;
 
@@ -76,12 +67,12 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         super(application);
 
 
-    db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
-            /*.allowMainThreadQueries()*/.build();
+        db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
+                /*.allowMainThreadQueries()*/.build();
 
-    mCenterPosition = 0;
-    todos = getAll();
-}
+        mCenterPosition = 0;
+        todos = getAll();
+    }
 
     //
     public String initDB() {
@@ -101,7 +92,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         return DateFormat.getDate(mCurrentDataTime, DateFormat.CALENDAR_DAY_FORMAT);
     }
 
-    public void updateTime(long time){
+    public void updateTime(long time) {
         this.time = time;
     }
 
@@ -136,8 +127,8 @@ public class CalendarInsertViewModel extends AndroidViewModel {
             this.mTodoDao = mTodoDao;
         }
 
-        InsertAsyncTask(TodoDao todoDao, String todo, boolean isChecked, long time){
-            updateTime = Calendar.getInstance().getTimeInMillis()/86400000;
+        InsertAsyncTask(TodoDao todoDao, String todo, boolean isChecked, long time) {
+            updateTime = Calendar.getInstance().getTimeInMillis() / 86400000;
             this.mTodoDao = todoDao;
             this.todo = todo;
             this.isChecked = isChecked;
@@ -149,7 +140,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
         @Override   // 꼭 필요한 Method, 여기서 비동기 처리를 해줍니다.
         protected Void doInBackground(Todo... todos) {  // spread 연산자 ... 배열로 담겨서 넘어온다.
             //mTodoDao.insert(todos[0]);  // 배열에서 하나만 넘겨주니까
-            Todo singleTodo = new Todo(todo,isChecked,time);
+            Todo singleTodo = new Todo(todo, isChecked, time);
 //            Map<String, Object> insertData = new HashMap<>();
 //            insertData.put("title",todo);
 //            insertData.put("isChecked",isChecked);
@@ -158,8 +149,7 @@ public class CalendarInsertViewModel extends AndroidViewModel {
             insertData.title = todo;
             insertData.time = time;
             insertData.isChecked = isChecked;
-            firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(-1*updateTime+"").push().setValue(insertData);
-
+            firebaseDatabase.getReference().child("EveryClub").child(clubName).child("Calendar").child("ToDo").child(-1 * updateTime + "").push().setValue(insertData);
             mTodoDao.insert(singleTodo);
             return null;
         }

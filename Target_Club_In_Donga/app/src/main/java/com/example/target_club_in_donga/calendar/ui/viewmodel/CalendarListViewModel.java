@@ -1,21 +1,33 @@
 package com.example.target_club_in_donga.calendar.ui.viewmodel;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.room.Room;
+
+import com.example.target_club_in_donga.calendar.CalendarDay;
 import com.example.target_club_in_donga.calendar.data.TSLiveData;
+import com.example.target_club_in_donga.calendar.room.CalendarDayDatabase;
+import com.example.target_club_in_donga.calendar.room.Todo;
 import com.example.target_club_in_donga.calendar.utils.DateFormat;
 import com.example.target_club_in_donga.calendar.utils.Keys;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
+
+import static com.example.target_club_in_donga.MainActivity.clubName;
 
 // class Keys -> public static final String EMPTY = "empty";
 
 public class CalendarListViewModel extends ViewModel {
     public static Long mCurrentTime;
     public static String mCurrentMonth;
+    private int updateRefreshKey;
     final private int mBegin_Month = -2, mEnd_Month = 2;
+
 
     public TSLiveData<String> mTitle = new TSLiveData<>();
     public TSLiveData<ArrayList<Object>> mCalendarList = new TSLiveData<>(new ArrayList<>());
@@ -27,9 +39,18 @@ public class CalendarListViewModel extends ViewModel {
         mTitle.setValue(DateFormat.getDate(time, DateFormat.CALENDAR_HEADER_FORMAT));
     }
 
-    public void initCalendarList() {
+    public void initCalendarList(com.example.target_club_in_donga.calendar.Calendar application) {
         GregorianCalendar cal = new GregorianCalendar();
         setCalendarList(cal);
+
+        CalendarDayDatabase db = Room.databaseBuilder(application, CalendarDayDatabase.class, clubName)
+                /*.allowMainThreadQueries()*/.build();
+
+        updateRefreshKey = getKey(db);
+    }
+
+    private int getKey(CalendarDayDatabase db) {
+        return 0;
     }
 
     public void setCalendarList(GregorianCalendar cal) {
@@ -70,4 +91,10 @@ public class CalendarListViewModel extends ViewModel {
         }
         mCalendarList.setValue(calendarList);
     }//setCalendarList
+
+    public void refreshDB() {
+        // TODO : refresh action from FB
+
+        // TODO : refresh action to DB
+    }
 }
