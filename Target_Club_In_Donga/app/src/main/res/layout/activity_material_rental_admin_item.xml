@@ -3,28 +3,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:weightSum="2">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_weight="1">
-
+    android:paddingStart="5dp"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp"
+    android:id="@+id/activity_material_rental_admin_item_linearlayout"
+    android:background="@drawable/layout_rounded">
     <LinearLayout
-        android:id="@+id/activity_material_rental_admin_item_linearlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingRight="5dp">
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/activity_material_rental_admin_item_imageview_recyclerview_image"
-            app:civ_border_width="0.5dp"
-            app:civ_border_color="#FF000000"
             android:layout_width="100dp"
             android:background="@drawable/picture_que_ver0"
 
@@ -37,56 +26,68 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp"
+        android:weightSum="1">
+        <TextView
+            android:layout_weight="0.3"
+            android:id="@+id/activity_material_rental_admin_item_textview_recyclerview_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lottedreammedium"
+            android:textSize="20dp"
+            android:textColor="#000000"
+            android:layout_marginBottom="6dp"
+            android:text="물품명" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="5dp">
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3">
             <TextView
-                android:id="@+id/activity_material_rental_admin_item_textview_recyclerview_item_name"
-                style="@style/Content_Text_Style"
-                android:text="물품명" />
-
-            <View
-                style="@style/Line_Style" />
-
-            <TextView
-                style="@style/Content_Classification_Text_Style"
-                android:text="대여자"
-                android:textColor="@color/colorWhite"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="대여 중인 사람 : "/>
 
             <TextView
                 android:id="@+id/activity_material_rental_admin_item_textview_recyclerview_lender"
-                style="@style/Content_Text_Style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:fontFamily="@font/lottedreammedium"
+                android:textColor="#000000"
+                android:layout_marginStart="10dp"
                 android:text="없음" />
+        </LinearLayout>
 
-            <View
-                style="@style/Line_Style" />
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_gravity="bottom">
             <TextView
-                style="@style/Content_Classification_Text_Style"
-                android:text="대여 끝나는 날짜"
-                android:textColor="@color/colorWhite" />
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_gravity="bottom"
+                android:text="반납일 : " />
             <TextView
                 android:id="@+id/activity_material_rental_admin_item_recyclerview_timestamp"
-                style="@style/Content_Text_Style" />
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:fontFamily="@font/lottedreammedium"
+                android:textColor="#000000"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="bottom"
+                android:text="없음"/>
         </LinearLayout>
+
     </LinearLayout>
-
-    <View
-        style="@style/Line_Style" />
-
-</LinearLayout>
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/arrow_btn"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="right|center" />
 
 </LinearLayout>
