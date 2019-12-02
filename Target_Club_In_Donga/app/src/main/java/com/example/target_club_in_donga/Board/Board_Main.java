@@ -66,12 +66,6 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
         recyclerView.setAdapter(boardRecy_adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
 
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getBoard();
-            }
-        });
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,10 +79,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
                 startActivityForResult(intent, 100); // 글쓰기 CODE
             }
         });
-        getBoard();
-    }
-    private void getBoard(){
-        database.getReference().child("EveryClub").child(clubName).child("Board").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("EveryClub").child(clubName).child("Board").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boardModels.clear();
@@ -110,7 +101,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) { // 글쓰기
+        /*if (requestCode == 100) { // 글쓰기
             if (resultCode == RESULT_OK) {
                 getBoard();
             } else {   // RESULT_CANCEL
@@ -122,7 +113,7 @@ public class Board_Main extends AppCompatActivity {// 제목, 썸네일이 존�
             }
             else {// RESULT_CANCEL
             }
-        }
+        }*/
     }
 
     public View.OnClickListener board_clicklistner = new View.OnClickListener() { // 이미지 클릭이벤트

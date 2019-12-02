@@ -116,10 +116,6 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        progressDialog.setMessage("물품대여를 불러오는 중입니다...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
         activity_material_rental_home_button_insert = (Button) findViewById(R.id.activity_material_rental_home_button_insert);
         activity_material_rental_home_textview = (TextView) findViewById(R.id.activity_material_rental_home_textview);
         activity_material_rental_home_imagebutton_back = (ImageButton) findViewById(R.id.activity_material_rental_home_imagebutton_back);
@@ -149,9 +145,14 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
         material_rental_home_edittext_search = (AutoCompleteTextView) findViewById(R.id.activity_material_rental_home_edtitext_search);
 
+        progressDialog.setMessage("물품을 불러오는 중입니다...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         database.getReference().child("EveryClub").child(clubName).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
+
                 if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                     admin = Integer.parseInt(dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("admin").getValue().toString());
                     if (admin > adminNumber) {
@@ -168,7 +169,6 @@ public class MaterialRentalActivity_Home extends AppCompatActivity {
 
                         }
                     });
-
                 } else {
                     admin = Integer.parseInt(dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("admin").getValue().toString());
                     uidName = dataSnapshot.child("User").child(auth.getCurrentUser().getUid()).child("name").getValue().toString();

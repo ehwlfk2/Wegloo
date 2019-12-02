@@ -1,6 +1,7 @@
 package com.example.target_club_in_donga.Attend;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -69,6 +70,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
     public static String uidAdminPath;
     public static Activity activity;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,8 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+
+        progressDialog = new ProgressDialog(this);
 
         activity_attend_admin_information_home_category = (Button) findViewById(R.id.activity_attend_admin_information_home_category);
         activity_attend_admin_information_home_imagebutton_back = (ImageButton) findViewById(R.id.activity_attend_admin_information_home_imagebutton_back);
@@ -146,7 +151,6 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                         }
                     }
                 }
-
             }
 
             @Override
@@ -166,6 +170,10 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
 
             }
         });
+
+        progressDialog.setMessage("회원을 불러오는 중입니다...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         database.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -189,6 +197,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                                 attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
                                             }
                                         }
+                                        progressDialog.dismiss();
                                     }
                                 }
 
@@ -215,6 +224,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                         uidLists.add(0, uidKey);
                     }
                     attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
                 }
             }
 
@@ -242,9 +252,15 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                 flag = 0;
                                 activity_attend_admin_information_home_category.setText("회원 별");
                                 attend_admin_information_home_edittext_search.setVisibility(View.VISIBLE);
+
+                                progressDialog.setMessage("회원을 불러오는 중입니다...");
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
+
                                 database.getReference().child("EveryClub").child(clubName).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
+
                                         if (dataSnapshot.child("realNameSystem").getValue().toString().equals("true")) {
                                             userList.clear();
                                             uidLists.clear();
@@ -261,6 +277,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                                                 attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
                                                             }
                                                         }
+                                                        progressDialog.dismiss();
                                                     }
 
                                                     @Override
@@ -282,6 +299,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                                 uidLists.add(0, uidKey);
                                             }
                                             attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
+                                            progressDialog.dismiss();
                                         }
                                     }
 
@@ -299,6 +317,11 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                 flag = 1;
                                 activity_attend_admin_information_home_category.setText("일자 별");
                                 attend_admin_information_home_edittext_search.setVisibility(View.INVISIBLE);
+
+                                progressDialog.setMessage("일자 별로 불러오는 중입니다...");
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
+
                                 database.getReference().child("EveryClub").child(clubName).child("Attend").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -311,6 +334,7 @@ public class AttendActivity_Admin_Home extends AppCompatActivity {
                                             uidLists.add(0, uidKey);
                                         }
                                         attendAdminHomeActivity_recyclerViewAdapter.notifyDataSetChanged();
+                                        progressDialog.dismiss();
                                     }
 
                                     @Override
