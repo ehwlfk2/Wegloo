@@ -96,7 +96,7 @@
 
         android:id="@+id/joinclube_autoCompleteSearch"
         android:hint = "모임 검색 (2자 이상)"
-        android:completionThreshold="2"
+        android:completionThreshold="1"
         android:textColorHint="@color/color_Orange"
         android:theme="@style/EditTheme"
         android:layout_width="0dp"
