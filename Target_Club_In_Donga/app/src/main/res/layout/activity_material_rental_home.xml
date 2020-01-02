@@ -108,13 +108,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/state_gray_rectangle"
+                    android:src="@drawable/state_orange_rectangle"
                     android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="대여중"
+                    android:text="대여미납"
                     android:layout_weight="1" />
 
             </LinearLayout>
@@ -129,13 +129,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/state_orange_rectangle"
+                    android:src="@drawable/state_gray_rectangle"
                     android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="대여미납"
+                    android:text="대여중"
                     android:layout_weight="1" />
 
             </LinearLayout>
